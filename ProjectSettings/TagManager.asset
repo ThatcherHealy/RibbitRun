@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Grapplable
+  - Water
+  - NoSwim
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Ground
+  - Prey
+  - GrappleDetector
+  - TongueDetector
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Middle1
+    uniqueID: 2027511101
+    locked: 0
+  - name: Middle2
+    uniqueID: 2611786543
+    locked: 0
+  - name: Front
+    uniqueID: 597057791
+    locked: 0
+  - name: Fronter
+    uniqueID: 912553649
+    locked: 0
+  - name: Frontest
+    uniqueID: 3491482703
+    locked: 0
