@@ -101,12 +101,11 @@ public class PlayerController : MonoBehaviour
         }
         if (isSwimming)
         {
-
+            Time.timeScale = 1;
         }
         else //Remove the swim line and resume time when out of the water
         {
             swimLr.positionCount = 0;
-            Time.timeScale = 1;
         }
     }
     void DragStart() 
