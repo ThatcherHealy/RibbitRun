@@ -67,7 +67,6 @@ public class TongueLauncher : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(Time.timeScale);
         //Identify touch
         if (Input.touchCount > 0)
         {

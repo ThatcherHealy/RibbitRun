@@ -135,12 +135,14 @@ public class PlayerController : MonoBehaviour
         
         if (isSwimming)
         {
+            jumpLr.positionCount = 0;
             swimLr.positionCount = 2;
             swimLr.SetPosition(0, transform.position);
             swimLr.SetPosition(1, secondLinePoint);
         }
         else
         {
+            swimLr.positionCount = 0;
             jumpLr.positionCount = 2;
             jumpLr.SetPosition(0, transform.position);
             jumpLr.SetPosition(1, secondLinePoint);
