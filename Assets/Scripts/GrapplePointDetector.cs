@@ -24,7 +24,7 @@ public class GrapplePointDetector : MonoBehaviour
     //End the grapple when the frog gets too close
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject == tongueLauncher.grappleTarget && tongueLine.isGrappling)
+        if ((collision.gameObject == tongueLauncher.grappleTarget || collision.gameObject.tag == "Water") && tongueLine.isGrappling)
         {
             touchingObjects.Add(collision.gameObject);
         }

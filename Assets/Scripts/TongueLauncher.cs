@@ -22,7 +22,7 @@ public class TongueLauncher : MonoBehaviour
 
     [Header("Physics Ref:")]
     public SpringJoint2D m_springJoint2D;
-    public Rigidbody2D m_rigidbody;
+    public Rigidbody2D rb;
 
     [Header("Distance:")]
     [SerializeField] private bool hasMaxDistance = false;
@@ -115,7 +115,7 @@ public class TongueLauncher : MonoBehaviour
         {
             tongueLine.enabled = false;
             m_springJoint2D.enabled = false;
-            m_rigidbody.gravityScale = 1;
+            rb.gravityScale = 1.2f;
             tongueLine.isGrappling = false;
         }
 
@@ -235,14 +235,14 @@ public class TongueLauncher : MonoBehaviour
                 case LaunchType.Transform_Launch:
 
 
-                    m_rigidbody.gravityScale = 0;
+                    rb.gravityScale = 0;
                     if (grappleTarget.layer == 7) //Makes the frog dash through prey
                     {
-                        m_rigidbody.velocity = new Vector3((grappleTarget.transform.position.x - transform.position.x), (grappleTarget.transform.position.y - transform.position.y), 0).normalized * 10;
+                        rb.velocity = new Vector3((grappleTarget.transform.position.x - transform.position.x), (grappleTarget.transform.position.y - transform.position.y), 0).normalized * 10;
                     }
                     else
                     {
-                        m_rigidbody.velocity = Vector2.zero;
+                        rb.velocity = Vector2.zero;
                     }
                     break;
             }

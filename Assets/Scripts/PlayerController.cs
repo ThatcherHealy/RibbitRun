@@ -102,10 +102,13 @@ public class PlayerController : MonoBehaviour
         if (isSwimming)
         {
             Time.timeScale = 1;
+            int slowingFactor = 1;
+            rb.drag = slowingFactor;
         }
         else //Remove the swim line and resume time when out of the water
         {
             swimLr.positionCount = 0;
+            rb.drag = 0;
         }
     }
     void DragStart() 
@@ -157,9 +160,11 @@ public class PlayerController : MonoBehaviour
         Vector3 dragReleasePos = draggingPos;
         dragReleasePos.z = 0;
 
+        if (isSwimming)
+            rb.velocity *= 0.8f;
+
         Vector3 force = dragStartPos - dragReleasePos;
         Vector3 clampedForce = Vector3.ClampMagnitude(force, maxDrag) * power;
-
         rb.AddForce(clampedForce, ForceMode2D.Impulse);
 
         forceApplied = true;
@@ -190,7 +195,7 @@ public class PlayerController : MonoBehaviour
                 tongueLauncher.grapplePointIdentified = false;
                 Destroy(collision.transform.parent.gameObject);
 
-                rb.gravityScale = 1;
+                rb.gravityScale = 1.2f;
                 power = 5;
                 rb.AddForce(rb.velocity.normalized * power, ForceMode2D.Impulse);
 
