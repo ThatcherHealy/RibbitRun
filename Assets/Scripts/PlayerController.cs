@@ -45,13 +45,17 @@ public class PlayerController : MonoBehaviour
         RaycastHit2D raycastHit = Physics2D.BoxCast(circleCollider.bounds.center,
         new Vector2(circleCollider.bounds.size.x * 0.4f, circleCollider.bounds.size.y * 0.7f), 0f, Vector2.down, extraDistance, ground);
         if (raycastHit.collider != null)
-        {
             isGrounded = true;
+        else
+            isGrounded = false;
+
+        if (isGrounded)
+        {
+            cantSwim = true; 
+            isSwimming = false;
         }
         else
-        {
-            isGrounded = false;
-        }
+            cantSwim = false;
 
         //Jump Mechanic
         if (Input.touchCount > 0 && isGrounded)
@@ -79,7 +83,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //Swimming Mechanic
-        if (Input.touchCount > 0 && isSwimming) //
+        if (Input.touchCount > 0 && isSwimming)
         {
             tongueLauncher.lr.positionCount = 0;
             touch = Input.GetTouch(0);
@@ -104,6 +108,7 @@ public class PlayerController : MonoBehaviour
             Time.timeScale = 1;
             int slowingFactor = 1;
             rb.drag = slowingFactor;
+            tongueLine.isGrappling = false;
         }
         else //Remove the swim line and resume time when out of the water
         {
@@ -161,7 +166,7 @@ public class PlayerController : MonoBehaviour
         dragReleasePos.z = 0;
 
         if (isSwimming)
-            rb.velocity *= 0.8f;
+            rb.velocity *= 0.5f;
 
         Vector3 force = dragStartPos - dragReleasePos;
         Vector3 clampedForce = Vector3.ClampMagnitude(force, maxDrag) * power;
