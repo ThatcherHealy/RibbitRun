@@ -55,7 +55,11 @@ public class PlayerController : MonoBehaviour
             isSwimming = false;
         }
         else
+        {
             cantSwim = false;
+            jumpLr.positionCount = 0;
+        }
+
 
         //Jump Mechanic
         if (Input.touchCount > 0 && isGrounded)

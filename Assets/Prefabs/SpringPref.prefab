@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3665440802930484594}
   - component: {fileID: 9011227159182546203}
   - component: {fileID: 2659907917772345320}
-  m_Layer: 6
+  m_Layer: 2
   m_Name: SpringPref
   m_TagString: Spring
   m_Icon: {fileID: 0}
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 4731394779048943225}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -21.404888, y: -24.081291, z: 14.537123}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.8392157, g: 0.043137256, b: 0.27450982, a: 1}
+  m_Color: {r: 0.8392157, g: 0.043137256, b: 0.27450982, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
@@ -115,7 +115,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 2147483647
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -137,3 +137,4 @@ MonoBehaviour:
   force: 0
   height: 0
   springTransform: {fileID: 4807435788306670504}
+  spriteShapeController: {fileID: 0}

@@ -13,15 +13,17 @@ public class WaterSpring : MonoBehaviour
     private float target_height = 0f;
     public Transform springTransform;
     [SerializeField]
-    private static SpriteShapeController spriteShapeController = null;
+    private SpriteShapeController spriteShapeController = null;
     private int waveIndex = 0;
     private List<WaterSpring> springs = new();
-    private float resistance = 40f;
-    public void Init(SpriteShapeController ssc) { 
+    private float resistance = 80f;
+    private bool cooldown;
+    public void Init(SpriteShapeController ssc)
+    {
 
         var index = transform.GetSiblingIndex();
-        waveIndex = index+1;
-        
+        waveIndex = index + 1;
+
         spriteShapeController = ssc;
         velocity = 0;
         height = transform.localPosition.y;
@@ -29,33 +31,45 @@ public class WaterSpring : MonoBehaviour
     }
     // with dampening
     // adding the dampening to the force
-    public void WaveSpringUpdate(float springStiffness, float dampening) { 
+    public void WaveSpringUpdate(float springStiffness, float dampening)
+    {
         height = transform.localPosition.y;
         // maximum extension
-        var x = height - target_height;
-        var loss = -dampening * velocity;
+        float x = height - target_height;
+        float loss = -dampening * velocity;
 
-        force = - springStiffness * x + loss;
+        force = -springStiffness * x + loss;
         velocity += force;
-        var y = transform.localPosition.y;  
-        transform.localPosition = new Vector3(transform.localPosition.x, y+velocity, transform.localPosition.z);
-  
+        float y = transform.localPosition.y;
+        transform.localPosition = new Vector3(transform.localPosition.x, y + velocity, transform.localPosition.z);
+
     }
-    public void WavePointUpdate() { 
-        if (spriteShapeController != null) {
+    public void WavePointUpdate()
+    {
+        if (spriteShapeController != null)
+        {
             Spline waterSpline = spriteShapeController.spline;
             Vector3 wavePosition = waterSpline.GetPosition(waveIndex);
             waterSpline.SetPosition(waveIndex, new Vector3(wavePosition.x, transform.localPosition.y, wavePosition.z));
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D other) {
-        if (other.gameObject.tag.Equals("Player")) {
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag.Equals("Player") && !cooldown)
+        {
+            cooldown = true;
+            StartCoroutine(Cooldown());
             PlayerController playerController = other.gameObject.GetComponent<PlayerController>();
             Rigidbody2D rb = playerController.GetComponent<Rigidbody2D>();
             var speed = rb.velocity;
 
-            velocity += speed.y/resistance;
+            velocity += speed.y / resistance;
         }
+    }
+    IEnumerator Cooldown()
+    {
+        yield return new WaitForSeconds(0.1f);
+        cooldown = false;        
     }
 }
