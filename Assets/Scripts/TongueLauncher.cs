@@ -132,7 +132,7 @@ public class TongueLauncher : MonoBehaviour
 
         if (grapplePointIdentified)
         {
-            if (grappleTarget.transform.gameObject.layer == 7) //Prey
+            if (grappleTarget != null && grappleTarget.transform.gameObject.layer == 7) //Prey
             {
                 grapplePoint = grappleTarget.transform.position;
             }

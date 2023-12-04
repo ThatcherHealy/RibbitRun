@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D;
 
-[ExecuteAlways]
 public class WaterShapeController : MonoBehaviour
 {
 
@@ -26,11 +25,8 @@ public class WaterShapeController : MonoBehaviour
     // How much to spread to the other springs
     public float spread = 0.006f;
 
-    void Start() { 
-       
-    }
-    void OnValidate() {
-        // Clean waterpoints 
+    void Start() {
+        // Clean waterpoints
         StartCoroutine(CreateWaves());
     }
     IEnumerator CreateWaves() {

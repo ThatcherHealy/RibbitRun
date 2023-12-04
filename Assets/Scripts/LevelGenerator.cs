@@ -6,22 +6,30 @@ public class LevelGenerator : MonoBehaviour
 {
     private const float spawnDistance = 200f;
     private const float preySpawnDistance = 150f;
+    private const float waterSpawnDistance = 200f;
     [SerializeField] private Transform startEndPoint;
+    [SerializeField] private Transform startWaterEndPoint;
     [SerializeField] private Transform startPreyEndPoint;
     [SerializeField] private Transform lilypad1;
     [SerializeField] private List<Transform> levelPartList;
     [SerializeField] private List<Transform> preyList;
     [SerializeField] private GameObject player;
     [SerializeField] private Transform waterLevel;
+    [SerializeField] private Transform waterHeight;
+    [SerializeField] private Transform waterPrefab;
     private Vector3 lastLevelEndPosition;
     private Vector3 lastPreyEndPosition;
+    private Vector3 lastWaterEndPosition;
     private int swarmSize;
     Transform lastPreyTransform;
+    Transform lastWaterTransform;
 
     private void Awake()
     {
         lastLevelEndPosition = (Vector2)startEndPoint.position;
         lastPreyEndPosition = (Vector2)startPreyEndPoint.position;
+        lastWaterEndPosition = (Vector2)startWaterEndPoint.position - new Vector2(157.5f, 0);
+        
         int startingSpawnLevelParts = 5;
         for (int i = 0; i<startingSpawnLevelParts; i++)
         {
@@ -43,6 +51,20 @@ public class LevelGenerator : MonoBehaviour
         {
             SpawnPrey();
         }
+        if (Vector2.Distance(player.transform.position, lastWaterEndPosition) < waterSpawnDistance)
+        {
+            SpawnWater();
+        }
+    }
+
+    private void SpawnWater()
+    {
+        Transform lastWaterTransform;
+
+        float waterOffset = 232.5f;
+
+        lastWaterTransform = SpawnWater(waterPrefab, new Vector2(lastWaterEndPosition.x, waterHeight.position.y) + new Vector2(waterOffset, 0));
+        lastWaterEndPosition = lastWaterTransform.position;
     }
 
     private void SpawnPrey()
@@ -58,7 +80,6 @@ public class LevelGenerator : MonoBehaviour
         lastPreyTransform = SpawnPrey(chosenPrey, new Vector2(lastPreyEndPosition.x, waterLevel.position.y) + new Vector2(flyXOffset, flyYOffset));
 
         lastPreyEndPosition = lastPreyTransform.position;
-
     }
 
     private void SpawnLevelPart()
@@ -138,5 +159,10 @@ public class LevelGenerator : MonoBehaviour
             lastPreyTransform = Instantiate(prey, preySpawnPosition + offset, Quaternion.identity);
         }
         return lastPreyTransform;
+    }
+    private Transform SpawnWater(Transform water, Vector3 waterSpawnPosition)
+    {
+        lastWaterTransform = Instantiate(water, waterSpawnPosition, Quaternion.identity);
+        return lastWaterTransform;
     }
 }
