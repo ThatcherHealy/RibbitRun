@@ -17,6 +17,7 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private Transform waterLevel;
     [SerializeField] private Transform waterHeight;
     [SerializeField] private Transform waterPrefab;
+    [SerializeField] private Transform mudPrefab;
     private Vector3 lastLevelEndPosition;
     private Vector3 lastPreyEndPosition;
     private Vector3 lastWaterEndPosition;
@@ -24,11 +25,14 @@ public class LevelGenerator : MonoBehaviour
     Transform lastPreyTransform;
     Transform lastWaterTransform;
 
+    public float testX = 41.05f;
+    public float testY = -63.82f;
+
     private void Awake()
     {
         lastLevelEndPosition = (Vector2)startEndPoint.position;
         lastPreyEndPosition = (Vector2)startPreyEndPoint.position;
-        lastWaterEndPosition = (Vector2)startWaterEndPoint.position - new Vector2(157.5f, 0);
+        lastWaterEndPosition = (Vector2)startWaterEndPoint.position - new Vector2(157.5f, 0); 
         
         int startingSpawnLevelParts = 5;
         for (int i = 0; i<startingSpawnLevelParts; i++)
@@ -56,7 +60,6 @@ public class LevelGenerator : MonoBehaviour
             SpawnWater();
         }
     }
-
     private void SpawnWater()
     {
         Transform lastWaterTransform;
@@ -132,25 +135,15 @@ public class LevelGenerator : MonoBehaviour
         int swarmSizeGenerator = Random.Range(0, 100); 
         swarmSize = Random.Range(0, 100);
         if (swarmSizeGenerator >= 95)
-        {
             swarmSize = 5;
-        }
         else if (swarmSizeGenerator >= 85)
-        {
             swarmSize = 4;
-        }
         else if (swarmSizeGenerator >= 65)
-        {
             swarmSize = 3;
-        }
         else if (swarmSizeGenerator >= 36)
-        {
             swarmSize = 2;
-        }
         else
-        { 
             swarmSize = 1; 
-        }
 
         //spawns flies equal to the swarm size
         for (int i = 0; i < swarmSize; i++) 
@@ -162,6 +155,9 @@ public class LevelGenerator : MonoBehaviour
     }
     private Transform SpawnWater(Transform water, Vector3 waterSpawnPosition)
     {
+        //Spawn Mud
+        Instantiate(mudPrefab, waterSpawnPosition + new Vector3(testX, testY, 0), Quaternion.identity);
+
         lastWaterTransform = Instantiate(water, waterSpawnPosition, Quaternion.identity);
         return lastWaterTransform;
     }
