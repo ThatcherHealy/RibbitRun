@@ -7,15 +7,27 @@ public class GrapplePointDetector : MonoBehaviour
     public TongueLauncher tongueLauncher;
     public TongueLine tongueLine;
     public bool closeToGrapplePoint;
+    public bool closeToGrappleTarget;
     HashSet<GameObject> touchingObjects = new HashSet<GameObject>();
 
     private void Update()
     {
-        if (touchingObjects.Count > 0 )
+        float range = 0.3f;
+
+        if (Vector2.Distance(transform.position, tongueLauncher.grapplePoint) <= range)
+        {
+            closeToGrappleTarget = true;
+        }
+        else
+        {
+            closeToGrappleTarget= false;
+        }
+
+        if (touchingObjects.Count > 0 || closeToGrappleTarget)
         {
             closeToGrapplePoint = true;
         }
-        else if (touchingObjects.Count == 0 )
+        else if (touchingObjects.Count == 0 && !closeToGrappleTarget)
         {
             closeToGrapplePoint= false;
         }

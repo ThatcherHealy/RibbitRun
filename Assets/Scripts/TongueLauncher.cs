@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class TongueLauncher : MonoBehaviour
@@ -56,6 +57,9 @@ public class TongueLauncher : MonoBehaviour
     Touch touch;
     public bool touchEnded;
     public bool grapplePointIdentified = false;
+    private Vector2 hitPoint;
+    private Vector2 closestPoint;
+    private Collider2D hitCollider;
 
 
     private void Start()
@@ -128,7 +132,7 @@ public class TongueLauncher : MonoBehaviour
         //Get current touch position
         dragEndPosition = Camera.main.WorldToViewportPoint(touch.position);
         dragEndPosition.z = 0;
-        //Debug.DrawRay(firePoint.position, dragStartPosition - dragEndPosition, Color.red, 1);
+
 
         if (grapplePointIdentified)
         {
@@ -146,6 +150,13 @@ public class TongueLauncher : MonoBehaviour
         {
             playerController.skipToJump = true;
             lr.positionCount = 0;
+        }
+
+        //Make the grapple point stay as the edge of the collider where the raycast hit
+        if (hitCollider != null && hitPoint != null && grappleTarget.layer != 7)
+        {
+            grapplePoint = hitCollider.ClosestPoint(hitPoint);
+            hitPoint = grapplePoint;
         }
     }
 
@@ -193,7 +204,9 @@ public class TongueLauncher : MonoBehaviour
                 //If the hit object can be grappled to, grapple to it
                 if (Vector2.Distance(_hit.point, firePoint.position) <= maxDistance || !hasMaxDistance)
                 {
-                    grapplePoint = _hit.point;
+                    hitPoint = _hit.point;
+                    hitCollider = _hit.collider;
+
                     grappleDistanceVector = grapplePoint - (Vector2)gunPivot.position;
                     tongueLine.enabled = true;
                     grapplePointIdentified = true;
@@ -234,16 +247,16 @@ public class TongueLauncher : MonoBehaviour
                     break;
                 case LaunchType.Transform_Launch:
 
-
+                    int strength;
                     rb.gravityScale = 0;
+
                     if (grappleTarget.layer == 7) //Makes the frog dash through prey
-                    {
-                        rb.velocity = new Vector3((grappleTarget.transform.position.x - transform.position.x), (grappleTarget.transform.position.y - transform.position.y), 0).normalized * 10;
-                    }
+                        strength = 10;
                     else
-                    {
-                        rb.velocity = Vector2.zero;
-                    }
+                        strength = 20;
+
+                    rb.velocity = new Vector3((grappleTarget.transform.position.x - transform.position.x), (grappleTarget.transform.position.y - transform.position.y), 0).normalized * strength;
+
                     break;
             }
         }

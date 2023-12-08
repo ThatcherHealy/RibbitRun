@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour
         {
             cantSwim = true; 
             isSwimming = false;
+            tongueLine.isGrappling = false;
         }
         else
         {
@@ -113,6 +114,7 @@ public class PlayerController : MonoBehaviour
             int slowingFactor = 1;
             rb.drag = slowingFactor;
             tongueLine.isGrappling = false;
+            isJumping = false;
         }
         else //Remove the swim line and resume time when out of the water
         {
