@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.U2D;
 
@@ -120,7 +122,7 @@ public class WaterShapeController : MonoBehaviour
     }
     void FixedUpdate()
     {
-        foreach(WaterSpring waterSpringComponent in springs) {
+        foreach (WaterSpring waterSpringComponent in springs.Take(springs.Count() - 1).Skip(1).ToArray() ) {
             waterSpringComponent.WaveSpringUpdate(springStiffness, dampening);
             waterSpringComponent.WavePointUpdate();
         }
@@ -133,7 +135,7 @@ public class WaterShapeController : MonoBehaviour
         int count = springs.Count;
         float[] left_deltas = new float[count];
         float[] right_deltas = new float[count];
-
+        
         for(int i = 0; i < count; i++) {
             if (i > 0) {
                 left_deltas[i] = spread * (springs[i].height - springs[i-1].height);
