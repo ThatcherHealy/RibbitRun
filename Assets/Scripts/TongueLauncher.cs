@@ -153,7 +153,7 @@ public class TongueLauncher : MonoBehaviour
         }
 
         //Make the grapple point stay as the edge of the collider where the raycast hit
-        if (hitCollider != null && hitPoint != null && grappleTarget.layer != 7)
+        if (hitCollider != null && hitPoint != null && grapplePoint != null && grappleTarget.layer != 7 && tongueLine.isGrappling == true)
         {
             grapplePoint = hitCollider.ClosestPoint(hitPoint);
             hitPoint = grapplePoint;

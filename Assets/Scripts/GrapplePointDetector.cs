@@ -12,17 +12,6 @@ public class GrapplePointDetector : MonoBehaviour
 
     private void Update()
     {
-        float range = 0.3f;
-
-        if (Vector2.Distance(transform.position, tongueLauncher.grapplePoint) <= range)
-        {
-            closeToGrappleTarget = true;
-        }
-        else
-        {
-            closeToGrappleTarget= false;
-        }
-
         if (touchingObjects.Count > 0 || closeToGrappleTarget)
         {
             closeToGrapplePoint = true;
@@ -36,7 +25,7 @@ public class GrapplePointDetector : MonoBehaviour
     //End the grapple when the frog gets too close
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject == tongueLauncher.grappleTarget && tongueLine.isGrappling)
+        if (tongueLine.isGrappling && (collision.gameObject == tongueLauncher.grappleTarget || collision.gameObject.transform.parent == tongueLauncher.grappleTarget))
         {
             touchingObjects.Add(collision.gameObject);
         }

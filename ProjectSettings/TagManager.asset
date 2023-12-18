@@ -7,18 +7,20 @@ TagManager:
   - Grapplable
   - Water
   - NoSwim
+  - Spring
+  - Stem
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Mud
   - Water
   - UI
   - Ground
   - Prey
   - GrappleDetector
   - TongueDetector
-  - 
+  - Stem
   - 
   - 
   - 

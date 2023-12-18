@@ -1698,7 +1698,7 @@ GameObject:
   - component: {fileID: 5459466979193981646}
   m_Layer: 2
   m_Name: WavePoints
-  m_TagString: Untagged
+  m_TagString: Water
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2494,8 +2494,8 @@ MonoBehaviour:
   spriteShapeController: {fileID: 351034985504347286}
   wavePointPref: {fileID: 4731394779048943225, guid: 6748a13038032324b8a74966803c3c26, type: 3}
   wavePoints: {fileID: 2687427122101661657}
-  WavesCount: 100
-  springStiffness: 0.06
+  WavesCount: 80
+  springStiffness: 0.08
   dampening: 0.05
   spread: 0.008
 --- !u!1 &3112487320128541043
@@ -6025,7 +6025,7 @@ BuoyancyEffector2D:
     serializedVersion: 2
     m_Bits: 64
   m_SurfaceLevel: 17.5
-  m_Density: 2
+  m_Density: 1
   m_LinearDrag: 5
   m_AngularDrag: 5
   m_FlowAngle: 0

@@ -22,15 +22,18 @@ public class PlayerController : MonoBehaviour
     Vector3 dragStartPos;
     Touch touch;
 
-    //States
-    public bool isGrounded;
-    public bool isJumping;
-    public bool isSwimming;
-
     private bool forceApplied;
     private bool draggingStarted = false;
 
     private bool cantSwim;
+
+    [Header("States")]
+    public bool isGrounded;
+    public bool isJumping;
+    public bool isSwimming;
+
+    [Header("Settings")]
+    public bool conserveMomentum;
 
     private void Start()
     {
@@ -84,7 +87,9 @@ public class PlayerController : MonoBehaviour
         if (isGrounded && !forceApplied)
         {
             isJumping = false;
-            rb.velocity = Vector2.zero;
+
+            if (!conserveMomentum)
+                rb.velocity = Vector2.zero;
         }
 
         //Swimming Mechanic
@@ -174,8 +179,11 @@ public class PlayerController : MonoBehaviour
         if (isSwimming)
             rb.velocity *= 0.5f;
 
+        if (!isSwimming)
+            rb.velocity = Vector2.zero;
+
         Vector3 force = dragStartPos - dragReleasePos;
-        Vector3 clampedForce = Vector3.ClampMagnitude(force, maxDrag) * power;
+        Vector3 clampedForce = Vector3.ClampMagnitude(force, maxDrag) * power * rb.mass;
         rb.AddForce(clampedForce, ForceMode2D.Impulse);
 
         forceApplied = true;
@@ -208,7 +216,7 @@ public class PlayerController : MonoBehaviour
 
                 rb.gravityScale = 1.2f;
                 power = 5;
-                rb.AddForce(rb.velocity.normalized * power, ForceMode2D.Impulse);
+                rb.AddForce(rb.velocity.normalized * power * rb.mass, ForceMode2D.Impulse);
 
                 tongueLine.enabled = false;
                 tongueLine.isGrappling = false;

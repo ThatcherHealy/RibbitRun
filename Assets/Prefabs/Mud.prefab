@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 942463131302161424}
   - component: {fileID: 1223007739983312121}
   - component: {fileID: 928254122086917600}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Mud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +26,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7547967756141155768}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 132.8678, y: -85.42532, z: 1}
   m_LocalScale: {x: 232.92091, y: 97.9928, z: 1}
   m_ConstrainProportionsScale: 0
