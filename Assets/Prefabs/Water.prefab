@@ -1940,7 +1940,7 @@ Transform:
   - {fileID: 4752323759296246975}
   - {fileID: 5459466979193981646}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!60 &6067246254681642165
 PolygonCollider2D:
@@ -2031,9 +2031,9 @@ SpriteShapeRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -803484593
+  m_SortingLayer: 2
+  m_SortingOrder: -5
   m_Color: {r: 0.15649696, g: 0.5283019, b: 0.36678573, a: 1}
   m_MaskInteraction: 0
   m_ShapeTexture: {fileID: 2800000, guid: b281b91a70a624a0da1c43adc1c30c7b, type: 3}

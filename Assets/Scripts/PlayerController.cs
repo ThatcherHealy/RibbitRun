@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Mail;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,7 +14,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LineRenderer jumpLr;
     [SerializeField] private LineRenderer swimLr;
     [SerializeField] private CircleCollider2D circleCollider;
+    [SerializeField] private ScoreController scoreController;
     [SerializeField] private LayerMask ground;
+
+
     private float power = 5;
     private float maxDrag = 5;
     public bool skipToJump;
@@ -204,7 +209,12 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 9)
-        {     
+        {
+            
+            //Add Score
+            scoreController.SpawnFloatingText(10, collision.transform.position);
+            scoreController.Score(10);
+
             //Remove the aim line when the frog eats prey
             tongueLauncher.lr.positionCount = 0;
 

@@ -7,25 +7,31 @@ public class GrapplePointDetector : MonoBehaviour
     public TongueLauncher tongueLauncher;
     public TongueLine tongueLine;
     public bool closeToGrapplePoint;
-    public bool closeToGrappleTarget;
     HashSet<GameObject> touchingObjects = new HashSet<GameObject>();
 
     private void Update()
     {
-        if (touchingObjects.Count > 0 || closeToGrappleTarget)
+        if (touchingObjects.Count > 0)
         {
             closeToGrapplePoint = true;
         }
-        else if (touchingObjects.Count == 0 && !closeToGrappleTarget)
+
+        else if (touchingObjects.Count == 0)
         {
             closeToGrapplePoint= false;
+        }
+
+        //Dodges a bug where destroyed flies would continue to add to the touchingObjects
+        if (tongueLauncher.grappleTarget == null)
+        {
+            touchingObjects.Clear();
         }
     }
 
     //End the grapple when the frog gets too close
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (tongueLine.isGrappling && (collision.gameObject == tongueLauncher.grappleTarget || collision.gameObject.transform.parent == tongueLauncher.grappleTarget))
+        if (collision.gameObject == tongueLauncher.grappleTarget || collision.gameObject.transform.parent == tongueLauncher.grappleTarget)
         {
             touchingObjects.Add(collision.gameObject);
         }
