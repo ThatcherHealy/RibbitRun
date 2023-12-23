@@ -212,7 +212,7 @@ public class PlayerController : MonoBehaviour
         {
             
             //Add Score
-            scoreController.SpawnFloatingText(10, collision.transform.position);
+            scoreController.SpawnFloatingText(10, transform.position);
             scoreController.Score(10);
 
             //Remove the aim line when the frog eats prey

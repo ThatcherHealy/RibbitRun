@@ -16,8 +16,8 @@ public class WaterSpring : MonoBehaviour
     private SpriteShapeController spriteShapeController = null;
     private int waveIndex = 0;
     private List<WaterSpring> springs = new();
-    private float resistance = 80f;
-    private bool cooldown;
+    [HideInInspector] public float resistance = 80f;
+    [HideInInspector] public bool cooldown;
     public void Init(SpriteShapeController ssc)
     {
 
@@ -53,8 +53,8 @@ public class WaterSpring : MonoBehaviour
             waterSpline.SetPosition(waveIndex, new Vector3(wavePosition.x, transform.localPosition.y, wavePosition.z));
         }
     }
-
-    private void OnTriggerEnter2D(Collider2D other)
+    
+   /* private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag.Equals("Player") && !cooldown)
         {
@@ -66,8 +66,8 @@ public class WaterSpring : MonoBehaviour
 
             velocity += speed.y / resistance;
         }
-    }
-    IEnumerator Cooldown()
+    } */
+    public IEnumerator Cooldown()
     {
         yield return new WaitForSeconds(0.1f);
         cooldown = false;        

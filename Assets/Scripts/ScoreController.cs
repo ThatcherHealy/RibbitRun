@@ -11,7 +11,8 @@ public class ScoreController : MonoBehaviour
     private float farthestDistance = 0;
     public Transform playerPosition;
     public int score = 0;
-    public TextMeshProUGUI floatingText;
+    public TextMeshPro floatingText;
+    public GameObject floatingTextParent;
     public Canvas canvas;
 
 
@@ -50,7 +51,11 @@ public class ScoreController : MonoBehaviour
         //Spawns a score of the value inputted at the location inputted and then destroys it  
 
         floatingText.text = value.ToString();
-        TextMeshProUGUI spawnedScore = Instantiate(floatingText, position, Quaternion.identity, canvas.transform);
+        Vector3 offset = new Vector3(0, 2, 0);
+
+        GameObject parent = Instantiate(floatingTextParent, position + offset, Quaternion.identity);
+        TextMeshPro spawnedScore = Instantiate(floatingText, position, Quaternion.identity, parent.transform);
         Destroy(spawnedScore.gameObject, 2);
+        Destroy(parent, 2);
     }
 }

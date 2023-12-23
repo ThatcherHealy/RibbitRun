@@ -24,6 +24,7 @@ public class StemController : MonoBehaviour
         lr = GetComponent<LineRenderer>();
         polygonCollider = GetComponent<PolygonCollider2D>();
 
+        //Finds all objects in the scene with a lilypad script then selects the closest one
         LilypadController[] lilypadScripts = FindObjectsByType<LilypadController>(FindObjectsSortMode.None);
         GameObject[] lilypads = new GameObject[lilypadScripts.Length];
         for (int it = 0;  it < lilypadScripts.Length; it++)
@@ -76,7 +77,7 @@ public class StemController : MonoBehaviour
     void Update()
     {
         // Set the second line point on the lilyad
-        lr.SetPosition(1,closestLilypad.transform.position - new Vector3(0,1,0));
+        lr.SetPosition(1,closestLilypad.transform.position - new Vector3(0,1f,0));
         SetEdgeCollider();
 
 
