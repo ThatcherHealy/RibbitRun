@@ -58,8 +58,8 @@ public class TongueLauncher : MonoBehaviour
     public bool touchEnded;
     public bool grapplePointIdentified = false;
     private Vector2 hitPoint;
-    private Vector2 closestPoint;
     private Collider2D hitCollider;
+    [HideInInspector] public Vector2 addedForce; 
 
 
     private void Start()
@@ -257,8 +257,8 @@ public class TongueLauncher : MonoBehaviour
                         strength = 10;
                     else
                         strength = 20;
-
-                    rb.velocity = new Vector3((grapplePoint.x - transform.position.x), (grapplePoint.y - transform.position.y), 0).normalized * strength;
+                    addedForce = (grapplePoint - (Vector2)transform.position).normalized * strength;
+                    rb.velocity = addedForce;
 
                     break;
             }

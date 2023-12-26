@@ -48,7 +48,7 @@ public class StemController : MonoBehaviour
             if (hit[i].collider.transform.gameObject.layer == 3)  //Returns true when the first mud (hit[i]) is detected
             {
                 stemBeginning = hit[i].point;
-                startDistance = Vector3.Distance(stemBeginning, closestLilypad.transform.position) * 1.1f;
+                startDistance = Vector3.Distance(stemBeginning, closestLilypad.transform.position) * 1.04f;
                 hitMud = true;
             }
         } 

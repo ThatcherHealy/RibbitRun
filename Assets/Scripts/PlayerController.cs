@@ -121,7 +121,7 @@ public class PlayerController : MonoBehaviour
         if (isSwimming)
         {
             Time.timeScale = 1;
-            int slowingFactor = 1;
+            float slowingFactor = 0.5f;
             rb.drag = slowingFactor;
             tongueLine.isGrappling = false;
             isJumping = false;
@@ -182,10 +182,15 @@ public class PlayerController : MonoBehaviour
         dragReleasePos.z = 0;
 
         if (isSwimming)
-            rb.velocity *= 0.5f;
-
-        if (!isSwimming)
+        {
+            rb.velocity *= 0.3f;
+            power = 4.5f;
+        }
+        else if (!isSwimming && !tongueLine.isGrappling)
+        {
             rb.velocity = Vector2.zero;
+            power = 5f;
+        }
 
         Vector3 force = dragStartPos - dragReleasePos;
         Vector3 clampedForce = Vector3.ClampMagnitude(force, maxDrag) * power * rb.mass;
@@ -210,28 +215,28 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.layer == 9)
         {
-            
             //Add Score
             scoreController.SpawnFloatingText(10, transform.position);
             scoreController.Score(10);
 
-            //Remove the aim line when the frog eats prey
-            tongueLauncher.lr.positionCount = 0;
-
             //When grappling to prey, continue momentum and destroy prey
-            if (tongueLine.isGrappling)
+            if (tongueLine.isGrappling && tongueLauncher.grappleTarget != null && collision.transform.parent == tongueLauncher.grappleTarget.transform)
             {
                 tongueLauncher.grapplePointIdentified = false;
-                Destroy(collision.transform.parent.gameObject);
-
                 rb.gravityScale = 1.2f;
-                power = 5;
-                rb.AddForce(rb.velocity.normalized * power * rb.mass, ForceMode2D.Impulse);
+                power = 7;
+                rb.AddForce(tongueLauncher.addedForce.normalized * power * rb.mass, ForceMode2D.Impulse);
 
+                //Remove the aim line when the frog eats prey
+                tongueLauncher.lr.positionCount = 0;
+
+                //Cancel the grapple
                 tongueLine.enabled = false;
                 tongueLine.isGrappling = false;
                 tongueLauncher.grapplePointIdentified = false;
                 tongueLauncher.grappleTarget = null;
+
+                Destroy(collision.transform.parent.gameObject);
             }
             else
             {

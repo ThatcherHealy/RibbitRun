@@ -32,7 +32,7 @@ public class CameraFollow : MonoBehaviour
     {
         float minHeight = -8;
         float maxHeight = 15;
-        if (player.position.y <= maxHeight && player.position.y >= -minHeight) //Default view window
+        if (player.position.y <= maxHeight && player.position.y >= minHeight) //Default view window
         {
             //Set the camera to smoothly move slightly ahead of where the player is moving on the x direction
             //Set the camera to a set Y Value (baseHeight)
@@ -46,7 +46,7 @@ public class CameraFollow : MonoBehaviour
             {
                 //Smoothly move the camera out of the baseHeight to a height of yInwardBias *below* the player's position
 
-                Vector3 targetPosition = new Vector3(player.position.x + xOffset, player.position.y - yInwardsBias, 0);
+                Vector3 targetPosition = new Vector3(player.position.x + xOffset, player.position.y - (yInwardsBias + 3), 0);
                 cameraGuide.position = Vector3.SmoothDamp(cameraGuide.position, targetPosition, ref velocity, heightDamping);
             }
             else //Below default view window
