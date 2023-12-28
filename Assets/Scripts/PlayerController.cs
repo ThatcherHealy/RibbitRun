@@ -120,7 +120,6 @@ public class PlayerController : MonoBehaviour
         }
         if (isSwimming)
         {
-            Time.timeScale = 1;
             float slowingFactor = 0.5f;
             rb.drag = slowingFactor;
             tongueLine.isGrappling = false;
@@ -240,6 +239,33 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
+                Destroy(collision.transform.parent.gameObject);
+            }
+        }
+        else if (collision.gameObject.layer == 11)
+        {
+            //When grappling to prey, continue momentum and destroy prey
+            if (tongueLine.isGrappling && tongueLauncher.grappleTarget != null && collision.transform.parent == tongueLauncher.grappleTarget.transform)
+            {
+                tongueLauncher.grapplePointIdentified = false;
+                rb.gravityScale = 1.2f;
+                power = 20;
+
+                // Launch the player up and to the right if they are coming from the left
+                if (tongueLauncher.grappleTarget != null && (tongueLauncher.grappleTarget.transform.position.x - transform.position.x > 0))
+                    rb.AddForce((Vector2.one - new Vector2(0,0.3f)) * power * rb.mass, ForceMode2D.Impulse); // approx. 70 degree angle
+                else //Launch the player up and to the left if they are coming from the right
+                    rb.AddForce(new Vector2(-(Vector2.one - new Vector2(0, 0.3f)).x, (Vector2.one - new Vector2(0, 0.3f)).y) * power * rb.mass, ForceMode2D.Impulse); // approx. 110 degree angle
+
+                //Remove the aim line when the frog eats prey
+                tongueLauncher.lr.positionCount = 0;
+
+                //Cancel the grapple
+                tongueLine.enabled = false;
+                tongueLine.isGrappling = false;
+                tongueLauncher.grapplePointIdentified = false;
+                tongueLauncher.grappleTarget = null;
+
                 Destroy(collision.transform.parent.gameObject);
             }
         }

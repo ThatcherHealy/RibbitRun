@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
-    private const float spawnDistance = 200f;
+    private const float levelPartDistance = 200f;
     private const float preySpawnDistance = 150f;
     private const float waterSpawnDistance = 200f;
+    private float cattailSpawnDistance = 200f;
     [SerializeField] private Transform startEndPoint;
     [SerializeField] private Transform startWaterEndPoint;
     [SerializeField] private Transform startPreyEndPoint;
@@ -18,21 +19,23 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private Transform waterHeight;
     [SerializeField] private Transform waterPrefab;
     [SerializeField] private Transform mudPrefab;
+    [SerializeField] private Transform cattailPrefab;
+    [SerializeField] private Transform emptyTransformPrefab;
     private Vector3 lastLevelEndPosition;
     private Vector3 lastPreyEndPosition;
     private Vector3 lastWaterEndPosition;
+    private Vector3 lastCattailEndPosition;
     private int swarmSize;
     Transform lastPreyTransform;
     Transform lastWaterTransform;
-
-    public float testX = 41.05f;
-    public float testY = -63.82f;
+    Transform lastCattailTransform;
 
     private void Awake()
     {
         lastLevelEndPosition = (Vector2)startEndPoint.position;
         lastPreyEndPosition = (Vector2)startPreyEndPoint.position;
         lastWaterEndPosition = (Vector2)startWaterEndPoint.position - new Vector2(157.5f, 0); 
+        lastCattailEndPosition = Vector3.zero;
         
         int startingSpawnLevelParts = 5;
         for (int i = 0; i<startingSpawnLevelParts; i++)
@@ -47,7 +50,7 @@ public class LevelGenerator : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (Vector2.Distance(player.transform.position, lastLevelEndPosition) < spawnDistance)
+        if (Vector2.Distance(player.transform.position, lastLevelEndPosition) < levelPartDistance)
         {
             SpawnLevelPart();
         }
@@ -59,6 +62,37 @@ public class LevelGenerator : MonoBehaviour
         {
             SpawnWater();
         }
+        if (Vector2.Distance(player.transform.position, lastCattailEndPosition) < cattailSpawnDistance)
+        {
+            SpawnCattail();
+        }
+    }
+    private void SpawnCattail()
+    {
+        Transform lastCattailTransform;
+
+        int minCattailXOffset = 150, maxCattailXOffset = 250;
+        int cattailXOffset = Random.Range(minCattailXOffset, maxCattailXOffset);
+        int minCattailHeight = 5, maxCattailHeight = 18;
+        int cattailHeight = Random.Range(minCattailHeight, maxCattailHeight);
+
+
+        lastCattailTransform = SpawnCattail(cattailPrefab, new Vector3(lastCattailEndPosition.x + cattailXOffset, cattailHeight));
+        lastCattailEndPosition = lastCattailTransform.position;
+    }
+    private Transform SpawnCattail(Transform cattail, Vector3 cattailSpawnPosition)
+    {
+        //There is a 50% chance for the cattail to actually spawn
+        int chance = Random.Range(0, 100);
+        if (chance > 50)
+        {
+            lastCattailTransform = Instantiate(cattail, cattailSpawnPosition, Quaternion.identity);
+            Debug.Log("Cattail Spawned");
+        }
+        else
+            lastCattailTransform = Instantiate(emptyTransformPrefab, cattailSpawnPosition, Quaternion.identity);
+
+        return lastCattailTransform;
     }
     private void SpawnWater()
     {
@@ -68,6 +102,17 @@ public class LevelGenerator : MonoBehaviour
 
         lastWaterTransform = SpawnWater(waterPrefab, new Vector2(lastWaterEndPosition.x, waterHeight.position.y) + new Vector2(waterOffset, 0));
         lastWaterEndPosition = lastWaterTransform.position;
+    }
+    private Transform SpawnWater(Transform water, Vector3 waterSpawnPosition)
+    {
+        float mudOffsetX = 41.05f;
+        float mudOffsetY = -63.82f;
+
+        //Spawn Mud
+        Instantiate(mudPrefab, waterSpawnPosition + new Vector3(mudOffsetX, mudOffsetY, 0), Quaternion.identity);
+
+        lastWaterTransform = Instantiate(water, waterSpawnPosition, Quaternion.identity);
+        return lastWaterTransform;
     }
 
     private void SpawnPrey()
@@ -83,6 +128,30 @@ public class LevelGenerator : MonoBehaviour
         lastPreyTransform = SpawnPrey(chosenPrey, new Vector2(lastPreyEndPosition.x, waterLevel.position.y) + new Vector2(flyXOffset, flyYOffset));
 
         lastPreyEndPosition = lastPreyTransform.position;
+    }
+    private Transform SpawnPrey(Transform prey, Vector3 preySpawnPosition)
+    {
+        //Chooses a random swarm size
+        int swarmSizeGenerator = Random.Range(0, 100);
+        swarmSize = Random.Range(0, 100);
+        if (swarmSizeGenerator >= 95)
+            swarmSize = 5;
+        else if (swarmSizeGenerator >= 85)
+            swarmSize = 4;
+        else if (swarmSizeGenerator >= 65)
+            swarmSize = 3;
+        else if (swarmSizeGenerator >= 36)
+            swarmSize = 2;
+        else
+            swarmSize = 1;
+
+        //spawns flies equal to the swarm size
+        for (int i = 0; i < swarmSize; i++)
+        {
+            Vector3 offset = new Vector3(Random.Range(-5f, 5f), Random.Range(-5f, 5f), 0);
+            lastPreyTransform = Instantiate(prey, preySpawnPosition + offset, Quaternion.identity);
+        }
+        return lastPreyTransform;
     }
 
     private void SpawnLevelPart()
@@ -128,37 +197,5 @@ public class LevelGenerator : MonoBehaviour
         //Spawns a level part and then returns that parts transform
         Transform levelpartTransform = Instantiate(levelPart, spawnPosition, Quaternion.identity);
         return levelpartTransform;
-    }
-    private Transform SpawnPrey(Transform prey, Vector3 preySpawnPosition)
-    {
-        //Chooses a random swarm size
-        int swarmSizeGenerator = Random.Range(0, 100); 
-        swarmSize = Random.Range(0, 100);
-        if (swarmSizeGenerator >= 95)
-            swarmSize = 5;
-        else if (swarmSizeGenerator >= 85)
-            swarmSize = 4;
-        else if (swarmSizeGenerator >= 65)
-            swarmSize = 3;
-        else if (swarmSizeGenerator >= 36)
-            swarmSize = 2;
-        else
-            swarmSize = 1; 
-
-        //spawns flies equal to the swarm size
-        for (int i = 0; i < swarmSize; i++) 
-        {
-            Vector3 offset = new Vector3(Random.Range(-5f, 5f), Random.Range(-5f, 5f), 0);
-            lastPreyTransform = Instantiate(prey, preySpawnPosition + offset, Quaternion.identity);
-        }
-        return lastPreyTransform;
-    }
-    private Transform SpawnWater(Transform water, Vector3 waterSpawnPosition)
-    {
-        //Spawn Mud
-        Instantiate(mudPrefab, waterSpawnPosition + new Vector3(testX, testY, 0), Quaternion.identity);
-
-        lastWaterTransform = Instantiate(water, waterSpawnPosition, Quaternion.identity);
-        return lastWaterTransform;
     }
 }

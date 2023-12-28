@@ -8,7 +8,7 @@ public class WaterSpringCollisions : MonoBehaviour
     public WaterSpring waterSpring;
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag.Equals("Player") && !waterSpring.cooldown)
+        if ((other.gameObject.tag.Equals("Player") && other.gameObject.name != "GrapplePointDetector") && !waterSpring.cooldown)
         {
             waterSpring.cooldown = true;
             StartCoroutine(waterSpring.Cooldown());

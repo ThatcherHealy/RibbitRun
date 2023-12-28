@@ -59,7 +59,7 @@ public class TongueLauncher : MonoBehaviour
     public bool grapplePointIdentified = false;
     private Vector2 hitPoint;
     private Collider2D hitCollider;
-    [HideInInspector] public Vector2 addedForce; 
+    [HideInInspector] public Vector2 addedForce;
 
 
     private void Start()
@@ -82,11 +82,11 @@ public class TongueLauncher : MonoBehaviour
             touchEnded = true;
             Time.timeScale = 0.3f;
         }
-        //Resume time when tongue is fired or when the player is grounded
-        if ((tongueLine.isGrappling || playerController.isGrounded) && Time.timeScale != 1)
-        {
+        else //Resume time when tongue is fired or when the player is grounded
+        { 
             Time.timeScale = 1;
         }
+        
         if (touch.phase == TouchPhase.Ended && !playerController.isGrounded && !playerController.isSwimming && touchEnded)
         {
             //On first click, set grapple point then grapple
