@@ -215,8 +215,16 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.layer == 9)
         {
             //Add Score
-            scoreController.SpawnFloatingText(10, transform.position);
-            scoreController.Score(10);
+            if (collision.gameObject.transform.parent.name == "Fly(Clone)")
+            {
+                scoreController.SpawnFloatingText(10, transform.position);
+                scoreController.Score(10);
+            }
+            else if (collision.gameObject.transform.parent.name == "Slug(Clone)")
+            {
+                scoreController.SpawnFloatingText(20, transform.position);
+                scoreController.Score(20);
+            }
 
             //When grappling to prey, continue momentum and destroy prey
             if (tongueLine.isGrappling && tongueLauncher.grappleTarget != null && collision.transform.parent == tongueLauncher.grappleTarget.transform)
@@ -252,8 +260,9 @@ public class PlayerController : MonoBehaviour
                 power = 20;
 
                 // Launch the player up and to the right if they are coming from the left
-                if (tongueLauncher.grappleTarget != null && (tongueLauncher.grappleTarget.transform.position.x - transform.position.x > 0))
+                if (tongueLauncher.grappleTarget != null && (tongueLauncher.grappleTarget.transform.position.x - transform.position.x >= 0))
                     rb.AddForce((Vector2.one - new Vector2(0,0.3f)) * power * rb.mass, ForceMode2D.Impulse); // approx. 70 degree angle
+
                 else //Launch the player up and to the left if they are coming from the right
                     rb.AddForce(new Vector2(-(Vector2.one - new Vector2(0, 0.3f)).x, (Vector2.one - new Vector2(0, 0.3f)).y) * power * rb.mass, ForceMode2D.Impulse); // approx. 110 degree angle
 

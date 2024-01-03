@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEditor.FilePathAttribute;
 
 public class CattailController : MonoBehaviour
 {
@@ -16,6 +18,8 @@ public class CattailController : MonoBehaviour
     private TongueLauncher tongueLauncher;
     private TongueLine tongueLine;
     private GameObject player;
+    public bool fixedPosition = true;
+    Vector3 inwards;
 
     private float startDistance;
     Vector2 stemBeginning;
@@ -48,7 +52,6 @@ public class CattailController : MonoBehaviour
 
         lr.positionCount = 2;
         lr.SetPosition(0, stemBeginning);
-        lr.SetPosition(1, stemPoint.position);
     }
 
     // Update is called once per frame
@@ -70,11 +73,16 @@ public class CattailController : MonoBehaviour
 
             if (tongueLauncher.grappleTarget != null && cattailTop.transform == tongueLauncher.grappleTarget.transform && !forceApplied)
             {
+                fixedPosition = false;
                 StartCoroutine(TimeSlow());
-                if (right)
+                stemPoint.position = cattailTop.transform.position - inwards.normalized * 5;
+
+                if (right && Vector2.Distance(new Vector2(player.transform.position.x, 0), new Vector2(cattailTop.transform.position.x, 0)) >= 5)
                     rb.AddForce(Vector2.right * 20, ForceMode2D.Impulse);
-                else
+                else if (!right && Vector2.Distance(new Vector2(player.transform.position.x, 0), new Vector2(cattailTop.transform.position.x, 0)) >= 5)
                     rb.AddForce(Vector2.left * 20, ForceMode2D.Impulse);
+                else
+                    rb.AddForce(Vector2.zero);
 
                 forceApplied = true;
             }
@@ -87,15 +95,15 @@ public class CattailController : MonoBehaviour
     }
     IEnumerator TimeSlow()
     {
-        Time.timeScale = 0.01f;
-        yield return new WaitForSeconds(0.05f);
+        Time.timeScale = 0.001f;
+        yield return new WaitForSeconds(0.1f);
         Time.timeScale = 1;
     }
 
     void LockPosition()
     {
         float distance = Vector2.Distance(stemBeginning, cattailTop.transform.position);
-        Vector3 inwards = stemBeginning - (Vector2)cattailTop.transform.position;
+        inwards = stemBeginning - (Vector2)cattailTop.transform.position;
 
         stemPoint.position = cattailTop.transform.position - inwards.normalized * 5;
         if (distance != startDistance)
@@ -143,8 +151,8 @@ public class CattailController : MonoBehaviour
         }
 
         //When the cattail resets to normal, it stops
-        if ((!(eulerAngles.z > 360 - 1 && eulerAngles.z <= 360) && eulerAngles.z < 1 && eulerAngles.z < 180) 
-            && tongueLauncher.grappleTarget != null && !tongueLine.isGrappling && cattailTop.transform == tongueLauncher.grappleTarget.transform)
+        if (fixedPosition == true && ((!(eulerAngles.z > 360 - 1 && eulerAngles.z <= 360) && eulerAngles.z < 1 && eulerAngles.z < 180))
+            /*&& tongueLauncher.grappleTarget != null && !tongueLine.isGrappling && cattailTop.transform == tongueLauncher.grappleTarget.transform*/)
         {
             rb.velocity = Vector2.zero;
         }

@@ -21,14 +21,19 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private Transform mudPrefab;
     [SerializeField] private Transform cattailPrefab;
     [SerializeField] private Transform emptyTransformPrefab;
+    [SerializeField] private Transform slugPrefab;
     private Vector3 lastLevelEndPosition;
     private Vector3 lastPreyEndPosition;
     private Vector3 lastWaterEndPosition;
     private Vector3 lastCattailEndPosition;
     private int swarmSize;
+    private int levelPartCalc;
     Transform lastPreyTransform;
     Transform lastWaterTransform;
     Transform lastCattailTransform;
+
+    public enum Biome {Bog,Cypress,Wetland};
+    Biome currentBiome;
 
     private void Awake()
     {
@@ -73,7 +78,7 @@ public class LevelGenerator : MonoBehaviour
 
         int minCattailXOffset = 150, maxCattailXOffset = 250;
         int cattailXOffset = Random.Range(minCattailXOffset, maxCattailXOffset);
-        int minCattailHeight = 5, maxCattailHeight = 18;
+        int minCattailHeight = 10, maxCattailHeight = 18;
         int cattailHeight = Random.Range(minCattailHeight, maxCattailHeight);
 
 
@@ -85,10 +90,7 @@ public class LevelGenerator : MonoBehaviour
         //There is a 50% chance for the cattail to actually spawn
         int chance = Random.Range(0, 100);
         if (chance > 50)
-        {
-            lastCattailTransform = Instantiate(cattail, cattailSpawnPosition, Quaternion.identity);
-            Debug.Log("Cattail Spawned");
-        }
+            lastCattailTransform = Instantiate(cattail, cattailSpawnPosition, Quaternion.identity);        
         else
             lastCattailTransform = Instantiate(emptyTransformPrefab, cattailSpawnPosition, Quaternion.identity);
 
@@ -98,18 +100,17 @@ public class LevelGenerator : MonoBehaviour
     {
         Transform lastWaterTransform;
 
-        float waterOffset = 232.5f;
+        Vector2 waterOffset = new Vector2(232.5f,0);
 
-        lastWaterTransform = SpawnWater(waterPrefab, new Vector2(lastWaterEndPosition.x, waterHeight.position.y) + new Vector2(waterOffset, 0));
+        lastWaterTransform = SpawnWater(waterPrefab, new Vector2(lastWaterEndPosition.x, waterHeight.position.y) + waterOffset);
         lastWaterEndPosition = lastWaterTransform.position;
     }
     private Transform SpawnWater(Transform water, Vector3 waterSpawnPosition)
     {
-        float mudOffsetX = 41.05f;
-        float mudOffsetY = -63.82f;
+        Vector3 mudOffset = new Vector3(41.05f, -63.82f, 0);
 
-        //Spawn Mud
-        Instantiate(mudPrefab, waterSpawnPosition + new Vector3(mudOffsetX, mudOffsetY, 0), Quaternion.identity);
+        //Spawn mud under the water
+        Instantiate(mudPrefab, waterSpawnPosition + mudOffset, Quaternion.identity);
 
         lastWaterTransform = Instantiate(water, waterSpawnPosition, Quaternion.identity);
         return lastWaterTransform;
@@ -120,12 +121,13 @@ public class LevelGenerator : MonoBehaviour
         Transform chosenPrey;
         Transform lastPreyTransform;
 
-        int minFlyXOffset = 20, maxFlyXOffset = 45, minFlyYOffset = 12, maxFlyYOffset = 20;
+        int minFlyXOffset = 35, maxFlyXOffset = 50, minFlyYOffset = 12, maxFlyYOffset = 20;
         int flyXOffset = Random.Range(minFlyXOffset, maxFlyXOffset), flyYOffset = Random.Range(minFlyYOffset, maxFlyYOffset);
+        Vector2 flyOffset = new Vector2(flyXOffset, flyYOffset);
 
         chosenPrey = preyList[0];
 
-        lastPreyTransform = SpawnPrey(chosenPrey, new Vector2(lastPreyEndPosition.x, waterLevel.position.y) + new Vector2(flyXOffset, flyYOffset));
+        lastPreyTransform = SpawnPrey(chosenPrey, new Vector2(lastPreyEndPosition.x, waterLevel.position.y) + flyOffset);
 
         lastPreyEndPosition = lastPreyTransform.position;
     }
@@ -158,36 +160,34 @@ public class LevelGenerator : MonoBehaviour
     {
         Transform chosenLevelPart;
         Transform lastLevelPartTransform;
+        Vector2 offset;
 
         //Range of the possible distances between a lilypad and the last spawned level part
         int minLilypadXOffset = 10, maxLilypadXOffset = 30, minLilypadYOffset = -2, maxLilypadYOffset = 2;
         int lilypadXOffset = Random.Range(minLilypadXOffset, maxLilypadXOffset), lilypadYOffset = Random.Range(minLilypadYOffset, maxLilypadYOffset);
+        Vector2 lilypadOffset = new Vector2(lilypadXOffset,lilypadYOffset);
 
         //Range of the possible distances between a log and the last spawned level part
         int minLogXOffset = 20, maxLogXOffset = 35, minLogYOffset = -2, maxLogYOffset = 0;
         int logXOffset = Random.Range(minLogXOffset, maxLogXOffset), logYOffset = Random.Range(minLogYOffset, maxLogYOffset);
+        Vector2 logOffset = new Vector2(logXOffset, logYOffset);
 
-        int levelPartCalc = Random.Range(0, 100);
+        levelPartCalc = Random.Range(0, 100);
 
         if (levelPartCalc <= 75)
         {
             //75% chance to spawn a lilypad
             chosenLevelPart = levelPartList[0];
+            offset = lilypadOffset;
         }
         else
         {
             //25% chance to spawn a log
             chosenLevelPart = levelPartList[1];
+            offset = logOffset;
         }
 
-        if (chosenLevelPart == levelPartList[0]) //Lillypad
-        {
-            lastLevelPartTransform = SpawnLevelPart(chosenLevelPart, new Vector2(lastLevelEndPosition.x, waterLevel.position.y) + new Vector2(lilypadXOffset, lilypadYOffset));
-        }
-        else //Log
-        {
-            lastLevelPartTransform = SpawnLevelPart(chosenLevelPart, new Vector2(lastLevelEndPosition.x, waterLevel.position.y) + new Vector2(logXOffset, logYOffset));
-        }
+        lastLevelPartTransform = SpawnLevelPart(chosenLevelPart, new Vector2(lastLevelEndPosition.x, waterLevel.position.y) + offset);
 
         lastLevelEndPosition = lastLevelPartTransform.Find("EndPosition").position;
     }
@@ -196,6 +196,12 @@ public class LevelGenerator : MonoBehaviour
     {
         //Spawns a level part and then returns that parts transform
         Transform levelpartTransform = Instantiate(levelPart, spawnPosition, Quaternion.identity);
+        if (levelPartCalc >= 85)
+        {
+            Instantiate(slugPrefab, spawnPosition + new Vector3(0, 4, 0), Quaternion.identity);
+            if (levelPartCalc >= 95)
+                Instantiate(slugPrefab, spawnPosition + new Vector3(0, -4, 0), Quaternion.identity);
+        }
         return levelpartTransform;
     }
 }
