@@ -138,6 +138,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 2467042836560985235}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &493604013002254704
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,6 +278,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 3714675437637912701}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &550210647857121037
 GameObject:
   m_ObjectHideFlags: 0
@@ -414,6 +418,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 8358472555050345331}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &761982981680565749
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,6 +558,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 1639873151765873631}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &804344666590584235
 GameObject:
   m_ObjectHideFlags: 0
@@ -690,6 +698,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 6650257189601029473}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &1142813166641722001
 GameObject:
   m_ObjectHideFlags: 0
@@ -828,6 +838,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 8469812976668324632}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &1537550537887083136
 GameObject:
   m_ObjectHideFlags: 0
@@ -997,6 +1009,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 7831984524568611044}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &1826989171749267538
 GameObject:
   m_ObjectHideFlags: 0
@@ -1135,6 +1149,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 7646511122089766464}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &2189980931985358004
 GameObject:
   m_ObjectHideFlags: 0
@@ -1273,6 +1289,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 3265927718616648704}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &2278911929954368364
 GameObject:
   m_ObjectHideFlags: 0
@@ -1411,6 +1429,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 5358169609932451836}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &2490753303557999925
 GameObject:
   m_ObjectHideFlags: 0
@@ -1549,6 +1569,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 7235176729344866210}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &2527387154811291548
 GameObject:
   m_ObjectHideFlags: 0
@@ -1687,6 +1709,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 5644544734280441582}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &2687427122101661657
 GameObject:
   m_ObjectHideFlags: 0
@@ -1903,6 +1927,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 6127554883368919194}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &2948667572685909818
 GameObject:
   m_ObjectHideFlags: 0
@@ -1913,6 +1939,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7800086212385466402}
   - component: {fileID: 6067246254681642165}
+  - component: {fileID: 3118105222790463760}
   - component: {fileID: 6003322027023869043}
   - component: {fileID: 351034985504347286}
   - component: {fileID: 8553370652856000292}
@@ -1940,7 +1967,7 @@ Transform:
   - {fileID: 4752323759296246975}
   - {fileID: 5459466979193981646}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!60 &6067246254681642165
 PolygonCollider2D:
@@ -1991,6 +2018,55 @@ PolygonCollider2D:
       - {x: 31.5, y: 3.6}
       - {x: 31.5, y: -3}
       - {x: -15, y: -3}
+  m_UseDelaunayMesh: 0
+--- !u!60 &3118105222790463760
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2948667572685909818}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 11775
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.2, y: 0.2}
+    newSize: {x: 2.75, y: 1.83}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -15, y: -3}
+      - {x: -15, y: 3.6}
+      - {x: 31.5, y: 3.6}
+      - {x: 31.5, y: -3}
   m_UseDelaunayMesh: 0
 --- !u!1971053207 &6003322027023869043
 SpriteShapeRenderer:
@@ -2636,6 +2712,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 273622821577153450}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &3244468577421809340
 GameObject:
   m_ObjectHideFlags: 0
@@ -2774,6 +2852,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 8210041797395841666}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &3266694781598055198
 GameObject:
   m_ObjectHideFlags: 0
@@ -2912,6 +2992,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 8273547415371765084}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &3363870961828608459
 GameObject:
   m_ObjectHideFlags: 0
@@ -3050,6 +3132,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 4032111365314818352}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &3485910985177053545
 GameObject:
   m_ObjectHideFlags: 0
@@ -3188,6 +3272,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 3673639120166052074}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &3529491269264437826
 GameObject:
   m_ObjectHideFlags: 0
@@ -3326,6 +3412,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 6373268297578252266}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &3791635504427369577
 GameObject:
   m_ObjectHideFlags: 0
@@ -3464,6 +3552,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 5662972379731237544}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &3929722128562307324
 GameObject:
   m_ObjectHideFlags: 0
@@ -3602,6 +3692,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 4376333304505922215}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &4224478773111903797
 GameObject:
   m_ObjectHideFlags: 0
@@ -3740,6 +3832,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 5237440917400932477}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &4240299611587957166
 GameObject:
   m_ObjectHideFlags: 0
@@ -3878,6 +3972,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 7065398234854647334}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &4347899212836709653
 GameObject:
   m_ObjectHideFlags: 0
@@ -4016,6 +4112,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 1462406451939249653}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &4384650429880292188
 GameObject:
   m_ObjectHideFlags: 0
@@ -4154,6 +4252,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 7540001768377134852}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &4438629099580765459
 GameObject:
   m_ObjectHideFlags: 0
@@ -4323,6 +4423,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 4091014073437815142}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &4867340878848512682
 GameObject:
   m_ObjectHideFlags: 0
@@ -4461,6 +4563,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 75830163125767778}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &5184976386157796279
 GameObject:
   m_ObjectHideFlags: 0
@@ -4599,6 +4703,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 5391343829060592373}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &5391663223679504051
 GameObject:
   m_ObjectHideFlags: 0
@@ -4737,6 +4843,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 7189084756064617414}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &5421610879112149116
 GameObject:
   m_ObjectHideFlags: 0
@@ -4875,6 +4983,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 3346080133947560274}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &5509361449399372621
 GameObject:
   m_ObjectHideFlags: 0
@@ -5013,6 +5123,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 3866547570327811967}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &5710567724862283354
 GameObject:
   m_ObjectHideFlags: 0
@@ -5151,6 +5263,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 4428444078043660981}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &6390562529427786329
 GameObject:
   m_ObjectHideFlags: 0
@@ -5289,6 +5403,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 1542840052129117901}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &6413636463805042556
 GameObject:
   m_ObjectHideFlags: 0
@@ -5427,6 +5543,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 5485402065756088883}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &6511645497184722229
 GameObject:
   m_ObjectHideFlags: 0
@@ -5565,6 +5683,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 677344942776601266}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &6513416770419356934
 GameObject:
   m_ObjectHideFlags: 0
@@ -5703,6 +5823,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 2399846887639758283}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &6626499136063236225
 GameObject:
   m_ObjectHideFlags: 0
@@ -5841,6 +5963,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 2301382113704446378}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &6798955216059091689
 GameObject:
   m_ObjectHideFlags: 0
@@ -5979,6 +6103,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 7518790541274122478}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &6914514526303290100
 GameObject:
   m_ObjectHideFlags: 0
@@ -6214,6 +6340,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 7476628199507361239}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &7313557495410722652
 GameObject:
   m_ObjectHideFlags: 0
@@ -6352,6 +6480,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 2196974448554656941}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &7343652312018347825
 GameObject:
   m_ObjectHideFlags: 0
@@ -6490,6 +6620,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 4914646849767866385}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &8292788457009765887
 GameObject:
   m_ObjectHideFlags: 0
@@ -6628,6 +6760,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 4078491314248321619}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &8569600122392569833
 GameObject:
   m_ObjectHideFlags: 0
@@ -6766,6 +6900,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 6938638974488045197}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &8675093008067267263
 GameObject:
   m_ObjectHideFlags: 0
@@ -6904,6 +7040,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 1536892629737178929}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &8742408193738084186
 GameObject:
   m_ObjectHideFlags: 0
@@ -7042,6 +7180,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 3221645710860769686}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &9081108827989722644
 GameObject:
   m_ObjectHideFlags: 0
@@ -7180,6 +7320,8 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 662274070641957001}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0
 --- !u!1 &9175654440183021953
 GameObject:
   m_ObjectHideFlags: 0
@@ -7318,3 +7460,5 @@ MonoBehaviour:
   height: 3.6
   springTransform: {fileID: 2321326243434954478}
   spriteShapeController: {fileID: 351034985504347286}
+  resistance: 80
+  cooldown: 0

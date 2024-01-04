@@ -22,6 +22,7 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private Transform cattailPrefab;
     [SerializeField] private Transform emptyTransformPrefab;
     [SerializeField] private Transform slugPrefab;
+    [SerializeField] private Transform waterStriderPrefab;
     private Vector3 lastLevelEndPosition;
     private Vector3 lastPreyEndPosition;
     private Vector3 lastWaterEndPosition;
@@ -134,8 +135,7 @@ public class LevelGenerator : MonoBehaviour
     private Transform SpawnPrey(Transform prey, Vector3 preySpawnPosition)
     {
         //Chooses a random swarm size
-        int swarmSizeGenerator = Random.Range(0, 100);
-        swarmSize = Random.Range(0, 100);
+        int swarmSizeGenerator = Random.Range(0, 101);
         if (swarmSizeGenerator >= 95)
             swarmSize = 5;
         else if (swarmSizeGenerator >= 85)
@@ -172,7 +172,7 @@ public class LevelGenerator : MonoBehaviour
         int logXOffset = Random.Range(minLogXOffset, maxLogXOffset), logYOffset = Random.Range(minLogYOffset, maxLogYOffset);
         Vector2 logOffset = new Vector2(logXOffset, logYOffset);
 
-        levelPartCalc = Random.Range(0, 100);
+        levelPartCalc = Random.Range(0, 101);
 
         if (levelPartCalc <= 75)
         {
@@ -196,12 +196,32 @@ public class LevelGenerator : MonoBehaviour
     {
         //Spawns a level part and then returns that parts transform
         Transform levelpartTransform = Instantiate(levelPart, spawnPosition, Quaternion.identity);
-        if (levelPartCalc >= 85)
+        if (levelPartCalc >= 85) //60% chance to spawn one slug on a log
         {
-            Instantiate(slugPrefab, spawnPosition + new Vector3(0, 4, 0), Quaternion.identity);
-            if (levelPartCalc >= 95)
-                Instantiate(slugPrefab, spawnPosition + new Vector3(0, -4, 0), Quaternion.identity);
+            int doubleChance = Random.Range(1, 5);
+            Instantiate(slugPrefab, spawnPosition + new Vector3(0, Random.Range(2,6), 0), Quaternion.identity);
+            if (doubleChance == 1) //25% chance to spawn another after the first one is spawned
+                Instantiate(slugPrefab, spawnPosition + new Vector3(0, -Random.Range(2, 6), 0), Quaternion.identity);
         }
+
+        int striderChance = Random.Range(1, 8);
+        if (levelPartCalc <= 75 && striderChance >= 7)
+        {
+            //Chooses a random swarm size
+            int swarmSizeGenerator = Random.Range(0, 101);
+            if (swarmSizeGenerator >= 50)
+                swarmSize = 2;
+            else
+                swarmSize = 1;
+
+            //spawns water striders equal to the swarm size
+            for (int i = 0; i < swarmSize; i++)
+            {
+                Vector3 offset = new Vector3(Random.Range(4, 9), Random.Range(1, 3), 0);
+                Instantiate(waterStriderPrefab, spawnPosition + offset, Quaternion.identity);
+            }
+        }
+
         return levelpartTransform;
     }
 }

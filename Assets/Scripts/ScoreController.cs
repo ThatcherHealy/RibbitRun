@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ScoreController : MonoBehaviour
 {
-    public TextMeshProUGUI scoreText;
+    public TextMeshPro scoreText;
     private float xDistance;
     private float farthestDistance = 0;
     public Transform playerPosition;

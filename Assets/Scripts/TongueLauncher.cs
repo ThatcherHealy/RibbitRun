@@ -134,9 +134,9 @@ public class TongueLauncher : MonoBehaviour
         dragEndPosition.z = 0;
 
 
-        if (grapplePointIdentified)
+        if (grapplePointIdentified && grappleTarget != null) //Switch the grapple point from a point on an object to the center of that object if it is prey
         {
-            if (grappleTarget != null && grappleTarget.transform.gameObject.layer == 7) //Prey
+            if (grappleTarget.transform.gameObject.layer == 7 || grappleTarget.transform.gameObject.layer == 12) //Prey
             {
                 grapplePoint = grappleTarget.transform.position;
             }
@@ -153,7 +153,8 @@ public class TongueLauncher : MonoBehaviour
         }
 
         //Make the grapple point stay as the edge of the collider where the raycast hit
-        if (grappleTarget != null && hitCollider != null && hitPoint != null && grapplePoint != null && grappleTarget.layer != 7 && grappleTarget.layer != 8)
+        if (grappleTarget != null && hitCollider != null && hitPoint != null && grapplePoint != null 
+            && grappleTarget.layer != 7 && grappleTarget.layer != 8 && grappleTarget.layer != 12)
         {
             grapplePoint = hitCollider.ClosestPoint(hitPoint);
             hitPoint = grapplePoint;
@@ -189,10 +190,11 @@ public class TongueLauncher : MonoBehaviour
 
             //Aim a raycast that starts at the player and is fired at the direction of the initial touch - the last touch
             RaycastHit2D _hit = Physics2D.Raycast(firePoint.position, distanceVector);
-            if (_hit.transform.gameObject.layer == 8 && _hit.transform.gameObject.CompareTag("Grapplable")) //Detector
+
+            if ((_hit.transform.gameObject.layer == 8) && _hit.transform.gameObject.CompareTag("Grapplable")) //Detector
             {
                 //If the grapple latches onto the detector of an object, redirect it to the detector's parent
-                grappleTarget = _hit.transform.parent.gameObject;
+                grappleTarget = _hit.collider.transform.parent.gameObject;
             }
             else
             {
@@ -202,6 +204,7 @@ public class TongueLauncher : MonoBehaviour
                     grappleTarget = _hit.transform.gameObject;
                 }
             }
+
             if (_hit.transform.gameObject.CompareTag("Grapplable") || grappleToAll)
             {
                 //If the hit object can be grappled to, grapple to it

@@ -54,10 +54,11 @@ public class SlugMovement : MonoBehaviour
         ApplyGravity();
         RotateTowardsTargetCenter();
 
+        int speed = 5;
         if (targetObject != null && directionChance == 1)
-            rb.velocity = transform.right * 5; //Move right
+            rb.velocity = transform.right * speed; //Move right
         else
-            rb.velocity = -transform.right * 5; //Move left
+            rb.velocity = -transform.right * speed; //Move left
     }
 
     void StickToTargetPoint()

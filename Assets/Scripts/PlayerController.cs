@@ -212,10 +212,11 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == 9)
+        if (collision.gameObject.layer == 7 || collision.gameObject.layer == 12)
         {
             //Add Score
-            if (collision.gameObject.transform.parent.name == "Fly(Clone)")
+            if (collision.transform.parent != null &&
+                collision.gameObject.transform.parent.name == "Fly(Clone)" || collision.gameObject.transform.parent.name == "WaterStrider(Clone)")
             {
                 scoreController.SpawnFloatingText(10, transform.position);
                 scoreController.Score(10);
@@ -231,7 +232,11 @@ public class PlayerController : MonoBehaviour
             {
                 tongueLauncher.grapplePointIdentified = false;
                 rb.gravityScale = 1.2f;
+
                 power = 7;
+                if (collision.gameObject.layer == 12)
+                    power = 2;
+
                 rb.AddForce(tongueLauncher.addedForce.normalized * power * rb.mass, ForceMode2D.Impulse);
 
                 //Remove the aim line when the frog eats prey
