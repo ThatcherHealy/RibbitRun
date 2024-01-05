@@ -40,6 +40,9 @@ public class PlayerController : MonoBehaviour
     [Header("Settings")]
     public bool conserveMomentum;
 
+    private CattailController cattailController;
+
+
     private void Start()
     {
         isJumping = false;
@@ -255,7 +258,7 @@ public class PlayerController : MonoBehaviour
                 Destroy(collision.transform.parent.gameObject);
             }
         }
-        else if (collision.gameObject.layer == 11)
+        else if (collision.gameObject.tag == "Cattail")
         {
             //When grappling to prey, continue momentum and destroy prey
             if (tongueLine.isGrappling && tongueLauncher.grappleTarget != null && collision.transform.parent == tongueLauncher.grappleTarget.transform)
@@ -280,6 +283,11 @@ public class PlayerController : MonoBehaviour
                 tongueLauncher.grapplePointIdentified = false;
                 tongueLauncher.grappleTarget = null;
 
+                //Maintains stem distance
+                cattailController = collision.transform.parent.gameObject.transform.parent.gameObject.GetComponent<CattailController>();
+                cattailController.extension = 5;
+                cattailController.LockPosition();
+                cattailController.lr.SetPosition(1, cattailController.stemPoint.position);
                 Destroy(collision.transform.parent.gameObject);
             }
         }

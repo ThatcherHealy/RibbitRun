@@ -60,6 +60,7 @@ public class TongueLauncher : MonoBehaviour
     private Vector2 hitPoint;
     private Collider2D hitCollider;
     [HideInInspector] public Vector2 addedForce;
+    [SerializeField] private LayerMask ignoreLayer;
 
 
     private void Start()
@@ -136,7 +137,7 @@ public class TongueLauncher : MonoBehaviour
 
         if (grapplePointIdentified && grappleTarget != null) //Switch the grapple point from a point on an object to the center of that object if it is prey
         {
-            if (grappleTarget.transform.gameObject.layer == 7 || grappleTarget.transform.gameObject.layer == 12) //Prey
+            if (grappleTarget.transform.gameObject.layer == 7 || grappleTarget.transform.gameObject.layer == 12 || grappleTarget.transform.gameObject.layer == 8) //Prey
             {
                 grapplePoint = grappleTarget.transform.position;
             }
@@ -187,31 +188,17 @@ public class TongueLauncher : MonoBehaviour
 
         if (Physics2D.Raycast(firePoint.position, distanceVector))
         {
-
             //Aim a raycast that starts at the player and is fired at the direction of the initial touch - the last touch
             RaycastHit2D _hit = Physics2D.Raycast(firePoint.position, distanceVector);
 
-            if ((_hit.transform.gameObject.layer == 8) && _hit.transform.gameObject.CompareTag("Grapplable")) //Detector
-            {
-                //If the grapple latches onto the detector of an object, redirect it to the detector's parent
-                grappleTarget = _hit.collider.transform.parent.gameObject;
-            }
-            else
-            {
-                if (_hit.transform.gameObject.CompareTag("Grapplable"))
-                {
-                    //Otherwise just identify what the grapple latched onto
-                    grappleTarget = _hit.transform.gameObject;
-                }
-            }
-
-            if (_hit.transform.gameObject.CompareTag("Grapplable") || grappleToAll)
+            if (_hit.collider.gameObject.CompareTag("Grapplable") || grappleToAll)
             {
                 //If the hit object can be grappled to, grapple to it
                 if (Vector2.Distance(_hit.point, firePoint.position) <= maxDistance || !hasMaxDistance)
                 {
                     hitPoint = _hit.point;
                     hitCollider = _hit.collider;
+                    grappleTarget = _hit.collider.gameObject;
 
                     grappleDistanceVector = grapplePoint - (Vector2)gunPivot.position;
                     tongueLine.enabled = true;

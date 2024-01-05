@@ -19,6 +19,7 @@ public class CattailController : MonoBehaviour
     private TongueLine tongueLine;
     private GameObject player;
     public bool fixedPosition = true;
+    public int extension = 2;
     Vector3 inwards;
 
     private float startDistance;
@@ -59,12 +60,6 @@ public class CattailController : MonoBehaviour
     {
         if (cattailTop != null)
         {
-            lr.SetPosition(1, stemPoint.position);
-
-            LockPosition();
-
-            LockRotation();
-
             bool right;
             if (player.transform.position.x - cattailTop.transform.position.x > 0)
                 right = true;
@@ -77,20 +72,26 @@ public class CattailController : MonoBehaviour
                 StartCoroutine(TimeSlow());
                 stemPoint.position = cattailTop.transform.position - inwards.normalized * 5;
 
-                if (right && Vector2.Distance(new Vector2(player.transform.position.x, 0), new Vector2(cattailTop.transform.position.x, 0)) >= 5)
+                if (right && Vector2.Distance(new Vector2(player.transform.position.x, 0), new Vector2(cattailTop.transform.position.x, 0)) >= 8)
                     rb.AddForce(Vector2.right * 20, ForceMode2D.Impulse);
-                else if (!right && Vector2.Distance(new Vector2(player.transform.position.x, 0), new Vector2(cattailTop.transform.position.x, 0)) >= 5)
+                else if (!right && Vector2.Distance(new Vector2(player.transform.position.x, 0), new Vector2(cattailTop.transform.position.x, 0)) >= 8)
                     rb.AddForce(Vector2.left * 20, ForceMode2D.Impulse);
                 else
                     rb.AddForce(Vector2.zero);
 
                 forceApplied = true;
             }
+
+            lr.SetPosition(1, stemPoint.position);
+
+            LockPosition();
+
+            LockRotation();
         }
 
         if (destroyedSensor.destroyed) 
         {
-            
+            //Particles
         } 
     }
     IEnumerator TimeSlow()
@@ -100,12 +101,12 @@ public class CattailController : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    void LockPosition()
+    public void LockPosition()
     {
         float distance = Vector2.Distance(stemBeginning, cattailTop.transform.position);
         inwards = stemBeginning - (Vector2)cattailTop.transform.position;
 
-        stemPoint.position = cattailTop.transform.position - inwards.normalized * 5;
+        stemPoint.position = cattailTop.transform.position - inwards.normalized * extension;
         if (distance != startDistance)
         {
             //Sets a limit on how far the lilypad can be from the base of the stem

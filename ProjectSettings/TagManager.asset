@@ -9,6 +9,7 @@ TagManager:
   - NoSwim
   - Spring
   - Stem
+  - Cattail
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - GrappleDetector
   - 
   - Stem
-  - Cattail
+  - 
   - WaterStrider
   - SlugPath
   - 
