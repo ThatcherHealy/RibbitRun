@@ -15,6 +15,7 @@ public class SlugMovement : MonoBehaviour
     private Vector2 closestPoint;
     private Vector2 transformToPoint;
     private int directionChance;
+    private float speed;
     Rigidbody2D rb;
 
     private void Start()
@@ -33,6 +34,7 @@ public class SlugMovement : MonoBehaviour
         {
             sprite.transform.eulerAngles = new Vector3(sprite.transform.eulerAngles.x, 180, sprite.transform.eulerAngles.z);
         }
+        speed = Random.Range(4, 6);
     }
     GameObject GetClosestLog(GameObject[] logs) //Finds the closest log in the scene
     { 
@@ -54,7 +56,6 @@ public class SlugMovement : MonoBehaviour
         ApplyGravity();
         RotateTowardsTargetCenter();
 
-        int speed = 5;
         if (targetObject != null && directionChance == 1)
             rb.velocity = transform.right * speed; //Move right
         else

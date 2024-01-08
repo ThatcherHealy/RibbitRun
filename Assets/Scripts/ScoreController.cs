@@ -14,7 +14,8 @@ public class ScoreController : MonoBehaviour
     public TextMeshPro floatingText;
     public GameObject floatingTextParent;
     public Canvas canvas;
-
+    public PlayerController playerController;
+    public TextMeshPro finalScoreText;
 
     private void Start()
     {
@@ -36,6 +37,13 @@ public class ScoreController : MonoBehaviour
         {
             farthestDistance = xDistance;
             Score(1);
+        }
+
+        //When the player dies, display their final score
+        if (playerController.dead)
+        {
+            scoreText.text = new string(" ");
+            finalScoreText.text = score.ToString();
         }
     }
 

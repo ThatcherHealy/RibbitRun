@@ -10,6 +10,7 @@ TagManager:
   - Spring
   - Stem
   - Cattail
+  - Predator
   layers:
   - Default
   - TransparentFX

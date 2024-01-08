@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Mail;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +17,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private CircleCollider2D circleCollider;
     [SerializeField] private ScoreController scoreController;
     [SerializeField] private LayerMask ground;
-
 
     private float power = 5;
     private float maxDrag = 5;
@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     public bool conserveMomentum;
 
     private CattailController cattailController;
+    public bool dead = false;
 
 
     private void Start()
@@ -291,9 +292,14 @@ public class PlayerController : MonoBehaviour
                 Destroy(collision.transform.parent.gameObject);
             }
         }
+
         //When the player enters a no-swim-zone, they can't swim until they leave
         if (collision.gameObject.tag == "NoSwim")
             cantSwim = true;
+
+        //When the player gets hit by a predator, they die
+        if (collision.gameObject.tag == "Predator")
+            dead = true;
     }
     private void OnTriggerExit2D(Collider2D collision)
     {

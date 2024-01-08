@@ -78,12 +78,13 @@ public class TongueLauncher : MonoBehaviour
             touch = Input.GetTouch(0);
         }
         //When aiming, slow down time
-        if ((touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary) && !tongueLine.isGrappling && !playerController.isGrounded && !playerController.isSwimming)
+        if ((touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary) 
+            && !tongueLine.isGrappling && !playerController.isGrounded && !playerController.isSwimming && !playerController.dead)
         {
             touchEnded = true;
             Time.timeScale = 0.3f;
         }
-        else //Resume time when tongue is fired or when the player is grounded
+        else if(!playerController.dead) //Resume time when tongue is fired or when the player is grounded
         { 
             Time.timeScale = 1;
         }
@@ -99,7 +100,7 @@ public class TongueLauncher : MonoBehaviour
             touchEnded = false;
 
             //On grapple, resume time
-            if (Time.timeScale != 1)
+            if (Time.timeScale != 1 && !playerController.dead)
             {
                 Time.timeScale = 1;
             }

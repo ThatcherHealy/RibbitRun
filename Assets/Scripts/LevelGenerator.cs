@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
-    private const float levelPartDistance = 200f;
-    private const float preySpawnDistance = 150f;
-    private const float waterSpawnDistance = 200f;
-    private float cattailSpawnDistance = 200f;
     [SerializeField] private Transform startEndPoint;
     [SerializeField] private Transform startWaterEndPoint;
     [SerializeField] private Transform startPreyEndPoint;
@@ -15,7 +11,6 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private List<Transform> levelPartList;
     [SerializeField] private List<Transform> preyList;
     [SerializeField] private GameObject player;
-    [SerializeField] private Transform waterLevel;
     [SerializeField] private Transform waterHeight;
     [SerializeField] private Transform waterPrefab;
     [SerializeField] private Transform mudPrefab;
@@ -23,6 +18,11 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private Transform emptyTransformPrefab;
     [SerializeField] private Transform slugPrefab;
     [SerializeField] private Transform waterStriderPrefab;
+
+    private const float levelPartDistance = 200f;
+    private const float preySpawnDistance = 150f;
+    private const float waterSpawnDistance = 200f;
+    private float cattailSpawnDistance = 200f;
     private Vector3 lastLevelEndPosition;
     private Vector3 lastPreyEndPosition;
     private Vector3 lastWaterEndPosition;
@@ -32,7 +32,7 @@ public class LevelGenerator : MonoBehaviour
     Transform lastPreyTransform;
     Transform lastWaterTransform;
     Transform lastCattailTransform;
-
+    private float waterLevel = -3.44f;
     public enum Biome {Bog,Cypress,Wetland};
     Biome currentBiome;
 
@@ -128,7 +128,7 @@ public class LevelGenerator : MonoBehaviour
 
         chosenPrey = preyList[0];
 
-        lastPreyTransform = SpawnPrey(chosenPrey, new Vector2(lastPreyEndPosition.x, waterLevel.position.y) + flyOffset);
+        lastPreyTransform = SpawnPrey(chosenPrey, new Vector2(lastPreyEndPosition.x, waterLevel) + flyOffset);
 
         lastPreyEndPosition = lastPreyTransform.position;
     }
@@ -187,7 +187,7 @@ public class LevelGenerator : MonoBehaviour
             offset = logOffset;
         }
 
-        lastLevelPartTransform = SpawnLevelPart(chosenLevelPart, new Vector2(lastLevelEndPosition.x, waterLevel.position.y) + offset);
+        lastLevelPartTransform = SpawnLevelPart(chosenLevelPart, new Vector2(lastLevelEndPosition.x, waterLevel) + offset);
 
         lastLevelEndPosition = lastLevelPartTransform.Find("EndPosition").position;
     }
