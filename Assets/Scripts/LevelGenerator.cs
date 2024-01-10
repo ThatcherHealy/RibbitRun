@@ -91,9 +91,13 @@ public class LevelGenerator : MonoBehaviour
         //There is a 50% chance for the cattail to actually spawn
         int chance = Random.Range(0, 100);
         if (chance > 50)
-            lastCattailTransform = Instantiate(cattail, cattailSpawnPosition, Quaternion.identity);        
+        {
+            lastCattailTransform = Instantiate(cattail, cattailSpawnPosition, Quaternion.identity);
+        }
         else
+        {
             lastCattailTransform = Instantiate(emptyTransformPrefab, cattailSpawnPosition, Quaternion.identity);
+        }
 
         return lastCattailTransform;
     }

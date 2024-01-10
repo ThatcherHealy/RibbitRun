@@ -30,10 +30,6 @@ public class SlugMovement : MonoBehaviour
             GetClosestLog(logs);
 
         directionChance = Random.Range(1, 3);
-        if (directionChance == 2)
-        {
-            sprite.transform.eulerAngles = new Vector3(sprite.transform.eulerAngles.x, 180, sprite.transform.eulerAngles.z);
-        }
         speed = Random.Range(4, 6);
     }
     GameObject GetClosestLog(GameObject[] logs) //Finds the closest log in the scene
@@ -50,12 +46,24 @@ public class SlugMovement : MonoBehaviour
         }
         return targetObject;
     }
-    void Update()
+    private void FixedUpdate()
     {
+        FixSpriteRotation();
         StickToTargetPoint();
         ApplyGravity();
         RotateTowardsTargetCenter();
+        Movement();
+    }
+    void FixSpriteRotation() 
+    {
+        if (directionChance == 1)
+            sprite.transform.localEulerAngles = Vector3.zero;
+        if (directionChance == 2)
+            sprite.transform.localEulerAngles = new Vector3(0, 180, 0);
+    }
 
+    void Movement() 
+    {
         if (targetObject != null && directionChance == 1)
             rb.velocity = transform.right * speed; //Move right
         else
@@ -78,6 +86,7 @@ public class SlugMovement : MonoBehaviour
                 {
                     targetPoint = hit[i].point;
                     transformToPoint = (targetPoint - (Vector2)transform.position);
+
                     rb.AddForceAtPosition(transformToPoint.normalized * gravityStrength, targetPoint, ForceMode2D.Force);
                 }
             }
@@ -96,16 +105,16 @@ public class SlugMovement : MonoBehaviour
     }
     void RotateTowardsTargetCenter()
     {
+        Collider2D targetCollider = targetObject.GetComponent<PolygonCollider2D>();
         if (targetObject != null)
         {
             // Calculate the direction towards the target
             Vector2 targetDirection = targetPoint - (Vector2)transform.position;
-
-            // Calculate the angle and set the rotation
+            
             float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
             Quaternion targetRotation = Quaternion.AngleAxis(angle + 90, Vector3.forward);
 
            transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, targetRotation.eulerAngles.z);
-        }
+        } 
     }
 }

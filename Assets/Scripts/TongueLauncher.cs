@@ -72,57 +72,25 @@ public class TongueLauncher : MonoBehaviour
 
     private void Update()
     {
+        GetTouch();
+        SlowTime();
+        SwitchFromPointToTransform();
+        KeepGrapplePointOnCollider();
+        TransitionAimLine();
+        DetatchWhenClose();
+        Launch();
+    }
+    private void FixedUpdate()
+    {
+
+    }
+
+    void GetTouch()
+    {
         //Identify touch
         if (Input.touchCount > 0)
         {
             touch = Input.GetTouch(0);
-        }
-        //When aiming, slow down time
-        if ((touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary) 
-            && !tongueLine.isGrappling && !playerController.isGrounded && !playerController.isSwimming && !playerController.dead)
-        {
-            touchEnded = true;
-            Time.timeScale = 0.3f;
-        }
-        else if(!playerController.dead) //Resume time when tongue is fired or when the player is grounded
-        { 
-            Time.timeScale = 1;
-        }
-        
-        if (touch.phase == TouchPhase.Ended && !playerController.isGrounded && !playerController.isSwimming && touchEnded)
-        {
-            //On first click, set grapple point then grapple
-            if (touchEnded)
-            {
-                SetGrapplePoint();
-            }
-
-            touchEnded = false;
-
-            //On grapple, resume time
-            if (Time.timeScale != 1 && !playerController.dead)
-            {
-                Time.timeScale = 1;
-            }
-        }
-
-        if (launchToPoint && tongueLine.isGrappling)
-        {
-            if (launchType == LaunchType.Transform_Launch)
-            {
-                Vector2 firePointDistance = firePoint.position - gunHolder.localPosition;
-                Vector2 targetPos = grapplePoint - firePointDistance;
-                gunHolder.position = Vector2.Lerp(gunHolder.position, targetPos, launchCurve.Evaluate(Time.deltaTime) * launchSpeed);
-            }
-        }
-
-        //If the tongue gets too close to its target, it unattaches;
-        if (grapplePointDetector.closeToGrapplePoint)
-        {
-            tongueLine.enabled = false;
-            m_springJoint2D.enabled = false;
-            rb.gravityScale = 1.2f;
-            tongueLine.isGrappling = false;
         }
 
         //Get initial touch position
@@ -131,11 +99,43 @@ public class TongueLauncher : MonoBehaviour
             dragStartPosition = Camera.main.WorldToViewportPoint(touch.position);
             dragStartPosition.z = 0;
         }
+
         //Get current touch position
         dragEndPosition = Camera.main.WorldToViewportPoint(touch.position);
         dragEndPosition.z = 0;
 
+        if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
+        {
+            Dragging();
+        }
 
+        if (touch.phase == TouchPhase.Ended && !playerController.isGrounded && !playerController.isSwimming && touchEnded)
+        {
+            //On first click, set grapple point then grapple
+            if (touchEnded)
+            {
+                SetGrapplePoint();
+            }
+            touchEnded = false;
+        }
+    }
+
+    void SlowTime()
+    {
+        //When aiming, slow down time
+        if ((touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
+            && !tongueLine.isGrappling && !playerController.isGrounded && !playerController.isSwimming && !playerController.dead)
+        {
+            touchEnded = true;
+            Time.timeScale = 0.3f;
+        }
+        else if (!playerController.dead) //Resume time when tongue is fired or when the player is grounded
+        {
+            Time.timeScale = 1;
+        }
+    }
+    void SwitchFromPointToTransform()
+    {
         if (grapplePointIdentified && grappleTarget != null) //Switch the grapple point from a point on an object to the center of that object if it is prey
         {
             if (grappleTarget.transform.gameObject.layer == 7 || grappleTarget.transform.gameObject.layer == 12 || grappleTarget.transform.gameObject.layer == 8) //Prey
@@ -143,24 +143,25 @@ public class TongueLauncher : MonoBehaviour
                 grapplePoint = grappleTarget.transform.position;
             }
         }
-        if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
+    }
+    void KeepGrapplePointOnCollider()
+    {
+        //Make the grapple point stay as the edge of the collider where the raycast hit
+        if (grappleTarget != null && hitCollider != null && hitPoint != null && grapplePoint != null
+            && grappleTarget.layer != 7 && grappleTarget.layer != 8 && grappleTarget.layer != 12)
         {
-            Dragging();
+            grapplePoint = hitCollider.ClosestPoint(hitPoint);
+            hitPoint = grapplePoint;
         }
-        //Remove the aim line when grounded
+    }
+    void TransitionAimLine()
+    {
+        //Remove the aim line when grounded or swimming
         if ((playerController.isGrounded || playerController.isSwimming) && lr.positionCount > 0)
         {
             playerController.skipToJump = true;
             lr.positionCount = 0;
         }
-
-        //Make the grapple point stay as the edge of the collider where the raycast hit
-        if (grappleTarget != null && hitCollider != null && hitPoint != null && grapplePoint != null 
-            && grappleTarget.layer != 7 && grappleTarget.layer != 8 && grappleTarget.layer != 12)
-        {
-            grapplePoint = hitCollider.ClosestPoint(hitPoint);
-            hitPoint = grapplePoint;
-        } 
     }
 
     void Dragging()
@@ -176,7 +177,17 @@ public class TongueLauncher : MonoBehaviour
             lr.SetPosition(0, transform.position);
             lr.SetPosition(1, secondLinePoint);
         }
-
+    }
+    private void DetatchWhenClose()
+    {
+        //If the tongue gets too close to its target, it unattaches;
+        if (grapplePointDetector.closeToGrapplePoint)
+        {
+            tongueLine.enabled = false;
+            m_springJoint2D.enabled = false;
+            rb.gravityScale = 1.2f;
+            tongueLine.isGrappling = false;
+        }
     }
 
     void SetGrapplePoint()
@@ -252,6 +263,18 @@ public class TongueLauncher : MonoBehaviour
                     rb.velocity = addedForce;
 
                     break;
+            }
+        }
+    }
+    private void Launch()
+    {
+        if (launchToPoint && tongueLine.isGrappling)
+        {
+            if (launchType == LaunchType.Transform_Launch)
+            {
+                Vector2 firePointDistance = firePoint.position - gunHolder.localPosition;
+                Vector2 targetPos = grapplePoint - firePointDistance;
+                gunHolder.position = Vector2.Lerp(gunHolder.position, targetPos, launchCurve.Evaluate(Time.deltaTime) * launchSpeed);
             }
         }
     }

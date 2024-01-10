@@ -17,9 +17,6 @@ public class WaterStriderBehavior : MonoBehaviour
         else
             biasLeft = false;
     }
-    private void Update()
-    {
-    }
 
     private void RandomJump()
     {

@@ -38,14 +38,13 @@ public class PredatorEvents : MonoBehaviour
         if (sc.score > lowerScoreLimit && !cooldown)
         {
             int chance = UnityEngine.Random.Range(1, 9);
-            if (chance >= 5) //12% chance
+            if (chance == 1) //12% chance
             {
                 yield return new WaitForSeconds(warningTime);
                 int eventChosen = UnityEngine.Random.Range(1, 2);
                 if (eventChosen == 1)
                 {
                     StartCoroutine(FishEvent());
-                    Debug.Log("Fish Spawned");
                 }
                 else if (eventChosen == 2)
                     BirdEvent();

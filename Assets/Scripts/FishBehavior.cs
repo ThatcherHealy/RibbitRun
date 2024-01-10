@@ -21,7 +21,7 @@ public class FishBehavior : MonoBehaviour
         }
 
     }
-    void Update()
+    void FixedUpdate()
     {
         transform.Translate(Vector3.left * speed * Time.deltaTime);
     }

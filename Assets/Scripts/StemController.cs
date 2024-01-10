@@ -54,7 +54,7 @@ public class StemController : MonoBehaviour
         } 
 
         //Set the first point to the first point on the ground under where the lilypad spawns
-        lr.positionCount = 2;
+        lr.positionCount = 1;
         lr.SetPosition(0, stemBeginning);
     }
 
@@ -74,13 +74,19 @@ public class StemController : MonoBehaviour
         return closestLilypad.gameObject;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         // Set the second line point on the lilyad
+        if (lr.positionCount != 2)
+            lr.positionCount = 2;
+
         lr.SetPosition(1,closestLilypad.transform.position - new Vector3(0,1f,0));
-        SetEdgeCollider();
 
-
+        //SetEdgeCollider();
+        ConstrainDistance();
+    }
+    void ConstrainDistance()
+    {
         float distance = Vector3.Distance(stemBeginning, closestLilypad.transform.position); //Distance from base to stem
         if (distance > startDistance)
         {

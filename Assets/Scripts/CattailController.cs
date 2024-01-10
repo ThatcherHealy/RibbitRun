@@ -16,7 +16,6 @@ public class CattailController : MonoBehaviour
     public Rigidbody2D rb;
     public CattailDestroyedSensor destroyedSensor;
     private TongueLauncher tongueLauncher;
-    private TongueLine tongueLine;
     private GameObject player;
     public bool fixedPosition = true;
     public int extension = 2;
@@ -28,14 +27,17 @@ public class CattailController : MonoBehaviour
     void Start()
     {
         tongueLauncher = FindObjectOfType<TongueLauncher>();
-        tongueLine = FindObjectOfType<TongueLine>();
         player = GameObject.Find("Frog");
 
         SetColor();
+        FindStemBeginning();
+    }
 
+    void FindStemBeginning()
+    {
         //Find the first point on the ground under where the lilypad spawns
         RaycastHit2D[] hit = Physics2D.RaycastAll(stemPoint.position, Vector2.down);
-        
+
         bool hitMud = false;
 
         for (int i = 0; i < hit.Length; i++) //Stop searching when the raycast hits mud
@@ -51,48 +53,59 @@ public class CattailController : MonoBehaviour
             }
         }
 
-        lr.positionCount = 2;
-        lr.SetPosition(0, stemBeginning);
+        if (stemBeginning != null && stemBeginning != Vector2.zero) 
+        {
+            lr.positionCount = 1;
+            lr.SetPosition(0, stemBeginning);
+        }
     }
-
-    // Update is called once per frame
     void Update()
     {
         if (cattailTop != null)
         {
-            bool right;
-            if (player.transform.position.x - cattailTop.transform.position.x > 0)
-                right = true;
-            else
-                right = false;
-
-            if (tongueLauncher.grappleTarget != null && cattailTop.transform == tongueLauncher.grappleTarget.transform && !forceApplied)
-            {
-                fixedPosition = false;
-                StartCoroutine(TimeSlow());
-                stemPoint.position = cattailTop.transform.position - inwards.normalized * 5;
-
-                if (right && Vector2.Distance(new Vector2(player.transform.position.x, 0), new Vector2(cattailTop.transform.position.x, 0)) >= 8)
-                    rb.AddForce(Vector2.right * 20, ForceMode2D.Impulse);
-                else if (!right && Vector2.Distance(new Vector2(player.transform.position.x, 0), new Vector2(cattailTop.transform.position.x, 0)) >= 8)
-                    rb.AddForce(Vector2.left * 20, ForceMode2D.Impulse);
-                else
-                    rb.AddForce(Vector2.zero);
-
-                forceApplied = true;
-            }
+            if (lr.positionCount != 2)
+                lr.positionCount = 2;
 
             lr.SetPosition(1, stemPoint.position);
-
-            LockPosition();
-
-            LockRotation();
         }
 
         if (destroyedSensor.destroyed) 
         {
             //Particles
         } 
+    }
+    private void FixedUpdate()
+    {
+        if (cattailTop != null)
+        {
+            Sway();
+            LockPosition();
+            LockRotation();
+        }
+    }
+    void Sway()
+    {
+        bool right;
+        if (player.transform.position.x - cattailTop.transform.position.x > 0)
+            right = true;
+        else
+            right = false;
+
+        if (tongueLauncher.grappleTarget != null && cattailTop.transform == tongueLauncher.grappleTarget.transform && !forceApplied)
+        {
+            fixedPosition = false;
+            StartCoroutine(TimeSlow());
+            stemPoint.position = cattailTop.transform.position - inwards.normalized * 5;
+
+            if (right && Vector2.Distance(new Vector2(player.transform.position.x, 0), new Vector2(cattailTop.transform.position.x, 0)) >= 8)
+                rb.AddForce(Vector2.right * 20, ForceMode2D.Impulse);
+            else if (!right && Vector2.Distance(new Vector2(player.transform.position.x, 0), new Vector2(cattailTop.transform.position.x, 0)) >= 8)
+                rb.AddForce(Vector2.left * 20, ForceMode2D.Impulse);
+            else
+                rb.AddForce(Vector2.zero);
+
+            forceApplied = true;
+        }
     }
     IEnumerator TimeSlow()
     {
