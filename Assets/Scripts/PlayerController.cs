@@ -17,14 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private CircleCollider2D circleCollider;
     [SerializeField] private ScoreController scoreController;
     [SerializeField] private LayerMask ground;
-
-    [Header("States")]
-    public bool isGrounded;
-    public bool jump;
-    public bool isSwimming;
-
-    [Header("Settings")]
-    public bool conserveMomentum;
+    [SerializeField] Transform raycastOrigin;
 
     private float power = 5;
     private float maxDrag = 5;
@@ -40,6 +33,15 @@ public class PlayerController : MonoBehaviour
     private CattailController cattailController;
     [HideInInspector]public bool dead = false;
 
+    [Header("States")]
+    public bool isGrounded;
+    public bool jump;
+    public bool isSwimming;
+
+    [Header("Settings")]
+    public bool conserveMomentum;
+    public bool aimingJumpStopsMomentum;
+
 
     private void Start()
     {
@@ -48,8 +50,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        DetectInputs();
         GroundCheck();
-        DetectJumpAndSwim();
         Swimming();
     }
     private void FixedUpdate()
@@ -65,7 +67,7 @@ public class PlayerController : MonoBehaviour
         if (raycastHit.collider != null)
             isGrounded = true;
         else
-            isGrounded = false;
+            isGrounded = false; 
 
         if (isGrounded)
         {
@@ -82,26 +84,6 @@ public class PlayerController : MonoBehaviour
     }
     void Swimming()
     {
-        if (Input.touchCount > 0 && isSwimming)
-        {
-            tongueLauncher.lr.positionCount = 0;
-            touch = Input.GetTouch(0);
-            if (touch.phase == TouchPhase.Began)
-            {
-                draggingStarted = true;
-                DragStart();
-            }
-            if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
-            {
-                Dragging();
-            }
-
-            if (touch.phase == TouchPhase.Ended)
-            {
-                DragRelease();
-                draggingStarted = false;
-            }
-        }
         if (isSwimming)
         {
             float slowingFactor = 0.5f;
@@ -114,9 +96,9 @@ public class PlayerController : MonoBehaviour
             rb.drag = 0;
         }
     }
-    void DetectJumpAndSwim()
+    void DetectInputs()
     {
-        if (Input.touchCount > 0 && isGrounded)
+        if (Input.touchCount > 0 && (isGrounded || isSwimming))
         {
             touch = Input.GetTouch(0);
             if (touch.phase == TouchPhase.Began)
@@ -191,6 +173,11 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            if (aimingJumpStopsMomentum) 
+            {
+                rb.velocity = new Vector2(0, rb.velocity.y);
+            }
+
             swimLr.positionCount = 0;
             jumpLr.positionCount = 2;
             jumpLr.SetPosition(0, transform.position);

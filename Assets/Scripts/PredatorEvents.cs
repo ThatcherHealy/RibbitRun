@@ -10,6 +10,7 @@ public class PredatorEvents : MonoBehaviour
     public PlayerController pc;
     public ScoreController sc;
     public GameObject fishSwarmPrefab;
+    public GameObject birdPrefab;
     public GameObject warningPrefab;
     public Transform player;
 
@@ -25,7 +26,8 @@ public class PredatorEvents : MonoBehaviour
     private Rect shrunkCameraRect;
     private Vector3 predatorSpawnPosition;
     private bool fishEvent;
-    private int fishDirectionChance;
+    private int directionChance;
+    private bool birdEvent;
 
     void Start()
     {
@@ -38,16 +40,18 @@ public class PredatorEvents : MonoBehaviour
         if (sc.score > lowerScoreLimit && !cooldown)
         {
             int chance = UnityEngine.Random.Range(1, 9);
-            if (chance == 1) //12% chance
+            if (chance >= 1) //12% chance
             {
                 yield return new WaitForSeconds(warningTime);
-                int eventChosen = UnityEngine.Random.Range(1, 2);
+                int eventChosen = UnityEngine.Random.Range(2, 3);
                 if (eventChosen == 1)
                 {
                     StartCoroutine(FishEvent());
                 }
                 else if (eventChosen == 2)
-                    BirdEvent();
+                {
+                    StartCoroutine(BirdEvent());
+                }
             }
         }
         //Loop
@@ -57,10 +61,10 @@ public class PredatorEvents : MonoBehaviour
     private IEnumerator FishEvent()
     {
         fishEvent = true;
-        int fishCooldownTime = 12;
-        Cooldown(fishCooldownTime);
+        int fishCooldownTime = 20;
+        StartCoroutine(Cooldown(fishCooldownTime));
 
-        fishDirectionChance = UnityEngine.Random.Range(1, 3);
+        directionChance = UnityEngine.Random.Range(1, 3);
 
         Warning();
         yield return new WaitForSeconds(warningTime);
@@ -69,6 +73,23 @@ public class PredatorEvents : MonoBehaviour
 
         //Destroy the fish after 15 seconds
         Destroy(fishSwarm, 15);
+    }
+    private IEnumerator BirdEvent()
+    {
+        birdEvent = true;
+        int birdCooldownTime = 20;
+        StartCoroutine(Cooldown(birdCooldownTime));
+
+        directionChance = UnityEngine.Random.Range(1, 3);
+
+        Warning();
+        yield return new WaitForSeconds(warningTime);
+
+        GameObject bird = Instantiate(birdPrefab, predatorSpawnPosition, Quaternion.identity);
+
+        //Destroy the fish after 15 seconds
+        Destroy(bird, 15);
+
     }
     private void Warning()
     {
@@ -79,18 +100,41 @@ public class PredatorEvents : MonoBehaviour
     }
     void Update()
     {
+        SetFishDirection();
+    }
+    void FixedUpdate() 
+    {
+        SetWarningPosition();
+    }
+
+    void SetFishDirection() 
+    {
         if (fishEvent)
         {
-            if (fishDirectionChance == 1)
+            if (directionChance == 1)
                 predatorSpawnPosition = new Vector2(player.position.x + 150, -20);
             else
                 predatorSpawnPosition = new Vector2(player.position.x - 150, -20);
         }
-
+        else if (birdEvent)
+        {
+            if (directionChance == 1)
+                predatorSpawnPosition = new Vector2(player.position.x + 150, 4);
+            else
+                predatorSpawnPosition = new Vector2(player.position.x - 150, 4);
+        }
+    }
+    void SetWarningPosition() 
+    {
         if (warningActive && warning != null)
         {
-            //First, create a rectangle that matches the camera view
+            //First, smooth the centerpoint of the camera
             Vector3 cameraCenter = Camera.main.transform.position;
+            Vector3 smoothedCenter = cameraCenter;
+            int smoothSpeed = 5;
+            smoothedCenter = Vector3.Lerp(smoothedCenter, cameraCenter, smoothSpeed * Time.deltaTime);
+
+            //Then, create a rectangle that matches the smoothed camera view
             Vector3 bottomLeft = Camera.main.ScreenToWorldPoint(Vector3.zero);
             Vector3 topRight = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight));
             cameraRect = new(bottomLeft.x, bottomLeft.y, (topRight.x - bottomLeft.x), (topRight.y - bottomLeft.y));
@@ -99,14 +143,14 @@ public class PredatorEvents : MonoBehaviour
             float xShrink = 0.85f, yShrink = 0.7f;
             float shrunkWidth = cameraRect.width * xShrink;
             float shrunkHeight = cameraRect.height * yShrink;
-            shrunkCameraRect = new Rect(cameraCenter.x - shrunkWidth / 2, cameraCenter.y - shrunkHeight / 2, shrunkWidth, shrunkHeight);
+            shrunkCameraRect = new Rect(smoothedCenter.x - shrunkWidth / 2, smoothedCenter.y - shrunkHeight / 2, shrunkWidth, shrunkHeight);
 
-            //Finally, set the warning position to be where the predator is going to spawn from, clamped within the shrunk circle
-            warningSpawnPosition = new Vector3
-           (Mathf.Clamp(predatorSpawnPosition.x, shrunkCameraRect.xMin, shrunkCameraRect.xMax),
-            Mathf.Clamp(predatorSpawnPosition.y, shrunkCameraRect.yMin, shrunkCameraRect.yMax), 0);
+            //Finally, set the warning position to be where the predator is going to spawn from, clamped within the shrunk rectangle
+            Vector3 warningTarget = new Vector3(
+            Mathf.Clamp(predatorSpawnPosition.x, shrunkCameraRect.xMin, shrunkCameraRect.xMax),
+            Mathf.Clamp(predatorSpawnPosition.y, shrunkCameraRect.yMin, shrunkCameraRect.yMax),0);
 
-            warning.transform.position = warningSpawnPosition;
+            warning.transform.position = Vector3.Lerp(warning.transform.position, warningTarget, 100 * Time.deltaTime);
         }
     }
     IEnumerator WarningDuration()
@@ -116,17 +160,12 @@ public class PredatorEvents : MonoBehaviour
         warningActive = false;
     }
 
-    private void BirdEvent()
-    {
-        int birdCooldownTime = 12;
-        Cooldown(birdCooldownTime);
-    }
-
     IEnumerator Cooldown(int cooldownTime)
     {
         cooldown = true;
-        yield return new WaitForSeconds (cooldownTime);
+        yield return new WaitForSeconds(cooldownTime);
         fishEvent = false;
+        birdEvent = false;
         cooldown = false;
     }
     private void OnDrawGizmos()

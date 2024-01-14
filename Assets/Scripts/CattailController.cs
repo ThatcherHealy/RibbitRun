@@ -67,6 +67,8 @@ public class CattailController : MonoBehaviour
                 lr.positionCount = 2;
 
             lr.SetPosition(1, stemPoint.position);
+
+            LockPosition();
         }
 
         if (destroyedSensor.destroyed) 
@@ -79,7 +81,6 @@ public class CattailController : MonoBehaviour
         if (cattailTop != null)
         {
             Sway();
-            LockPosition();
             LockRotation();
         }
     }
@@ -128,7 +129,7 @@ public class CattailController : MonoBehaviour
             cattailTop.transform.position += inwards;
         }
 
-        // vector from this object towards the target location
+        //vector from this object towards the target location
         Vector3 vectorToTarget = (Vector2)cattailTop.transform.position - stemBeginning;
 
         // get the rotation that points the Z axis forward, and the Y axis 90 degrees away from the target
@@ -137,7 +138,6 @@ public class CattailController : MonoBehaviour
 
         // changed this from a lerp to a RotateTowards because you were supplying a "speed" not an interpolation value
         cattailTop.transform.rotation = Quaternion.RotateTowards(cattailTop.transform.rotation, targetRotation, 40);
-
     }
 
    void LockRotation()

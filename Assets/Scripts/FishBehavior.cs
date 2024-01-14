@@ -7,7 +7,6 @@ public class FishBehavior : MonoBehaviour
     int speed = 25;
     private Transform player;
     private bool facingLeft;
-    public Transform[] sprites;
     private void Start()
     {
         player = GameObject.Find("Frog").transform;
