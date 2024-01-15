@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FishBehavior : MonoBehaviour
 {
-    int speed = 25;
+    int speed = 50;
     private Transform player;
     private bool facingLeft;
     private void Start()

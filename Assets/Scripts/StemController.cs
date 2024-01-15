@@ -84,6 +84,9 @@ public class StemController : MonoBehaviour
 
         //SetEdgeCollider();
         ConstrainDistance();
+
+        if(!closestLilypad.activeSelf)
+            gameObject.SetActive(false);
     }
     void ConstrainDistance()
     {

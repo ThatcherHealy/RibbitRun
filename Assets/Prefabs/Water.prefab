@@ -1943,6 +1943,7 @@ GameObject:
   - component: {fileID: 6003322027023869043}
   - component: {fileID: 351034985504347286}
   - component: {fileID: 8553370652856000292}
+  - component: {fileID: 1854989175690709258}
   m_Layer: 2
   m_Name: Water
   m_TagString: Water
@@ -1967,7 +1968,7 @@ Transform:
   - {fileID: 4752323759296246975}
   - {fileID: 5459466979193981646}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!60 &6067246254681642165
 PolygonCollider2D:
@@ -2574,6 +2575,33 @@ MonoBehaviour:
   springStiffness: 0.08
   dampening: 0.05
   spread: 0.008
+--- !u!50 &1854989175690709258
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2948667572685909818}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &3112487320128541043
 GameObject:
   m_ObjectHideFlags: 0

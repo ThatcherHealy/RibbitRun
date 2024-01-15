@@ -26,6 +26,7 @@ public class WaterShapeController : MonoBehaviour
     public float dampening = 0.03f;
     // How much to spread to the other springs
     public float spread = 0.006f;
+    bool otherFrame = true;
 
     void Start() {
         // Clean waterpoints
@@ -122,12 +123,20 @@ public class WaterShapeController : MonoBehaviour
     }
     void FixedUpdate()
     {
-        foreach (WaterSpring waterSpringComponent in springs.Take(springs.Count() - 1).Skip(1).ToArray() ) {
-            waterSpringComponent.WaveSpringUpdate(springStiffness, dampening);
-            waterSpringComponent.WavePointUpdate();
+        if (otherFrame == true)
+        {
+            foreach (WaterSpring waterSpringComponent in springs.Take(springs.Count() - 1).Skip(1).ToArray())
+            {
+                waterSpringComponent.WaveSpringUpdate(springStiffness, dampening);
+                waterSpringComponent.WavePointUpdate();
+            }
+            UpdateSprings();
+            otherFrame = false;
         }
-
-        UpdateSprings();
+        else
+        {
+            otherFrame = true;
+        }
 
     }
 

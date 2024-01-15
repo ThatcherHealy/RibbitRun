@@ -20,7 +20,6 @@ public class PredatorEvents : MonoBehaviour
     private int warningTime = 4;
     private bool warningActive = false;
 
-    private Vector3 warningSpawnPosition;
     private GameObject warning;
     private Rect cameraRect;
     private Rect shrunkCameraRect;
@@ -43,7 +42,7 @@ public class PredatorEvents : MonoBehaviour
             if (chance >= 1) //12% chance
             {
                 yield return new WaitForSeconds(warningTime);
-                int eventChosen = UnityEngine.Random.Range(2, 3);
+                int eventChosen = UnityEngine.Random.Range(1, 3);
                 if (eventChosen == 1)
                 {
                     StartCoroutine(FishEvent());
@@ -93,7 +92,7 @@ public class PredatorEvents : MonoBehaviour
     }
     private void Warning()
     {
-        warning = Instantiate(warningPrefab, warningSpawnPosition, Quaternion.identity);
+        warning = Instantiate(warningPrefab, predatorSpawnPosition, Quaternion.identity);
         StartCoroutine(WarningDuration());
 
         Destroy (warning, warningTime);
@@ -119,9 +118,9 @@ public class PredatorEvents : MonoBehaviour
         else if (birdEvent)
         {
             if (directionChance == 1)
-                predatorSpawnPosition = new Vector2(player.position.x + 150, 4);
+                predatorSpawnPosition = new Vector2(player.position.x + 150, 6);
             else
-                predatorSpawnPosition = new Vector2(player.position.x - 150, 4);
+                predatorSpawnPosition = new Vector2(player.position.x - 150, 6);
         }
     }
     void SetWarningPosition() 

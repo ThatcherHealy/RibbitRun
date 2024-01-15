@@ -72,7 +72,10 @@ public class TongueLauncher : MonoBehaviour
 
     private void Update()
     {
-        GetTouch();
+        if (!playerController.dead)
+        {
+            GetTouch();
+        }
         SlowTime();
         SwitchFromPointToTransform();
         KeepGrapplePointOnCollider();
@@ -124,7 +127,7 @@ public class TongueLauncher : MonoBehaviour
     {
         //When aiming, slow down time
         if ((touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
-            && !tongueLine.isGrappling && !playerController.isGrounded && !playerController.isSwimming && !playerController.dead)
+            && !tongueLine.isGrappling && !playerController.isGrounded && !playerController.isSwimming)
         {
             touchEnded = true;
             Time.timeScale = 0.3f;

@@ -31,12 +31,13 @@ public class PlayerController : MonoBehaviour
     Touch touch;
 
     private CattailController cattailController;
-    [HideInInspector]public bool dead = false;
 
     [Header("States")]
     public bool isGrounded;
     public bool jump;
     public bool isSwimming;
+    public bool dead = false;
+
 
     [Header("Settings")]
     public bool conserveMomentum;
@@ -50,13 +51,16 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        DetectInputs();
-        GroundCheck();
-        Swimming();
+        if (!dead) 
+        {
+            DetectInputs();
+        }
     }
     private void FixedUpdate()
     {
         Jump();
+        GroundCheck();
+        Swimming();
     }
 
     void GroundCheck()
@@ -86,7 +90,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isSwimming)
         {
-            float slowingFactor = 0.5f;
+            float slowingFactor = 0.7f;
             rb.drag = slowingFactor;
             tongueLine.isGrappling = false;
         }

@@ -95,7 +95,6 @@ public class CattailController : MonoBehaviour
         if (tongueLauncher.grappleTarget != null && cattailTop.transform == tongueLauncher.grappleTarget.transform && !forceApplied)
         {
             fixedPosition = false;
-            StartCoroutine(TimeSlow());
             stemPoint.position = cattailTop.transform.position - inwards.normalized * 5;
 
             if (right && Vector2.Distance(new Vector2(player.transform.position.x, 0), new Vector2(cattailTop.transform.position.x, 0)) >= 8)
@@ -107,12 +106,6 @@ public class CattailController : MonoBehaviour
 
             forceApplied = true;
         }
-    }
-    IEnumerator TimeSlow()
-    {
-        Time.timeScale = 0.001f;
-        yield return new WaitForSeconds(0.1f);
-        Time.timeScale = 1;
     }
 
     public void LockPosition()
