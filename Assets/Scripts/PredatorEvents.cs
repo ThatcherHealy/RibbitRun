@@ -14,19 +14,19 @@ public class PredatorEvents : MonoBehaviour
     public GameObject warningPrefab;
     public Transform player;
 
-    private int lowerScoreLimit = 0;
-    private int checkInterval = 6;
-    private bool cooldown = false;
-    private int warningTime = 4;
-    private bool warningActive = false;
-
-    private GameObject warning;
-    private Rect cameraRect;
-    private Rect shrunkCameraRect;
     private Vector3 predatorSpawnPosition;
     private bool fishEvent;
     private int directionChance;
     private bool birdEvent;
+    public int lowerScoreLimit = 50;
+    private int checkInterval = 6;
+    private bool cooldown = false;
+
+    private int warningTime = 4;
+    private bool warningActive = false;
+    private GameObject warning;
+    private Rect cameraRect;
+    private Rect shrunkCameraRect;
 
     void Start()
     {
@@ -38,8 +38,8 @@ public class PredatorEvents : MonoBehaviour
         yield return new WaitForSeconds(checkInterval);
         if (sc.score > lowerScoreLimit && !cooldown)
         {
-            int chance = UnityEngine.Random.Range(1, 9);
-            if (chance >= 1) //12% chance
+            int chance = UnityEngine.Random.Range(1, 5);
+            if (chance == 1) //25% chance
             {
                 yield return new WaitForSeconds(warningTime);
                 int eventChosen = UnityEngine.Random.Range(1, 3);

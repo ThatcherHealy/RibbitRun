@@ -13,7 +13,7 @@ public class MassController : MonoBehaviour
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (gameObject.name == "Log" || gameObject.name == "Log(Clone)")
         {
-            logMassMin = 20; logMassMax = 40;
+            logMassMin = 75; logMassMax = 130;
             rb.mass = Random.Range(logMassMin, logMassMax);
         }
         else

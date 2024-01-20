@@ -9,19 +9,19 @@ using static UnityEditor.FilePathAttribute;
 
 public class CattailController : MonoBehaviour
 {
-    public Color color;
-    public LineRenderer lr;
     public GameObject cattailTop;
-    public Transform stemPoint;
     public Rigidbody2D rb;
     public CattailDestroyedSensor destroyedSensor;
     private TongueLauncher tongueLauncher;
     private GameObject player;
     public bool fixedPosition = true;
-    public int extension = 2;
     Vector3 inwards;
+    public GameObject stem;
+    public HingeJoint2D stemHinge;
 
+    private bool hitMud;
     private float startDistance;
+    private float currentDistance;
     Vector2 stemBeginning;
     bool forceApplied = false;
     void Start()
@@ -29,45 +29,35 @@ public class CattailController : MonoBehaviour
         tongueLauncher = FindObjectOfType<TongueLauncher>();
         player = GameObject.Find("Frog");
 
-        SetColor();
         FindStemBeginning();
+
     }
 
     void FindStemBeginning()
     {
         //Find the first point on the ground under where the lilypad spawns
-        RaycastHit2D[] hit = Physics2D.RaycastAll(stemPoint.position, Vector2.down);
-
-        bool hitMud = false;
+        RaycastHit2D[] hit = Physics2D.RaycastAll(cattailTop.transform.position, Vector2.down);
+        Debug.DrawRay(cattailTop.transform.position, Vector2.down);
+        hitMud = false;
 
         for (int i = 0; i < hit.Length; i++) //Stop searching when the raycast hits mud
         {
-            if (hitMud == true) { break; }
+            Debug.Log(hit[i].transform);
+                if (hit[i].collider.transform.gameObject.layer == 3)  //Returns true when the first mud (hit[i]) is detected
+                {
+                    stemBeginning = hit[i].point;
 
-            if (hit[i].collider.transform.gameObject.layer == 3)  //Returns true when the first mud (hit[i]) is detected
-            {
-                stemBeginning = hit[i].point;
-                startDistance = Vector2.Distance(stemBeginning, cattailTop.transform.position);
-
-                hitMud = true;
-            }
+                    hitMud = true;
+                }
         }
 
-        if (stemBeginning != null && stemBeginning != Vector2.zero) 
-        {
-            lr.positionCount = 1;
-            lr.SetPosition(0, stemBeginning);
-        }
+        startDistance = Vector2.Distance(stemBeginning, cattailTop.transform.position);
     }
     void Update()
     {
-        if (cattailTop != null)
+        Debug.Log(hitMud);
+        if (cattailTop != null && hitMud)
         {
-            if (lr.positionCount != 2)
-                lr.positionCount = 2;
-
-            lr.SetPosition(1, stemPoint.position);
-
             LockPosition();
         }
 
@@ -78,11 +68,28 @@ public class CattailController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (cattailTop != null)
+        if (cattailTop != null && hitMud)
         {
+            currentDistance = Vector2.Distance(stemBeginning, cattailTop.transform.position);
+            inwards = stemBeginning - (Vector2)cattailTop.transform.position;
             Sway();
+            SetStem();
             LockRotation();
         }
+    }
+    private void SetStem()
+    {
+        // Set the position of the GameObject (one end at point A)
+        stem.transform.position = new Vector3((stemBeginning.x + cattailTop.transform.position.x) / 2, (stemBeginning.y + cattailTop.transform.position.y) / 2); //Midpoint
+
+        // Calculate the rotation angle in radians
+        float angle = Mathf.Atan2(inwards.y, inwards.x);
+
+        // Convert the angle to degrees and set the rotation of the GameObject
+        stem.transform.eulerAngles = new Vector3(0, 0, angle * Mathf.Rad2Deg);
+
+        // Optionally, you can scale the GameObject based on the distance between points A and B
+        stem.transform.localScale = new Vector3(currentDistance, 0.17f, stem.transform.localScale.z);
     }
     void Sway()
     {
@@ -95,8 +102,6 @@ public class CattailController : MonoBehaviour
         if (tongueLauncher.grappleTarget != null && cattailTop.transform == tongueLauncher.grappleTarget.transform && !forceApplied)
         {
             fixedPosition = false;
-            stemPoint.position = cattailTop.transform.position - inwards.normalized * 5;
-
             if (right && Vector2.Distance(new Vector2(player.transform.position.x, 0), new Vector2(cattailTop.transform.position.x, 0)) >= 8)
                 rb.AddForce(Vector2.right * 20, ForceMode2D.Impulse);
             else if (!right && Vector2.Distance(new Vector2(player.transform.position.x, 0), new Vector2(cattailTop.transform.position.x, 0)) >= 8)
@@ -110,15 +115,13 @@ public class CattailController : MonoBehaviour
 
     public void LockPosition()
     {
-        float distance = Vector2.Distance(stemBeginning, cattailTop.transform.position);
-        inwards = stemBeginning - (Vector2)cattailTop.transform.position;
 
-        stemPoint.position = cattailTop.transform.position - inwards.normalized * extension;
-        if (distance != startDistance)
+        if (currentDistance != startDistance)
         {
             //Sets a limit on how far the lilypad can be from the base of the stem
             inwards = inwards.normalized;
-            inwards *= distance - startDistance;
+            inwards *= currentDistance - startDistance;
+            Debug.Log("Inwards = " + inwards + " Current Distance = " + currentDistance + " Start Distance = " + startDistance);
             cattailTop.transform.position += inwards;
         }
 
@@ -164,14 +167,4 @@ public class CattailController : MonoBehaviour
             rb.velocity = Vector2.zero;
         }
    }
-    void SetColor()
-    {
-       lr.material = new Material(Shader.Find("Legacy Shaders/Particles/Alpha Blended Premultiply"));
-       float alpha = 1.0f;
-       Gradient gradient = new Gradient();
-       gradient.SetKeys(
-           new GradientColorKey[] { new GradientColorKey(color, 0.0f), new GradientColorKey(color, 1.0f) },
-           new GradientAlphaKey[] { new GradientAlphaKey(alpha, 0.0f), new GradientAlphaKey(alpha, 1.0f) });
-      lr.colorGradient = gradient;
-    }
 }

@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 1848285892543075011}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 27.3, y: -5, z: 0}
-  m_LocalScale: {x: 6.878678, y: 3.5716302, z: 2.5064073}
+  m_LocalScale: {x: 9, y: 4.3, z: 3.2793605}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1757302489470846060}
@@ -237,6 +237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stemPrefab: {fileID: 3305129574840979458, guid: e5f37e7cceac4034fa136cf049fb662b, type: 3}
+  stem: {fileID: 3305129574840979458, guid: e5f37e7cceac4034fa136cf049fb662b, type: 3}
   stemController: {fileID: -1904055835950109680, guid: e5f37e7cceac4034fa136cf049fb662b, type: 3}
 --- !u!1 &2271465044991415782
 GameObject:

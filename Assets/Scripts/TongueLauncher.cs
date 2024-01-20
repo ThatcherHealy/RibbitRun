@@ -20,6 +20,7 @@ public class TongueLauncher : MonoBehaviour
     public Transform gunPivot;
     public Transform firePoint;
     public LineRenderer lr;
+    [SerializeField] Transform tongueRangeCircle;
 
     [Header("Physics Ref:")]
     public SpringJoint2D m_springJoint2D;
@@ -85,7 +86,15 @@ public class TongueLauncher : MonoBehaviour
     }
     private void FixedUpdate()
     {
-
+        if(lr.positionCount > 0) 
+        {
+            tongueRangeCircle.transform.localScale = new Vector3(maxDistance * 5.7333f, maxDistance * 6.466f, 0);
+            tongueRangeCircle.gameObject.SetActive(true);
+        }
+        else
+        {
+            tongueRangeCircle.gameObject.SetActive(false);
+        }
     }
 
     void GetTouch()

@@ -1,17 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
     [SerializeField] private Transform startEndPoint;
-    [SerializeField] private Transform startWaterEndPoint;
     [SerializeField] private Transform startPreyEndPoint;
     [SerializeField] private Transform lilypad1;
     [SerializeField] private List<Transform> levelPartList;
     [SerializeField] private List<Transform> preyList;
     [SerializeField] private GameObject player;
-    [SerializeField] private Transform waterHeight;
     [SerializeField] private Transform waterPrefab;
     [SerializeField] private Transform mudPrefab;
     [SerializeField] private Transform cattailPrefab;
@@ -22,27 +21,44 @@ public class LevelGenerator : MonoBehaviour
     private const float levelPartDistance = 200f;
     private const float preySpawnDistance = 150f;
     private const float waterSpawnDistance = 200f;
-    private float cattailSpawnDistance = 200f;
+    private const float mudSpawnDistance = 250f;
+    private const float cattailSpawnDistance = 200f;
+
     private Vector3 lastLevelEndPosition;
     private Vector3 lastPreyEndPosition;
     private Vector3 lastWaterEndPosition;
+    private Vector3 lastMudEndPosition;
     private Vector3 lastCattailEndPosition;
+
     private int swarmSize;
     private int levelPartCalc;
     Transform lastPreyTransform;
     Transform lastWaterTransform;
+    Transform lastMudTransform;
     Transform lastCattailTransform;
     private float waterLevel = -3.44f;
-    public enum Biome {Bog,Cypress,Wetland};
+    public enum Biome {Bog,Cypress,Polluted};
     Biome currentBiome;
 
     private void Awake()
     {
+        //Spawns the starting level
         lastLevelEndPosition = (Vector2)startEndPoint.position;
         lastPreyEndPosition = (Vector2)startPreyEndPoint.position;
-        lastWaterEndPosition = (Vector2)startWaterEndPoint.position - new Vector2(157.5f, 0); 
+        lastWaterEndPosition = new Vector2(startEndPoint.position.x - 158.235f, waterLevel);
+        lastMudEndPosition = (Vector2)startEndPoint.position - new Vector2(41f, 45.7f);
         lastCattailEndPosition = Vector3.zero;
-        
+
+        int startingSpawnMud = 3;
+        for (int i = 0; i < startingSpawnMud; i++)
+        {
+            SpawnMud();
+        }
+        int startingSpawnWater = 1;
+        for (int i = 0; i < startingSpawnWater; i++)
+        {
+            SpawnWater();
+        }
         int startingSpawnLevelParts = 5;
         for (int i = 0; i<startingSpawnLevelParts; i++)
         {
@@ -52,10 +68,19 @@ public class LevelGenerator : MonoBehaviour
         for (int i = 0; i < startingSpawnPrey; i++)
         {
             SpawnPrey();
-        }
+        } 
     }
     private void FixedUpdate()
     {
+        //Spawns objects when the player reaches a specified distance away from the last one
+        if (Vector2.Distance(player.transform.position, lastMudEndPosition) < mudSpawnDistance)
+        {
+            SpawnMud();
+        }
+        if (Vector2.Distance(player.transform.position, lastWaterEndPosition) < waterSpawnDistance)
+        {
+            SpawnWater();
+        }
         if (Vector2.Distance(player.transform.position, lastLevelEndPosition) < levelPartDistance)
         {
             SpawnLevelPart();
@@ -63,10 +88,6 @@ public class LevelGenerator : MonoBehaviour
         if (Vector2.Distance(player.transform.position, lastPreyEndPosition) < preySpawnDistance)
         {
             SpawnPrey();
-        }
-        if (Vector2.Distance(player.transform.position, lastWaterEndPosition) < waterSpawnDistance)
-        {
-            SpawnWater();
         }
         if (Vector2.Distance(player.transform.position, lastCattailEndPosition) < cattailSpawnDistance)
         {
@@ -101,26 +122,34 @@ public class LevelGenerator : MonoBehaviour
 
         return lastCattailTransform;
     }
+    private void SpawnMud()
+    {
+        Transform lastMudTransform;
+
+        Vector2 mudOffset = new Vector2(82f, 0);
+
+        lastMudTransform = SpawnMud(mudPrefab, (Vector2)lastMudEndPosition + mudOffset);
+        lastMudEndPosition = lastMudTransform.position;
+    }
+    private Transform SpawnMud(Transform mud, Vector3 mudSpawnPosition)
+    {
+        lastMudTransform = Instantiate(mud, mudSpawnPosition, Quaternion.identity);
+        return lastMudTransform;
+    }
     private void SpawnWater()
     {
         Transform lastWaterTransform;
 
         Vector2 waterOffset = new Vector2(232.5f,0);
 
-        lastWaterTransform = SpawnWater(waterPrefab, new Vector2(lastWaterEndPosition.x, waterHeight.position.y) + waterOffset);
+        lastWaterTransform = SpawnWater(waterPrefab, new Vector2(lastWaterEndPosition.x, waterLevel - 18.05f) + waterOffset);
         lastWaterEndPosition = lastWaterTransform.position;
     }
     private Transform SpawnWater(Transform water, Vector3 waterSpawnPosition)
     {
-        Vector3 mudOffset = new Vector3(41.05f, -63.82f, 0);
-
-        //Spawn mud under the water
-        Instantiate(mudPrefab, waterSpawnPosition + mudOffset, Quaternion.identity);
-
         lastWaterTransform = Instantiate(water, waterSpawnPosition, Quaternion.identity);
         return lastWaterTransform;
     }
-
     private void SpawnPrey()
     {
         Transform chosenPrey;

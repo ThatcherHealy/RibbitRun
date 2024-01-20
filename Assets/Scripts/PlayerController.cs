@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private CircleCollider2D circleCollider;
     [SerializeField] private ScoreController scoreController;
     [SerializeField] private LayerMask ground;
-    [SerializeField] Transform raycastOrigin;
+    [SerializeField] GameObject tongueRangeCircle;
 
     private float power = 5;
     private float maxDrag = 5;
@@ -29,8 +29,6 @@ public class PlayerController : MonoBehaviour
     Vector3 dragStartPos;
     Vector3 dragReleasePos;
     Touch touch;
-
-    private CattailController cattailController;
 
     [Header("States")]
     public bool isGrounded;
@@ -270,11 +268,7 @@ public class PlayerController : MonoBehaviour
                 tongueLauncher.grapplePointIdentified = false;
                 tongueLauncher.grappleTarget = null;
 
-                //Maintains stem distance
-                cattailController = collision.transform.parent.gameObject.transform.parent.gameObject.GetComponent<CattailController>();
-                cattailController.extension = 5;
-                cattailController.LockPosition();
-                cattailController.lr.SetPosition(1, cattailController.stemPoint.position);
+                //Destroy the cattail
                 Destroy(collision.transform.parent.gameObject);
             }
         }
