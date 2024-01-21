@@ -196,12 +196,12 @@ public class LevelGenerator : MonoBehaviour
         Vector2 offset;
 
         //Range of the possible distances between a lilypad and the last spawned level part
-        int minLilypadXOffset = 10, maxLilypadXOffset = 30, minLilypadYOffset = -2, maxLilypadYOffset = 2;
+        int minLilypadXOffset = 15, maxLilypadXOffset = 35, minLilypadYOffset = -1, maxLilypadYOffset = 2;
         int lilypadXOffset = Random.Range(minLilypadXOffset, maxLilypadXOffset), lilypadYOffset = Random.Range(minLilypadYOffset, maxLilypadYOffset);
         Vector2 lilypadOffset = new Vector2(lilypadXOffset,lilypadYOffset);
 
         //Range of the possible distances between a log and the last spawned level part
-        int minLogXOffset = 20, maxLogXOffset = 35, minLogYOffset = -2, maxLogYOffset = 0;
+        int minLogXOffset = 25, maxLogXOffset = 40, minLogYOffset = -2, maxLogYOffset = 0;
         int logXOffset = Random.Range(minLogXOffset, maxLogXOffset), logYOffset = Random.Range(minLogYOffset, maxLogYOffset);
         Vector2 logOffset = new Vector2(logXOffset, logYOffset);
 

@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 9010961499749271607}
   - component: {fileID: 5195742578126138811}
   - component: {fileID: 967711478251276557}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Collider
-  m_TagString: Untagged
+  m_TagString: Spring
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -184,3 +184,5 @@ MonoBehaviour:
   height: 0
   springTransform: {fileID: 4807435788306670504}
   spriteShapeController: {fileID: 0}
+  resistance: 80
+  cooldown: 0

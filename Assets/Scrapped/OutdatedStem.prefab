@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2122163398096672388}
   - component: {fileID: -1904055835950109680}
   m_Layer: 10
-  m_Name: Stem
+  m_Name: OutdatedStem
   m_TagString: Stem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

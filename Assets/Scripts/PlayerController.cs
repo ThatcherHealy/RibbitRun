@@ -243,10 +243,10 @@ public class PlayerController : MonoBehaviour
                 Destroy(collision.transform.parent.gameObject);
             }
         }
-        else if (collision.gameObject.tag == "Cattail")
+        else if (collision.gameObject.layer == 11)
         {
             //When grappling to prey, continue momentum and destroy prey
-            if (tongueLine.isGrappling && tongueLauncher.grappleTarget != null && collision.transform.parent == tongueLauncher.grappleTarget.transform)
+            if (tongueLauncher.grappleTarget != null && collision.transform == tongueLauncher.grappleTarget.transform)
             {
                 tongueLauncher.grapplePointIdentified = false;
                 rb.gravityScale = 1.2f;
@@ -269,7 +269,7 @@ public class PlayerController : MonoBehaviour
                 tongueLauncher.grappleTarget = null;
 
                 //Destroy the cattail
-                Destroy(collision.transform.parent.gameObject);
+                Destroy(collision.transform.gameObject);
             }
         }
 

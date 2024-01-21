@@ -5,14 +5,7 @@ using UnityEngine;
 
 public class LilypadController : MonoBehaviour
 {
-    public GameObject stemPrefab;
-    public GameObject stem;
-    public StemController stemController;
     private int range = 20;
-    void Start()
-    {
-        stem = Instantiate(stemPrefab, transform.position, Quaternion.identity);
-    }
     private void Update()
     {
         //Locks the angle of the lilypad between -range and range
