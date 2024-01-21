@@ -207,8 +207,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.62422806, y: 0.22000013}
-  m_Size: {x: 4.105182, y: 1.8698847}
+  m_Offset: {x: -0.5032965, y: 0.21999845}
+  m_Size: {x: 4.34707, y: 3.3902879}
   m_Direction: 1
 --- !u!1 &981594370288246581
 GameObject:
@@ -462,11 +462,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2174439182525401531}
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0.15999985, y: 0.00999999, z: 0}
-  m_LocalScale: {x: 0.588556, y: 0.6716368, z: 1.5188539}
+  m_LocalPosition: {x: 3.3377323, y: 1.4348221, z: -0.0384292}
+  m_LocalScale: {x: 0.588556, y: 0.67163676, z: 1.5188539}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8927212771824975340}
+  m_Father: {fileID: 7286271675256437782}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!212 &4259483022586898222
@@ -530,6 +530,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4577524051288831203}
+  - component: {fileID: 8419897434694095289}
+  - component: {fileID: 3597085935211433085}
   m_Layer: 7
   m_Name: Dragonfly
   m_TagString: Grapplable
@@ -552,8 +554,55 @@ Transform:
   - {fileID: 8927212771824975340}
   - {fileID: 6067941473483722453}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8419897434694095289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2182179920400537631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5adc08703337c847a0f322bce3c42f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bodySprites:
+  - {fileID: 3770479479131236166}
+  - {fileID: 4259483022586898222}
+  - {fileID: 3987163477368716013}
+  green: {r: 0, g: 0.5283019, b: 0.046960164, a: 1}
+  blue: {r: 0.20784315, g: 0.19607845, b: 0.6039216, a: 1}
+  yellow: {r: 0.4528302, g: 0.4528302, b: 0, a: 1}
+  red: {r: 0.38679248, g: 0, b: 0, a: 1}
+--- !u!50 &3597085935211433085
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2182179920400537631}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &2401698350034671312
 GameObject:
   m_ObjectHideFlags: 0
@@ -722,11 +771,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2715432999837510877}
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -0.86000013, y: 0.13999999, z: 0}
-  m_LocalScale: {x: 0.38750014, y: 1.6406256, z: 1}
+  m_LocalPosition: {x: 2.3177319, y: 1.5648212, z: -0.0384292}
+  m_LocalScale: {x: 0.38750017, y: 1.6406257, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8927212771824975340}
+  m_Father: {fileID: 7286271675256437782}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!212 &3770479479131236166
@@ -781,6 +830,40 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &4046199594208723116
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7286271675256437782}
+  m_Layer: 0
+  m_Name: Body
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7286271675256437782
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4046199594208723116}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.1777315, y: -1.4248219, z: 0.0384292}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8542826657780992899}
+  - {fileID: 3752282728092261341}
+  - {fileID: 6431707785862257653}
+  m_Father: {fileID: 8927212771824975340}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4482716687807086292
 GameObject:
   m_ObjectHideFlags: 0
@@ -949,11 +1032,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7632631571866577985}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.89999986, y: 0.01999998, z: 0}
+  m_LocalPosition: {x: 4.077732, y: 1.4448223, z: -0.0384292}
   m_LocalScale: {x: 0.54038, y: 0.54038, z: 0.54038}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8927212771824975340}
+  m_Father: {fileID: 7286271675256437782}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3987163477368716013
@@ -1037,14 +1120,12 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8542826657780992899}
-  - {fileID: 3752282728092261341}
-  - {fileID: 6431707785862257653}
   - {fileID: 809556523928090708}
   - {fileID: 295496236379734927}
   - {fileID: 5843252568913075851}
   - {fileID: 1508619755443002224}
   - {fileID: 32168080461556086}
+  - {fileID: 7286271675256437782}
   m_Father: {fileID: 4577524051288831203}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1080,6 +1161,6 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.68485373, y: 0.00000014124558}
-  m_Size: {x: 3.7394493, y: 0.7032426}
+  m_Offset: {x: -0.64634615, y: 0.06385407}
+  m_Size: {x: 3.7049766, y: 0.61485654}
   m_Direction: 1

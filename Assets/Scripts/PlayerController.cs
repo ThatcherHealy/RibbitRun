@@ -202,18 +202,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.layer == 7 || collision.gameObject.layer == 12)
         {
-            //Add Score
-            if (collision.transform.parent != null &&
-                collision.gameObject.transform.parent.name == "Fly(Clone)" || collision.gameObject.transform.parent.name == "WaterStrider(Clone)")
-            {
-                scoreController.SpawnFloatingText(10, transform.position);
-                scoreController.Score(10);
-            }
-            else if (collision.gameObject.transform.parent.name == "Slug(Clone)")
-            {
-                scoreController.SpawnFloatingText(20, transform.position);
-                scoreController.Score(20);
-            }
+            AddPreyScores(collision);
 
             //When grappling to prey, continue momentum and destroy prey
             if (tongueLine.isGrappling && tongueLauncher.grappleTarget != null && collision.transform.parent == tongueLauncher.grappleTarget.transform)
@@ -294,5 +283,30 @@ public class PlayerController : MonoBehaviour
         //The player swims when they are in water, not grounded, and not in a no-swim-zone
         if (collision.gameObject.tag == "Water" && !isGrounded && !cantSwim)
             isSwimming = true;
+    }
+
+    void AddPreyScores(Collider2D collision)
+    {
+        //if fly or strider, add 10
+        if (collision.transform.parent != null &&
+            collision.gameObject.transform.parent.name == "Fly(Clone)" || collision.gameObject.transform.parent.name == "WaterStrider(Clone)")
+        {
+            scoreController.SpawnFloatingText(10, transform.position);
+            scoreController.Score(10);
+        }
+
+        //if slug, add 20
+        else if (collision.gameObject.transform.parent.name == "Slug(Clone)")
+        {
+            scoreController.SpawnFloatingText(20, transform.position);
+            scoreController.Score(20);
+        }
+
+        //if dragonfly, add 25
+        else if (collision.gameObject.transform.parent.name == "Dragonfly(Clone)")
+        {
+            scoreController.SpawnFloatingText(25, transform.position);
+            scoreController.Score(25);
+        }
     }
 }

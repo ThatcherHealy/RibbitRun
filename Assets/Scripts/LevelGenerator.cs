@@ -17,6 +17,7 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private Transform emptyTransformPrefab;
     [SerializeField] private Transform slugPrefab;
     [SerializeField] private Transform waterStriderPrefab;
+    [SerializeField] private Transform dragonflyPrefab;
 
     private const float levelPartDistance = 200f;
     private const float preySpawnDistance = 150f;
@@ -67,7 +68,7 @@ public class LevelGenerator : MonoBehaviour
         int startingSpawnPrey = 6;
         for (int i = 0; i < startingSpawnPrey; i++)
         {
-            SpawnPrey();
+            SpawnFlies();
         } 
     }
     private void FixedUpdate()
@@ -87,7 +88,7 @@ public class LevelGenerator : MonoBehaviour
         }
         if (Vector2.Distance(player.transform.position, lastPreyEndPosition) < preySpawnDistance)
         {
-            SpawnPrey();
+            SpawnFlies();
         }
         if (Vector2.Distance(player.transform.position, lastCattailEndPosition) < cattailSpawnDistance)
         {
@@ -150,22 +151,22 @@ public class LevelGenerator : MonoBehaviour
         lastWaterTransform = Instantiate(water, waterSpawnPosition, Quaternion.identity);
         return lastWaterTransform;
     }
-    private void SpawnPrey()
+    private void SpawnFlies()
     {
         Transform chosenPrey;
         Transform lastPreyTransform;
 
-        int minFlyXOffset = 35, maxFlyXOffset = 50, minFlyYOffset = 12, maxFlyYOffset = 20;
-        int flyXOffset = Random.Range(minFlyXOffset, maxFlyXOffset), flyYOffset = Random.Range(minFlyYOffset, maxFlyYOffset);
+        float minFlyXOffset = 40, maxFlyXOffset = 60, minFlyYOffset = 11, maxFlyYOffset = 17;
+        float flyXOffset = Random.Range(minFlyXOffset, maxFlyXOffset), flyYOffset = Random.Range(minFlyYOffset, maxFlyYOffset);
         Vector2 flyOffset = new Vector2(flyXOffset, flyYOffset);
 
         chosenPrey = preyList[0];
 
-        lastPreyTransform = SpawnPrey(chosenPrey, new Vector2(lastPreyEndPosition.x, waterLevel) + flyOffset);
+        lastPreyTransform = SpawnFlies(chosenPrey, new Vector2(lastPreyEndPosition.x, waterLevel) + flyOffset);
 
         lastPreyEndPosition = lastPreyTransform.position;
     }
-    private Transform SpawnPrey(Transform prey, Vector3 preySpawnPosition)
+    private Transform SpawnFlies(Transform prey, Vector3 preySpawnPosition)
     {
         //Chooses a random swarm size
         int swarmSizeGenerator = Random.Range(0, 101);
@@ -186,7 +187,34 @@ public class LevelGenerator : MonoBehaviour
             Vector3 offset = new Vector3(Random.Range(-5f, 5f), Random.Range(-5f, 5f), 0);
             lastPreyTransform = Instantiate(prey, preySpawnPosition + offset, Quaternion.identity);
         }
+
+        int dragonflySpawnChance = Random.Range(1, 3);
+        if (dragonflySpawnChance == 1)
+            SpawnDragonfly(preySpawnPosition);
+
         return lastPreyTransform;
+    }
+    void SpawnDragonfly(Vector3 position)
+    {
+        float minDragonflyXOffset = -30, maxDragonflyXOffset = 30, minHighDragonflyYOffset = 10, maxHighDragonflyYOffset = 14, minLowDragonflyYOffset = -2, maxLowDragonflyYOffset = 5;
+        float flyXOffset = Random.Range(minDragonflyXOffset, maxDragonflyXOffset);
+        float flyHighYOffset = Random.Range(minHighDragonflyYOffset, maxHighDragonflyYOffset);
+        float flyLowYOffset = Random.Range(minLowDragonflyYOffset, maxLowDragonflyYOffset);
+
+        int highChance = Random.Range(1, 5);
+        Vector3 offset;
+
+        if (highChance != 1) //80% chance to spawn above flies
+
+        {
+            offset = new Vector3(flyXOffset, flyHighYOffset);
+        }
+        else //20% chance to spawn with flies
+        {
+            offset = new Vector3(flyXOffset, flyLowYOffset);
+        }
+
+        Instantiate(dragonflyPrefab, position + offset, Quaternion.identity);
     }
 
     private void SpawnLevelPart()
@@ -196,12 +224,12 @@ public class LevelGenerator : MonoBehaviour
         Vector2 offset;
 
         //Range of the possible distances between a lilypad and the last spawned level part
-        int minLilypadXOffset = 15, maxLilypadXOffset = 35, minLilypadYOffset = -1, maxLilypadYOffset = 2;
+        int minLilypadXOffset = 15, maxLilypadXOffset = 30, minLilypadYOffset = 0, maxLilypadYOffset = 2;
         int lilypadXOffset = Random.Range(minLilypadXOffset, maxLilypadXOffset), lilypadYOffset = Random.Range(minLilypadYOffset, maxLilypadYOffset);
         Vector2 lilypadOffset = new Vector2(lilypadXOffset,lilypadYOffset);
 
         //Range of the possible distances between a log and the last spawned level part
-        int minLogXOffset = 25, maxLogXOffset = 40, minLogYOffset = -2, maxLogYOffset = 0;
+        int minLogXOffset = 25, maxLogXOffset = 35, minLogYOffset = -2, maxLogYOffset = 0;
         int logXOffset = Random.Range(minLogXOffset, maxLogXOffset), logYOffset = Random.Range(minLogYOffset, maxLogYOffset);
         Vector2 logOffset = new Vector2(logXOffset, logYOffset);
 
