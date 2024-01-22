@@ -31,10 +31,11 @@ public class GrapplePointDetector : MonoBehaviour
     //End the grapple when the frog gets too close
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (tongueLauncher.grappleTarget != null && (collision.gameObject == tongueLauncher.grappleTarget 
-            || (collision.gameObject.transform.parent == tongueLauncher.grappleTarget.transform && collision.gameObject.tag != "NoSwim" && collision.gameObject.layer != 8)))
+        if (tongueLauncher.grappleTarget != null && collision.gameObject.tag != "NoSwim" && collision.gameObject.layer != 8 && 
+            (collision.gameObject == tongueLauncher.grappleTarget || collision.gameObject.transform.parent == tongueLauncher.grappleTarget.transform))
         {
             touchingObjects.Add(collision.gameObject);
+            closeToGrapplePoint = true;
         }
     }
     private void OnTriggerExit2D(Collider2D collision)

@@ -21,9 +21,11 @@ public class PredatorEvents : MonoBehaviour
     public int lowerScoreLimit = 50;
     private int checkInterval = 6;
     private bool cooldown = false;
+    bool spawned;
 
     private int warningTime = 4;
     private bool warningActive = false;
+    private GameObject currentPredator;
     private GameObject warning;
     private Rect cameraRect;
     private Rect shrunkCameraRect;
@@ -38,8 +40,8 @@ public class PredatorEvents : MonoBehaviour
         yield return new WaitForSeconds(checkInterval);
         if (sc.score > lowerScoreLimit && !cooldown)
         {
-            int chance = UnityEngine.Random.Range(1, 5);
-            if (chance == 1) //25% chance
+            int chance = UnityEngine.Random.Range(1, 2);
+            if (chance == 1) //33% chance
             {
                 yield return new WaitForSeconds(warningTime);
                 int eventChosen = UnityEngine.Random.Range(1, 3);
@@ -68,10 +70,11 @@ public class PredatorEvents : MonoBehaviour
         Warning();
         yield return new WaitForSeconds(warningTime);
 
-        GameObject fishSwarm = Instantiate(fishSwarmPrefab, predatorSpawnPosition, Quaternion.identity);
+        currentPredator = Instantiate(fishSwarmPrefab, predatorSpawnPosition, Quaternion.identity);
+        spawned = true;
 
         //Destroy the fish after 15 seconds
-        Destroy(fishSwarm, 15);
+        Destroy(currentPredator, 15);
     }
     private IEnumerator BirdEvent()
     {
@@ -84,18 +87,17 @@ public class PredatorEvents : MonoBehaviour
         Warning();
         yield return new WaitForSeconds(warningTime);
 
-        GameObject bird = Instantiate(birdPrefab, predatorSpawnPosition, Quaternion.identity);
+        currentPredator = Instantiate(birdPrefab, predatorSpawnPosition, Quaternion.identity);
+        spawned = true;
 
         //Destroy the fish after 15 seconds
-        Destroy(bird, 15);
+        Destroy(currentPredator, 15);
 
     }
     private void Warning()
     {
         warning = Instantiate(warningPrefab, predatorSpawnPosition, Quaternion.identity);
-        StartCoroutine(WarningDuration());
-
-        Destroy (warning, warningTime);
+        warningActive = true;
     }
     void Update()
     {
@@ -144,32 +146,38 @@ public class PredatorEvents : MonoBehaviour
             float shrunkHeight = cameraRect.height * yShrink;
             shrunkCameraRect = new Rect(smoothedCenter.x - shrunkWidth / 2, smoothedCenter.y - shrunkHeight / 2, shrunkWidth, shrunkHeight);
 
-            //Finally, set the warning position to be where the predator is going to spawn from, clamped within the shrunk rectangle
-            Vector3 warningTarget = new Vector3(
-            Mathf.Clamp(predatorSpawnPosition.x, shrunkCameraRect.xMin, shrunkCameraRect.xMax),
-            Mathf.Clamp(predatorSpawnPosition.y, shrunkCameraRect.yMin, shrunkCameraRect.yMax),0);
+            //Finally, set the warning position to be where the predator is going to spawn from (before it's spawned), and then to where the predator is. All clamped within the shrunk rectangle
+            Vector3 warningTarget;
+            if (spawned)
+            {
+                warningTarget = new Vector3(
+              Mathf.Clamp(currentPredator.transform.position.x, shrunkCameraRect.xMin, shrunkCameraRect.xMax),
+              Mathf.Clamp(currentPredator.transform.position.y, shrunkCameraRect.yMin, shrunkCameraRect.yMax),0);
+            }
+            else
+            {
+              warningTarget = new Vector3(
+              Mathf.Clamp(predatorSpawnPosition.x, shrunkCameraRect.xMin, shrunkCameraRect.xMax),
+              Mathf.Clamp(predatorSpawnPosition.y, shrunkCameraRect.yMin, shrunkCameraRect.yMax), 0);
+            }
 
             warning.transform.position = Vector3.Lerp(warning.transform.position, warningTarget, 100 * Time.deltaTime);
+
+            //When the predator enters the cameraview, stop the warning
+            if (spawned && currentPredator.transform.position.x < (topRight.x + 5) && currentPredator.transform.position.x > (bottomLeft.x - 5))
+            {
+                warningActive = false;
+                Destroy(warning);
+            }
         }
     }
-    IEnumerator WarningDuration()
-    {
-        warningActive = true;
-        yield return new WaitForSeconds(warningTime);
-        warningActive = false;
-    }
-
     IEnumerator Cooldown(int cooldownTime)
     {
         cooldown = true;
         yield return new WaitForSeconds(cooldownTime);
+        spawned = false;
         fishEvent = false;
         birdEvent = false;
         cooldown = false;
-    }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(new Vector3(shrunkCameraRect.center.x, cameraRect.center.y, 0), new Vector3(cameraRect.size.x, cameraRect.size.y, 0));
     }
 }

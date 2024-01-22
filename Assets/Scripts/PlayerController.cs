@@ -298,8 +298,8 @@ public class PlayerController : MonoBehaviour
         //if slug, add 20
         else if (collision.gameObject.transform.parent.name == "Slug(Clone)")
         {
-            scoreController.SpawnFloatingText(20, transform.position);
-            scoreController.Score(20);
+            scoreController.SpawnFloatingText(15, transform.position);
+            scoreController.Score(15);
         }
 
         //if dragonfly, add 25

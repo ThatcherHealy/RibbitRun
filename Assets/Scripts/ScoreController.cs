@@ -16,7 +16,6 @@ public class ScoreController : MonoBehaviour
     public Canvas canvas;
     public PlayerController playerController;
     public TextMeshPro finalScoreText;
-
     private void Start()
     {
         scoreText.enabled = false;
