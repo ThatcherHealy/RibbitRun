@@ -12,7 +12,7 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private List<Transform> preyList;
     [SerializeField] private GameObject player;
     [SerializeField] private Transform waterPrefab;
-    [SerializeField] private Transform mudPrefab;
+    [SerializeField] private Transform[] riverbedPrefabs;
     [SerializeField] private Transform cattailPrefab;
     [SerializeField] private Transform emptyTransformPrefab;
     [SerializeField] private Transform slugPrefab;
@@ -22,22 +22,22 @@ public class LevelGenerator : MonoBehaviour
     private const float levelPartDistance = 200f;
     private const float preySpawnDistance = 150f;
     private const float waterSpawnDistance = 200f;
-    private const float mudSpawnDistance = 250f;
+    private const float riverbedSpawnDistance = 250f;
     private const float cattailSpawnDistance = 200f;
 
     private Vector3 lastLevelEndPosition;
     private Vector3 lastPreyEndPosition;
     private Vector3 lastWaterEndPosition;
-    private Vector3 lastMudEndPosition;
+    private Vector3 lastRiverbedEndPosition;
     private Vector3 lastCattailEndPosition;
 
     private int swarmSize;
     private int levelPartCalc;
     Transform lastPreyTransform;
     Transform lastWaterTransform;
-    Transform lastMudTransform;
+    Transform lastRiverbedTransform;
     Transform lastCattailTransform;
-    private float waterLevel = -3.44f;
+    const float waterLevel = -3.44f;
     public enum Biome {Bog,Cypress,Polluted};
     Biome currentBiome;
 
@@ -47,13 +47,13 @@ public class LevelGenerator : MonoBehaviour
         lastLevelEndPosition = (Vector2)startEndPoint.position;
         lastPreyEndPosition = (Vector2)startPreyEndPoint.position;
         lastWaterEndPosition = new Vector2(startEndPoint.position.x - 158.235f, waterLevel);
-        lastMudEndPosition = (Vector2)startEndPoint.position - new Vector2(41f, 45.7f);
+        lastRiverbedEndPosition = (Vector2)startEndPoint.position - new Vector2(41f, 45.7f);
         lastCattailEndPosition = Vector3.zero;
 
         int startingSpawnMud = 3;
         for (int i = 0; i < startingSpawnMud; i++)
         {
-            SpawnMud();
+            SpawnRiverbeds();
         }
         int startingSpawnWater = 1;
         for (int i = 0; i < startingSpawnWater; i++)
@@ -74,9 +74,9 @@ public class LevelGenerator : MonoBehaviour
     private void FixedUpdate()
     {
         //Spawns objects when the player reaches a specified distance away from the last one
-        if (Vector2.Distance(player.transform.position, lastMudEndPosition) < mudSpawnDistance)
+        if (Vector2.Distance(player.transform.position, lastRiverbedEndPosition) < riverbedSpawnDistance)
         {
-            SpawnMud();
+            SpawnRiverbeds();
         }
         if (Vector2.Distance(player.transform.position, lastWaterEndPosition) < waterSpawnDistance)
         {
@@ -123,19 +123,20 @@ public class LevelGenerator : MonoBehaviour
 
         return lastCattailTransform;
     }
-    private void SpawnMud()
+    private void SpawnRiverbeds()
     {
         Transform lastMudTransform;
 
         Vector2 mudOffset = new Vector2(82f, 0);
+        int chosen = Random.Range(0, riverbedPrefabs.Length);
 
-        lastMudTransform = SpawnMud(mudPrefab, (Vector2)lastMudEndPosition + mudOffset);
-        lastMudEndPosition = lastMudTransform.position;
+        lastMudTransform = SpawnRiverbed(riverbedPrefabs[chosen], (Vector2)lastRiverbedEndPosition + mudOffset);
+        lastRiverbedEndPosition = lastMudTransform.position;
     }
-    private Transform SpawnMud(Transform mud, Vector3 mudSpawnPosition)
+    private Transform SpawnRiverbed(Transform mud, Vector3 mudSpawnPosition)
     {
-        lastMudTransform = Instantiate(mud, mudSpawnPosition, Quaternion.identity);
-        return lastMudTransform;
+        lastRiverbedTransform = Instantiate(mud, mudSpawnPosition, Quaternion.identity);
+        return lastRiverbedTransform;
     }
     private void SpawnWater()
     {

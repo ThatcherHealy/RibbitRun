@@ -45,12 +45,12 @@ public class BirdSwoopBehavior : MonoBehaviour
         else
         {
             //Makes the bird swoop down when it is within 40x from the player
-            if (Vector3.Distance(new Vector3(transform.position.x,0,0), new Vector3(player.position.x,0,0)) < 40)
+            if (Vector3.Distance(new Vector3(transform.position.x,0,0), new Vector3(player.position.x,0,0)) < 50)
             {
                 //Aligns the y position of the beak exactly to the frog's y position when the frog is above the bird
                 if (player.position.y > transform.position.y)
                 {
-                    lerpedPosition = Vector3.Lerp(transform.position, player.position, Time.deltaTime * iSpeed + 5);
+                    lerpedPosition = Vector3.Lerp(transform.position, player.position, Time.deltaTime * (iSpeed + 2));
                 }
                 //Slowly moves the y position of the beak  to the frog's y position when the frog is below the bird
                 else

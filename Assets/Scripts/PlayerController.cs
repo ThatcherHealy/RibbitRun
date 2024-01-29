@@ -123,12 +123,12 @@ public class PlayerController : MonoBehaviour
     {
         if (jump) 
         {
-            if (isSwimming)
+            if (isSwimming) //Swim
             {
                 rb.velocity *= 0.3f;
                 power = 4.5f;
             }
-            else if (!isSwimming && !tongueLine.isGrappling)
+            else if (!isSwimming && !tongueLine.isGrappling) //Jump
             {
                 rb.velocity = Vector2.zero;
                 power = 5f;
@@ -202,7 +202,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.layer == 7 || collision.gameObject.layer == 12)
         {
-            AddPreyScores(collision);
+            AddPreyScore(collision);
 
             //When grappling to prey, continue momentum and destroy prey
             if (tongueLine.isGrappling && tongueLauncher.grappleTarget != null && collision.transform.parent == tongueLauncher.grappleTarget.transform)
@@ -285,28 +285,30 @@ public class PlayerController : MonoBehaviour
             isSwimming = true;
     }
 
-    void AddPreyScores(Collider2D collision)
+    void AddPreyScore(Collider2D collision)
     {
-        //if fly or strider, add 10
-        if (collision.transform.parent != null &&
-            collision.gameObject.transform.parent.name == "Fly(Clone)" || collision.gameObject.transform.parent.name == "WaterStrider(Clone)")
+        if (collision.transform.parent != null)
         {
-            scoreController.SpawnFloatingText(10, transform.position);
-            scoreController.Score(10);
-        }
+            //if fly or waterstrider, add 10
+            if (collision.gameObject.transform.parent.name == "Fly(Clone)" || collision.gameObject.transform.parent.name == "WaterStrider(Clone)")
+            {
+                scoreController.SpawnFloatingText(10, transform.position);
+                scoreController.Score(10);
+            }
 
-        //if slug, add 20
-        else if (collision.gameObject.transform.parent.name == "Slug(Clone)")
-        {
-            scoreController.SpawnFloatingText(15, transform.position);
-            scoreController.Score(15);
-        }
+            //if slug, add 20
+            else if (collision.gameObject.transform.parent.name == "Slug(Clone)")
+            {
+                scoreController.SpawnFloatingText(15, transform.position);
+                scoreController.Score(15);
+            }
 
-        //if dragonfly, add 25
-        else if (collision.gameObject.transform.parent.name == "Dragonfly(Clone)")
-        {
-            scoreController.SpawnFloatingText(25, transform.position);
-            scoreController.Score(25);
+            //if dragonfly, add 25
+            else if (collision.gameObject.transform.parent.name == "Dragonfly(Clone)")
+            {
+                scoreController.SpawnFloatingText(25, transform.position);
+                scoreController.Score(25);
+            }
         }
     }
 }

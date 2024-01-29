@@ -16,6 +16,7 @@ public class ScoreController : MonoBehaviour
     public Canvas canvas;
     public PlayerController playerController;
     public TextMeshPro finalScoreText;
+    public TextMeshPro highscoreText;
     private void Start()
     {
         scoreText.enabled = false;
@@ -43,6 +44,8 @@ public class ScoreController : MonoBehaviour
         {
             scoreText.text = new string(" ");
             finalScoreText.text = score.ToString();
+            CheckHighscore(score);
+            highscoreText.text = PlayerPrefs.GetInt("Highscore", 0).ToString();
         }
     }
 
@@ -51,6 +54,14 @@ public class ScoreController : MonoBehaviour
         //Updates the score by the amount inputted
         score += scoreChange;
         return score;
+    }
+
+    private void CheckHighscore(int finalScore)
+    {
+        if (finalScore > PlayerPrefs.GetInt("Highscore", 0))
+        {
+            PlayerPrefs.SetInt("Highscore", finalScore);
+        }
     }
 
     public void SpawnFloatingText(int value, Vector3 position)

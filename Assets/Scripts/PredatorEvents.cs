@@ -19,11 +19,12 @@ public class PredatorEvents : MonoBehaviour
     private int directionChance;
     private bool birdEvent;
     public int lowerScoreLimit = 50;
-    private int checkInterval = 6;
+    private int checkInterval = 5;
+    int max, startingValue = 4;
     private bool cooldown = false;
     bool spawned;
 
-    private int warningTime = 4;
+    private int warningTime = 3;
     private bool warningActive = false;
     private GameObject currentPredator;
     private GameObject warning;
@@ -33,6 +34,7 @@ public class PredatorEvents : MonoBehaviour
     void Start()
     {
         StartCoroutine(DetermineSpawnTime());
+        max = startingValue;
     }
 
     IEnumerator DetermineSpawnTime()
@@ -40,10 +42,10 @@ public class PredatorEvents : MonoBehaviour
         yield return new WaitForSeconds(checkInterval);
         if (sc.score > lowerScoreLimit && !cooldown)
         {
-            int chance = UnityEngine.Random.Range(1, 2);
+            int chance = UnityEngine.Random.Range(1, max);
             if (chance == 1) //33% chance
             {
-                yield return new WaitForSeconds(warningTime);
+                max = startingValue;
                 int eventChosen = UnityEngine.Random.Range(1, 3);
                 if (eventChosen == 1)
                 {
@@ -53,6 +55,10 @@ public class PredatorEvents : MonoBehaviour
                 {
                     StartCoroutine(BirdEvent());
                 }
+            }
+            else
+            {
+                max--;
             }
         }
         //Loop
@@ -66,6 +72,7 @@ public class PredatorEvents : MonoBehaviour
         StartCoroutine(Cooldown(fishCooldownTime));
 
         directionChance = UnityEngine.Random.Range(1, 3);
+        SetFishDirection();
 
         Warning();
         yield return new WaitForSeconds(warningTime);
@@ -83,6 +90,7 @@ public class PredatorEvents : MonoBehaviour
         StartCoroutine(Cooldown(birdCooldownTime));
 
         directionChance = UnityEngine.Random.Range(1, 3);
+        SetFishDirection();
 
         Warning();
         yield return new WaitForSeconds(warningTime);
@@ -99,10 +107,7 @@ public class PredatorEvents : MonoBehaviour
         warning = Instantiate(warningPrefab, predatorSpawnPosition, Quaternion.identity);
         warningActive = true;
     }
-    void Update()
-    {
-        SetFishDirection();
-    }
+
     void FixedUpdate() 
     {
         SetWarningPosition();

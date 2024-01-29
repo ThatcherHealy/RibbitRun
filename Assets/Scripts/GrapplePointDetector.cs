@@ -7,18 +7,20 @@ public class GrapplePointDetector : MonoBehaviour
     public TongueLauncher tongueLauncher;
     public TongueLine tongueLine;
     public bool closeToGrapplePoint;
-    HashSet<GameObject> touchingObjects = new HashSet<GameObject>();
+    public HashSet<GameObject> touchingObjects = new();
+    Collider2D colliderParentChildCollider;
+    public bool bugHit;
 
     private void Update()
     {
-        if (touchingObjects.Count > 0 || Vector2.Distance(transform.position, tongueLauncher.grapplePoint) < 2)
+        if (touchingObjects.Count > 0)
         {
-            closeToGrapplePoint = true;
+            Detatch();
         }
 
-        else if (touchingObjects.Count == 0)
+        else if (touchingObjects.Count == 0 && !bugHit)
         {
-            closeToGrapplePoint= false;
+            closeToGrapplePoint = false;
         }
 
         //Dodges a bug where destroyed flies would continue to add to the touchingObjects
@@ -27,19 +29,41 @@ public class GrapplePointDetector : MonoBehaviour
             touchingObjects.Clear();
         }
     }
+    void Detatch()
+    {
+        closeToGrapplePoint = true;
+    }
 
     //End the grapple when the frog gets too close
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (tongueLauncher.grappleTarget != null && collision.gameObject.tag != "NoSwim" && collision.gameObject.layer != 8 && 
-            (collision.gameObject == tongueLauncher.grappleTarget || collision.gameObject.transform.parent == tongueLauncher.grappleTarget.transform))
+        if(tongueLauncher.grappleTarget != null && tongueLauncher.grappleTarget.layer != 8)
         {
-            touchingObjects.Add(collision.gameObject);
-            closeToGrapplePoint = true;
+            if ((collision.gameObject.tag != "NoSwim" && collision.gameObject.layer != 8 && tongueLauncher.grappleTarget != null && tongueLauncher.grappleTarget.transform != null)
+            && (collision.gameObject.transform == tongueLauncher.grappleTarget.transform))
+            {
+                touchingObjects.Add(collision.gameObject);
+            }
+        }
+        else 
+        {
+            if (tongueLauncher.grappleTarget != null && tongueLauncher.grappleTarget.transform.parent != null && collision.gameObject.transform.parent != null
+            && collision.gameObject.transform.parent == tongueLauncher.grappleTarget.transform.parent)
+            {
+                colliderParentChildCollider = collision.gameObject.transform.parent.GetComponentInChildren<Collider2D>();
+                touchingObjects.Add(colliderParentChildCollider.gameObject);
+                bugHit = true;
+                Detatch();
+            }
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-         touchingObjects.Remove(collision.gameObject);   
+        touchingObjects.Remove(collision.gameObject);
+
+        if(colliderParentChildCollider != null)
+        {
+            touchingObjects.Remove(colliderParentChildCollider.gameObject);
+        }
     }
 }

@@ -63,7 +63,6 @@ public class TongueLauncher : MonoBehaviour
     [HideInInspector] public Vector2 addedForce;
     [SerializeField] private LayerMask ignoreLayer;
 
-
     private void Start()
     {
         tongueLine.enabled = false;
@@ -150,7 +149,7 @@ public class TongueLauncher : MonoBehaviour
     {
         if (grapplePointIdentified && grappleTarget != null) //Switch the grapple point from a point on an object to the center of that object if it is prey
         {
-            if (grappleTarget.transform.gameObject.layer == 7 || grappleTarget.transform.gameObject.layer == 12 || grappleTarget.transform.gameObject.layer == 8) //Prey
+            if ((grappleTarget.transform.gameObject.layer == 7 || grappleTarget.transform.gameObject.layer == 12 || grappleTarget.transform.gameObject.layer == 8))
             {
                 grapplePoint = grappleTarget.transform.position;
             }
@@ -198,7 +197,7 @@ public class TongueLauncher : MonoBehaviour
             tongueLine.enabled = false;
             m_springJoint2D.enabled = false;
             rb.gravityScale = 1.2f;
-            tongueLine.isGrappling = false;
+            grapplePointDetector.bugHit = false;
         }
     }
 
@@ -266,12 +265,19 @@ public class TongueLauncher : MonoBehaviour
 
                     int strength;
                     rb.gravityScale = 0;
+                    strength = 20;
 
-                    if (grappleTarget != null && grappleTarget.layer == 7) //Makes the frog dash through prey
-                        strength = 10;
+                    //Set a force towards the grapple target for detectors, and towards grapple point for everything else
+                    if (grapplePointIdentified && grappleTarget != null && (grappleTarget.transform.gameObject.layer == 7 || grappleTarget.transform.gameObject.layer == 12 || grappleTarget.transform.gameObject.layer == 8))
+                    {
+                        addedForce = ((Vector2)grappleTarget.transform.position - (Vector2)transform.position).normalized * strength;
+
+                    }
                     else
-                        strength = 20;
-                    addedForce = (grapplePoint - (Vector2)transform.position).normalized * strength;
+                    {
+                        addedForce = (grapplePoint - (Vector2)transform.position).normalized * strength;
+                    }
+
                     rb.velocity = addedForce;
 
                     break;
