@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LineRenderer swimLr;
     [SerializeField] private CircleCollider2D circleCollider;
     [SerializeField] private ScoreController scoreController;
+    [SerializeField] private PauseButtons pauseScript;
     [SerializeField] private LayerMask ground;
     [SerializeField] GameObject tongueRangeCircle;
 
@@ -49,7 +50,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (!dead) 
+        if (!dead && !pauseScript.pause) 
         {
             DetectInputs();
         }
@@ -204,7 +205,7 @@ public class PlayerController : MonoBehaviour
         {
             AddPreyScore(collision);
 
-            //When grappling to prey, continue momentum and destroy prey
+            //When grappling to prey continue momentum and destroy prey
             if (tongueLine.isGrappling && tongueLauncher.grappleTarget != null && collision.transform.parent == tongueLauncher.grappleTarget.transform)
             {
                 tongueLauncher.grapplePointIdentified = false;
@@ -214,7 +215,7 @@ public class PlayerController : MonoBehaviour
                 if (collision.gameObject.layer == 12)
                     power = 2;
 
-                rb.AddForce(tongueLauncher.addedForce.normalized * power * rb.mass, ForceMode2D.Impulse);
+                rb.AddForce(power * rb.mass * tongueLauncher.addedForce.normalized, ForceMode2D.Impulse);
 
                 //Remove the aim line when the frog eats prey
                 tongueLauncher.lr.positionCount = 0;
@@ -224,13 +225,9 @@ public class PlayerController : MonoBehaviour
                 tongueLine.isGrappling = false;
                 tongueLauncher.grapplePointIdentified = false;
                 tongueLauncher.grappleTarget = null;
+            }
 
-                Destroy(collision.transform.parent.gameObject);
-            }
-            else
-            {
-                Destroy(collision.transform.parent.gameObject);
-            }
+            Destroy(collision.transform.parent.gameObject);
         }
         else if (collision.gameObject.layer == 11)
         {
@@ -296,8 +293,8 @@ public class PlayerController : MonoBehaviour
                 scoreController.Score(10);
             }
 
-            //if slug, add 20
-            else if (collision.gameObject.transform.parent.name == "Slug(Clone)")
+            //if slug or snail, add 15
+            else if (collision.gameObject.transform.parent.name == "Slug(Clone)" || collision.gameObject.transform.parent.name == "Snail(Clone)")
             {
                 scoreController.SpawnFloatingText(15, transform.position);
                 scoreController.Score(15);

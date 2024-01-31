@@ -7,6 +7,7 @@ public class TongueLauncher : MonoBehaviour
     public TongueLine tongueLine;
     public GrapplePointDetector grapplePointDetector;
     public PlayerController playerController;
+    public PauseButtons pauseScript;
 
     [Header("Layers Settings:")]
     [SerializeField] private bool grappleToAll = false;
@@ -72,7 +73,7 @@ public class TongueLauncher : MonoBehaviour
 
     private void Update()
     {
-        if (!playerController.dead)
+        if (!playerController.dead && !pauseScript.pause)
         {
             GetTouch();
         }
@@ -135,12 +136,13 @@ public class TongueLauncher : MonoBehaviour
     {
         //When aiming, slow down time
         if ((touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
-            && !tongueLine.isGrappling && !playerController.isGrounded && !playerController.isSwimming)
+            && !tongueLine.isGrappling && !playerController.isGrounded && !playerController.isSwimming
+            && !pauseScript.pause)
         {
             touchEnded = true;
             Time.timeScale = 0.3f;
         }
-        else if (!playerController.dead) //Resume time when tongue is fired or when the player is grounded
+        else if (!playerController.dead && !pauseScript.pause) //Resume time when tongue is fired or when the player is grounded
         {
             Time.timeScale = 1;
         }

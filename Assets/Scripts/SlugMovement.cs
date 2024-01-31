@@ -50,7 +50,6 @@ public class SlugMovement : MonoBehaviour
     {
         FixSpriteRotation();
         StickToTargetPoint();
-        ApplyGravity();
         RotateTowardsTargetCenter();
         Movement();
     }
@@ -90,17 +89,6 @@ public class SlugMovement : MonoBehaviour
                     rb.AddForceAtPosition(transformToPoint.normalized * gravityStrength, targetPoint, ForceMode2D.Force);
                 }
             }
-        }
-    }
-    void ApplyGravity()
-    {
-        if (targetObject != null)
-        {
-            // Calculate the direction of gravity towards the target
-            Vector2 gravityDirection = (targetPoint - (Vector2)transform.position).normalized;
-
-            // Apply gravity force
-            rb.AddForce(gravityDirection * gravityStrength);
         }
     }
     void RotateTowardsTargetCenter()
