@@ -29,7 +29,8 @@ public class TongueLauncher : MonoBehaviour
 
     [Header("Distance:")]
     [SerializeField] private bool hasMaxDistance = false;
-    [SerializeField] private float maxDistance = 20;
+    [SerializeField] private float maxDistance = 30;
+    private float shrunkDistance = 8;
 
     private enum LaunchType
     {
@@ -83,6 +84,15 @@ public class TongueLauncher : MonoBehaviour
         TransitionAimLine();
         DetatchWhenClose();
         Launch();
+
+        if (playerController.dried)
+        {
+            maxDistance = shrunkDistance;
+        }
+        else
+        {
+            maxDistance = 30;
+        }
     }
     private void FixedUpdate()
     {
@@ -184,6 +194,10 @@ public class TongueLauncher : MonoBehaviour
             //Set the aim line to a clamped vector of the distance between the first click on the screen to the current dragging position
             lr.positionCount = 2;
             int maxDrag = 12;
+            if (playerController.dried)
+            {
+                maxDrag = 4;
+            }
             secondLinePoint = transform.position + (Vector3.ClampMagnitude((dragStartPosition - dragEndPosition), maxDrag));
 
             //Create the line

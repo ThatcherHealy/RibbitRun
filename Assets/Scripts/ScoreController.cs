@@ -9,6 +9,7 @@ public class ScoreController : MonoBehaviour
     public TextMeshPro scoreText;
     private float xDistance;
     private float farthestDistance = 0;
+    private float totalDistanceTravelled;
     public Transform playerPosition;
     public int score = 0;
     public TextMeshPro floatingText;
@@ -17,6 +18,9 @@ public class ScoreController : MonoBehaviour
     public PlayerController playerController;
     public TextMeshPro finalScoreText;
     public TextMeshPro highscoreText;
+    public TextMeshPro drownedFinalScoreText;
+    public TextMeshPro drownedHighscoreText;
+
     private void Start()
     {
         scoreText.enabled = false;
@@ -25,7 +29,9 @@ public class ScoreController : MonoBehaviour
     {
         //Starts displaying score after the player gets a point
         if (score > 0)
+        {
             scoreText.enabled = true;
+        }
 
         scoreText.text = score.ToString();
 
@@ -37,11 +43,17 @@ public class ScoreController : MonoBehaviour
         {
             farthestDistance = xDistance;
             Score(1);
+            totalDistanceTravelled += 1;
         }
 
         //When the player dies, display their final score
         if (playerController.dead)
         {
+            if (playerController.drowned) 
+            {
+                finalScoreText = drownedFinalScoreText;
+                highscoreText = drownedHighscoreText;
+            }
             scoreText.text = new string(" ");
             finalScoreText.text = score.ToString();
             CheckHighscore(score);

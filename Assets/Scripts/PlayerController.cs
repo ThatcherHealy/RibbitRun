@@ -35,7 +35,10 @@ public class PlayerController : MonoBehaviour
     public bool isGrounded;
     public bool jump;
     public bool isSwimming;
-    public bool dead = false;
+    public bool dead;
+    public bool eaten;
+    public bool drowned;
+    public bool dried;
 
 
     [Header("Settings")]
@@ -53,6 +56,14 @@ public class PlayerController : MonoBehaviour
         if (!dead && !pauseScript.pause) 
         {
             DetectInputs();
+        }
+        if (dried)
+        {
+            maxDrag = 1.5f;
+        }
+        else
+        {
+            maxDrag = 5;
         }
     }
     private void FixedUpdate()
@@ -164,8 +175,13 @@ public class PlayerController : MonoBehaviour
 
         if (skipToJump)
             dragStartPos = tongueLauncher.dragStartPosition;
-        
-        secondLinePoint = transform.position + (Vector3.ClampMagnitude((dragStartPos - draggingPos), maxDrag + 5));
+
+        int extraforce = 5;
+        if (dried)
+        {
+            extraforce = 2;
+        }
+        secondLinePoint = transform.position + (Vector3.ClampMagnitude((dragStartPos - draggingPos), maxDrag + extraforce));
         
         if (isSwimming)
         {
@@ -265,7 +281,10 @@ public class PlayerController : MonoBehaviour
 
         //When the player gets hit by a predator, they die
         if (collision.gameObject.tag == "Predator")
+        {
+            eaten = true;
             dead = true;
+        }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {

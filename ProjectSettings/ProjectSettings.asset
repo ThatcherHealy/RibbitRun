@@ -14,16 +14,9 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: DefaultCompany
   productName: Frog Game
-  defaultCursor:
-    fileID: 0
-  cursorHotspot:
-    x: 0
-    'y': 0
-  m_SplashScreenBackgroundColor:
-    r: 0.13725491
-    g: 0.12156863
-    b: 0.1254902
-    a: 1
+  defaultCursor: {fileID: 0}
+  cursorHotspot: {x: 0, y: 0}
+  m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
   m_ShowUnitySplashScreen: 1
   m_ShowUnitySplashLogo: 1
   m_SplashScreenOverlayOpacity: 1
@@ -37,20 +30,18 @@ PlayerSettings:
   m_SplashScreenBackgroundLandscapeUvs:
     serializedVersion: 2
     x: 0
-    'y': 0
+    y: 0
     width: 1
     height: 1
   m_SplashScreenBackgroundPortraitUvs:
     serializedVersion: 2
     x: 0
-    'y': 0
+    y: 0
     width: 1
     height: 1
   m_SplashScreenLogos: []
-  m_VirtualRealitySplashScreen:
-    fileID: 0
-  m_HolographicTrackingLossScreen:
-    fileID: 0
+  m_VirtualRealitySplashScreen: {fileID: 0}
+  m_HolographicTrackingLossScreen: {fileID: 0}
   defaultScreenWidth: 1920
   defaultScreenHeight: 1080
   defaultScreenWidthWeb: 960
@@ -62,7 +53,7 @@ PlayerSettings:
   mipStripping: 0
   numberOfMipsStripped: 0
   numberOfMipsStrippedPerMipmapLimitGroup: {}
-  m_StackTraceTypes: 1.00000001e+46
+  m_StackTraceTypes: fe0000000100000001000000010000000100000001000000
   iosShowActivityIndicatorOnLoading: -1
   androidShowActivityIndicatorOnLoading: -1
   iosUseCustomAppBackgroundBehavior: 0
@@ -156,7 +147,7 @@ PlayerSettings:
   enableOpenGLProfilerGPURecorders: 1
   useHDRDisplay: 0
   hdrBitDepth: 0
-  m_ColorGamuts: 0
+  m_ColorGamuts: 
   targetPixelDensity: 30
   resolutionScalingMode: 0
   resetResolutionOnWindowResize: 0
@@ -187,10 +178,10 @@ PlayerSettings:
   strictShaderVariantMatching: 0
   VertexChannelCompressionMask: 4054
   iPhoneSdkVersion: 988
-  iOSTargetOSVersionString: 12
+  iOSTargetOSVersionString: 12.0
   tvOSSdkVersion: 0
   tvOSRequireExtendedGameController: 0
-  tvOSTargetOSVersionString: 12
+  tvOSTargetOSVersionString: 12.0
   bratwurstSdkVersion: 0
   bratwurstTargetOSVersionString: 16.4
   uIPrerenderedIcon: 0
@@ -199,10 +190,8 @@ PlayerSettings:
   uIStatusBarHidden: 1
   uIExitOnSuspend: 0
   uIStatusBarStyle: 0
-  appleTVSplashScreen:
-    fileID: 0
-  appleTVSplashScreen2x:
-    fileID: 0
+  appleTVSplashScreen: {fileID: 0}
+  appleTVSplashScreen2x: {fileID: 0}
   tvOSSmallIconLayers: []
   tvOSSmallIconLayers2x: []
   tvOSLargeIconLayers: []
@@ -212,10 +201,8 @@ PlayerSettings:
   tvOSTopShelfImageWideLayers: []
   tvOSTopShelfImageWideLayers2x: []
   iOSLaunchScreenType: 0
-  iOSLaunchScreenPortrait:
-    fileID: 0
-  iOSLaunchScreenLandscape:
-    fileID: 0
+  iOSLaunchScreenPortrait: {fileID: 0}
+  iOSLaunchScreenLandscape: {fileID: 0}
   iOSLaunchScreenBackgroundColor:
     serializedVersion: 2
     rgba: 0
@@ -223,8 +210,7 @@ PlayerSettings:
   iOSLaunchScreenSize: 100
   iOSLaunchScreenCustomXibPath: 
   iOSLaunchScreeniPadType: 0
-  iOSLaunchScreeniPadImage:
-    fileID: 0
+  iOSLaunchScreeniPadImage: {fileID: 0}
   iOSLaunchScreeniPadBackgroundColor:
     serializedVersion: 2
     rgba: 0
@@ -268,8 +254,7 @@ PlayerSettings:
   AndroidTargetArchitectures: 1
   AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
-  androidSplashScreen:
-    fileID: 0
+  androidSplashScreen: {fileID: 0}
   AndroidKeystoreName: 
   AndroidKeyaliasName: 
   AndroidEnableArmv9SecurityFeatures: 0
@@ -281,10 +266,9 @@ PlayerSettings:
   androidUseLowAccuracyLocation: 0
   androidUseCustomKeystore: 0
   m_AndroidBanners:
-    - width: 320
-      height: 180
-      banner:
-        fileID: 0
+  - width: 320
+    height: 180
+    banner: {fileID: 0}
   androidGamepadSupportLevel: 0
   chromeosInputEmulation: 1
   AndroidMinifyRelease: 0
@@ -293,140 +277,140 @@ PlayerSettings:
   AndroidAppBundleSizeToValidate: 150
   m_BuildTargetIcons: []
   m_BuildTargetPlatformIcons:
-    - m_BuildTarget: iPhone
-      m_Icons:
-        - m_Textures: []
-          m_Width: 180
-          m_Height: 180
-          m_Kind: 0
-          m_SubKind: iPhone
-        - m_Textures: []
-          m_Width: 120
-          m_Height: 120
-          m_Kind: 0
-          m_SubKind: iPhone
-        - m_Textures: []
-          m_Width: 167
-          m_Height: 167
-          m_Kind: 0
-          m_SubKind: iPad
-        - m_Textures: []
-          m_Width: 152
-          m_Height: 152
-          m_Kind: 0
-          m_SubKind: iPad
-        - m_Textures: []
-          m_Width: 76
-          m_Height: 76
-          m_Kind: 0
-          m_SubKind: iPad
-        - m_Textures: []
-          m_Width: 120
-          m_Height: 120
-          m_Kind: 3
-          m_SubKind: iPhone
-        - m_Textures: []
-          m_Width: 80
-          m_Height: 80
-          m_Kind: 3
-          m_SubKind: iPhone
-        - m_Textures: []
-          m_Width: 80
-          m_Height: 80
-          m_Kind: 3
-          m_SubKind: iPad
-        - m_Textures: []
-          m_Width: 40
-          m_Height: 40
-          m_Kind: 3
-          m_SubKind: iPad
-        - m_Textures: []
-          m_Width: 87
-          m_Height: 87
-          m_Kind: 1
-          m_SubKind: iPhone
-        - m_Textures: []
-          m_Width: 58
-          m_Height: 58
-          m_Kind: 1
-          m_SubKind: iPhone
-        - m_Textures: []
-          m_Width: 29
-          m_Height: 29
-          m_Kind: 1
-          m_SubKind: iPhone
-        - m_Textures: []
-          m_Width: 58
-          m_Height: 58
-          m_Kind: 1
-          m_SubKind: iPad
-        - m_Textures: []
-          m_Width: 29
-          m_Height: 29
-          m_Kind: 1
-          m_SubKind: iPad
-        - m_Textures: []
-          m_Width: 60
-          m_Height: 60
-          m_Kind: 2
-          m_SubKind: iPhone
-        - m_Textures: []
-          m_Width: 40
-          m_Height: 40
-          m_Kind: 2
-          m_SubKind: iPhone
-        - m_Textures: []
-          m_Width: 40
-          m_Height: 40
-          m_Kind: 2
-          m_SubKind: iPad
-        - m_Textures: []
-          m_Width: 20
-          m_Height: 20
-          m_Kind: 2
-          m_SubKind: iPad
-        - m_Textures: []
-          m_Width: 1024
-          m_Height: 1024
-          m_Kind: 4
-          m_SubKind: App Store
+  - m_BuildTarget: iPhone
+    m_Icons:
+    - m_Textures: []
+      m_Width: 180
+      m_Height: 180
+      m_Kind: 0
+      m_SubKind: iPhone
+    - m_Textures: []
+      m_Width: 120
+      m_Height: 120
+      m_Kind: 0
+      m_SubKind: iPhone
+    - m_Textures: []
+      m_Width: 167
+      m_Height: 167
+      m_Kind: 0
+      m_SubKind: iPad
+    - m_Textures: []
+      m_Width: 152
+      m_Height: 152
+      m_Kind: 0
+      m_SubKind: iPad
+    - m_Textures: []
+      m_Width: 76
+      m_Height: 76
+      m_Kind: 0
+      m_SubKind: iPad
+    - m_Textures: []
+      m_Width: 120
+      m_Height: 120
+      m_Kind: 3
+      m_SubKind: iPhone
+    - m_Textures: []
+      m_Width: 80
+      m_Height: 80
+      m_Kind: 3
+      m_SubKind: iPhone
+    - m_Textures: []
+      m_Width: 80
+      m_Height: 80
+      m_Kind: 3
+      m_SubKind: iPad
+    - m_Textures: []
+      m_Width: 40
+      m_Height: 40
+      m_Kind: 3
+      m_SubKind: iPad
+    - m_Textures: []
+      m_Width: 87
+      m_Height: 87
+      m_Kind: 1
+      m_SubKind: iPhone
+    - m_Textures: []
+      m_Width: 58
+      m_Height: 58
+      m_Kind: 1
+      m_SubKind: iPhone
+    - m_Textures: []
+      m_Width: 29
+      m_Height: 29
+      m_Kind: 1
+      m_SubKind: iPhone
+    - m_Textures: []
+      m_Width: 58
+      m_Height: 58
+      m_Kind: 1
+      m_SubKind: iPad
+    - m_Textures: []
+      m_Width: 29
+      m_Height: 29
+      m_Kind: 1
+      m_SubKind: iPad
+    - m_Textures: []
+      m_Width: 60
+      m_Height: 60
+      m_Kind: 2
+      m_SubKind: iPhone
+    - m_Textures: []
+      m_Width: 40
+      m_Height: 40
+      m_Kind: 2
+      m_SubKind: iPhone
+    - m_Textures: []
+      m_Width: 40
+      m_Height: 40
+      m_Kind: 2
+      m_SubKind: iPad
+    - m_Textures: []
+      m_Width: 20
+      m_Height: 20
+      m_Kind: 2
+      m_SubKind: iPad
+    - m_Textures: []
+      m_Width: 1024
+      m_Height: 1024
+      m_Kind: 4
+      m_SubKind: App Store
   m_BuildTargetBatching: []
   m_BuildTargetShaderSettings: []
   m_BuildTargetGraphicsJobs:
-    - m_BuildTarget: MacStandaloneSupport
-      m_GraphicsJobs: 0
-    - m_BuildTarget: Switch
-      m_GraphicsJobs: 0
-    - m_BuildTarget: MetroSupport
-      m_GraphicsJobs: 0
-    - m_BuildTarget: AppleTVSupport
-      m_GraphicsJobs: 0
-    - m_BuildTarget: BJMSupport
-      m_GraphicsJobs: 0
-    - m_BuildTarget: LinuxStandaloneSupport
-      m_GraphicsJobs: 0
-    - m_BuildTarget: PS4Player
-      m_GraphicsJobs: 0
-    - m_BuildTarget: iOSSupport
-      m_GraphicsJobs: 0
-    - m_BuildTarget: WindowsStandaloneSupport
-      m_GraphicsJobs: 0
-    - m_BuildTarget: XboxOnePlayer
-      m_GraphicsJobs: 0
-    - m_BuildTarget: LuminSupport
-      m_GraphicsJobs: 0
-    - m_BuildTarget: AndroidPlayer
-      m_GraphicsJobs: 0
-    - m_BuildTarget: WebGLSupport
-      m_GraphicsJobs: 0
+  - m_BuildTarget: MacStandaloneSupport
+    m_GraphicsJobs: 0
+  - m_BuildTarget: Switch
+    m_GraphicsJobs: 0
+  - m_BuildTarget: MetroSupport
+    m_GraphicsJobs: 0
+  - m_BuildTarget: AppleTVSupport
+    m_GraphicsJobs: 0
+  - m_BuildTarget: BJMSupport
+    m_GraphicsJobs: 0
+  - m_BuildTarget: LinuxStandaloneSupport
+    m_GraphicsJobs: 0
+  - m_BuildTarget: PS4Player
+    m_GraphicsJobs: 0
+  - m_BuildTarget: iOSSupport
+    m_GraphicsJobs: 0
+  - m_BuildTarget: WindowsStandaloneSupport
+    m_GraphicsJobs: 0
+  - m_BuildTarget: XboxOnePlayer
+    m_GraphicsJobs: 0
+  - m_BuildTarget: LuminSupport
+    m_GraphicsJobs: 0
+  - m_BuildTarget: AndroidPlayer
+    m_GraphicsJobs: 0
+  - m_BuildTarget: WebGLSupport
+    m_GraphicsJobs: 0
   m_BuildTargetGraphicsJobMode: []
   m_BuildTargetGraphicsAPIs:
-    - m_BuildTarget: AndroidPlayer
-      m_APIs: 150000000b000000
-      m_Automatic: 1
-    - m_BuildTarget: iOSSupport
-      m_APIs: 10000000
-      m_Automatic: 1
+  - m_BuildTarget: AndroidPlayer
+    m_APIs: 150000000b000000
+    m_Automatic: 1
+  - m_BuildTarget: iOSSupport
+    m_APIs: 10000000
+    m_Automatic: 1
   m_BuildTargetVRSettings: []
   m_DefaultShaderChunkSizeInMB: 16
   m_DefaultShaderChunkCount: 0
@@ -444,8 +428,8 @@ PlayerSettings:
   m_BuildTargetGroupLoadStoreDebugModeSettings: []
   m_BuildTargetNormalMapEncoding: []
   m_BuildTargetDefaultTextureCompressionFormat:
-    - m_BuildTarget: Android
-      m_Format: 3
+  - m_BuildTarget: Android
+    m_Format: 3
   playModeTestRunnerEnabled: 0
   runPlayModeTestAsEditModeTest: 0
   actionOnDotNetUnhandledException: 1
@@ -501,70 +485,38 @@ PlayerSettings:
   switchPublisherNames_13: 
   switchPublisherNames_14: 
   switchPublisherNames_15: 
-  switchIcons_0:
-    fileID: 0
-  switchIcons_1:
-    fileID: 0
-  switchIcons_2:
-    fileID: 0
-  switchIcons_3:
-    fileID: 0
-  switchIcons_4:
-    fileID: 0
-  switchIcons_5:
-    fileID: 0
-  switchIcons_6:
-    fileID: 0
-  switchIcons_7:
-    fileID: 0
-  switchIcons_8:
-    fileID: 0
-  switchIcons_9:
-    fileID: 0
-  switchIcons_10:
-    fileID: 0
-  switchIcons_11:
-    fileID: 0
-  switchIcons_12:
-    fileID: 0
-  switchIcons_13:
-    fileID: 0
-  switchIcons_14:
-    fileID: 0
-  switchIcons_15:
-    fileID: 0
-  switchSmallIcons_0:
-    fileID: 0
-  switchSmallIcons_1:
-    fileID: 0
-  switchSmallIcons_2:
-    fileID: 0
-  switchSmallIcons_3:
-    fileID: 0
-  switchSmallIcons_4:
-    fileID: 0
-  switchSmallIcons_5:
-    fileID: 0
-  switchSmallIcons_6:
-    fileID: 0
-  switchSmallIcons_7:
-    fileID: 0
-  switchSmallIcons_8:
-    fileID: 0
-  switchSmallIcons_9:
-    fileID: 0
-  switchSmallIcons_10:
-    fileID: 0
-  switchSmallIcons_11:
-    fileID: 0
-  switchSmallIcons_12:
-    fileID: 0
-  switchSmallIcons_13:
-    fileID: 0
-  switchSmallIcons_14:
-    fileID: 0
-  switchSmallIcons_15:
-    fileID: 0
+  switchIcons_0: {fileID: 0}
+  switchIcons_1: {fileID: 0}
+  switchIcons_2: {fileID: 0}
+  switchIcons_3: {fileID: 0}
+  switchIcons_4: {fileID: 0}
+  switchIcons_5: {fileID: 0}
+  switchIcons_6: {fileID: 0}
+  switchIcons_7: {fileID: 0}
+  switchIcons_8: {fileID: 0}
+  switchIcons_9: {fileID: 0}
+  switchIcons_10: {fileID: 0}
+  switchIcons_11: {fileID: 0}
+  switchIcons_12: {fileID: 0}
+  switchIcons_13: {fileID: 0}
+  switchIcons_14: {fileID: 0}
+  switchIcons_15: {fileID: 0}
+  switchSmallIcons_0: {fileID: 0}
+  switchSmallIcons_1: {fileID: 0}
+  switchSmallIcons_2: {fileID: 0}
+  switchSmallIcons_3: {fileID: 0}
+  switchSmallIcons_4: {fileID: 0}
+  switchSmallIcons_5: {fileID: 0}
+  switchSmallIcons_6: {fileID: 0}
+  switchSmallIcons_7: {fileID: 0}
+  switchSmallIcons_8: {fileID: 0}
+  switchSmallIcons_9: {fileID: 0}
+  switchSmallIcons_10: {fileID: 0}
+  switchSmallIcons_11: {fileID: 0}
+  switchSmallIcons_12: {fileID: 0}
+  switchSmallIcons_13: {fileID: 0}
+  switchSmallIcons_14: {fileID: 0}
+  switchSmallIcons_15: {fileID: 0}
   switchManualHTML: 
   switchAccessibleURLs: 
   switchLegalInformation: 
@@ -709,10 +661,8 @@ PlayerSettings:
   ps4IncludedModules: []
   ps4attribVROutputEnabled: 0
   monoEnv: 
-  splashScreenBackgroundSourceLandscape:
-    fileID: 0
-  splashScreenBackgroundSourcePortrait:
-    fileID: 0
+  splashScreenBackgroundSourceLandscape: {fileID: 0}
+  splashScreenBackgroundSourcePortrait: {fileID: 0}
   blurSplashScreenBackground: 1
   spritePackerPolicy: 
   webGLMemorySize: 32
@@ -738,7 +688,20 @@ PlayerSettings:
   webGLMemoryGeometricGrowthStep: 0.2
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    Android: UNITY_POST_PROCESSING_STACK_V2
+    Bratwurst: UNITY_POST_PROCESSING_STACK_V2
+    EmbeddedLinux: UNITY_POST_PROCESSING_STACK_V2
+    GameCoreXboxOne: UNITY_POST_PROCESSING_STACK_V2
+    Nintendo Switch: UNITY_POST_PROCESSING_STACK_V2
+    PS4: UNITY_POST_PROCESSING_STACK_V2
+    PS5: UNITY_POST_PROCESSING_STACK_V2
+    QNX: UNITY_POST_PROCESSING_STACK_V2
+    Stadia: UNITY_POST_PROCESSING_STACK_V2
+    Standalone: UNITY_POST_PROCESSING_STACK_V2
+    WebGL: UNITY_POST_PROCESSING_STACK_V2
+    XboxOne: UNITY_POST_PROCESSING_STACK_V2
+    tvOS: UNITY_POST_PROCESSING_STACK_V2
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
@@ -776,7 +739,7 @@ PlayerSettings:
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
-  metroCertificateNotAfter: 0
+  metroCertificateNotAfter: ddf016fdb8b9952c
   metroApplicationDescription: Frog Game
   wsaImages: {}
   metroTileShortName: 
@@ -788,16 +751,8 @@ PlayerSettings:
   metroLastRequiredScene: 0
   metroDefaultTileSize: 1
   metroTileForegroundText: 2
-  metroTileBackgroundColor:
-    r: 0.13333334
-    g: 0.17254902
-    b: 0.21568628
-    a: 0
-  metroSplashScreenBackgroundColor:
-    r: 0.12941177
-    g: 0.17254902
-    b: 0.21568628
-    a: 1
+  metroTileBackgroundColor: {r: 0.13333334, g: 0.17254902, b: 0.21568628, a: 0}
+  metroSplashScreenBackgroundColor: {r: 0.12941177, g: 0.17254902, b: 0.21568628, a: 1}
   metroSplashScreenUseBackgroundColor: 0
   platformCapabilities: {}
   metroTargetDeviceFamilies: {}
@@ -819,15 +774,14 @@ PlayerSettings:
   XboxOnePackageUpdateGranularity: 2
   XboxOneDescription: 
   XboxOneLanguage:
-    - enus
+  - enus
   XboxOneCapability: []
   XboxOneGameRating: {}
   XboxOneIsContentPackage: 0
   XboxOneEnhancedXboxCompatibilityMode: 0
   XboxOneEnableGPUVariability: 1
   XboxOneSockets: {}
-  XboxOneSplashScreen:
-    fileID: 0
+  XboxOneSplashScreen: {fileID: 0}
   XboxOneAllowedProductIds: []
   XboxOnePersistentLocalStorageSize: 0
   XboxOneXTitleMemory: 8
@@ -861,9 +815,7 @@ PlayerSettings:
   organizationId: twhl5
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
-  hmiLoadingImage:
-    fileID: 0
+  hmiLoadingImage: {fileID: 0}
   platformRequiresReadableAssets: 0
   virtualTexturingSupportEnabled: 0
   insecureHttpOption: 0
-  genesisOrgId: '2474378851927'

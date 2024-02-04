@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseButtons : MonoBehaviour
 {
@@ -23,5 +24,18 @@ public class PauseButtons : MonoBehaviour
         score.SetActive(true);
         pauseIcon.SetActive(true);
         Time.timeScale = 1;
+    }
+    public void Restart()
+    {
+        pause = false;
+        pauseMenu.SetActive(false);
+        score.SetActive(true);
+        pauseIcon.SetActive(true);
+        Time.timeScale = 1;
+        SceneManager.LoadScene("GameScene");
+    }
+    public void Home()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }

@@ -40,7 +40,7 @@ public class PredatorEvents : MonoBehaviour
     IEnumerator DetermineSpawnTime()
     {
         yield return new WaitForSeconds(checkInterval);
-        if (sc.score > lowerScoreLimit && !cooldown)
+        if (sc.score > lowerScoreLimit && !cooldown && !pc.dead)
         {
             int chance = UnityEngine.Random.Range(1, max);
             if (chance == 1) //33% chance
@@ -111,6 +111,15 @@ public class PredatorEvents : MonoBehaviour
     void FixedUpdate() 
     {
         SetWarningPosition();
+
+        if(pc.drowned) //Deactivate warning and predator when player drowns
+        {
+            if (warning != null)
+                warning.SetActive(false);
+
+            if (currentPredator != null)
+                currentPredator.SetActive(false);
+        }
     }
 
     void SetFishDirection() 
