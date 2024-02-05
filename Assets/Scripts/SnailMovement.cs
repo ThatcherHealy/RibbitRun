@@ -7,16 +7,16 @@ using UnityEngine;
 
 public class SnailMovement : MonoBehaviour
 {
+    [SerializeField] float gravityStrength = 3f; // Strength of gravity force
+    [SerializeField] GameObject sprite;
+    [SerializeField] PolygonCollider2D col;
+    public int direction;
 
     private GameObject targetObject; // Reference to the target GameObject
-    public float gravityStrength = 3f; // Strength of gravity force
-    public GameObject sprite;
     Collider2D targetCollider;
-    public PolygonCollider2D col;
     private Vector2 targetPoint;
     private Vector2 closestPoint;
     private Vector2 transformToPoint;
-    public int direction;
     private float speed;
     Rigidbody2D rb;
 

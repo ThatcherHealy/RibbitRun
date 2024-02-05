@@ -6,20 +6,22 @@ using UnityEngine.UI;
 
 public class ScoreController : MonoBehaviour
 {
-    public TextMeshPro scoreText;
+    public int score;
+
+    [SerializeField] TextMeshPro scoreText;
+    [SerializeField] Transform playerPosition;
+    [SerializeField] TextMeshPro floatingText;
+    [SerializeField] GameObject floatingTextParent;
+    [SerializeField] Canvas canvas;
+    [SerializeField] PlayerController playerController;
+    [SerializeField] TextMeshPro finalScoreText;
+    [SerializeField] TextMeshPro highscoreText;
+    [SerializeField] TextMeshPro drownedFinalScoreText;
+    [SerializeField] TextMeshPro drownedHighscoreText;
+
     private float xDistance;
-    private float farthestDistance = 0;
+    private float farthestDistance;
     private float totalDistanceTravelled;
-    public Transform playerPosition;
-    public int score = 0;
-    public TextMeshPro floatingText;
-    public GameObject floatingTextParent;
-    public Canvas canvas;
-    public PlayerController playerController;
-    public TextMeshPro finalScoreText;
-    public TextMeshPro highscoreText;
-    public TextMeshPro drownedFinalScoreText;
-    public TextMeshPro drownedHighscoreText;
 
     private void Start()
     {

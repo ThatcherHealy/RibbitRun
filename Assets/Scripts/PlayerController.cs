@@ -20,6 +20,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask ground;
     [SerializeField] GameObject tongueRangeCircle;
 
+    [Header("States")]
+    public bool isGrounded;
+    public bool jump;
+    public bool isSwimming;
+    public bool dead;
+    public bool eaten;
+    public bool drowned;
+    public bool dried;
+
+    [Header("Settings")]
+    [SerializeField] bool conserveMomentum;
+    [SerializeField] bool aimingJumpStopsMomentum;
+
     private float power = 5;
     private float maxDrag = 5;
     public bool skipToJump;
@@ -30,21 +43,6 @@ public class PlayerController : MonoBehaviour
     Vector3 dragStartPos;
     Vector3 dragReleasePos;
     Touch touch;
-
-    [Header("States")]
-    public bool isGrounded;
-    public bool jump;
-    public bool isSwimming;
-    public bool dead;
-    public bool eaten;
-    public bool drowned;
-    public bool dried;
-
-
-    [Header("Settings")]
-    public bool conserveMomentum;
-    public bool aimingJumpStopsMomentum;
-
 
     private void Start()
     {
@@ -64,6 +62,10 @@ public class PlayerController : MonoBehaviour
         else
         {
             maxDrag = 5;
+        }
+        if (drowned)
+        {
+            rb.velocity = Vector3.zero;
         }
     }
     private void FixedUpdate()
@@ -305,6 +307,12 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.transform.parent != null)
         {
+            //if beetle, add 5
+            if (collision.gameObject.transform.parent.name == "Beetle(Clone)")
+            {
+                scoreController.SpawnFloatingText(5, transform.position);
+                scoreController.Score(5);
+            }
             //if fly or waterstrider, add 10
             if (collision.gameObject.transform.parent.name == "Fly(Clone)" || collision.gameObject.transform.parent.name == "WaterStrider(Clone)")
             {

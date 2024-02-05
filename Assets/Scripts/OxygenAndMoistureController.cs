@@ -6,24 +6,22 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 
-public class OxygenBar : MonoBehaviour
+public class OxygenAndMoistureController : MonoBehaviour
 {
-    public Slider oxygenBar;
-    public Slider moistureBar;
-    public Transform frog;
-    public PlayerController playerController;
-    public GameObject oxygenFill;
-    public GameObject moistureFill;
-    public Image blackout;
-    public PostProcessVolume volume;
-    //public PostProcessProfile profile;
+    [SerializeField] Slider oxygenBar;
+    [SerializeField] Slider moistureBar;
+    [SerializeField] Transform frog;
+    [SerializeField] PlayerController playerController;
+    [SerializeField] GameObject oxygenFill;
+    [SerializeField] GameObject moistureFill;
+    [SerializeField] Image blackout;
+    [SerializeField] PostProcessVolume volume;
     private Vignette vignette;
+    
     private float maxOxygen = 100;
     private float maxMoisture = 100;
     private float currentOxygen = 100;
     private float currentMoisture = 100;
-
-    public float num;
     void Start()
     {
         volume.profile.TryGetSettings(out vignette);
@@ -45,20 +43,20 @@ public class OxygenBar : MonoBehaviour
     {
         if (playerController.isSwimming)
         {
-            currentOxygen -= 0.08f;
+            currentOxygen -= 0.06f; //Oxygen loss speed
         }
         else
         {
-            currentOxygen += 0.5f;
+            currentOxygen += 0.5f; //Oxygen gain speed
         }
 
         if (!playerController.isSwimming)
         {
-            currentMoisture -= 0.07f;
+            currentMoisture -= 0.06f; //Moisture loss speed
         }
         else
         {
-            currentMoisture += 2f;
+            currentMoisture += 2f; //Moisture gain speed
         }
     }
 
@@ -76,6 +74,7 @@ public class OxygenBar : MonoBehaviour
     }
     private void BoundBar() 
     {
+        //Keep bar values between 0 and 100
         if (currentOxygen > 100)
         {
             currentOxygen = 100;
@@ -96,20 +95,19 @@ public class OxygenBar : MonoBehaviour
     }
     private void Appear()
     {
+        //Only show the bar with the lowest fill
+        oxygenBar.gameObject.SetActive(currentOxygen < currentMoisture);
+        moistureBar.gameObject.SetActive(currentMoisture < currentOxygen);
 
-        if (currentOxygen < currentMoisture)
+        if (currentMoisture >= 100 && currentOxygen >= 100)
         {
-            oxygenBar.gameObject.SetActive(true);
             moistureBar.gameObject.SetActive(false);
-        }
-        if (currentMoisture < currentOxygen)
-        {
-            moistureBar.gameObject.SetActive(true);
             oxygenBar.gameObject.SetActive(false);
-        }   
+        }
     }
     private void DepleteToZero()
     {
+        //Makes fill disappear when the value < 4, this fixes the fill area looking weird as it approaches 0
         if (oxygenBar.value < 4)
         {
             oxygenFill.SetActive(false);
@@ -130,21 +128,11 @@ public class OxygenBar : MonoBehaviour
     }
     private void Blackout()
     {
-        if (currentOxygen <= 0)
-        {
-            blackout.color = new Color(blackout.color.r, blackout.color.g, blackout.color.b, blackout.color.a + (0.35f * Time.deltaTime));
-        }
-        else
-        {
-            blackout.color = new Color(blackout.color.r, blackout.color.g, blackout.color.b, blackout.color.a - (1 * Time.deltaTime));
-        }
+        //Begins fade in when the player loses oxygen and fades out when the player gains oxygen
+        blackout.color = new Color(blackout.color.r, blackout.color.g, blackout.color.b,
+        Mathf.Clamp(blackout.color.a + (currentOxygen <= 0 ? 0.25f : -1f) * Time.deltaTime, 0, 1));
 
-        if (blackout.color.a < 0)
-        {
-            blackout.color = new Color(blackout.color.r, blackout.color.g, blackout.color.b, 0);
-        }
-
-        //Die
+        //Die after the blackout is opaque
         if(blackout.color.a >= 1)
         {
             playerController.dead = true;
@@ -153,35 +141,19 @@ public class OxygenBar : MonoBehaviour
     }
     private void Dry()
     {
-        if (currentMoisture <= 30)
-        {
-            vignette.intensity.value += (0.05f * Time.deltaTime);
-        }
-        else
-        {
-            if (vignette.intensity.value > 0)
-            {
-                vignette.intensity.value -= (1 * Time.deltaTime);
-            }
-        }
+        //Start vignette effect when the player gets to 30% moisture
+        //Removes vignette effect when the player goes above 30%
+        vignette.intensity.value += (currentMoisture <= 30 ? 0.05f : -1f) * Time.deltaTime;
+        vignette.intensity.value = Mathf.Clamp(vignette.intensity.value, 0, 0.3f);
 
-        if (vignette.intensity.value < 0)
-        {
-            vignette.intensity.value = 0;
-        }
-        if (vignette.intensity.value > 0.3f)
-        {
-            vignette.intensity.value = 0.3f;
-        }
-
-        //Dry
-        if (vignette.intensity.value >= 0.25f)
-        {
-            playerController.dried = true;
-        }
-        if (moistureBar.value > 0)
-        {
-            playerController.dried = false;
-        }
+         //Dry out when the vignette is almost at max intensity and be cured when the player touches water
+         if (vignette.intensity.value >= 0.22f)
+         {
+             playerController.dried = true;
+         }
+         if (moistureBar.value > 0)
+         {
+             playerController.dried = false;
+         } 
     }
 }

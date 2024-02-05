@@ -7,12 +7,12 @@ using UnityEngine;
 
 public class PredatorEvents : MonoBehaviour
 {
-    public PlayerController pc;
-    public ScoreController sc;
-    public GameObject fishSwarmPrefab;
-    public GameObject birdPrefab;
-    public GameObject warningPrefab;
-    public Transform player;
+    [SerializeField] PlayerController pc;
+    [SerializeField] ScoreController sc;
+    [SerializeField] GameObject fishSwarmPrefab;
+    [SerializeField] GameObject birdPrefab;
+    [SerializeField] GameObject warningPrefab;
+    [SerializeField] Transform player;
 
     private Vector3 predatorSpawnPosition;
     private bool fishEvent;
@@ -127,16 +127,16 @@ public class PredatorEvents : MonoBehaviour
         if (fishEvent)
         {
             if (directionChance == 1)
-                predatorSpawnPosition = new Vector2(player.position.x + 150, -20);
+                predatorSpawnPosition = new Vector2(player.position.x + 100, -20);
             else
-                predatorSpawnPosition = new Vector2(player.position.x - 150, -20);
+                predatorSpawnPosition = new Vector2(player.position.x - 100, -20);
         }
         else if (birdEvent)
         {
             if (directionChance == 1)
-                predatorSpawnPosition = new Vector2(player.position.x + 150, 6);
+                predatorSpawnPosition = new Vector2(player.position.x + 100, 6);
             else
-                predatorSpawnPosition = new Vector2(player.position.x - 150, 6);
+                predatorSpawnPosition = new Vector2(player.position.x - 100, 6);
         }
     }
     void SetWarningPosition() 

@@ -19,11 +19,11 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private Transform waterStriderPrefab;
     [SerializeField] private Transform dragonflyPrefab;
 
-    private const float levelPartDistance = 200f;
-    private const float preySpawnDistance = 150f;
-    private const float waterSpawnDistance = 200f;
-    private const float riverbedSpawnDistance = 250f;
-    private const float cattailSpawnDistance = 200f;
+    private const float levelPartDistance = 100;
+    private const float preySpawnDistance = 100;
+    private const float waterSpawnDistance = 100;
+    private const float riverbedSpawnDistance = 100;
+    private const float cattailSpawnDistance = 100;
 
     private Vector3 lastLevelEndPosition;
     private Vector3 lastPreyEndPosition;
@@ -50,7 +50,7 @@ public class LevelGenerator : MonoBehaviour
         lastRiverbedEndPosition = (Vector2)startEndPoint.position - new Vector2(41f, 45.7f);
         lastCattailEndPosition = Vector3.zero;
 
-        int startingSpawnMud = 3;
+        int startingSpawnMud = 1;
         for (int i = 0; i < startingSpawnMud; i++)
         {
             SpawnRiverbeds();
@@ -60,16 +60,6 @@ public class LevelGenerator : MonoBehaviour
         {
             SpawnWater();
         }
-        int startingSpawnLevelParts = 5;
-        for (int i = 0; i<startingSpawnLevelParts; i++)
-        {
-            SpawnLevelPart();
-        }
-        int startingSpawnPrey = 6;
-        for (int i = 0; i < startingSpawnPrey; i++)
-        {
-            SpawnFlies();
-        } 
     }
     private void FixedUpdate()
     {

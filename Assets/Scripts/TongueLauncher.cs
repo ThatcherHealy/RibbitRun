@@ -4,28 +4,28 @@ using UnityEngine;
 public class TongueLauncher : MonoBehaviour
 {
     [Header("Scripts Ref:")]
-    public TongueLine tongueLine;
-    public GrapplePointDetector grapplePointDetector;
-    public PlayerController playerController;
-    public PauseButtons pauseScript;
+    [SerializeField] TongueLine tongueLine;
+    [SerializeField] GrapplePointDetector grapplePointDetector;
+    [SerializeField] PlayerController playerController;
+    [SerializeField] PauseButtons pauseScript;
 
     [Header("Layers Settings:")]
     [SerializeField] private bool grappleToAll = false;
 
     [Header("Main Camera:")]
-    public Camera m_camera;
+    [SerializeField] Camera m_camera;
 
     [Header("Transform Ref:")]
-    public Transform player;
-    public Transform gunHolder;
-    public Transform gunPivot;
+    [SerializeField] Transform player;
+    [SerializeField] Transform gunHolder;
+    [SerializeField] Transform gunPivot;
     public Transform firePoint;
     public LineRenderer lr;
     [SerializeField] Transform tongueRangeCircle;
 
     [Header("Physics Ref:")]
-    public SpringJoint2D m_springJoint2D;
-    public Rigidbody2D rb;
+    [SerializeField] SpringJoint2D m_springJoint2D;
+    [SerializeField] Rigidbody2D rb;
 
     [Header("Distance:")]
     [SerializeField] private bool hasMaxDistance = false;

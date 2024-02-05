@@ -8,8 +8,8 @@ using TMPro;
 
 public class DeathScript : MonoBehaviour
 {
-    public PlayerController playerController;
-    public GameObject eatenDeathScene;
+    [SerializeField] PlayerController playerController;
+    [SerializeField] GameObject eatenDeathScene;
     [SerializeField] GameObject drownScene;
     [SerializeField] TextMeshPro youDrownedText;
     [SerializeField] TextMeshPro[] drownedText;
