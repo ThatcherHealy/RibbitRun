@@ -1167,7 +1167,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1616429680976595026, guid: 869f7a0a6335d3f45bccfb3bb62bf763, type: 3}
       propertyPath: m_Name
-      value: Spawner (1)
+      value: SnailSpawner
       objectReference: {fileID: 0}
     - target: {fileID: 2417177793709261942, guid: 869f7a0a6335d3f45bccfb3bb62bf763, type: 3}
       propertyPath: m_RootOrder
@@ -1787,7 +1787,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1616429680976595026, guid: 869f7a0a6335d3f45bccfb3bb62bf763, type: 3}
       propertyPath: m_Name
-      value: Spawner
+      value: SnailSpawner
       objectReference: {fileID: 0}
     - target: {fileID: 2417177793709261942, guid: 869f7a0a6335d3f45bccfb3bb62bf763, type: 3}
       propertyPath: m_RootOrder

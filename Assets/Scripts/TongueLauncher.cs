@@ -24,7 +24,6 @@ public class TongueLauncher : MonoBehaviour
     [SerializeField] Transform tongueRangeCircle;
 
     [Header("Physics Ref:")]
-    [SerializeField] SpringJoint2D m_springJoint2D;
     [SerializeField] Rigidbody2D rb;
 
     [Header("Distance:")]
@@ -45,31 +44,26 @@ public class TongueLauncher : MonoBehaviour
     public AnimationCurve launchCurve;
 
     [Header("No Launch To Point")]
-    [SerializeField] private bool autoConfigureDistance = false;
-    [SerializeField] private float targetDistance = 3;
-    [SerializeField] private float targetFrequncy = 1;
-
     [HideInInspector] public Vector2 grapplePoint;
     [HideInInspector] public Vector2 grappleDistanceVector;
 
-    [Header("My Variables")]
-    public GameObject grappleTarget;
+    [Header("Touch")]
     public Vector3 dragStartPosition;
     public Vector3 dragEndPosition;
     Vector3 secondLinePoint;
     Touch touch;
     public bool touchEnded;
+
+    [Header("My Variables")]
+    public GameObject grappleTarget;
     public bool grapplePointIdentified = false;
     private Vector2 hitPoint;
     private Collider2D hitCollider;
     [HideInInspector] public Vector2 addedForce;
-    [SerializeField] private LayerMask ignoreLayer;
 
     private void Start()
     {
         tongueLine.enabled = false;
-        m_springJoint2D.enabled = false;
-        touchEnded = false;
     }
 
     private void Update()
@@ -96,17 +90,13 @@ public class TongueLauncher : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if(lr.positionCount > 0) 
+        SetRangeCircle();
+
+        if (tongueLine.isGrappling)
         {
-            tongueRangeCircle.transform.localScale = new Vector3(maxDistance * 5.7333f, maxDistance * 6.466f, 0);
-            tongueRangeCircle.gameObject.SetActive(true);
-        }
-        else
-        {
-            tongueRangeCircle.gameObject.SetActive(false);
+            Grapple();
         }
     }
-
     void GetTouch()
     {
         //Identify touch
@@ -211,7 +201,6 @@ public class TongueLauncher : MonoBehaviour
         if (grapplePointDetector.closeToGrapplePoint)
         {
             tongueLine.enabled = false;
-            m_springJoint2D.enabled = false;
             rb.gravityScale = 1.2f;
             grapplePointDetector.bugHit = false;
         }
@@ -246,58 +235,26 @@ public class TongueLauncher : MonoBehaviour
             }
         }
     }
-    public void Grapple()
+    void Grapple()
     {
-        m_springJoint2D.autoConfigureDistance = false;
-        if (!launchToPoint && !autoConfigureDistance)
-        {
-            m_springJoint2D.distance = targetDistance;
-            m_springJoint2D.frequency = targetFrequncy;
-        }
-        if (!launchToPoint)
-        {
-            if (autoConfigureDistance)
-            {
-                m_springJoint2D.autoConfigureDistance = true;
-                m_springJoint2D.frequency = 0;
-            }
+        rb.gravityScale = 0;
+        int strength = 20;
 
-            m_springJoint2D.connectedAnchor = grapplePoint;
-            m_springJoint2D.enabled = true;
+        //Set the frog's velocity towards the grapple point
+        addedForce = (grapplePoint - (Vector2)transform.position).normalized * strength;
+        rb.velocity = addedForce;
+    }
+    void SetRangeCircle()
+    {
+        //Sets the scale of the circle to match the range
+        if (lr.positionCount > 0)
+        {
+            tongueRangeCircle.transform.localScale = new Vector3(maxDistance * 5.7333f, maxDistance * 6.466f, 0);
+            tongueRangeCircle.gameObject.SetActive(true);
         }
         else
         {
-            switch (launchType)
-            {
-                case LaunchType.Physics_Launch:
-                    m_springJoint2D.connectedAnchor = grapplePoint;
-
-                    Vector2 springDistanceVector = firePoint.position - gunHolder.position;
-                    m_springJoint2D.distance = springDistanceVector.magnitude;
-                    m_springJoint2D.frequency = launchSpeed;
-                    m_springJoint2D.enabled = true;
-                    break;
-                case LaunchType.Transform_Launch:
-
-                    int strength;
-                    rb.gravityScale = 0;
-                    strength = 20;
-
-                    //Set a force towards the grapple target for detectors, and towards grapple point for everything else
-                    if (grapplePointIdentified && grappleTarget != null && (grappleTarget.transform.gameObject.layer == 7 || grappleTarget.transform.gameObject.layer == 12 || grappleTarget.transform.gameObject.layer == 8))
-                    {
-                        addedForce = ((Vector2)grappleTarget.transform.position - (Vector2)transform.position).normalized * strength;
-
-                    }
-                    else
-                    {
-                        addedForce = (grapplePoint - (Vector2)transform.position).normalized * strength;
-                    }
-
-                    rb.velocity = addedForce;
-
-                    break;
-            }
+            tongueRangeCircle.gameObject.SetActive(false);
         }
     }
     private void Launch()
@@ -310,15 +267,6 @@ public class TongueLauncher : MonoBehaviour
                 Vector2 targetPos = grapplePoint - firePointDistance;
                 gunHolder.position = Vector2.Lerp(gunHolder.position, targetPos, launchCurve.Evaluate(Time.deltaTime) * launchSpeed);
             }
-        }
-    }
-    private void OnDrawGizmosSelected()
-    {
-        //Creates a gizmo that shows the grapple range
-        if (firePoint != null && hasMaxDistance)
-        {
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(firePoint.position, maxDistance);
         }
     }
 }

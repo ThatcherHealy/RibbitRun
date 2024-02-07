@@ -31,14 +31,7 @@ public class BeetleBehavior : MonoBehaviour
     void ChooseNextWaypoint()
     {
         int randomAssignment = Random.Range(0, waypoints.Length);
-        if (randomAssignment != currentWaypoint) 
-        {
-            currentWaypoint = randomAssignment;
-        }
-        else
-        {
-            ChooseNextWaypoint();
-        }
+        currentWaypoint = randomAssignment;
     }
     void LookAtWaypoint()
     {

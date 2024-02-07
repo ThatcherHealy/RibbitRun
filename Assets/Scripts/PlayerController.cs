@@ -33,7 +33,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool conserveMomentum;
     [SerializeField] bool aimingJumpStopsMomentum;
 
-    private float power = 5;
+    float defaultGravityScale;
+    private float power = 6;
     private float maxDrag = 5;
     public bool skipToJump;
     private bool draggingStarted = false;
@@ -46,6 +47,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        defaultGravityScale = rb.gravityScale;
         rb.freezeRotation = true;
     }
 
@@ -102,12 +104,18 @@ public class PlayerController : MonoBehaviour
     {
         if (isSwimming)
         {
-            float slowingFactor = 0.7f;
+            float slowingFactor = 1f;
             rb.drag = slowingFactor;
+
+            rb.gravityScale = defaultGravityScale / 2;
+
             tongueLine.isGrappling = false;
         }
         else //Remove the swim line and resume time when out of the water
         {
+            if (!tongueLine.isGrappling)
+                rb.gravityScale = defaultGravityScale;
+
             swimLr.positionCount = 0;
             rb.drag = 0;
         }
@@ -140,12 +148,12 @@ public class PlayerController : MonoBehaviour
             if (isSwimming) //Swim
             {
                 rb.velocity *= 0.3f;
-                power = 4.5f;
+                power = 5f;
             }
             else if (!isSwimming && !tongueLine.isGrappling) //Jump
             {
                 rb.velocity = Vector2.zero;
-                power = 5f;
+                power = 6f;
             }
 
             Vector3 force = dragStartPos - dragReleasePos;
@@ -227,7 +235,7 @@ public class PlayerController : MonoBehaviour
             if (tongueLine.isGrappling && tongueLauncher.grappleTarget != null && collision.transform.parent == tongueLauncher.grappleTarget.transform)
             {
                 tongueLauncher.grapplePointIdentified = false;
-                rb.gravityScale = 1.2f;
+                rb.gravityScale = defaultGravityScale;
 
                 power = 7;
                 if (collision.gameObject.layer == 12)
@@ -253,7 +261,7 @@ public class PlayerController : MonoBehaviour
             if (tongueLauncher.grappleTarget != null && collision.transform == tongueLauncher.grappleTarget.transform)
             {
                 tongueLauncher.grapplePointIdentified = false;
-                rb.gravityScale = 1.2f;
+                rb.gravityScale = defaultGravityScale;
                 power = 20;
 
                 // Launch the player up and to the right if they are coming from the left

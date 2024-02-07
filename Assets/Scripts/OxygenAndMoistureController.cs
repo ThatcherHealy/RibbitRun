@@ -130,7 +130,7 @@ public class OxygenAndMoistureController : MonoBehaviour
     {
         //Begins fade in when the player loses oxygen and fades out when the player gains oxygen
         blackout.color = new Color(blackout.color.r, blackout.color.g, blackout.color.b,
-        Mathf.Clamp(blackout.color.a + (currentOxygen <= 0 ? 0.25f : -1f) * Time.deltaTime, 0, 1));
+        Mathf.Clamp(blackout.color.a + (currentOxygen <= 0 ? 0.2f : -1f) * Time.deltaTime, 0, 1));
 
         //Die after the blackout is opaque
         if(blackout.color.a >= 1)
@@ -147,11 +147,11 @@ public class OxygenAndMoistureController : MonoBehaviour
         vignette.intensity.value = Mathf.Clamp(vignette.intensity.value, 0, 0.3f);
 
          //Dry out when the vignette is almost at max intensity and be cured when the player touches water
-         if (vignette.intensity.value >= 0.22f)
+         if (currentMoisture <= 0)
          {
              playerController.dried = true;
          }
-         if (moistureBar.value > 0)
+         else
          {
              playerController.dried = false;
          } 

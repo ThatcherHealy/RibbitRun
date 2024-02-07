@@ -294,7 +294,7 @@ Transform:
   - {fileID: 8048396073947923871}
   - {fileID: 8347996869251867676}
   - {fileID: 6400224610686284057}
-  - {fileID: 5412949984054719576}
+  - {fileID: 6554164087897926072}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1974,7 +1974,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2968949347461428992, guid: 2b54ae85bbdb198489b9625c8d626937, type: 3}
   m_PrefabInstance: {fileID: 5080753234348372639}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &8411709718483331026
+--- !u!1001 &7302549120657979954
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -2035,10 +2035,10 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 944cf20d715de654986e08b3f79ca235, type: 3}
---- !u!4 &5412949984054719576 stripped
+--- !u!4 &6554164087897926072 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4585451942132568970, guid: 944cf20d715de654986e08b3f79ca235, type: 3}
-  m_PrefabInstance: {fileID: 8411709718483331026}
+  m_PrefabInstance: {fileID: 7302549120657979954}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8744196323217765743
 PrefabInstance:
@@ -2050,7 +2050,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1616429680976595026, guid: 869f7a0a6335d3f45bccfb3bb62bf763, type: 3}
       propertyPath: m_Name
-      value: Spawner
+      value: SnailSpawner
       objectReference: {fileID: 0}
     - target: {fileID: 2417177793709261942, guid: 869f7a0a6335d3f45bccfb3bb62bf763, type: 3}
       propertyPath: m_RootOrder

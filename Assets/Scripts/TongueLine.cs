@@ -76,7 +76,6 @@ public class TongueLine : MonoBehaviour
         {
             if (!isGrappling)
             {
-                tongueLauncher.Grapple();
                 isGrappling = true;
             }
             if (waveSize > 0)

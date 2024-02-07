@@ -32,6 +32,7 @@ public class LevelGenerator : MonoBehaviour
     private Vector3 lastCattailEndPosition;
 
     private int swarmSize;
+    private int currentRiverbedIndex;
     private int levelPartCalc;
     Transform lastPreyTransform;
     Transform lastWaterTransform;
@@ -120,8 +121,15 @@ public class LevelGenerator : MonoBehaviour
         Vector2 mudOffset = new Vector2(82f, 0);
         int chosen = Random.Range(0, riverbedPrefabs.Length);
 
+        while (chosen == currentRiverbedIndex) //Repeat choosing which riverbed to spawn until a new one is chosen
+        {
+            chosen = Random.Range(0, riverbedPrefabs.Length);
+        }
+
         lastMudTransform = SpawnRiverbed(riverbedPrefabs[chosen], (Vector2)lastRiverbedEndPosition + mudOffset);
         lastRiverbedEndPosition = lastMudTransform.position;
+
+        currentRiverbedIndex = chosen;
     }
     private Transform SpawnRiverbed(Transform mud, Vector3 mudSpawnPosition)
     {
@@ -132,7 +140,7 @@ public class LevelGenerator : MonoBehaviour
     {
         Transform lastWaterTransform;
 
-        Vector2 waterOffset = new Vector2(232.5f,0);
+        Vector2 waterOffset = new (232.5f,0);
 
         lastWaterTransform = SpawnWater(waterPrefab, new Vector2(lastWaterEndPosition.x, waterLevel - 18.05f) + waterOffset);
         lastWaterEndPosition = lastWaterTransform.position;
