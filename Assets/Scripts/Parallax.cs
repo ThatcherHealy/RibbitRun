@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Parallax : MonoBehaviour
 {
-    private float length, startPos;
+    [SerializeField] float length, startPos;
     public GameObject cam;
     public float parallaxEffect;
+    [SerializeField] float height;
     
     void Start()
     {
@@ -18,7 +19,7 @@ public class Parallax : MonoBehaviour
     {
         float temp = (cam.transform.position.x * (1 - parallaxEffect));
         float dist = cam.transform.position.x * parallaxEffect;
-        transform.position = new Vector3(startPos + dist, transform.position.y, transform.position.z);
+        transform.position = new Vector3(startPos + dist, height, transform.position.z);
 
         if(temp > startPos + length) 
         {

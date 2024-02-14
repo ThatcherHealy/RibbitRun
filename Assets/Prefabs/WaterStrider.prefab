@@ -430,7 +430,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5186341224690725607}
-  - component: {fileID: 1527558826487820718}
+  - component: {fileID: 3633832841052047601}
   m_Layer: 12
   m_Name: Sprite
   m_TagString: Grapplable
@@ -465,8 +465,8 @@ Transform:
   m_Father: {fileID: 4229519401969715675}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!60 &1527558826487820718
-PolygonCollider2D:
+--- !u!61 &3633832841052047601
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -497,7 +497,7 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.034187317, y: 0.11623329}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -507,20 +507,9 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.74121046, y: 0.23019803}
-      - {x: -1.0246997, y: 0.67021155}
-      - {x: -1.3993688, y: 0.4667566}
-      - {x: -1.2806126, y: 0.066324554}
-      - {x: -1.2273189, y: -0.20935863}
-      - {x: -1.060857, y: -0.2789446}
-      - {x: -0.8841261, y: -0.42}
-      - {x: 0.1671531, y: -0.42}
-      - {x: 1.3371694, y: -0.42}
-      - {x: 1.1808959, y: -0.11269438}
-      - {x: 0.7553358, y: 0.17038268}
-  m_UseDelaunayMesh: 0
+  serializedVersion: 2
+  m_Size: {x: 2.7093124, y: 1.0957211}
+  m_EdgeRadius: 0
 --- !u!1 &3267041066431193294
 GameObject:
   m_ObjectHideFlags: 0
@@ -806,7 +795,7 @@ Transform:
   - {fileID: 5186341224690725607}
   - {fileID: 484451574771284262}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7518898654786946164
 MonoBehaviour:

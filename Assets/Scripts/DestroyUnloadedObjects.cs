@@ -9,10 +9,12 @@ public class DestroyUnloadedObjects : MonoBehaviour
         if (collision.gameObject.transform.parent != null)
         {
             collision.gameObject.transform.parent.gameObject.SetActive(false);
+            //Destroy(collision.gameObject.transform.parent.gameObject);
         }
         if (collision.gameObject != null)
         {
             collision.gameObject.SetActive(false);
+            //Destroy(collision.gameObject);
         }
     }
 }

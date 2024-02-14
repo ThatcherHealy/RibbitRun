@@ -57,6 +57,13 @@ public class PlayerController : MonoBehaviour
         {
             DetectInputs();
         }
+
+        if (dead)
+        {
+            swimLr.positionCount = 0;
+            jumpLr.positionCount = 0;
+        }
+
         if (dried)
         {
             maxDrag = 1.5f;
@@ -65,6 +72,7 @@ public class PlayerController : MonoBehaviour
         {
             maxDrag = 5;
         }
+
         if (drowned)
         {
             rb.velocity = Vector3.zero;
@@ -286,22 +294,25 @@ public class PlayerController : MonoBehaviour
         }
 
         //When the player enters a no-swim-zone, they can't swim until they leave
-        if (collision.gameObject.tag == "NoSwim")
+        if (collision.gameObject.CompareTag("NoSwim"))
             cantSwim = true;
 
         //When the player gets hit by a predator, they die
-        if (collision.gameObject.tag == "Predator")
+        if (collision.gameObject.CompareTag("Predator"))
         {
-            eaten = true;
-            dead = true;
+            if (!drowned)
+            {
+                eaten = true;
+                dead = true;
+            }
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         //When the player leaves a no-swim-zone, they can swim
-        if (collision.gameObject.tag == "NoSwim" && cantSwim)
+        if (collision.gameObject.CompareTag("NoSwim") && cantSwim)
             cantSwim = false;
-        if (collision.gameObject.tag == "Water")
+        if (collision.gameObject.CompareTag("Water"))
             isSwimming = false;
     }
     private void OnTriggerStay2D(Collider2D collision)

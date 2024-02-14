@@ -63,11 +63,14 @@ public class ScoreController : MonoBehaviour
         }
     }
 
-    public int Score(int scoreChange)
+    public void Score(int scoreChange)
     {
         //Updates the score by the amount inputted
-        score += scoreChange;
-        return score;
+        if(!playerController.dead) 
+        {
+            score += scoreChange;
+
+        }
     }
 
     private void CheckHighscore(int finalScore)
@@ -80,14 +83,16 @@ public class ScoreController : MonoBehaviour
 
     public void SpawnFloatingText(int value, Vector3 position)
     {
-        //Spawns a score of the value inputted at the location inputted and then destroys it  
+        if (!playerController.dead)
+        {
+            //Spawns a score of the value inputted at the location inputted and then destroys it  
+            floatingText.text = value.ToString();
+            Vector3 offset = new Vector3(0, 2, -0.5f);
 
-        floatingText.text = value.ToString();
-        Vector3 offset = new Vector3(0, 2, -0.5f);
-
-        GameObject parent = Instantiate(floatingTextParent, position + offset, Quaternion.identity);
-        TextMeshPro spawnedScore = Instantiate(floatingText, position, Quaternion.identity, parent.transform);
-        Destroy(spawnedScore.gameObject, 2);
-        Destroy(parent, 2);
+            GameObject parent = Instantiate(floatingTextParent, position + offset, Quaternion.identity);
+            TextMeshPro spawnedScore = Instantiate(floatingText, position, Quaternion.identity, parent.transform);
+            Destroy(spawnedScore.gameObject, 2);
+            Destroy(parent, 2);
+        }
     }
 }

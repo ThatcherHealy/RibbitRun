@@ -5,6 +5,8 @@ using UnityEngine;
 public class BirdSwoopBehavior : MonoBehaviour
 {
     [SerializeField] Transform flyAwayPosition;
+    [SerializeField] PredatorGrab hitbox1;
+    [SerializeField] PredatorGrab hitbox2;
     int speed = 50;
     private Transform player;
     private bool facingLeft;
@@ -36,9 +38,12 @@ public class BirdSwoopBehavior : MonoBehaviour
 
         Vector3 lerpedPosition;
         float iSpeed = 1f;
-
+        if (hitbox1.grabbed || hitbox2.grabbed)
+        {
+            lerpedPosition = Vector3.Lerp(transform.position, transform.position + new Vector3(0,10,0), Time.deltaTime * (iSpeed));
+        }
         //When the bird passes the frog, it flies away
-        if ((facingLeft && flyAwayPosition.position.x < player.position.x) || (!facingLeft && flyAwayPosition.position.x > player.position.x))
+        else if ((facingLeft && flyAwayPosition.position.x < player.position.x) || (!facingLeft && flyAwayPosition.position.x > player.position.x))
         {
             lerpedPosition = Vector3.Slerp(transform.position, new Vector3(transform.position.x,30,0), Time.deltaTime * 0.5f);
         }

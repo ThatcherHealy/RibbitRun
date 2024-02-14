@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AlligatorBehavior : MonoBehaviour
 {
+    [SerializeField] PlayerController pc;
     [SerializeField] Transform player;
     [SerializeField] GameObject sprite;
     [SerializeField] GameObject destructionPoint;
@@ -16,7 +17,7 @@ public class AlligatorBehavior : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (player != null) 
+        if (player != null && !pc.dead) 
         {
             Activate();
             SetPosition();

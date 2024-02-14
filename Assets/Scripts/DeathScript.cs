@@ -26,7 +26,7 @@ public class DeathScript : MonoBehaviour
         {
             if (playerController.eaten) 
             {
-                Time.timeScale = 0;
+                //Time.timeScale = 0;
                 eatenDeathScene.SetActive(true);
             }
             if (playerController.drowned) 

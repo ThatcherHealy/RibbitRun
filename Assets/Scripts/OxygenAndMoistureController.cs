@@ -36,7 +36,10 @@ public class OxygenAndMoistureController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        LoseAndGainOxygenandMoisture();
+        if (!playerController.eaten)
+        {
+            LoseAndGainOxygenandMoisture();
+        }
     }
 
     private void LoseAndGainOxygenandMoisture() 
@@ -68,8 +71,10 @@ public class OxygenAndMoistureController : MonoBehaviour
         BoundBar();
         Appear();
         DepleteToZero();
-
-        Blackout();
+        if (!playerController.eaten) 
+        {
+            Blackout();
+        }
         Dry();
     }
     private void BoundBar() 
@@ -130,7 +135,7 @@ public class OxygenAndMoistureController : MonoBehaviour
     {
         //Begins fade in when the player loses oxygen and fades out when the player gains oxygen
         blackout.color = new Color(blackout.color.r, blackout.color.g, blackout.color.b,
-        Mathf.Clamp(blackout.color.a + (currentOxygen <= 0 ? 0.2f : -1f) * Time.deltaTime, 0, 1));
+        Mathf.Clamp(blackout.color.a + (currentOxygen <= 0 || playerController.drowned ? 0.15f : -1f) * Time.deltaTime, 0, 1));
 
         //Die after the blackout is opaque
         if(blackout.color.a >= 1)

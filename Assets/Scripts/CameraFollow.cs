@@ -6,11 +6,11 @@ using System.Runtime.CompilerServices;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform player;
-    public Transform cameraGuide;
-    public Rigidbody2D playerRB;
-    public PlayerController playerController;
-    public CinemachineVirtualCamera virtualCamera;
+    [SerializeField] Transform player;
+    [SerializeField] Transform cameraGuide;
+    [SerializeField] Rigidbody2D playerRB;
+    [SerializeField] PlayerController playerController;
+    [SerializeField] CinemachineVirtualCamera virtualCamera;
 
     private float xOffset = 5;
     private bool lookingRight = true;
@@ -23,10 +23,22 @@ public class CameraFollow : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
     float mudLevel = -34.20609f;
 
+    Vector3 pausePosition;
+    bool pausePositionSet;
+    bool paused;
+
     private void FixedUpdate()
     {
-        LookAhead();
-        CameraHeight();
+        if (playerController.eaten)
+        {
+            StartCoroutine(Pause());
+        }
+        
+        if (!paused) 
+        {
+            LookAhead();
+            CameraHeight();
+        }
     }
 
     private void CameraHeight()
@@ -80,5 +92,17 @@ public class CameraFollow : MonoBehaviour
             xOffset = Mathf.Abs(xOffset);
             lookingRight = true;
         }
+    }
+    IEnumerator Pause()
+    {
+        yield return new WaitForSeconds(2);
+        paused = true;
+
+        if (!pausePositionSet)
+        {
+            pausePosition = cameraGuide.position;
+            pausePositionSet = true;
+        }
+        cameraGuide.position = pausePosition;
     }
 }
