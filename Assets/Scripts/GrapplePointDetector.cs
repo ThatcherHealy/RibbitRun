@@ -13,7 +13,7 @@ public class GrapplePointDetector : MonoBehaviour
 
     private void Update()
     {
-        if (touchingObjects.Count > 0)
+        if (touchingObjects.Count > 0 || Vector2.Distance(transform.position, tongueLauncher.grapplePoint) <= 0.5f)
         {
             Detatch();
         }

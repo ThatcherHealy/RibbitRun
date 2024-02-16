@@ -237,7 +237,23 @@ public class LevelGenerator : MonoBehaviour
         if (levelPartCalc <= 75)
         {
             //75% chance to spawn a lilypad
-            chosenLevelPart = levelPartList[0];
+            float lilypadVariant = Random.Range(0, 100);
+            if(lilypadVariant <= 90)
+            {
+                chosenLevelPart = levelPartList[0]; //90% chance to spawn normal lilypad
+            }
+            else
+            {
+                //10% chance to flower
+                float color = Random.Range(0, 100);
+                if (color <= 33.3f)
+                    chosenLevelPart = levelPartList[2]; //33% chance to spawn pink
+                else if (color > 33.3f && color <= 66.6f)
+                    chosenLevelPart = levelPartList[3]; //33% chace to spawn red
+                else
+                    chosenLevelPart = levelPartList[4]; //33% chance to spawn white
+            }
+
             offset = lilypadOffset;
         }
         else

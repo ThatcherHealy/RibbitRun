@@ -274,14 +274,15 @@ public class PlayerController : MonoBehaviour
 
                 //Spawn Cattail Particles
                 float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
-                Instantiate(cattailParticles, collision.ClosestPoint(transform.position), Quaternion.Euler(-angle, 90, 0));
+                GameObject particles = Instantiate(cattailParticles, collision.ClosestPoint(transform.position), Quaternion.Euler(-angle, 90, 0));
+                Destroy(particles, 3);
 
                 // Launch the player up and to the right if they are coming from the left
                 if (tongueLauncher.grappleTarget != null && (tongueLauncher.grappleTarget.transform.position.x - transform.position.x >= 0))
                     rb.AddForce((Vector2.one - new Vector2(0,0.4f)) * power * rb.mass, ForceMode2D.Impulse); // approx. 60 degree angle
 
                 else //Launch the player up and to the left if they are coming from the right
-                    rb.AddForce(new Vector2(-(Vector2.one - new Vector2(0, 0.3f)).x, (Vector2.one - new Vector2(0, 0.3f)).y) * power * rb.mass, ForceMode2D.Impulse); // approx. 110 degree angle
+                    rb.AddForce(new Vector2(-Vector2.one.x, new Vector2(0, 0.7f).y) * power * rb.mass, ForceMode2D.Impulse); // approx. -60 degree angle
 
                 //Remove the aim line when the frog eats prey
                 tongueLauncher.lr.positionCount = 0;
