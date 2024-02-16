@@ -50,7 +50,7 @@ public class OxygenAndMoistureController : MonoBehaviour
         }
         else
         {
-            currentOxygen += 0.5f; //Oxygen gain speed
+            currentOxygen += 1f; //Oxygen gain speed
         }
 
         if (!playerController.isSwimming)

@@ -242,11 +242,13 @@ public class GarBehavior : MonoBehaviour
     IEnumerator EatPlayer() 
     {
         yield return new WaitForSeconds(0.3f);
-
-        if (pv.frog.position.x > transform.position.x)
+        if (pv.frog != null) 
+        {
+                if (pv.frog.position.x > transform.position.x)
             transform.localScale = new Vector3(-1, 1, 1); // Flip the sprite
 
         animator.enabled = true;
         animator.SetBool("Thrash", true);
+        }
     }
 }

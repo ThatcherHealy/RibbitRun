@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PauseButtons pauseScript;
     [SerializeField] private LayerMask ground;
     [SerializeField] GameObject tongueRangeCircle;
+    [SerializeField] GameObject cattailParticles;
 
     [Header("States")]
     public bool isGrounded;
@@ -235,7 +236,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == 7 || collision.gameObject.layer == 12)
+        if (collision.gameObject.layer == 7 || collision.gameObject.layer == 12) //Prey
         {
             AddPreyScore(collision);
 
@@ -263,18 +264,21 @@ public class PlayerController : MonoBehaviour
 
             Destroy(collision.transform.parent.gameObject);
         }
-        else if (collision.gameObject.layer == 11)
+        else if (collision.gameObject.layer == 11) //Cattail
         {
-            //When grappling to prey, continue momentum and destroy prey
             if (tongueLauncher.grappleTarget != null && collision.transform == tongueLauncher.grappleTarget.transform)
             {
                 tongueLauncher.grapplePointIdentified = false;
                 rb.gravityScale = defaultGravityScale;
-                power = 20;
+                power = 25;
+
+                //Spawn Cattail Particles
+                float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
+                Instantiate(cattailParticles, collision.ClosestPoint(transform.position), Quaternion.Euler(-angle, 90, 0));
 
                 // Launch the player up and to the right if they are coming from the left
                 if (tongueLauncher.grappleTarget != null && (tongueLauncher.grappleTarget.transform.position.x - transform.position.x >= 0))
-                    rb.AddForce((Vector2.one - new Vector2(0,0.3f)) * power * rb.mass, ForceMode2D.Impulse); // approx. 70 degree angle
+                    rb.AddForce((Vector2.one - new Vector2(0,0.4f)) * power * rb.mass, ForceMode2D.Impulse); // approx. 60 degree angle
 
                 else //Launch the player up and to the left if they are coming from the right
                     rb.AddForce(new Vector2(-(Vector2.one - new Vector2(0, 0.3f)).x, (Vector2.one - new Vector2(0, 0.3f)).y) * power * rb.mass, ForceMode2D.Impulse); // approx. 110 degree angle

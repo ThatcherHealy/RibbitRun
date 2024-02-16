@@ -93,9 +93,10 @@ public class SlugMovement : MonoBehaviour
     }
     void RotateTowardsTargetCenter()
     {
-        Collider2D targetCollider = targetObject.GetComponent<PolygonCollider2D>();
         if (targetObject != null)
         {
+            Collider2D targetCollider = targetObject.GetComponent<PolygonCollider2D>();
+
             // Calculate the direction towards the target
             Vector2 targetDirection = targetPoint - (Vector2)transform.position;
             
