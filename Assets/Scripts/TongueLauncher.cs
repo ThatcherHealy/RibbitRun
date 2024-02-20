@@ -137,12 +137,12 @@ public class TongueLauncher : MonoBehaviour
         //When aiming, slow down time
         if ((touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
             && !tongueLine.isGrappling && !playerController.isGrounded && !playerController.isSwimming
-            && !pauseScript.pause)
+            && !pauseScript.pause && !playerController.dead)
         {
             touchEnded = true;
             Time.timeScale = 0.3f;
         }
-        else if (!playerController.dead && !pauseScript.pause) //Resume time when tongue is fired or when the player is grounded
+        else if (!pauseScript.pause) //Resume time when tongue is fired or when the player is grounded
         {
             Time.timeScale = 1;
         }
@@ -247,7 +247,7 @@ public class TongueLauncher : MonoBehaviour
     void SetRangeCircle()
     {
         //Sets the scale of the circle to match the range
-        if (lr.positionCount > 0)
+        if (lr.positionCount > 0 && !playerController.dead)
         {
             tongueRangeCircle.transform.localScale = new Vector3(maxDistance * 5.7333f, maxDistance * 6.466f, 0);
             tongueRangeCircle.gameObject.SetActive(true);

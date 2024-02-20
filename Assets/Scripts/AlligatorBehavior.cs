@@ -29,7 +29,7 @@ public class AlligatorBehavior : MonoBehaviour
     }
     void Activate()
     {
-        if (player.position.x > 200 && !active)
+        if (player.position.x > 125 && !active)
         {
             sprite.SetActive(true);
             destructionPoint.SetActive(true);
@@ -38,9 +38,9 @@ public class AlligatorBehavior : MonoBehaviour
     }
     void SetPosition() 
     {
-        if (transform.position.x < player.position.x - 200)
+        if (transform.position.x < player.position.x - 125)
         {
-            Vector3 targetPosition = new Vector3(player.position.x - 200, 0, 0);
+            Vector3 targetPosition = new Vector3(player.position.x - 125, 0, 0);
             transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime);
         }
     }

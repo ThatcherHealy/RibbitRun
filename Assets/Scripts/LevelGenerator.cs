@@ -21,7 +21,7 @@ public class LevelGenerator : MonoBehaviour
 
     private const float levelPartDistance = 100;
     private const float preySpawnDistance = 100;
-    private const float waterSpawnDistance = 100;
+    private const float waterSpawnDistance = 150;
     private const float riverbedSpawnDistance = 100;
     private const float cattailSpawnDistance = 100;
 
@@ -47,7 +47,7 @@ public class LevelGenerator : MonoBehaviour
         //Spawns the starting level
         lastLevelEndPosition = (Vector2)startEndPoint.position;
         lastPreyEndPosition = (Vector2)startPreyEndPoint.position;
-        lastWaterEndPosition = new Vector2(startEndPoint.position.x - 158.235f, waterLevel);
+        lastWaterEndPosition = new Vector2(startEndPoint.position.x - 55.382f, waterLevel);
         lastRiverbedEndPosition = (Vector2)startEndPoint.position - new Vector2(41f, 45.7f);
         lastCattailEndPosition = Vector3.zero;
 
@@ -140,7 +140,7 @@ public class LevelGenerator : MonoBehaviour
     {
         Transform lastWaterTransform;
 
-        Vector2 waterOffset = new (232.5f,0);
+        Vector2 waterOffset = new (81.375f,0);
 
         lastWaterTransform = SpawnWater(waterPrefab, new Vector2(lastWaterEndPosition.x, waterLevel - 18.05f) + waterOffset);
         lastWaterEndPosition = lastWaterTransform.position;

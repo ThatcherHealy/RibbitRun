@@ -18,11 +18,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private ScoreController scoreController;
     [SerializeField] private PauseButtons pauseScript;
     [SerializeField] private LayerMask ground;
+    [SerializeField] private LayerMask slide;
     [SerializeField] GameObject tongueRangeCircle;
     [SerializeField] GameObject cattailParticles;
 
     [Header("States")]
     public bool isGrounded;
+    public bool isSliding;
     public bool jump;
     public bool isSwimming;
     public bool dead;
@@ -37,7 +39,7 @@ public class PlayerController : MonoBehaviour
     float defaultGravityScale;
     private float power = 6;
     private float maxDrag = 5;
-    public bool skipToJump;
+    [HideInInspector] public bool skipToJump;
     private bool draggingStarted = false;
     private bool cantSwim;
     Vector3 secondLinePoint;
@@ -89,12 +91,30 @@ public class PlayerController : MonoBehaviour
     void GroundCheck()
     {
         float extraDistance = 0.35f;
-        RaycastHit2D raycastHit = Physics2D.BoxCast(circleCollider.bounds.center,
+        RaycastHit2D raycastHitGround = Physics2D.BoxCast(circleCollider.bounds.center,
         new Vector2(circleCollider.bounds.size.x * 0.4f, circleCollider.bounds.size.y * 0.7f), 0f, Vector2.down, extraDistance, ground);
-        if (raycastHit.collider != null)
+
+        RaycastHit2D raycastHitSlide = Physics2D.BoxCast(circleCollider.bounds.center,
+       new Vector2(circleCollider.bounds.size.x * 0.4f, circleCollider.bounds.size.y * 0.7f), 0f, Vector2.down, extraDistance, slide);
+
+        if (raycastHitGround.collider != null || raycastHitSlide.collider != null)
+        {
             isGrounded = true;
+            if (raycastHitSlide.collider != null)
+            {
+                isSliding = true;
+            }
+        }
         else
-            isGrounded = false; 
+        {
+            isGrounded = false;
+        }
+
+        if (raycastHitSlide.collider == null)
+        {
+            isSliding = false;
+        }
+
 
         if (isGrounded)
         {
@@ -211,9 +231,12 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            if (aimingJumpStopsMomentum) 
+            if (!isSliding) 
             {
-                rb.velocity = new Vector2(0, rb.velocity.y);
+                if (aimingJumpStopsMomentum)
+                {
+                    rb.velocity = new Vector2(0, rb.velocity.y);
+                }
             }
 
             swimLr.positionCount = 0;
