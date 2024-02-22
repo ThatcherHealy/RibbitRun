@@ -57,6 +57,28 @@ public class GrapplePointDetector : MonoBehaviour
             }
         }
     }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (tongueLauncher.grappleTarget != null && tongueLauncher.grappleTarget.layer != 8)
+        {
+            if ((collision.gameObject.tag != "NoSwim" && collision.gameObject.layer != 8 && tongueLauncher.grappleTarget != null && tongueLauncher.grappleTarget.transform != null)
+            && (collision.gameObject.transform == tongueLauncher.grappleTarget.transform))
+            {
+                touchingObjects.Add(collision.gameObject);
+            }
+        }
+        else
+        {
+            if (tongueLauncher.grappleTarget != null && tongueLauncher.grappleTarget.transform.parent != null && collision.gameObject.transform.parent != null
+            && collision.gameObject.transform.parent == tongueLauncher.grappleTarget.transform.parent)
+            {
+                colliderParentChildCollider = collision.gameObject.transform.parent.GetComponentInChildren<Collider2D>();
+                touchingObjects.Add(colliderParentChildCollider.gameObject);
+                bugHit = true;
+                Detatch();
+            }
+        }
+    }
     private void OnTriggerExit2D(Collider2D collision)
     {
         touchingObjects.Remove(collision.gameObject);

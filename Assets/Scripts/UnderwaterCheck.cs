@@ -5,6 +5,13 @@ using UnityEngine;
 public class UnderwaterCheck : MonoBehaviour
 {
     public bool underwater;
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Water"))
+        {
+            underwater = true;
+        }
+    }
     private void OnTriggerStay2D(Collider2D collision)
     {
         if(collision.gameObject.CompareTag("Water"))

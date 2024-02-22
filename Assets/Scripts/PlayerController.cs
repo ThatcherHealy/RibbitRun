@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
@@ -21,12 +22,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask slide;
     [SerializeField] GameObject tongueRangeCircle;
     [SerializeField] GameObject cattailParticles;
+    [SerializeField] GameObject mudParticles;
 
     [Header("States")]
     public bool isGrounded;
     public bool isSliding;
     public bool jump;
     public bool isSwimming;
+    public bool saturated;
     public bool dead;
     public bool eaten;
     public bool drowned;
@@ -334,6 +337,22 @@ public class PlayerController : MonoBehaviour
                 dead = true;
             }
         }
+
+        if (collision.gameObject.layer == 14) //When the player is on mud, it doesnt lose moisture
+        {
+            saturated = true;
+        }
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        //The player swims when they are in water, not grounded, and not in a no-swim-zone
+        if (collision.gameObject.tag == "Water" && !isGrounded && !cantSwim)
+            isSwimming = true;
+
+        if (collision.gameObject.layer == 14 && isSliding) //When the player is on mud, it doesnt lose moisture
+        {
+            MudParticles(collision);
+        }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -342,12 +361,10 @@ public class PlayerController : MonoBehaviour
             cantSwim = false;
         if (collision.gameObject.CompareTag("Water"))
             isSwimming = false;
-    }
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        //The player swims when they are in water, not grounded, and not in a no-swim-zone
-        if (collision.gameObject.tag == "Water" && !isGrounded && !cantSwim)
-            isSwimming = true;
+        if (collision.gameObject.layer == 14) //When the player is on mud, it doesnt lose moisture
+        {
+            saturated = false;
+        }
     }
 
     void AddPreyScore(Collider2D collision)
@@ -380,6 +397,21 @@ public class PlayerController : MonoBehaviour
                 scoreController.SpawnFloatingText(25, transform.position);
                 scoreController.Score(25);
             }
+        }
+    }
+    void MudParticles(Collider2D col)
+    {
+        Vector2 normal = (Vector2)transform.position - col.ClosestPoint(transform.position);
+        float angle = Mathf.Atan2(normal.y,normal.x) * Mathf.Rad2Deg;
+        if (rb.velocity.x > 0)
+        {
+            GameObject mp = Instantiate(mudParticles, col.ClosestPoint(transform.position), Quaternion.Euler(-angle - 90, 90, 0));
+            Destroy(mp, 1);
+        }
+        else if (rb.velocity.x < 0)
+        {
+            GameObject mp = Instantiate(mudParticles, col.ClosestPoint(transform.position), Quaternion.Euler(-angle + 90, 90, 0));
+            Destroy(mp, 1);
         }
     }
 }

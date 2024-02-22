@@ -1903,10 +1903,10 @@ PolygonCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 72
+    m_Bits: 68
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 16307
+    m_Bits: 32699
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -2795,7 +2795,7 @@ Transform:
   - {fileID: 3965392112155841781}
   - {fileID: 3045089101650628662}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &6356769796145076264
 Rigidbody2D:
@@ -2843,7 +2843,6 @@ MonoBehaviour:
   animator: {fileID: 8044876445998171370}
   passiveSpeed: 10
   chaseSpeed: 20
-  forceApplied: 0
 --- !u!95 &8044876445998171370
 Animator:
   serializedVersion: 5
