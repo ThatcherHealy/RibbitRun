@@ -7,6 +7,8 @@ public class BirdSwoopBehavior : MonoBehaviour
     [SerializeField] Transform flyAwayPosition;
     [SerializeField] PredatorGrab hitbox1;
     [SerializeField] PredatorGrab hitbox2;
+    LevelGenerator levelGenerator;
+    Vector3 endPoint;
     int speed = 50;
     private Transform player;
     private bool facingLeft;
@@ -14,7 +16,15 @@ public class BirdSwoopBehavior : MonoBehaviour
     {
         player = GameObject.Find("Frog").transform;
         FaceTheRightWay();
-
+        levelGenerator = FindAnyObjectByType<LevelGenerator>();
+    }
+    private void Update()
+    {
+        if(player.GetComponent<PlayerController>().transitionCamera) 
+        { 
+            //Updates the endpoint when the player actually reaches the ramp
+            endPoint = levelGenerator.endPoint;
+        }
     }
     void FixedUpdate()
     {
@@ -45,7 +55,7 @@ public class BirdSwoopBehavior : MonoBehaviour
         //When the bird passes the frog, it flies away
         else if ((facingLeft && flyAwayPosition.position.x < player.position.x) || (!facingLeft && flyAwayPosition.position.x > player.position.x))
         {
-            lerpedPosition = Vector3.Slerp(transform.position, new Vector3(transform.position.x,30,0), Time.deltaTime * 0.5f);
+            lerpedPosition = Vector3.Slerp(transform.position, new Vector3(transform.position.x, (endPoint.y + 34.585f), 0), Time.deltaTime * 0.5f);
         }
         else
         {
@@ -70,8 +80,8 @@ public class BirdSwoopBehavior : MonoBehaviour
         }
 
         //The bird can't go under the water
-        if (lerpedPosition.y < -1)
-            lerpedPosition.y = -1;
+        if (lerpedPosition.y < (endPoint.y + 3.585f))
+            lerpedPosition.y = (endPoint.y + 3.585f);
 
         //Sets the birds yPosition
         transform.position = new Vector3(transform.position.x, lerpedPosition.y, 0);

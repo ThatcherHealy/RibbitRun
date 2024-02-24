@@ -9,6 +9,7 @@ public class PredatorEvents : MonoBehaviour
 {
     [SerializeField] PlayerController pc;
     [SerializeField] ScoreController sc;
+    [SerializeField] LevelGenerator lg;
     [SerializeField] GameObject fishSwarmPrefab;
     [SerializeField] GameObject birdPrefab;
     [SerializeField] GameObject warningPrefab;
@@ -127,16 +128,16 @@ public class PredatorEvents : MonoBehaviour
         if (fishEvent)
         {
             if (directionChance == 1)
-                predatorSpawnPosition = new Vector2(player.position.x + 100, -20);
+                predatorSpawnPosition = new Vector2(player.position.x + 100, lg.endPoint.y - 16.415f);
             else
-                predatorSpawnPosition = new Vector2(player.position.x - 100, -20);
+                predatorSpawnPosition = new Vector2(player.position.x - 100, lg.endPoint.y - 16.415f);
         }
         else if (birdEvent)
         {
             if (directionChance == 1)
-                predatorSpawnPosition = new Vector2(player.position.x + 100, 6);
+                predatorSpawnPosition = new Vector2(player.position.x + 100, lg.endPoint.y + 9.585f);
             else
-                predatorSpawnPosition = new Vector2(player.position.x - 100, 6);
+                predatorSpawnPosition = new Vector2(player.position.x - 100, lg.endPoint.y + 9.585f);
         }
     }
     void SetWarningPosition() 

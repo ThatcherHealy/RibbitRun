@@ -17,11 +17,11 @@ public class CameraFollow : MonoBehaviour
     private float velocityThreshold = 10;
 
     private float heightDamping = 0.2f;
-    private float baseHeight = 5f;
+    [HideInInspector] public float baseHeight = 5f;
     private float yInwardsBias = 5f;
 
     private Vector3 velocity = Vector3.zero;
-    float mudLevel = -34.20609f;
+    [HideInInspector] public float mudLevel = -34.20609f;
 
     Vector3 pausePosition;
     bool pausePositionSet;
@@ -43,8 +43,8 @@ public class CameraFollow : MonoBehaviour
 
     private void CameraHeight()
     {
-        float minHeight = -8;
-        float maxHeight = 13;
+        float minHeight = baseHeight - 13;
+        float maxHeight = baseHeight + 8;
         if (player.position.y <= maxHeight && player.position.y >= minHeight) //Default view window
         {
             //Set the camera to smoothly move slightly ahead of where the player is moving on the x direction
@@ -69,7 +69,7 @@ public class CameraFollow : MonoBehaviour
 
                 float offsetAboveMud = 13;
                 Vector3 targetPosition = new Vector3(player.position.x + xOffset, player.position.y + yInwardsBias, 0);
-                if (targetPosition.y < -21)
+                if (targetPosition.y < baseHeight - 26)
                 {
                     targetPosition = new Vector3(targetPosition.x, mudLevel + offsetAboveMud, targetPosition.z);
                 }

@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject tongueRangeCircle;
     [SerializeField] GameObject cattailParticles;
     [SerializeField] GameObject mudParticles;
+    [SerializeField] GameObject splashParticles;
 
     [Header("States")]
     public bool isGrounded;
@@ -39,10 +40,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool conserveMomentum;
     [SerializeField] bool aimingJumpStopsMomentum;
 
+    [HideInInspector] public bool skipToJump;
+    [HideInInspector] public bool changeBiome;
+    [HideInInspector] public bool transitionCamera;
     float defaultGravityScale;
     private float power = 6;
     private float maxDrag = 5;
-    [HideInInspector] public bool skipToJump;
     private bool draggingStarted = false;
     private bool cantSwim;
     Vector3 secondLinePoint;
@@ -50,6 +53,7 @@ public class PlayerController : MonoBehaviour
     Vector3 dragStartPos;
     Vector3 dragReleasePos;
     Touch touch;
+    bool splashParticleCooldown;
 
     private void Start()
     {
@@ -290,7 +294,7 @@ public class PlayerController : MonoBehaviour
 
             Destroy(collision.transform.parent.gameObject);
         }
-        else if (collision.gameObject.layer == 11) //Cattail
+        if (collision.gameObject.layer == 11) //Cattail
         {
             if (tongueLauncher.grappleTarget != null && collision.transform == tongueLauncher.grappleTarget.transform)
             {
@@ -338,17 +342,52 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        if (collision.gameObject.CompareTag("Water"))
+        {
+            if (!splashParticleCooldown && !isSwimming)
+            {
+                GameObject splash = Instantiate(splashParticles, (Vector3)collision.ClosestPoint(transform.position), Quaternion.Euler(-90, 0, 0));
+                ParticleSystem.MainModule ps = splash.GetComponent<ParticleSystem>().main;
+                ps.startSpeedMultiplier = Mathf.Abs((rb.velocity.y));
+
+                Destroy(splash, 1);
+                StartCoroutine(SplashCooldown());
+            }
+        }
+
+        if (collision.gameObject.CompareTag("BiomeSwapper"))
+        {
+            changeBiome = true;
+            Destroy(collision.gameObject);
+        }
+
+        if (collision.gameObject.CompareTag("CameraTransition"))
+        {
+            transitionCamera = true;
+            Destroy(collision.gameObject);
+        }
+
         if (collision.gameObject.layer == 14) //When the player is on mud, it doesnt lose moisture
         {
             saturated = true;
         }
     }
+    IEnumerator SplashCooldown()
+    {
+        splashParticleCooldown = true;
+        yield return new WaitForSeconds(0.2f);
+        splashParticleCooldown = false;
+    }
     private void OnTriggerStay2D(Collider2D collision)
     {
         //The player swims when they are in water, not grounded, and not in a no-swim-zone
-        if (collision.gameObject.tag == "Water" && !isGrounded && !cantSwim)
-            isSwimming = true;
-
+        if (collision.gameObject.tag == "Water")
+        {
+            if(!isGrounded && !cantSwim)
+            {
+                isSwimming = true;
+            }
+        }
         if (collision.gameObject.layer == 14 && isSliding) //When the player is on mud, it doesnt lose moisture
         {
             MudParticles(collision);
@@ -406,11 +445,15 @@ public class PlayerController : MonoBehaviour
         if (rb.velocity.x > 0)
         {
             GameObject mp = Instantiate(mudParticles, col.ClosestPoint(transform.position), Quaternion.Euler(-angle - 90, 90, 0));
+            ParticleSystem.MainModule ps = mp.GetComponent<ParticleSystem>().main;
+            ps.startSpeedMultiplier = rb.velocity.magnitude;
             Destroy(mp, 1);
         }
         else if (rb.velocity.x < 0)
         {
             GameObject mp = Instantiate(mudParticles, col.ClosestPoint(transform.position), Quaternion.Euler(-angle + 90, 90, 0));
+            ParticleSystem.MainModule ps = mp.GetComponent<ParticleSystem>().main;
+            ps.startSpeedMultiplier = rb.velocity.magnitude;
             Destroy(mp, 1);
         }
     }

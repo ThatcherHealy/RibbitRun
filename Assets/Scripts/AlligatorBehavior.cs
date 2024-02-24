@@ -40,7 +40,7 @@ public class AlligatorBehavior : MonoBehaviour
     {
         if (transform.position.x < player.position.x - 125)
         {
-            Vector3 targetPosition = new Vector3(player.position.x - 125, 0, 0);
+            Vector3 targetPosition = new Vector3(player.position.x - 125, player.position.y, 0);
             transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime);
         }
     }

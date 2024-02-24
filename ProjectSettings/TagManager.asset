@@ -12,6 +12,8 @@ TagManager:
   - Cattail
   - Predator
   - Rock
+  - BiomeSwapper
+  - CameraTransition
   layers:
   - Default
   - TransparentFX
