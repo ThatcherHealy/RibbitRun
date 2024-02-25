@@ -18,12 +18,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private CircleCollider2D circleCollider;
     [SerializeField] private ScoreController scoreController;
     [SerializeField] private PauseButtons pauseScript;
+    [SerializeField] private LevelGenerator levelGenerator;
     [SerializeField] private LayerMask ground;
     [SerializeField] private LayerMask slide;
     [SerializeField] GameObject tongueRangeCircle;
     [SerializeField] GameObject cattailParticles;
     [SerializeField] GameObject mudParticles;
     [SerializeField] GameObject splashParticles;
+    public string biomeIn;
 
     [Header("States")]
     public bool isGrounded;
@@ -54,11 +56,12 @@ public class PlayerController : MonoBehaviour
     Vector3 dragReleasePos;
     Touch touch;
     bool splashParticleCooldown;
-
+    
     private void Start()
     {
         defaultGravityScale = rb.gravityScale;
         rb.freezeRotation = true;
+        biomeIn = levelGenerator.biomeSpawning.ToString();
     }
 
     void Update()
@@ -363,6 +366,7 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.CompareTag("CameraTransition"))
         {
+            biomeIn = levelGenerator.biomeSpawning.ToString();
             transitionCamera = true;
             Destroy(collision.gameObject);
         }

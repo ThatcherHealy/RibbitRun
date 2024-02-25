@@ -5,6 +5,7 @@ using UnityEngine;
 public class AlligatorBehavior : MonoBehaviour
 {
     [SerializeField] PlayerController pc;
+    [SerializeField] LevelGenerator lg;
     [SerializeField] Transform player;
     [SerializeField] GameObject sprite;
     [SerializeField] GameObject destructionPoint;
@@ -40,7 +41,7 @@ public class AlligatorBehavior : MonoBehaviour
     {
         if (transform.position.x < player.position.x - 125)
         {
-            Vector3 targetPosition = new Vector3(player.position.x - 125, player.position.y, 0);
+            Vector3 targetPosition = new Vector3(player.position.x - 125, lg.playerRefEndPoint.y + 4.585f, 0);
             transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime);
         }
     }

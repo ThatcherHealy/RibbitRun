@@ -26,6 +26,7 @@ public class LevelGenerator : MonoBehaviour
     private const float spawnDistance = 100;
 
     public Vector3 endPoint;
+    public Vector3 playerRefEndPoint;
 
     private Vector3 lastLevelEndPosition;
     private Vector3 lastPreyEndPosition;
@@ -41,36 +42,36 @@ public class LevelGenerator : MonoBehaviour
     Transform lastCattailTransform;
     Transform lastBiomeTransitionTransform;
     float waterLevel = -3.44f;
-    bool changeBiome;
+
     bool switchPoints;
+    public bool spawnTransitionRamp;
+
     public enum Biome {Bog,Cypress,Amazon};
-    Biome currentBiome;
+    public Biome biomeSpawning;
+    public Biome playerBiome;
 
     private void Awake()
     {
         endPoint = startEndPoint.position;
-        currentBiome = Biome.Bog;
+        playerRefEndPoint = startEndPoint.position;
+        biomeSpawning = Biome.Bog;
 
         SpawnStartPoints();
-
-        int startingSpawnMud = 1;
-        for (int i = 0; i < startingSpawnMud; i++)
-        {
-            SpawnRiverbeds();
-        }
     }
     private void Update()
     {
         if (pc.changeBiome)
         {
             //Change the biome when the player hits a biomeswapper
-            pc.changeBiome = false;
             ChangeBiome();
+            spawnTransitionRamp = true;
+            pc.changeBiome = false;
         }
 
         if (pc.transitionCamera)
         {
             //Change the camera view when the player hits a cameratransition
+            playerRefEndPoint = endPoint;
             cameraScript.baseHeight -= 68;
             cameraScript.mudLevel -= 68;
             pc.transitionCamera = false;
@@ -82,32 +83,45 @@ public class LevelGenerator : MonoBehaviour
             waterLevel -= 68;
             SpawnStartPoints();
         }
+
+        if (pc.biomeIn.Equals("Bog"))
+        {
+            playerBiome = Biome.Bog; 
+        }
+        if (pc.biomeIn.Equals("Cypress"))
+        {
+            playerBiome = Biome.Cypress; 
+        }
+        if (pc.biomeIn.Equals("Amazon"))
+        {
+            playerBiome = Biome.Amazon; 
+        }
+
     }
     private void ChangeBiome() 
     {
         int chance = UnityEngine.Random.Range(1, 3);
-        if (currentBiome == Biome.Bog)
+        if (biomeSpawning == Biome.Bog)
         {
             if (chance == 1)
-                currentBiome = Biome.Cypress;
+                biomeSpawning = Biome.Cypress;
             else
-                currentBiome = Biome.Amazon;
+                biomeSpawning = Biome.Amazon;
         }
-        else if (currentBiome == Biome.Cypress)
+        else if (biomeSpawning == Biome.Cypress)
         {
             if (chance == 1)
-                currentBiome = Biome.Bog;
+                biomeSpawning = Biome.Bog;
             else
-                currentBiome = Biome.Amazon;
+                biomeSpawning = Biome.Amazon;
         }
-        else if (currentBiome == Biome.Amazon)
+        else if (biomeSpawning == Biome.Amazon)
         {
             if (chance == 1)
-                currentBiome = Biome.Bog;
+                biomeSpawning = Biome.Bog;
             else
-                currentBiome = Biome.Cypress;
+                biomeSpawning = Biome.Cypress;
         }
-        changeBiome = true;
     }
     private void SpawnStartPoints() 
     {
@@ -174,7 +188,7 @@ public class LevelGenerator : MonoBehaviour
     {
         Transform lastTransitionTransform;
 
-        int minTransitionXOffset = 250, maxTransitionXOffset = 300;
+        int minTransitionXOffset = 400, maxTransitionXOffset = 900;
         int transitionXOffset = UnityEngine.Random.Range(minTransitionXOffset, maxTransitionXOffset);
 
 
@@ -183,17 +197,7 @@ public class LevelGenerator : MonoBehaviour
     }
     private Transform SpawnTransition(Transform transition, Vector3 transitionSpawnPosition)
     {
-        //There is a 50% chance for the transition to actually spawn
-        int chance = UnityEngine.Random.Range(0, 100);
-        if (chance >= 50)
-        {
-            lastBiomeTransitionTransform = Instantiate(transition, transitionSpawnPosition, Quaternion.identity);
-        }
-        else
-        {
-            lastBiomeTransitionTransform = Instantiate(emptyTransformPrefab, transitionSpawnPosition, Quaternion.identity);
-        }
-
+        lastBiomeTransitionTransform = Instantiate(transition, transitionSpawnPosition, Quaternion.identity);
         return lastBiomeTransitionTransform;
     }
     private void SpawnRiverbeds()
@@ -201,31 +205,31 @@ public class LevelGenerator : MonoBehaviour
         Transform lastMudTransform;
 
         Vector2 mudOffset = new Vector2(82f, 0);
-        int chosen = UnityEngine.Random.Range(0, riverbedPrefabs.Length);
 
-        while (chosen == currentRiverbedIndex) //Repeat choosing which riverbed to spawn until a new one is chosen
+        if (spawnTransitionRamp) //Spawn a biome transition
         {
-            chosen = UnityEngine.Random.Range(0, riverbedPrefabs.Length);
-        }
-
-        if (!changeBiome) //Spawn a normal riverbed
-        {
-            lastMudTransform = SpawnRiverbed(riverbedPrefabs[chosen], (Vector2)lastRiverbedEndPosition + mudOffset);
-            lastRiverbedEndPosition = lastMudTransform.position;
-        }
-
-        else //Spawn a biome transition
-        {
-            lastMudTransform = Instantiate(transitionRamps[0], new Vector3(lastRiverbedEndPosition.x + mudOffset.x + 36, endPoint.y - 67, 0), Quaternion.identity);
+            lastMudTransform = SpawnRiverbed(transitionRamps[0], new Vector3(lastRiverbedEndPosition.x + mudOffset.x + 36, endPoint.y - 67, 0));
             endPoint = lastMudTransform.GetChild(0).position;
-            changeBiome = false;
+            spawnTransitionRamp = false;
             switchPoints = true;
         }
-        currentRiverbedIndex = chosen;
+        else //Spawn a normal riverbed
+        {
+            int chosen = UnityEngine.Random.Range(0, riverbedPrefabs.Length);
+
+            while (chosen == currentRiverbedIndex) //Repeat choosing which riverbed to spawn until a new one is chosen
+            {
+                chosen = UnityEngine.Random.Range(0, riverbedPrefabs.Length);
+            }
+
+            SpawnRiverbed(riverbedPrefabs[chosen], (Vector2)lastRiverbedEndPosition + mudOffset);
+            currentRiverbedIndex = chosen;
+        }
     }
     private Transform SpawnRiverbed(Transform mud, Vector3 mudSpawnPosition)
     {
         lastRiverbedTransform = Instantiate(mud, mudSpawnPosition, Quaternion.identity);
+        lastRiverbedEndPosition = mudSpawnPosition;
         return lastRiverbedTransform;
     }
     private void SpawnFlies()

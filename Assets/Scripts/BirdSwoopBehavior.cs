@@ -20,11 +20,7 @@ public class BirdSwoopBehavior : MonoBehaviour
     }
     private void Update()
     {
-        if(player.GetComponent<PlayerController>().transitionCamera) 
-        { 
-            //Updates the endpoint when the player actually reaches the ramp
-            endPoint = levelGenerator.endPoint;
-        }
+        endPoint = levelGenerator.playerRefEndPoint;
     }
     void FixedUpdate()
     {
