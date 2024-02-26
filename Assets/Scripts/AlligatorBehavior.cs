@@ -9,6 +9,7 @@ public class AlligatorBehavior : MonoBehaviour
     [SerializeField] Transform player;
     [SerializeField] GameObject sprite;
     [SerializeField] GameObject destructionPoint;
+    public int followDistance = 200;
     bool active;
     void Start()
     {
@@ -39,9 +40,9 @@ public class AlligatorBehavior : MonoBehaviour
     }
     void SetPosition() 
     {
-        if (transform.position.x < player.position.x - 125)
+        if (transform.position.x < player.position.x - followDistance)
         {
-            Vector3 targetPosition = new Vector3(player.position.x - 125, lg.playerRefEndPoint.y + 4.585f, 0);
+            Vector3 targetPosition = new Vector3(player.position.x - followDistance, lg.playerRefEndPoint.y + 4.585f, 0);
             transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime);
         }
     }

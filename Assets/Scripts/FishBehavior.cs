@@ -7,6 +7,8 @@ public class FishBehavior : MonoBehaviour
     int speed = 50;
     private Transform player;
     private bool facingLeft;
+    [SerializeField] PredatorTurner turner;
+    bool turned;
     private void Start()
     {
         player = GameObject.Find("Frog").transform;
@@ -24,4 +26,30 @@ public class FishBehavior : MonoBehaviour
     {
         transform.Translate(Vector3.left * speed * Time.deltaTime);
     }
+    private void Update()
+    {
+        //Turn around when hitting an edge
+        TurnAround();
+    }
+    void TurnAround()
+    {
+        if (turner.turnDirection.Equals("Right")) //If colliding from the left, flip right
+        {
+            if (!turned)
+            {
+                transform.eulerAngles = new Vector3(0, 0, 0);
+                turned = true;
+            }
+        }
+        else if (turner.turnDirection.Equals("Left")) //If colliding from the right, flip left
+        {
+            if (!turned)
+            {
+                transform.eulerAngles = new Vector3(0, 180, 0);
+                turned = true;
+
+            }
+        }
+    }
+
 }

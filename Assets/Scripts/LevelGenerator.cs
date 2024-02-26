@@ -70,8 +70,10 @@ public class LevelGenerator : MonoBehaviour
 
         if (pc.transitionCamera)
         {
-            //Change the camera view when the player hits a cameratransition
+            //Set the player reference endpoint to the current endpoint since the player has moved to the next biome
             playerRefEndPoint = endPoint;
+
+            //Change the camera view when the player hits a cameratransition
             cameraScript.baseHeight -= 68;
             cameraScript.mudLevel -= 68;
             pc.transitionCamera = false;
@@ -84,19 +86,23 @@ public class LevelGenerator : MonoBehaviour
             SpawnStartPoints();
         }
 
+        //Display the biome which the player is in, not the one that is being generated
+        SetPlayerBiome();
+    }
+    private void SetPlayerBiome()
+    {
         if (pc.biomeIn.Equals("Bog"))
         {
-            playerBiome = Biome.Bog; 
+            playerBiome = Biome.Bog;
         }
         if (pc.biomeIn.Equals("Cypress"))
         {
-            playerBiome = Biome.Cypress; 
+            playerBiome = Biome.Cypress;
         }
         if (pc.biomeIn.Equals("Amazon"))
         {
-            playerBiome = Biome.Amazon; 
+            playerBiome = Biome.Amazon;
         }
-
     }
     private void ChangeBiome() 
     {
@@ -175,11 +181,11 @@ public class LevelGenerator : MonoBehaviour
         int chance = UnityEngine.Random.Range(0, 100);
         if (chance > 50)
         {
-            lastCattailTransform = Instantiate(cattail, cattailSpawnPosition, Quaternion.identity);
+            lastCattailTransform = Instantiate(emptyTransformPrefab, cattailSpawnPosition, Quaternion.identity);
         }
         else
         {
-            lastCattailTransform = Instantiate(emptyTransformPrefab, cattailSpawnPosition, Quaternion.identity);
+            lastCattailTransform = Instantiate(cattail, cattailSpawnPosition, Quaternion.identity);
         }
 
         return lastCattailTransform;

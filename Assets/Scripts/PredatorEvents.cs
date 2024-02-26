@@ -15,6 +15,7 @@ public class PredatorEvents : MonoBehaviour
     [SerializeField] GameObject warningPrefab;
     [SerializeField] Transform player;
 
+
     private Vector3 predatorSpawnPosition;
     private bool fishEvent;
     private int directionChance;
@@ -73,7 +74,7 @@ public class PredatorEvents : MonoBehaviour
         StartCoroutine(Cooldown(fishCooldownTime));
 
         directionChance = UnityEngine.Random.Range(1, 3);
-        SetFishDirection();
+        SetSpawnPosition();
 
         Warning();
         yield return new WaitForSeconds(warningTime);
@@ -91,7 +92,7 @@ public class PredatorEvents : MonoBehaviour
         StartCoroutine(Cooldown(birdCooldownTime));
 
         directionChance = UnityEngine.Random.Range(1, 3);
-        SetFishDirection();
+        SetSpawnPosition();
 
         Warning();
         yield return new WaitForSeconds(warningTime);
@@ -111,6 +112,7 @@ public class PredatorEvents : MonoBehaviour
 
     void FixedUpdate() 
     {
+        SetSpawnPosition();
         SetWarningPosition();
 
         if(pc.drowned) //Deactivate warning and predator when player drowns
@@ -123,21 +125,21 @@ public class PredatorEvents : MonoBehaviour
         }
     }
 
-    void SetFishDirection() 
+    void SetSpawnPosition() 
     {
         if (fishEvent)
         {
             if (directionChance == 1)
-                predatorSpawnPosition = new Vector2(player.position.x + 100, lg.endPoint.y - 16.415f);
+                predatorSpawnPosition = new Vector2(player.position.x + 150, lg.playerRefEndPoint.y - 16.415f);
             else
-                predatorSpawnPosition = new Vector2(player.position.x - 100, lg.endPoint.y - 16.415f);
+                predatorSpawnPosition = new Vector2(player.position.x - 150, lg.playerRefEndPoint.y - 16.415f);
         }
         else if (birdEvent)
         {
             if (directionChance == 1)
-                predatorSpawnPosition = new Vector2(player.position.x + 100, lg.endPoint.y + 9.585f);
+                predatorSpawnPosition = new Vector2(player.position.x + 100, lg.playerRefEndPoint.y + 9.585f);
             else
-                predatorSpawnPosition = new Vector2(player.position.x - 100, lg.endPoint.y + 9.585f);
+                predatorSpawnPosition = new Vector2(player.position.x - 100, lg.playerRefEndPoint.y + 9.585f);
         }
     }
     void SetWarningPosition() 

@@ -7,6 +7,8 @@ public class BirdSwoopBehavior : MonoBehaviour
     [SerializeField] Transform flyAwayPosition;
     [SerializeField] PredatorGrab hitbox1;
     [SerializeField] PredatorGrab hitbox2;
+    [SerializeField] PredatorTurner turner;
+    bool turned;
     LevelGenerator levelGenerator;
     Vector3 endPoint;
     int speed = 50;
@@ -14,13 +16,17 @@ public class BirdSwoopBehavior : MonoBehaviour
     private bool facingLeft;
     private void Start()
     {
+        levelGenerator = FindAnyObjectByType<LevelGenerator>();
+        endPoint = levelGenerator.playerRefEndPoint;
         player = GameObject.Find("Frog").transform;
         FaceTheRightWay();
-        levelGenerator = FindAnyObjectByType<LevelGenerator>();
     }
     private void Update()
     {
         endPoint = levelGenerator.playerRefEndPoint;
+
+        //Turn around when hitting an edge
+        TurnAround();
     }
     void FixedUpdate()
     {
@@ -44,7 +50,7 @@ public class BirdSwoopBehavior : MonoBehaviour
 
         Vector3 lerpedPosition;
         float iSpeed = 1f;
-        if (hitbox1.grabbed || hitbox2.grabbed)
+        if (hitbox1.grabbed || hitbox2.grabbed) //When it grabs the frohg it flies away
         {
             lerpedPosition = Vector3.Lerp(transform.position, transform.position + new Vector3(0,10,0), Time.deltaTime * (iSpeed));
         }
@@ -81,5 +87,25 @@ public class BirdSwoopBehavior : MonoBehaviour
 
         //Sets the birds yPosition
         transform.position = new Vector3(transform.position.x, lerpedPosition.y, 0);
+    }
+    void TurnAround() 
+    {
+        if (turner.turnDirection.Equals("Right")) //If colliding from the left, flip right
+        {
+            if (!turned)
+            {
+                transform.eulerAngles = new Vector3(0, 0, 0);
+                turned = true;
+            }
+        }
+        else if (turner.turnDirection.Equals("Left")) //If colliding from the right, flip left
+        {
+            if (!turned)
+            {
+                transform.eulerAngles = new Vector3(0, 180, 0);
+                turned = true;
+
+            }
+        }
     }
 }
