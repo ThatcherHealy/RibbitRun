@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3758729612046194780}
   m_Layer: 0
-  m_Name: Riverbed2
+  m_Name: BogRiverbed2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -515,6 +515,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rock7
       objectReference: {fileID: 0}
+    - target: {fileID: 9199229152971055570, guid: 19ee2eeee266a874098a189230d5cdb5, type: 3}
+      propertyPath: m_Creator
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1008,6 +1012,10 @@ PrefabInstance:
     - target: {fileID: 3403550897868737343, guid: 19ee2eeee266a874098a189230d5cdb5, type: 3}
       propertyPath: m_Name
       value: Rock7 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9199229152971055570, guid: 19ee2eeee266a874098a189230d5cdb5, type: 3}
+      propertyPath: m_Creator
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

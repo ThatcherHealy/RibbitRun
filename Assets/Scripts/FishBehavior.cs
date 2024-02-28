@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class FishBehavior : MonoBehaviour
@@ -29,7 +30,10 @@ public class FishBehavior : MonoBehaviour
     private void Update()
     {
         //Turn around when hitting an edge
-        TurnAround();
+        if (math.distance(transform.position.x, player.position.x) < 30)
+        {
+            TurnAround();
+        }
     }
     void TurnAround()
     {

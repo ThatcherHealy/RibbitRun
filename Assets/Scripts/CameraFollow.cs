@@ -21,7 +21,9 @@ public class CameraFollow : MonoBehaviour
     private float yInwardsBias = 5f;
 
     private Vector3 velocity = Vector3.zero;
-    [HideInInspector] public float mudLevel = -34.20609f;
+    [SerializeField]public float mudLevel = -34.20609f;
+    public float offsetAboveMud = 13;
+    public float lowerBound = 26;
 
     Vector3 pausePosition;
     bool pausePositionSet;
@@ -67,9 +69,8 @@ public class CameraFollow : MonoBehaviour
                 //Smoothly move the camera out of the baseHeight to a height of yInwardBias *above* the player's position
                 //until it reaches a set distance from the mud, at which point its vertical motion stops
 
-                float offsetAboveMud = 13;
                 Vector3 targetPosition = new Vector3(player.position.x + xOffset, player.position.y + yInwardsBias, 0);
-                if (targetPosition.y < baseHeight - 26)
+                if (targetPosition.y < baseHeight - lowerBound)
                 {
                     targetPosition = new Vector3(targetPosition.x, mudLevel + offsetAboveMud, targetPosition.z);
                 }

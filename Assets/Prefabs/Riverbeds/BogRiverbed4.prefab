@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 810563601307214509}
   m_Layer: 0
-  m_Name: Riverbed4
+  m_Name: BogRiverbed4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -850,11 +850,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2417177793709261942, guid: 869f7a0a6335d3f45bccfb3bb62bf763, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 22.9
+      value: -3.7
       objectReference: {fileID: 0}
     - target: {fileID: 2417177793709261942, guid: 869f7a0a6335d3f45bccfb3bb62bf763, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 33.61891
+      value: 28.4
       objectReference: {fileID: 0}
     - target: {fileID: 2417177793709261942, guid: 869f7a0a6335d3f45bccfb3bb62bf763, type: 3}
       propertyPath: m_LocalPosition.z

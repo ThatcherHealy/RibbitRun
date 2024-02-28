@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8870518896177583463}
   m_Layer: 0
-  m_Name: Riverbed5
+  m_Name: BogRiverbed5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1535,7 +1535,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1616429680976595026, guid: 869f7a0a6335d3f45bccfb3bb62bf763, type: 3}
       propertyPath: m_Name
-      value: Spawner
+      value: GarSpawner
       objectReference: {fileID: 0}
     - target: {fileID: 2417177793709261942, guid: 869f7a0a6335d3f45bccfb3bb62bf763, type: 3}
       propertyPath: m_RootOrder
