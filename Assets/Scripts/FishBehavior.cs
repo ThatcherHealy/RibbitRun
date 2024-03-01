@@ -33,7 +33,10 @@ public class FishBehavior : MonoBehaviour
         if (math.distance(transform.position.x, player.position.x) < 30)
         {
             TurnAround();
+            turner.active = true;
         }
+        else
+            turner.active = false;
     }
     void TurnAround()
     {

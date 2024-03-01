@@ -197,10 +197,13 @@ public class TongueLauncher : MonoBehaviour
     }
     private void DetatchWhenClose()
     {
-        //If the tongue gets too close to its target, it unattaches;
+        //If the tongue gets too close to its target, it detaches;
         if (grapplePointDetector.closeToGrapplePoint)
         {
             tongueLine.enabled = false;
+            tongueLine.isGrappling = false;
+            grapplePointIdentified = false;
+            grappleTarget = null;
             rb.gravityScale = 1.2f;
             grapplePointDetector.bugHit = false;
         }

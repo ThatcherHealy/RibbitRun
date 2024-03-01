@@ -256,7 +256,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1553084394789793169, guid: 9d03e5b07ada8ec48a02a2e1d7004095, type: 3}
       propertyPath: m_DynamicOccludee
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6549079235359059541, guid: 9d03e5b07ada8ec48a02a2e1d7004095, type: 3}
       propertyPath: m_ConnectedAnchor.y
@@ -844,7 +844,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1553084394789793169, guid: 9d03e5b07ada8ec48a02a2e1d7004095, type: 3}
       propertyPath: m_DynamicOccludee
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6549079235359059541, guid: 9d03e5b07ada8ec48a02a2e1d7004095, type: 3}
       propertyPath: m_ConnectedAnchor.y
@@ -1583,7 +1583,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6626842743089227153, guid: 869f7a0a6335d3f45bccfb3bb62bf763, type: 3}
       propertyPath: probabilty
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6626842743089227153, guid: 869f7a0a6335d3f45bccfb3bb62bf763, type: 3}
       propertyPath: spawnedObject
@@ -1785,7 +1785,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 77477962252574057, guid: bf53c34163ba9bf409629511f2d0528a, type: 3}
       propertyPath: m_DynamicOccludee
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1321850564177909273, guid: bf53c34163ba9bf409629511f2d0528a, type: 3}
       propertyPath: m_ConnectedAnchor.y

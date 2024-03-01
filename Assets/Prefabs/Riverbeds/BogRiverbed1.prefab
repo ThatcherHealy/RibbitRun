@@ -957,7 +957,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6626842743089227153, guid: 869f7a0a6335d3f45bccfb3bb62bf763, type: 3}
       propertyPath: probabilty
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6626842743089227153, guid: 869f7a0a6335d3f45bccfb3bb62bf763, type: 3}
       propertyPath: spawnedObject

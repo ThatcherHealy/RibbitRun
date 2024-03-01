@@ -50,10 +50,14 @@ public class LevelGenerator : MonoBehaviour
     public bool spawnTransitionRamp;
     bool biomeSwapSpawned;
 
+    const float bogOffset = 0, cypressOffset = 9.3f, amazonOffset = -4.5f;
+    float currentOffset;
     public enum Biome {Bog,Cypress,Amazon};
     public Biome biomeSpawning;
     public Biome playerBiome;
     [SerializeField] Biome startBiome;
+
+    bool treeSpawned;
 
     private void Awake()
     {
@@ -75,12 +79,12 @@ public class LevelGenerator : MonoBehaviour
         else if (biomeSpawning == Biome.Cypress)
         {
             cameraScript.lowerBound = 17;
-            cameraScript.mudLevel += 9.3f;
+            cameraScript.mudLevel += cypressOffset;
         }
         else
         {
             cameraScript.lowerBound = 31f;
-            cameraScript.mudLevel -= 4.5f;
+            cameraScript.mudLevel += amazonOffset;
         }
     }
     private void Update()
@@ -103,17 +107,17 @@ public class LevelGenerator : MonoBehaviour
             if (biomeSpawning == Biome.Bog)
             {
                 cameraScript.lowerBound = 26;
-                cameraScript.mudLevel -= 68;
+                cameraScript.mudLevel = cameraScript.mudLevel - 68 - currentOffset + bogOffset;
             }
             else if (biomeSpawning == Biome.Cypress)
             {
                 cameraScript.lowerBound = 17;
-                cameraScript.mudLevel -= 58.7f;
+                cameraScript.mudLevel = cameraScript.mudLevel - 68 - currentOffset + cypressOffset;
             }
             else
             {
                 cameraScript.lowerBound = 31f;
-                cameraScript.mudLevel -= 72.5f;
+                cameraScript.mudLevel = cameraScript.mudLevel - 68 - currentOffset + amazonOffset;
             }
 
             pc.transitionCamera = false;
@@ -149,6 +153,8 @@ public class LevelGenerator : MonoBehaviour
         int chance = UnityEngine.Random.Range(1, 3);
         if (biomeSpawning == Biome.Bog)
         {
+            currentOffset = bogOffset;
+
             if (chance == 1)
                 biomeSpawning = Biome.Cypress;
             else
@@ -156,6 +162,8 @@ public class LevelGenerator : MonoBehaviour
         }
         else if (biomeSpawning == Biome.Cypress)
         {
+            currentOffset = cypressOffset;
+
             if (chance == 1)
                 biomeSpawning = Biome.Bog;
             else
@@ -163,11 +171,15 @@ public class LevelGenerator : MonoBehaviour
         }
         else if (biomeSpawning == Biome.Amazon)
         {
+            currentOffset = amazonOffset;
+
             if (chance == 1)
                 biomeSpawning = Biome.Bog;
             else
                 biomeSpawning = Biome.Cypress;
         }
+
+        treeSpawned = false;
     }
     private void SpawnStartPoints() 
     {
@@ -244,8 +256,8 @@ public class LevelGenerator : MonoBehaviour
         }
         else if (biomeSpawning == Biome.Cypress)
         {
-            minTransitionXOffset = 300;
-            maxTransitionXOffset = 500;
+            minTransitionXOffset = 200;
+            maxTransitionXOffset = 400;
         }
         else
         {
@@ -295,10 +307,23 @@ public class LevelGenerator : MonoBehaviour
             }
             if (biomeSpawning == Biome.Cypress)
             {
-                int chosen = UnityEngine.Random.Range(0, cypressRiverbedPrefabs.Length);
+                int chosen;
+
+                if (treeSpawned)
+                    chosen = UnityEngine.Random.Range(0, cypressRiverbedPrefabs.Length - 1);
+                else
+                {
+                    chosen = UnityEngine.Random.Range(0, cypressRiverbedPrefabs.Length );
+                }
+
                 while (chosen == currentRiverbedIndex) //Repeat choosing which riverbed to spawn until a new one is chosen
                 {
                     chosen = UnityEngine.Random.Range(0, cypressRiverbedPrefabs.Length);
+                }
+
+                if (cypressRiverbedPrefabs[chosen] == cypressRiverbedPrefabs[4])
+                {
+                    treeSpawned = true;
                 }
 
                 SpawnRiverbed(cypressRiverbedPrefabs[chosen], (Vector2)lastRiverbedEndPosition + mudOffset);
