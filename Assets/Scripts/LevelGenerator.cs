@@ -64,6 +64,7 @@ public class LevelGenerator : MonoBehaviour
         endPoint = startEndPoint.position;
         playerRefEndPoint = startEndPoint.position;
         biomeSpawning = startBiome;
+        playerBiome = startBiome;
 
         SpawnStartPoints();
     }
@@ -199,7 +200,8 @@ public class LevelGenerator : MonoBehaviour
         }
         if (math.distance(player.transform.position.x, lastLevelEndPosition.x) < spawnDistance)
         {
-            SpawnLevelPart();
+            if (playerBiome != Biome.Cypress)
+                SpawnLevelPart();
         }
         if (math.distance(player.transform.position.x, lastPreyEndPosition.x) < spawnDistance)
         {
@@ -431,8 +433,6 @@ public class LevelGenerator : MonoBehaviour
         Vector2 logOffset = new Vector2(logXOffset, logYOffset);
 
         levelPartCalc = UnityEngine.Random.Range(0, 101);
-        if(biomeSpawning != Biome.Cypress)
-        {
             if (levelPartCalc <= 75)
             {
                 //75% chance to spawn a lilypad
@@ -465,7 +465,7 @@ public class LevelGenerator : MonoBehaviour
             lastLevelPartTransform = SpawnLevelPart(chosenLevelPart, new Vector2(lastLevelEndPosition.x, waterLevel) + offset);
 
             lastLevelEndPosition = lastLevelPartTransform.Find("EndPosition").position;
-        }
+        
     }
 
     private Transform SpawnLevelPart(Transform levelPart, Vector3 spawnPosition)

@@ -129,6 +129,10 @@ public class PredatorEvents : MonoBehaviour
     {
         if (fishEvent)
         {
+            //Always spawn fish to the left when you're at the end of a biome
+            if (lg.biomeSpawning != lg.playerBiome)
+                directionChance = 2;
+
             if (directionChance == 1)
                 predatorSpawnPosition = new Vector2(player.position.x + 150, lg.playerRefEndPoint.y - 16.415f);
             else
