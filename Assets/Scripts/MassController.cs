@@ -11,7 +11,7 @@ public class MassController : MonoBehaviour
     void Awake()
     {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        if (gameObject.name == "Log" || gameObject.name == "Log(Clone)")
+        if (gameObject.name == "Log" || gameObject.name == "Log(Clone)" || gameObject.name == "AmazonLog(Clone)")
         {
             logMassMin = 75; logMassMax = 130;
             rb.mass = Random.Range(logMassMin, logMassMax);

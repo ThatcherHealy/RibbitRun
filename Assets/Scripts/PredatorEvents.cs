@@ -182,7 +182,25 @@ public class PredatorEvents : MonoBehaviour
               Mathf.Clamp(predatorSpawnPosition.y, shrunkCameraRect.yMin, shrunkCameraRect.yMax), 0);
             }
 
+            //Set Position
             warning.transform.position = Vector3.Lerp(warning.transform.position, warningTarget, 100 * Time.deltaTime);
+
+            //Set Scale
+            float scale; float distance;
+            if (spawned)
+            {
+                distance = Mathf.Abs(Vector3.Distance(player.position, currentPredator.transform.position));
+            }
+            else
+            {
+                distance = Mathf.Abs(Vector3.Distance(player.position, predatorSpawnPosition));
+            }
+            float normalizedDistance = Mathf.Clamp01(distance / 150f);
+
+            // Use Mathf.Lerp to interpolate between 0.5 and 1 based on the normalized distance
+            scale = Mathf.Lerp(0.5f, 1f, 1 - normalizedDistance);
+            scale *= 1.5f;
+            warning.transform.localScale = new Vector3(scale,scale,1);
 
             //When the predator enters the cameraview, stop the warning
             if (spawned && currentPredator.transform.position.x < (topRight.x + 5) && currentPredator.transform.position.x > (bottomLeft.x - 5))

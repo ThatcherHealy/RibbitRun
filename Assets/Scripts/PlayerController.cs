@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject cattailParticles;
     [SerializeField] GameObject mudParticles;
     [SerializeField] GameObject splashParticles;
+    [SerializeField] GameObject eatParticles;
     public string biomeIn;
 
     [Header("States")]
@@ -440,6 +441,7 @@ public class PlayerController : MonoBehaviour
                 scoreController.SpawnFloatingText(25, transform.position);
                 scoreController.Score(25);
             }
+            EatParticles(collision);
         }
     }
     void MudParticles(Collider2D col)
@@ -460,5 +462,10 @@ public class PlayerController : MonoBehaviour
             ps.startSpeedMultiplier = rb.velocity.magnitude;
             Destroy(mp, 1);
         }
+    }
+    void EatParticles(Collider2D col)
+    {
+        GameObject ep = Instantiate(eatParticles, col.transform.position, Quaternion.identity);
+        Destroy(ep, 1);
     }
 }

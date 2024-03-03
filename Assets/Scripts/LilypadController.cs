@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class LilypadController : MonoBehaviour
 {
-    private int range = 20;
+    [SerializeField] int range = 20;
     private void Update()
     {
         //Locks the angle of the lilypad between -range and range

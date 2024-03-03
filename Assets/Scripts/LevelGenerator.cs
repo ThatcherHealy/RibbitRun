@@ -7,7 +7,8 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
-    [SerializeField] private List<Transform> levelPartList;
+    [SerializeField] private List<Transform> bogLevelPartList;    
+    [SerializeField] private List<Transform> AmazonLevelPartList;
     [SerializeField] private List<Transform> preyList;
     [SerializeField] private Transform[] bogRiverbedPrefabs;    
     [SerializeField] private Transform[] cypressRiverbedPrefabs;   
@@ -35,7 +36,6 @@ public class LevelGenerator : MonoBehaviour
     private Vector3 lastPreyEndPosition;
     private Vector3 lastRiverbedEndPosition;
     private Vector3 lastCattailEndPosition;
-    private Vector3 lastBiomeTransitionEndPosition;
 
     private int swarmSize;
     private int currentRiverbedIndex;
@@ -189,7 +189,6 @@ public class LevelGenerator : MonoBehaviour
         lastPreyEndPosition = endPoint;
         lastRiverbedEndPosition = endPoint - new Vector3(41f, 45.7f, 0);
         lastCattailEndPosition = endPoint - new Vector3(40.34617f, -0.645f,0);
-        lastBiomeTransitionEndPosition = endPoint;
     }
     private void FixedUpdate()
     {
@@ -272,7 +271,6 @@ public class LevelGenerator : MonoBehaviour
 
 
         lastTransitionTransform = SpawnTransition(biomeSwapperPrefab, new Vector3(lastRiverbedEndPosition.x + transitionXOffset, endPoint.y + 10));
-        lastBiomeTransitionEndPosition = lastTransitionTransform.position;
         biomeSwapSpawned = true;
     }
     private Transform SpawnTransition(Transform transition, Vector3 transitionSpawnPosition)
@@ -427,30 +425,42 @@ public class LevelGenerator : MonoBehaviour
         int lilypadXOffset = UnityEngine.Random.Range(minLilypadXOffset, maxLilypadXOffset), lilypadYOffset = UnityEngine.Random.Range(minLilypadYOffset, maxLilypadYOffset);
         Vector2 lilypadOffset = new Vector2(lilypadXOffset,lilypadYOffset);
 
+        //Range of the possible distances between a water lily and the last spawned level part
+        int minWaterLilyXOffset = 20, maxWaterLilyXOffset = 35, minWaterLilyYOffset = 0, maxWaterLilyYOffset = 2;
+        int waterLilyXOffset = UnityEngine.Random.Range(minWaterLilyXOffset, maxWaterLilyXOffset), waterLilyYOffset = UnityEngine.Random.Range(minWaterLilyYOffset, maxWaterLilyYOffset);
+        Vector2 waterLilyOffset = new Vector2(waterLilyXOffset, waterLilyYOffset);
+
         //Range of the possible distances between a log and the last spawned level part
         int minLogXOffset = 25, maxLogXOffset = 35, minLogYOffset = -2, maxLogYOffset = 0;
         int logXOffset = UnityEngine.Random.Range(minLogXOffset, maxLogXOffset), logYOffset = UnityEngine.Random.Range(minLogYOffset, maxLogYOffset);
         Vector2 logOffset = new Vector2(logXOffset, logYOffset);
 
+        //Range of the possible distances between an amazon log and the last spawned level part
+        int minAmazonLogXOffset = 30, maxAmazonLogXOffset = 45, minAmazonLogYOffset = -2, maxAmazonLogYOffset = 0;
+        int amazonLogXOffset = UnityEngine.Random.Range(minAmazonLogXOffset, maxAmazonLogXOffset), amazonLogYOffset = UnityEngine.Random.Range(minAmazonLogYOffset, maxAmazonLogYOffset);
+        Vector2 amazonLogOffset = new Vector2(amazonLogXOffset, amazonLogYOffset);
+
         levelPartCalc = UnityEngine.Random.Range(0, 101);
+        if (playerBiome == Biome.Bog)
+        {
             if (levelPartCalc <= 75)
             {
                 //75% chance to spawn a lilypad
                 float lilypadVariant = UnityEngine.Random.Range(0, 100);
                 if (lilypadVariant <= 90)
                 {
-                    chosenLevelPart = levelPartList[0]; //90% chance to spawn normal lilypad
+                    chosenLevelPart = bogLevelPartList[0]; //90% chance to spawn normal lilypad
                 }
                 else
                 {
                     //10% chance to flower
                     float color = UnityEngine.Random.Range(0, 100);
                     if (color <= 33.3f)
-                        chosenLevelPart = levelPartList[2]; //33% chance to spawn pink
+                        chosenLevelPart = bogLevelPartList[2]; //33% chance to spawn pink
                     else if (color > 33.3f && color <= 66.6f)
-                        chosenLevelPart = levelPartList[3]; //33% chace to spawn red
+                        chosenLevelPart = bogLevelPartList[3]; //33% chace to spawn red
                     else
-                        chosenLevelPart = levelPartList[4]; //33% chance to spawn white
+                        chosenLevelPart = bogLevelPartList[4]; //33% chance to spawn white
                 }
 
                 offset = lilypadOffset;
@@ -458,21 +468,46 @@ public class LevelGenerator : MonoBehaviour
             else
             {
                 //25% chance to spawn a log
-                chosenLevelPart = levelPartList[1];
+                chosenLevelPart = bogLevelPartList[1];
                 offset = logOffset;
             }
-
+        }
+        else //Amazon
+        {
+            if (levelPartCalc <= 85)
+            {
+                //85% chance to spawn a water lily
+                float waterLilyVariant = UnityEngine.Random.Range(0, 100);
+                if (waterLilyVariant <= 50)
+                {
+                    chosenLevelPart = AmazonLevelPartList[0]; //50% chance to spawn normal size waterlily
+                }
+                else if (waterLilyVariant <= 75)
+                {
+                    chosenLevelPart = AmazonLevelPartList[1]; //25% chance to spawn large size waterlily
+                }
+                else
+                {
+                    chosenLevelPart = AmazonLevelPartList[2]; //50% chance to spawn small size waterlily
+                }
+                offset = waterLilyOffset;
+            }
+            else
+            {
+                //15% chance to spawn a log
+                chosenLevelPart = AmazonLevelPartList[3];
+                offset = amazonLogOffset;
+            }
+        }
             lastLevelPartTransform = SpawnLevelPart(chosenLevelPart, new Vector2(lastLevelEndPosition.x, waterLevel) + offset);
-
             lastLevelEndPosition = lastLevelPartTransform.Find("EndPosition").position;
-        
     }
 
     private Transform SpawnLevelPart(Transform levelPart, Vector3 spawnPosition)
     {
         //Spawns a level part and then returns that parts transform
         Transform levelpartTransform = Instantiate(levelPart, spawnPosition, Quaternion.identity);
-        if (levelPartCalc >= 85) //60% chance to spawn one slug on a log
+        if (levelPartCalc >= 85 && biomeSpawning == Biome.Bog) //60% chance to spawn one slug on a log
         {
             int doubleChance = UnityEngine.Random.Range(1, 5);
             Instantiate(slugPrefab, spawnPosition + new Vector3(0, UnityEngine.Random.Range(2,6), 0), Quaternion.identity);
