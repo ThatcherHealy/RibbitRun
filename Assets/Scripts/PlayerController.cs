@@ -428,8 +428,8 @@ public class PlayerController : MonoBehaviour
                 scoreController.Score(10);
             }
 
-            //if slug or snail, add 15
-            else if (collision.gameObject.transform.parent.name == "Slug(Clone)" || collision.gameObject.transform.parent.name == "Snail(Clone)")
+            //if slug or snail, or minnow, add 15
+            else if (collision.gameObject.transform.parent.name == "Slug(Clone)" || collision.gameObject.transform.parent.name == "Snail(Clone)" || collision.gameObject.transform.parent.name == "Minnow(Clone)")
             {
                 scoreController.SpawnFloatingText(15, transform.position);
                 scoreController.Score(15);
