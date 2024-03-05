@@ -7,10 +7,13 @@ public class GarBehavior : MonoBehaviour
     [SerializeField] PredatorVision pv;
     [SerializeField] UnderwaterCheck uc;
     [SerializeField] PredatorGrab hitbox;
+    [SerializeField] WaypointTurner turner;
     [SerializeField] Rigidbody2D rb;
     [SerializeField] Animator animator;
     [SerializeField] float passiveSpeed = 10;
     [SerializeField] float chaseSpeed = 20;
+
+    Vector3 initialPosition;
     private Vector3[] waypoints = new Vector3[4];
     int currentWaypoint;
 
@@ -77,6 +80,11 @@ public class GarBehavior : MonoBehaviour
                     }
                 }
             }
+        }
+
+        if (turner.hitMud || turner.hitSlideRight || turner.hitSlideLeft)
+        {
+            SetWaypoints();
         }
     }
     void LookAtVelocity()
@@ -220,7 +228,29 @@ public class GarBehavior : MonoBehaviour
 
     void SetWaypoints()
     {
-        Vector3 initialPosition = transform.position;
+        if (!(turner.hitMud || turner.hitSlideRight || turner.hitSlideLeft))
+        {
+            initialPosition = transform.position;
+        }
+        else
+        {
+            if (turner.hitMud)
+            {
+                initialPosition = transform.position + new Vector3(0, 20, 0);
+            }
+            else if (turner.hitSlideRight)
+            {
+                initialPosition = transform.position + new Vector3(-50, 0, 0);
+            }
+            else
+            {
+                initialPosition = transform.position + new Vector3(50, 0, 0);
+            }
+            turner.hitMud = false;
+            turner.hitSlideLeft = false;
+            turner.hitSlideRight = false;
+            ChooseNextWaypoint();
+        }
 
         float xOffsetLeft = Random.Range(20, 45); float yOffsetDown = Random.Range(2, 5);
         waypoints[0] = new Vector3(initialPosition.x - xOffsetLeft, initialPosition.y - yOffsetDown);

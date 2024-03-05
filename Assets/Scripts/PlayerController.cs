@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     public bool jump;
     public bool isSwimming;
     public bool saturated;
+    public bool wet;
     public bool dead;
     public bool eaten;
     public bool drowned;
@@ -144,12 +145,15 @@ public class PlayerController : MonoBehaviour
     {
         if (isSwimming)
         {
-            float slowingFactor = 1f;
-            rb.drag = slowingFactor;
+            if (!tongueLine.isGrappling)
+            {
+                float slowingFactor = 1f;
+                rb.drag = slowingFactor;
 
-            rb.gravityScale = defaultGravityScale / 2;
+                rb.gravityScale = defaultGravityScale / 2;
 
-            tongueLine.isGrappling = false;
+                tongueLine.isGrappling = false;
+            }
         }
         else //Remove the swim line and resume time when out of the water
         {
@@ -348,6 +352,7 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Water"))
         {
+            wet = true;
             if (!splashParticleCooldown && !isSwimming)
             {
                 GameObject splash = Instantiate(splashParticles, (Vector3)collision.ClosestPoint(transform.position), Quaternion.Euler(-90, 0, 0));
@@ -388,6 +393,7 @@ public class PlayerController : MonoBehaviour
         //The player swims when they are in water, not grounded, and not in a no-swim-zone
         if (collision.gameObject.tag == "Water")
         {
+            wet = true;
             if(!isGrounded && !cantSwim)
             {
                 isSwimming = true;
@@ -404,7 +410,10 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("NoSwim") && cantSwim)
             cantSwim = false;
         if (collision.gameObject.CompareTag("Water"))
+        {
             isSwimming = false;
+            wet = false;
+        }
         if (collision.gameObject.layer == 14) //When the player is on mud, it doesnt lose moisture
         {
             saturated = false;

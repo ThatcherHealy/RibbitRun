@@ -1862,6 +1862,7 @@ GameObject:
   - component: {fileID: 696127866267588626}
   - component: {fileID: 4343572089693257531}
   - component: {fileID: 8623318931551531593}
+  - component: {fileID: 5595847490704857868}
   m_Layer: 2
   m_Name: Sprite
   m_TagString: Untagged
@@ -1903,10 +1904,10 @@ PolygonCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 76
+    m_Bits: 16460
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 32691
+    m_Bits: 16307
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -1960,6 +1961,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   underwater: 0
+--- !u!114 &5595847490704857868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5213912513405304109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c636b125a24a29f4f8dd657d9da1a1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitSlideLeft: 0
+  hitSlideRight: 0
+  hitMud: 0
 --- !u!1 &6256523958329227824
 GameObject:
   m_ObjectHideFlags: 0
@@ -2839,6 +2855,7 @@ MonoBehaviour:
   pv: {fileID: 4559465151736104983}
   uc: {fileID: 8623318931551531593}
   hitbox: {fileID: 2255825875321478168}
+  turner: {fileID: 5595847490704857868}
   rb: {fileID: 6356769796145076264}
   animator: {fileID: 8044876445998171370}
   passiveSpeed: 10

@@ -27,7 +27,7 @@ public class SnailMovement : MonoBehaviour
         FindRock();
 
         direction = Random.Range(1, 3);
-        speed = Random.Range(1, 4);
+        speed = Random.Range(2, 4);
     }
     void FindRock()
     {

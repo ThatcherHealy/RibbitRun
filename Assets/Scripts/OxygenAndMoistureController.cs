@@ -44,7 +44,7 @@ public class OxygenAndMoistureController : MonoBehaviour
 
     private void LoseAndGainOxygenandMoisture() 
     {
-        if (playerController.isSwimming)
+        if (playerController.wet)
         {
             currentOxygen -= 0.06f; //Oxygen loss speed
         }
@@ -53,7 +53,7 @@ public class OxygenAndMoistureController : MonoBehaviour
             currentOxygen += 1f; //Oxygen gain speed
         }
 
-        if (!playerController.isSwimming && !playerController.saturated)
+        if (!playerController.wet && !playerController.saturated)
         {
             currentMoisture -= 0.06f; //Moisture loss speed
         }

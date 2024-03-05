@@ -7,12 +7,18 @@ public class MinnowBehavior : MonoBehaviour
     [SerializeField] float passiveSpeed = 3;
     [SerializeField] Rigidbody2D rb;
     [SerializeField] UnderwaterCheck uc;
+    [SerializeField] WaypointTurner turner;
+    [SerializeField] Transform sprite;
     private Vector3[] waypoints = new Vector3[4];
     int currentWaypoint;
     bool forceApplied; //True after the force has been applied to the gar in the direction of its next waypoint
+    Vector3 initialPosition;
     void Start()
     {
+        RandomizeSpeed();
         passiveSpeed *= rb.mass;
+
+        RandomizeScale();
         SetWaypoints();
     }
 
@@ -43,6 +49,11 @@ public class MinnowBehavior : MonoBehaviour
         {
             MoveTowardsWaypoint();
         } 
+
+        if (turner.hitMud || turner.hitSlideRight || turner.hitSlideLeft)
+        {
+            SetWaypoints();
+        }
     }
     void LookAtVelocity()
     {
@@ -135,7 +146,29 @@ public class MinnowBehavior : MonoBehaviour
 
     void SetWaypoints()
     {
-        Vector3 initialPosition = transform.position;
+        if (!(turner.hitMud || turner.hitSlideRight || turner.hitSlideLeft))
+        {
+            initialPosition = transform.position;
+        }
+        else
+        {
+            if (turner.hitMud) 
+            {
+                initialPosition = transform.position + new Vector3 (0, 20, 0);
+            }
+            else if (turner.hitSlideRight) 
+            {
+                initialPosition = transform.position + new Vector3(-30, 0, 0);
+            }
+            else 
+            {
+                initialPosition = transform.position + new Vector3(30, 0, 0);
+            }
+            turner.hitMud = false;
+            turner.hitSlideLeft = false;
+            turner.hitSlideRight = false;
+            ChooseNextWaypoint();
+        }
 
         float xOffsetLeft = Random.Range(5, 30); float yOffsetDown = Random.Range(2, 5);
         waypoints[0] = new Vector3(initialPosition.x - xOffsetLeft, initialPosition.y - yOffsetDown);
@@ -151,5 +184,57 @@ public class MinnowBehavior : MonoBehaviour
 
         int randomWaypoint = Random.Range(0, waypoints.Length);
         currentWaypoint = randomWaypoint;
+    }
+    void RandomizeSpeed() 
+    {
+        float random = Random.Range(1, 101);
+
+        if (random <= 50)
+        {
+            passiveSpeed += 0;
+        }
+        else if (random <= 65f)
+        {
+            passiveSpeed += 1;
+        }
+        else if (random <= 80f)
+        {
+            passiveSpeed += -1;
+        }
+        else if (random <= 90f)
+        {
+            passiveSpeed += 2;
+        }
+        else
+        {
+            passiveSpeed += -2;
+        }
+    }
+    void RandomizeScale()
+    {
+        float random = Random.Range(1, 101);
+        float scale = sprite.transform.localScale.x;
+
+        if (random <= 50)
+        {
+            scale += 0;
+        }
+        else if (random <= 65f)
+        {
+            scale += 0.1f;
+        }
+        else if (random <= 80f)
+        {
+            scale += -0.1f;
+        }
+        else if (random <= 90f)
+        {
+            scale += 0.2f;
+        }
+        else
+        {
+            scale += -0.15f;
+        }
+        sprite.localScale = new Vector3(scale, scale, 1);
     }
 }
