@@ -516,6 +516,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6240566185406343884}
   - component: {fileID: 8033026116121429576}
+  - component: {fileID: 6345600503653544822}
   m_Layer: 7
   m_Name: Sprite
   m_TagString: Untagged
@@ -553,7 +554,7 @@ CapsuleCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -576,6 +577,23 @@ CapsuleCollider2D:
   m_Offset: {x: 0.017157108, y: 0.23164119}
   m_Size: {x: 2.3898518, y: 1.1887578}
   m_Direction: 1
+--- !u!114 &6345600503653544822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5728992012049295159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c636b125a24a29f4f8dd657d9da1a1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitSlideLeft: 0
+  hitSlideRight: 0
+  hitGroundLeft: 0
+  hitGroundRight: 0
+  hitMud: 0
 --- !u!1 &5913384618079185895
 GameObject:
   m_ObjectHideFlags: 0
@@ -632,6 +650,7 @@ MonoBehaviour:
   isLinkOffsetScaleNegativeX: 0
   isLinkOffsetScalePositiveY: 0
   isLinkOffsetScaleNegativeY: 0
+  turner: {fileID: 6345600503653544822}
   behavior: 0
 --- !u!50 &8169689638425876732
 Rigidbody2D:
@@ -641,14 +660,14 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5913384618079185895}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -659,4 +678,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4

@@ -9,6 +9,10 @@ public class BiomeDependece : MonoBehaviour
     [SerializeField] bool destroyOnTransition; //Destroy the gameobject when it is spawned on a transition slide
     private void Start()
     {
+        if (destroyOnTransition)
+        {
+            StartCoroutine(CheckForTransitionSlide());
+        }
         //Determine what biome the level part was spawned at by scanning for the mud under it then looking at that mud's parent name and then seeing what type of riverbed it is.
         //If the level part is in a biome it does not belong in, it replaces itself with the corresponding correct level part and destroys itself.
         RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position, Vector2.down);
@@ -50,11 +54,19 @@ public class BiomeDependece : MonoBehaviour
                     }
                 }
             }
-
-            if (destroyOnTransition && hit[i].collider.transform.gameObject.layer == 14)
+        }
+    }
+    IEnumerator CheckForTransitionSlide() 
+    {
+        yield return new WaitForSeconds(4);
+        RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position, Vector2.down);
+        for (int i = 0; i < hit.Length; i++)
+        {
+            if (hit[i].transform.gameObject.layer == 14)
             {
                 Destroy(gameObject);
             }
         }
+        StartCoroutine(CheckForTransitionSlide());
     }
 }

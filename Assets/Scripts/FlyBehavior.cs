@@ -24,6 +24,10 @@ public class FlyBehavior : MonoBehaviour
     private Vector3 pivotOffset;
     private bool isInverted = false;
 
+    [SerializeField] WaypointTurner turner;
+    bool moving;
+    float initialOffset;
+
     public Behavior behavior;
     public enum Behavior
     {
@@ -69,6 +73,52 @@ public class FlyBehavior : MonoBehaviour
 
     void Update()
     {
+        if (turner.hitGroundLeft || moving)
+        {
+            if (turner.hitGroundLeft)
+            {
+                initialOffset = offsetX;
+                turner.hitGroundLeft = false;
+            }
+
+            MoveAway(true, initialOffset);
+        }
+        else if (turner.hitGroundRight || moving)
+        {
+            if (turner.hitGroundRight)
+            {
+                initialOffset = offsetX;
+                turner.hitGroundRight = false;
+            }
+
+            MoveAway(false, initialOffset);
+        }
+
+        void MoveAway(bool left, float initialOffset) 
+        {
+
+            if (left) 
+            {
+                if (offsetX < initialOffset + 10)
+                {
+                    offsetX += 0.01f;
+                    moving = true;
+                }
+                else
+                    moving = false;
+            }
+            else 
+            {
+                if (offsetX > initialOffset - 10)
+                {
+                    offsetX -= 0.01f;
+                    moving = true;
+                }
+                else
+                    moving = false;
+            }
+        }
+
         switch (behavior)
         {
             case Behavior.FigureEight:

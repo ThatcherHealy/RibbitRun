@@ -9,6 +9,10 @@ public class DragonflyBehavior : MonoBehaviour
     private Vector3[] waypoints = new Vector3[4];
     int currentWaypoint;
     float speed = 25f;
+
+    [SerializeField] WaypointTurner turner;
+    Vector3 initialPosition;
+
     public SpriteRenderer[] bodySprites;
     public Color green;
     public Color blue;
@@ -32,6 +36,11 @@ public class DragonflyBehavior : MonoBehaviour
     {
         LookAtWaypoint();
         MoveTowardsWaypoint();
+
+        if (turner.hitGroundLeft || turner.hitGroundRight)
+        {
+            SetWaypoints();
+        }
     }
     void MoveTowardsWaypoint()
     {
@@ -82,7 +91,24 @@ public class DragonflyBehavior : MonoBehaviour
     }
     void SetWaypoints()
     {
-        Vector3 initialPosition = transform.position;
+        if (!(turner.hitGroundLeft || turner.hitGroundRight))
+        {
+            initialPosition = transform.position;
+        }
+        else
+        {
+            if (turner.hitGroundLeft)
+            {
+                initialPosition = transform.position + new Vector3(45, 10, 0);
+            }
+            else if (turner.hitGroundRight)
+            {
+                initialPosition = transform.position + new Vector3(-45, 10, 0);
+            }
+            turner.hitGroundLeft = false;
+            turner.hitGroundRight = false;
+            ChooseNextWaypoint();
+        }
 
         float xOffsetLeft = Random.Range(15, 40); float yOffsetDown = Random.Range(2, 5);
         waypoints[0] = new Vector3(initialPosition.x - xOffsetLeft, initialPosition.y - yOffsetDown);

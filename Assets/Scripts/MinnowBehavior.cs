@@ -152,18 +152,19 @@ public class MinnowBehavior : MonoBehaviour
         }
         else
         {
-            if (turner.hitMud) 
+            if (turner.hitMud)
             {
-                initialPosition = transform.position + new Vector3 (0, 20, 0);
+                initialPosition = transform.position + new Vector3(0, 5, 0);
             }
-            else if (turner.hitSlideRight) 
+            else if (turner.hitSlideRight)
             {
-                initialPosition = transform.position + new Vector3(-30, 0, 0);
+                initialPosition = transform.position + new Vector3(-20, 0, 0);
             }
-            else 
+            else
             {
-                initialPosition = transform.position + new Vector3(30, 0, 0);
+                initialPosition = transform.position + new Vector3(20, 0, 0);
             }
+
             turner.hitMud = false;
             turner.hitSlideLeft = false;
             turner.hitSlideRight = false;
@@ -221,19 +222,19 @@ public class MinnowBehavior : MonoBehaviour
         }
         else if (random <= 65f)
         {
-            scale += 0.1f;
+            scale += 0.05f;
         }
         else if (random <= 80f)
         {
-            scale += -0.1f;
+            scale += -0.05f;
         }
         else if (random <= 90f)
         {
-            scale += 0.2f;
+            scale += 0.1f;
         }
         else
         {
-            scale += -0.15f;
+            scale += -0.1f;
         }
         sprite.localScale = new Vector3(scale, scale, 1);
     }
