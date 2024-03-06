@@ -50,7 +50,7 @@ public class MinnowBehavior : MonoBehaviour
             MoveTowardsWaypoint();
         } 
 
-        if (turner.hitMud || turner.hitSlideRight || turner.hitSlideLeft)
+        if (turner.hitMud || turner.hitSlideRight || turner.hitSlideLeft || turner.hitGroundRight || turner.hitGroundLeft)
         {
             SetWaypoints();
         }
@@ -146,7 +146,7 @@ public class MinnowBehavior : MonoBehaviour
 
     void SetWaypoints()
     {
-        if (!(turner.hitMud || turner.hitSlideRight || turner.hitSlideLeft))
+        if (!(turner.hitMud || turner.hitSlideRight || turner.hitSlideLeft || turner.hitGroundRight || turner.hitGroundLeft))
         {
             initialPosition = transform.position;
         }
@@ -156,11 +156,11 @@ public class MinnowBehavior : MonoBehaviour
             {
                 initialPosition = transform.position + new Vector3(0, 5, 0);
             }
-            else if (turner.hitSlideRight)
+            else if (turner.hitSlideRight || turner.hitGroundRight)
             {
                 initialPosition = transform.position + new Vector3(-20, 0, 0);
             }
-            else
+            else if (turner.hitSlideLeft || turner.hitGroundLeft)
             {
                 initialPosition = transform.position + new Vector3(20, 0, 0);
             }
@@ -168,6 +168,8 @@ public class MinnowBehavior : MonoBehaviour
             turner.hitMud = false;
             turner.hitSlideLeft = false;
             turner.hitSlideRight = false;
+            turner.hitGroundLeft = false;
+            turner.hitGroundRight = false;
             ChooseNextWaypoint();
         }
 

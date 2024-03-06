@@ -427,28 +427,36 @@ public class PlayerController : MonoBehaviour
             //if beetle, add 5
             if (collision.gameObject.transform.parent.name == "Beetle(Clone)")
             {
-                scoreController.SpawnFloatingText(5, transform.position);
+                scoreController.SpawnFloatingText(5, transform.position, Color.white);
                 scoreController.Score(5);
             }
             //if fly or waterstrider, add 10
             if (collision.gameObject.transform.parent.name == "Fly(Clone)" || collision.gameObject.transform.parent.name == "WaterStrider(Clone)")
             {
-                scoreController.SpawnFloatingText(10, transform.position);
+                scoreController.SpawnFloatingText(10, transform.position, Color.white);
                 scoreController.Score(10);
             }
 
             //if slug or snail, or minnow, add 15
-            else if (collision.gameObject.transform.parent.name == "Slug(Clone)" || collision.gameObject.transform.parent.name == "Snail(Clone)" || collision.gameObject.transform.parent.name == "Minnow(Clone)")
+            else if (collision.gameObject.transform.parent.name == "Slug(Clone)" || collision.gameObject.transform.parent.name == "Snail(Clone)" 
+                || collision.gameObject.transform.parent.name == "BogMinnow(Clone)"|| collision.gameObject.transform.parent.name == "AmazonMinnow(Clone)")
             {
-                scoreController.SpawnFloatingText(15, transform.position);
+                scoreController.SpawnFloatingText(15, transform.position, Color.white);
                 scoreController.Score(15);
             }
 
             //if dragonfly, add 25
             else if (collision.gameObject.transform.parent.name == "Dragonfly(Clone)")
             {
-                scoreController.SpawnFloatingText(25, transform.position);
+                scoreController.SpawnFloatingText(25, transform.position, Color.white);
                 scoreController.Score(25);
+            }
+
+            //if goldfish, add 100
+            else if (collision.gameObject.transform.parent.name == "Goldfish(Clone)")
+            {
+                scoreController.SpawnFloatingText(100, transform.position, Color.yellow);
+                scoreController.Score(100);
             }
             EatParticles(collision);
         }

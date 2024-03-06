@@ -101,7 +101,7 @@ public class FlyBehavior : MonoBehaviour
             {
                 if (offsetX < initialOffset + 10)
                 {
-                    offsetX += 0.01f;
+                    offsetX += 0.02f;
                     moving = true;
                 }
                 else
@@ -111,7 +111,7 @@ public class FlyBehavior : MonoBehaviour
             {
                 if (offsetX > initialOffset - 10)
                 {
-                    offsetX -= 0.01f;
+                    offsetX -= 0.02f;
                     moving = true;
                 }
                 else

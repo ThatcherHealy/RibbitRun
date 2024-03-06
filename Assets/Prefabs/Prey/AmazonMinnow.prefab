@@ -160,7 +160,7 @@ GameObject:
   - component: {fileID: 5753130982455516792}
   - component: {fileID: 4801867528808601519}
   m_Layer: 7
-  m_Name: Minnow
+  m_Name: AmazonMinnow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -801,6 +801,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitSlideLeft: 0
   hitSlideRight: 0
+  hitGroundLeft: 0
+  hitGroundRight: 0
   hitMud: 0
 --- !u!1 &5225044269772230650
 GameObject:

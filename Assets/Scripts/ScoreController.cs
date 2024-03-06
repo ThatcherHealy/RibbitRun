@@ -84,7 +84,7 @@ public class ScoreController : MonoBehaviour
         }
     }
 
-    public void SpawnFloatingText(int value, Vector3 position)
+    public void SpawnFloatingText(int value, Vector3 position, Color color)
     {
         if (!playerController.dead)
         {
@@ -94,6 +94,8 @@ public class ScoreController : MonoBehaviour
 
             GameObject parent = Instantiate(floatingTextParent, position + offset, Quaternion.identity);
             TextMeshPro spawnedScore = Instantiate(floatingText, position, Quaternion.identity, parent.transform);
+            spawnedScore.color = color;
+
             Destroy(spawnedScore.gameObject, 2);
             Destroy(parent, 2);
         }

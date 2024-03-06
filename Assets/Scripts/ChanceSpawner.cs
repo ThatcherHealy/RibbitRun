@@ -8,10 +8,10 @@ public class ChanceSpawner : MonoBehaviour
 
     //There is a 1/probability chance that the object is spawned 
     [SerializeField] int probabilty;
+    [SerializeField] bool guaranteed;
     private void Start()
     {
-
-        if (Random.Range(1,probabilty + 1) == 1)
+        if (guaranteed || Random.Range(1,probabilty + 1) == 1)
         {
             Instantiate(spawnedObject, transform.position, Quaternion.identity);
         }
