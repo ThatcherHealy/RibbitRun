@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FishBehavior : MonoBehaviour
 {
-    int speed = 50;
+    [SerializeField] int speed = 50;
     private Transform player;
     private bool facingLeft;
     [SerializeField] PredatorTurner turner;

@@ -14,6 +14,7 @@ public class ScoreController : MonoBehaviour
     [SerializeField] GameObject floatingTextParent;
     [SerializeField] Canvas canvas;
     [SerializeField] PlayerController playerController;
+    [SerializeField] LevelGenerator lg;
     [SerializeField] TextMeshPro finalScoreText;
     [SerializeField] TextMeshPro highscoreText;
     [SerializeField] TextMeshPro drownedFinalScoreText;
@@ -29,7 +30,7 @@ public class ScoreController : MonoBehaviour
     {
         farthestDistance = startPoint.position.x;
         scoreText.enabled = false;
-        initialPosition = playerPosition.position.x;
+        initialPosition = lg.endPoint.x;
     }
     private void Update()
     {
@@ -42,7 +43,8 @@ public class ScoreController : MonoBehaviour
         scoreText.text = score.ToString();
 
         //Adds a point whenever the player goes 4 units farther in the x axis than their previous location
-        xDistance = Vector3.Distance(new Vector3(initialPosition,0,0), new Vector3(playerPosition.position.x, 0,0));
+        if (playerPosition.position.x > initialPosition)
+            xDistance = Vector3.Distance(new Vector3(initialPosition,0,0), new Vector3(playerPosition.position.x, 0,0));
         int scoreThreshold = 4;
 
         if (xDistance > farthestDistance + scoreThreshold)

@@ -11,6 +11,7 @@ public class PredatorEvents : MonoBehaviour
     [SerializeField] ScoreController sc;
     [SerializeField] LevelGenerator lg;
     [SerializeField] GameObject fishSwarmPrefab;
+    [SerializeField] GameObject arapaimaPrefab;
     [SerializeField] GameObject birdPrefab;
     [SerializeField] GameObject warningPrefab;
     [SerializeField] Transform player;
@@ -48,12 +49,11 @@ public class PredatorEvents : MonoBehaviour
             if (chance == 1) //33% chance
             {
                 max = startingValue;
-                int eventChosen = UnityEngine.Random.Range(1, 3);
-                if (eventChosen == 1)
+                if (pc.isSwimming)
                 {
                     StartCoroutine(FishEvent());
                 }
-                else if (eventChosen == 2)
+                else
                 {
                     StartCoroutine(BirdEvent());
                 }
@@ -79,7 +79,14 @@ public class PredatorEvents : MonoBehaviour
         Warning();
         yield return new WaitForSeconds(warningTime);
 
-        currentPredator = Instantiate(fishSwarmPrefab, predatorSpawnPosition, Quaternion.identity);
+        if (lg.playerBiome != LevelGenerator.Biome.Amazon) 
+        {
+            currentPredator = Instantiate(fishSwarmPrefab, predatorSpawnPosition, Quaternion.identity);
+        }
+        else
+        {
+            currentPredator = Instantiate(arapaimaPrefab, predatorSpawnPosition, Quaternion.identity);
+        }
         spawned = true;
 
         //Destroy the fish after 15 seconds

@@ -46,7 +46,7 @@ public class OxygenAndMoistureController : MonoBehaviour
     {
         if (playerController.wet)
         {
-            currentOxygen -= 0.06f; //Oxygen loss speed
+            currentOxygen -= 0.05f; //Oxygen loss speed
         }
         else
         {
