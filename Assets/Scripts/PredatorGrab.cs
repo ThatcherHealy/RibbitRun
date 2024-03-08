@@ -10,16 +10,19 @@ public class PredatorGrab : MonoBehaviour
     public bool grabbed;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision != null)
+        if(!grabbed)
         {
-            if (collision.CompareTag("Player"))
+            if (collision != null)
             {
-                if (collision.name == "Frog")
-                    frog = collision.gameObject.transform;
-                else
-                    frog = collision.gameObject.transform.parent;
+                if (collision.CompareTag("Player"))
+                {
+                    if (collision.name == "Frog")
+                        frog = collision.gameObject.transform;
+                    else
+                        frog = collision.gameObject.transform.parent;
 
-                grabbed = true;
+                    grabbed = true;
+                }
             }
         }
     }

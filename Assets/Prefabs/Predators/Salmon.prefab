@@ -528,7 +528,7 @@ GameObject:
   - component: {fileID: 2657209066421630814}
   - component: {fileID: 6222670049138758962}
   m_Layer: 0
-  m_Name: FishSwarm
+  m_Name: Salmon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -568,6 +568,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa66251aa2835494a8850f99b6db5df5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 50
   turner: {fileID: 5450012398889880807}
 --- !u!1 &763655740660497835
 GameObject:

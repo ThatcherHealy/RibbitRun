@@ -49,7 +49,9 @@ public class PredatorEvents : MonoBehaviour
             if (chance == 1) //33% chance
             {
                 max = startingValue;
-                if (pc.isSwimming)
+                //Spawns a fish when you're in the water and a bird when you're out of the water
+                //Never spawns a bird when you're in cypress
+                if (pc.isSwimming && lg.playerBiome != LevelGenerator.Biome.Cypress)
                 {
                     StartCoroutine(FishEvent());
                 }

@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     public bool wet;
     public bool dead;
     public bool eaten;
+    public string killer;
     public bool drowned;
     public bool dried;
 
@@ -343,6 +344,13 @@ public class PlayerController : MonoBehaviour
         //When the player gets hit by a predator, they die
         if (collision.gameObject.CompareTag("Predator"))
         {
+            if (collision.transform.parent.transform.parent != null)
+                killer = collision.transform.parent.transform.parent.gameObject.name;
+            else if (collision.transform.parent != null)
+                killer = collision.transform.parent.gameObject.name;
+            else
+                killer = collision.gameObject.name;
+
             if (!drowned)
             {
                 eaten = true;
