@@ -5,12 +5,19 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class PredatorGrab : MonoBehaviour
 {
+    PlayerController pc;
     Transform frog;
     [SerializeField] Transform grabArea;
     public bool grabbed;
+    bool locked;
+
+    private void Start()
+    {
+        pc = FindFirstObjectByType<PlayerController>();
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(!grabbed)
+        if(!pc.eaten)
         {
             if (collision != null)
             {

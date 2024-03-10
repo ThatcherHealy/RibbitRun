@@ -1,0 +1,154 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.U2D;
+using UnityEngine.UIElements;
+
+public class SpiderBehavior : MonoBehaviour
+{
+    [SerializeField] LineRenderer web;
+    [SerializeField] LineRenderer strand;
+    [SerializeField] Transform[] webEnds;
+    Vector3 webMidpoint;
+
+    Rigidbody2D rb;
+    [SerializeField] GameObject sprite;
+    [SerializeField] SpriteShapeRenderer[] legSpritePieces;
+    [SerializeField] SpriteShapeRenderer[] bodySpritePieces;
+    [SerializeField] Color poisonousLegsColor;
+    [SerializeField] Color poisonousBodyColor;
+    [SerializeField] GameObject widowMark;
+
+    [SerializeField] PolygonCollider2D polygonCollider;
+    private Vector3[] linePositions = new Vector3[2];
+
+    [Header("Settings")]
+    [SerializeField] int chanceToExist = 2;
+    [SerializeField] float offsetBelow = 2;
+    [SerializeField] float bobSpacing = 2;
+    [SerializeField] bool poisonous;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        ChanceToExist();
+
+        rb = GetComponent<Rigidbody2D>();
+        DetermineIfPoisonous();
+
+        SetUpWeb();
+        transform.position = new Vector3(webMidpoint.x, webMidpoint.y - offsetBelow, 0);
+
+        StartCoroutine(Bob());
+    }
+
+    IEnumerator Bob()
+    {
+        rb.velocity = new Vector3(0, -bobSpacing, 0);
+        yield return new WaitForSeconds(2.5f);
+        rb.velocity = new Vector3(0, bobSpacing, 0);
+        yield return new WaitForSeconds(2.5f);
+        StartCoroutine(Bob());
+    }
+
+    void Update()
+    {
+        AttatchStrand();
+        SetEdgeCollider();
+    }
+
+    void SetUpWeb() 
+    {
+        web.positionCount = 2;
+        strand.positionCount = 2;
+        web.SetPosition(0, webEnds[0].position);
+        web.SetPosition(1, webEnds[1].position);
+
+        webMidpoint = new Vector3((webEnds[0].position.x + webEnds[1].position.x) / 2, (webEnds[0].position.y + webEnds[1].position.y) / 2, 0);
+        strand.SetPosition(0, webMidpoint);
+    }
+    void AttatchStrand() 
+    {
+        if (sprite != null) 
+        {
+            strand.SetPosition(1, transform.position);
+        }
+        else //Pause the strand when the frog is eaten
+        {
+            strand.SetPosition(1, strand.GetPosition(1));
+        }
+    }
+    private void SetEdgeCollider()
+    {
+        web.GetPositions(linePositions);
+        Vector3[] colliderPoints = new Vector3[web.positionCount * 2];
+
+        Vector2 width = new Vector2(0, 0.1f);
+        bool swap = false;
+
+        for (int i = 0; i < web.positionCount * 2; i += 2)
+        {
+            Vector2 localLRPos = web.transform.InverseTransformPoint(web.GetPosition(i / 2)); //The position of the lr points converted to local space
+
+            //Spawns two points per lr point, one a little to the left and one a little to the right.
+
+            //bool swap is used to spawn the points like: 
+            // o --> o
+            //       |
+            // o <-- o
+
+            if (!swap)
+            {
+                colliderPoints[i] = localLRPos - width;
+                colliderPoints[i + 1] = localLRPos + width;
+                swap = true;
+            }
+            else
+            {
+                colliderPoints[i] = localLRPos + width;
+                colliderPoints[i + 1] = localLRPos - width;
+                swap = false;
+            }
+        }
+
+        polygonCollider.points = ToVector2Array(colliderPoints);
+    }
+    void ChanceToExist()
+    {
+        int chance = Random.Range(1, chanceToExist + 1);
+        if (chance == 1)
+        { 
+            Destroy(gameObject);
+        }
+    }
+    void DetermineIfPoisonous() 
+    {
+        float chance = Random.Range(1, 5);
+        if (chance == 4)
+        {
+            poisonous = true;
+        }
+
+        if (poisonous) 
+        {
+            sprite.tag = "Poisonous";
+            foreach(SpriteShapeRenderer legSprite in legSpritePieces)
+            {
+                legSprite.color = poisonousLegsColor;
+            }
+            foreach (SpriteShapeRenderer bodySprite in bodySpritePieces)
+            {
+                bodySprite.color = poisonousBodyColor;
+            }
+            widowMark.SetActive(true);
+        }
+    }
+    private Vector2[] ToVector2Array(Vector3[] v3)
+    {
+        return System.Array.ConvertAll<Vector3, Vector2>(v3, getV3fromV2);
+    }
+    private Vector2 getV3fromV2(Vector3 v3)
+    {
+        return new Vector2(v3.x, v3.y);
+    }
+}

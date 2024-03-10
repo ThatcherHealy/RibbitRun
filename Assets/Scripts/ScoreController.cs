@@ -19,6 +19,8 @@ public class ScoreController : MonoBehaviour
     [SerializeField] TextMeshPro highscoreText;
     [SerializeField] TextMeshPro drownedFinalScoreText;
     [SerializeField] TextMeshPro drownedHighscoreText;
+    [SerializeField] TextMeshPro poisonedFinalScoreText;
+    [SerializeField] TextMeshPro poisonedHighscoreText;
     [SerializeField] Transform startPoint;
 
     private float initialPosition;
@@ -61,6 +63,11 @@ public class ScoreController : MonoBehaviour
             {
                 finalScoreText = drownedFinalScoreText;
                 highscoreText = drownedHighscoreText;
+            }
+            if (playerController.poisoned)
+            {
+                finalScoreText = poisonedFinalScoreText;
+                highscoreText = poisonedHighscoreText;
             }
             scoreText.text = new string(" ");
             finalScoreText.text = score.ToString();

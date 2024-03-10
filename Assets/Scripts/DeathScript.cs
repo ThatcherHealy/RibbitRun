@@ -15,8 +15,13 @@ public class DeathScript : MonoBehaviour
     [SerializeField] GameObject drownScene;
     [SerializeField] TextMeshPro youDrownedText;
     [SerializeField] TextMeshPro[] drownedText;
+    [SerializeField] GameObject poisonedScene;
+    [SerializeField] TextMeshPro youWerePoisonedText;
+    [SerializeField] TextMeshPro[] poisonedText;
+    [SerializeField] Image greenout;
 
-    bool fadeIn;
+    bool drownedFadeIn;
+    bool poisonedFadeIn;
     public void RespawnButton()
     {
         SceneManager.LoadScene("GameScene");
@@ -28,20 +33,28 @@ public class DeathScript : MonoBehaviour
         {
             if (playerController.eaten) 
             {
-                //Time.timeScale = 0;
                 eatenDeathScene.SetActive(true);
                 if (playerController.killer != null)
-                killerText.text = aOrAn(playerController.killer) + RemoveClone(playerController.killer).ToUpper();
+                    killerText.text = aOrAn(playerController.killer) + RemoveClone(playerController.killer).ToUpper();
             }
             if (playerController.drowned) 
             {
                 drownScene.SetActive(true);
-                StartCoroutine(BeginFadeIn());
+                StartCoroutine(BeginDrownFadeIn());
+            }
+            if (playerController.poisoned)
+            {
+                poisonedScene.SetActive(true);
+                Greenout();
             }
         }
-        if (fadeIn)
+        if (drownedFadeIn)
         {
             FadeInDrownScene();
+        }
+        if (poisonedFadeIn)
+        {
+            FadeInPoisonScene();
         }
     }
     static string aOrAn(string name)
@@ -87,9 +100,37 @@ public class DeathScript : MonoBehaviour
             Time.timeScale = 0;
         }
     }
-    IEnumerator BeginFadeIn() 
+    IEnumerator BeginDrownFadeIn() 
     {
         yield return new WaitForSeconds(1);
-        fadeIn = true;
+        drownedFadeIn = true;
+    }
+    private void Greenout()
+    {
+        //Begins fade in when the player loses oxygen and fades out when the player gains oxygen
+        greenout.color = new Color(greenout.color.r, greenout.color.g, greenout.color.b,
+        Mathf.Clamp(greenout.color.a + 0.25f * Time.deltaTime, 0, 1));
+
+        //Die after the blackout is opaque
+        if (greenout.color.a >= 1)
+        {
+            FadeInPoisonScene();
+        }
+    }
+    private void FadeInPoisonScene()
+    {
+        youWerePoisonedText.color = new Color(youWerePoisonedText.color.r, youWerePoisonedText.color.g, youWerePoisonedText.color.b, youWerePoisonedText.color.a + (0.3f * Time.deltaTime));
+
+        if (youWerePoisonedText.color.a >= 0.7f)
+        {
+            foreach (TextMeshPro text in poisonedText)
+            {
+                text.color = new Color(text.color.r, text.color.g, text.color.b, text.color.a + (1.5f * Time.deltaTime));
+            }
+        }
+        if (poisonedText[0].color.a >= 1)
+        {
+            Time.timeScale = 0;
+        }
     }
 }

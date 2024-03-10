@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
     public string killer;
     public bool drowned;
     public bool dried;
+    public bool poisoned;
 
     [Header("Settings")]
     [SerializeField] bool conserveMomentum;
@@ -301,7 +302,16 @@ public class PlayerController : MonoBehaviour
                 tongueLauncher.grappleTarget = null;
             }
 
-            Destroy(collision.transform.parent.gameObject);
+            //When you eat a spider, don't destroy its web
+            if (collision.gameObject.transform.parent.name == "Spider(Clone)" || collision.gameObject.transform.parent.name == "Spider")
+            {
+                Destroy(collision.gameObject);
+                Destroy(collision.transform.parent.gameObject.GetComponentInChildren<BoxCollider2D>());
+            }
+            else
+            {
+                Destroy(collision.transform.parent.gameObject);
+            }
         }
         if (collision.gameObject.layer == 11) //Cattail
         {
@@ -344,12 +354,15 @@ public class PlayerController : MonoBehaviour
         //When the player gets hit by a predator, they die
         if (collision.gameObject.CompareTag("Predator"))
         {
-            if (collision.transform.parent.transform.parent != null)
-                killer = collision.transform.parent.transform.parent.gameObject.name;
-            else if (collision.transform.parent != null)
-                killer = collision.transform.parent.gameObject.name;
-            else
-                killer = collision.gameObject.name;
+            if (killer == "")
+            {
+                if (collision.transform.parent.transform.parent != null)
+                    killer = collision.transform.parent.transform.parent.gameObject.name;
+                else if (collision.transform.parent != null)
+                    killer = collision.transform.parent.gameObject.name;
+                else
+                    killer = collision.gameObject.name;
+            }
 
             if (!drowned)
             {
@@ -388,6 +401,11 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.layer == 14) //When the player is on mud, it doesnt lose moisture
         {
             saturated = true;
+        }
+        if (collision.gameObject.CompareTag("Poisonous"))
+        {
+            dead = true;
+            poisoned = true;
         }
     }
     IEnumerator SplashCooldown()
@@ -451,6 +469,13 @@ public class PlayerController : MonoBehaviour
             {
                 scoreController.SpawnFloatingText(15, transform.position, Color.white);
                 scoreController.Score(15);
+            }
+
+            //If spider, add 20
+            else if (collision.gameObject.transform.parent.name == "Spider" || collision.gameObject.transform.parent.name == "Spider(Clone)")
+            {
+                scoreController.SpawnFloatingText(20, transform.position, Color.white);
+                scoreController.Score(20);
             }
 
             //if dragonfly, add 25
