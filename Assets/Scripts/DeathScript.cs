@@ -109,7 +109,7 @@ public class DeathScript : MonoBehaviour
     {
         //Begins fade in when the player loses oxygen and fades out when the player gains oxygen
         greenout.color = new Color(greenout.color.r, greenout.color.g, greenout.color.b,
-        Mathf.Clamp(greenout.color.a + 0.25f * Time.deltaTime, 0, 1));
+        Mathf.Clamp(greenout.color.a + 0.35f * Time.deltaTime, 0, 1));
 
         //Die after the blackout is opaque
         if (greenout.color.a >= 1)
@@ -119,7 +119,7 @@ public class DeathScript : MonoBehaviour
     }
     private void FadeInPoisonScene()
     {
-        youWerePoisonedText.color = new Color(youWerePoisonedText.color.r, youWerePoisonedText.color.g, youWerePoisonedText.color.b, youWerePoisonedText.color.a + (0.3f * Time.deltaTime));
+        youWerePoisonedText.color = new Color(youWerePoisonedText.color.r, youWerePoisonedText.color.g, youWerePoisonedText.color.b, youWerePoisonedText.color.a + (1f * Time.deltaTime));
 
         if (youWerePoisonedText.color.a >= 0.7f)
         {

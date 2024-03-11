@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.U2D;
 using UnityEngine.UIElements;
@@ -13,11 +14,16 @@ public class SpiderBehavior : MonoBehaviour
 
     Rigidbody2D rb;
     [SerializeField] GameObject sprite;
-    [SerializeField] SpriteShapeRenderer[] legSpritePieces;
+    [SerializeField] SpriteRenderer[] legSpritePieces;
+    [SerializeField] SpriteShapeRenderer legFillPiece;
     [SerializeField] SpriteShapeRenderer[] bodySpritePieces;
     [SerializeField] Color poisonousLegsColor;
     [SerializeField] Color poisonousBodyColor;
     [SerializeField] GameObject widowMark;
+
+    [SerializeField] GameObject poisonParticlesPrefab;
+    GameObject poisonParticles;
+    bool particlesSpawned;
 
     [SerializeField] PolygonCollider2D polygonCollider;
     private Vector3[] linePositions = new Vector3[2];
@@ -55,6 +61,16 @@ public class SpiderBehavior : MonoBehaviour
     {
         AttatchStrand();
         SetEdgeCollider();
+
+        if (poisonous) 
+        {
+            PoisonEffects();
+        }
+        if (sprite == null)
+        {
+            if (poisonParticles != null) 
+                poisonParticles.SetActive(false);
+        }
     }
 
     void SetUpWeb() 
@@ -128,19 +144,23 @@ public class SpiderBehavior : MonoBehaviour
         {
             poisonous = true;
         }
-
-        if (poisonous) 
+    }
+    void PoisonEffects()
+    {
+        if (sprite != null)
         {
             sprite.tag = "Poisonous";
-            foreach(SpriteShapeRenderer legSprite in legSpritePieces)
+            foreach (SpriteRenderer legSprite in legSpritePieces)
             {
                 legSprite.color = poisonousLegsColor;
             }
+            legFillPiece.color = poisonousLegsColor;
             foreach (SpriteShapeRenderer bodySprite in bodySpritePieces)
             {
                 bodySprite.color = poisonousBodyColor;
             }
             widowMark.SetActive(true);
+            PoisonParticles();
         }
     }
     private Vector2[] ToVector2Array(Vector3[] v3)
@@ -150,5 +170,17 @@ public class SpiderBehavior : MonoBehaviour
     private Vector2 getV3fromV2(Vector3 v3)
     {
         return new Vector2(v3.x, v3.y);
+    }
+    void PoisonParticles() 
+    {
+        if (!particlesSpawned) 
+        {
+            poisonParticles = Instantiate(poisonParticlesPrefab, sprite.transform.position, Quaternion.identity);
+            particlesSpawned = true;
+        }
+        if (poisonParticles != null) 
+        {
+            poisonParticles.transform.position = sprite.transform.position;
+        }
     }
 }

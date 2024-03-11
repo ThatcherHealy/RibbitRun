@@ -321,7 +321,7 @@ public class LevelGenerator : MonoBehaviour
                     chosen = UnityEngine.Random.Range(0, cypressRiverbedPrefabs.Length);
                 }
 
-                if (cypressRiverbedPrefabs[chosen] == cypressRiverbedPrefabs[4])
+                if (cypressRiverbedPrefabs[chosen] == cypressRiverbedPrefabs[5])
                 {
                     treeSpawned = true;
                 }
