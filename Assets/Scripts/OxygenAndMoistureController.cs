@@ -22,6 +22,8 @@ public class OxygenAndMoistureController : MonoBehaviour
     private float maxMoisture = 100;
     private float currentOxygen = 100;
     private float currentMoisture = 100;
+    public float oxygenLossRate = 0.05f;
+    public float moistureLossRate = 0.06f;
     void Start()
     {
         volume.profile.TryGetSettings(out vignette);
@@ -46,7 +48,7 @@ public class OxygenAndMoistureController : MonoBehaviour
     {
         if (playerController.wet)
         {
-            currentOxygen -= 0.05f; //Oxygen loss speed
+            currentOxygen -= oxygenLossRate; //Oxygen loss speed
         }
         else
         {
@@ -55,7 +57,7 @@ public class OxygenAndMoistureController : MonoBehaviour
 
         if (!playerController.wet && !playerController.saturated)
         {
-            currentMoisture -= 0.06f; //Moisture loss speed
+            currentMoisture -= moistureLossRate; //Moisture loss speed
         }
         else
         {

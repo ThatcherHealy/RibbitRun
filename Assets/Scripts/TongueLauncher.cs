@@ -28,7 +28,8 @@ public class TongueLauncher : MonoBehaviour
 
     [Header("Distance:")]
     [SerializeField] private bool hasMaxDistance = false;
-    [SerializeField] private float maxDistance = 30;
+    public float baseMaxDistance;
+    private float maxDistance;
     private float shrunkDistance = 8;
 
     private enum LaunchType
@@ -85,7 +86,7 @@ public class TongueLauncher : MonoBehaviour
         }
         else
         {
-            maxDistance = 30;
+            maxDistance = baseMaxDistance;
         }
     }
     private void FixedUpdate()

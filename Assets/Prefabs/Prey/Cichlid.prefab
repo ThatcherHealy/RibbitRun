@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 6076789842880134328}
   m_Layer: 0
   m_Name: Cichlid
-  m_TagString: Untagged
+  m_TagString: BPrey
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -256,7 +256,7 @@ GameObject:
   - component: {fileID: 6619318429864816381}
   m_Layer: 0
   m_Name: Sprite
-  m_TagString: Untagged
+  m_TagString: BPrey
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

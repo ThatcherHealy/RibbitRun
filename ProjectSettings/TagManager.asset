@@ -16,6 +16,7 @@ TagManager:
   - CameraTransition
   - Poisonous
   - Web
+  - BPrey
   layers:
   - Default
   - TransparentFX

@@ -32,7 +32,7 @@ public class SpiderBehavior : MonoBehaviour
     [SerializeField] int chanceToExist = 2;
     [SerializeField] float offsetBelow = 2;
     [SerializeField] float bobSpacing = 2;
-    [SerializeField] bool poisonous;
+    public bool poisonous;
 
     // Start is called before the first frame update
     void Start()
@@ -139,8 +139,8 @@ public class SpiderBehavior : MonoBehaviour
     }
     void DetermineIfPoisonous() 
     {
-        float chance = Random.Range(1, 5);
-        if (chance == 4)
+        float chance = Random.Range(1, 6);
+        if (chance == 5)
         {
             poisonous = true;
         }

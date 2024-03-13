@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private ScoreController scoreController;
     [SerializeField] private PauseButtons pauseScript;
     [SerializeField] private LevelGenerator levelGenerator;
+    [SerializeField] private OxygenAndMoistureController oxygenAndMoistureController;
     [SerializeField] private LayerMask ground;
     [SerializeField] private LayerMask slide;
     [SerializeField] GameObject tongueRangeCircle;
@@ -41,8 +42,10 @@ public class PlayerController : MonoBehaviour
     public bool drowned;
     public bool dried;
     public bool poisoned;
+    public enum Species { Default, Treefrog, Froglet, BullFrog, PoisonDartFrog };
 
     [Header("Settings")]
+    public Species species;
     [SerializeField] bool conserveMomentum;
     [SerializeField] bool aimingJumpStopsMomentum;
 
@@ -50,8 +53,11 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool changeBiome;
     [HideInInspector] public bool transitionCamera;
     float defaultGravityScale;
-    private float power = 6;
-    private float maxDrag = 5;
+    private float power;
+    private float jumpingPower;
+    private float swimmingPower;
+    private float maxJumpAimLineLength, initialMaxJumpAimLineLength, driedMaxJumpAimLineLength = 5;
+    private float maxSwimAimLineLength, initialMaxSwimAimLineLength, driedMaxSwimAimLineLength = 5;
     private bool draggingStarted = false;
     private bool cantSwim;
     Vector3 secondLinePoint;
@@ -63,6 +69,10 @@ public class PlayerController : MonoBehaviour
     
     private void Start()
     {
+        ConfigureSpecies();
+        initialMaxJumpAimLineLength = maxJumpAimLineLength;
+        initialMaxSwimAimLineLength = maxSwimAimLineLength;
+
         defaultGravityScale = rb.gravityScale;
         rb.freezeRotation = true;
         biomeIn = levelGenerator.biomeSpawning.ToString();
@@ -79,15 +89,6 @@ public class PlayerController : MonoBehaviour
         {
             swimLr.positionCount = 0;
             jumpLr.positionCount = 0;
-        }
-
-        if (dried)
-        {
-            maxDrag = 1.5f;
-        }
-        else
-        {
-            maxDrag = 5;
         }
 
         if (drowned)
@@ -191,19 +192,23 @@ public class PlayerController : MonoBehaviour
     {
         if (jump) 
         {
+            Vector3 force = dragStartPos - dragReleasePos;
+            float fillPercentage;
+
             if (isSwimming) //Swim
             {
                 rb.velocity *= 0.3f;
-                power = 5f;
+                fillPercentage = Mathf.InverseLerp(0, (maxSwimAimLineLength), (secondLinePoint - transform.position).magnitude);
+                power = swimmingPower;
             }
-            else if (!isSwimming && !tongueLine.isGrappling) //Jump
+            else //Jump
             {
                 rb.velocity = Vector2.zero;
-                power = 6f;
+                fillPercentage = Mathf.InverseLerp(0, (maxJumpAimLineLength), (secondLinePoint - transform.position).magnitude);
+                power = jumpingPower;
             }
 
-            Vector3 force = dragStartPos - dragReleasePos;
-            Vector3 clampedForce = Vector3.ClampMagnitude(force, maxDrag) * power * rb.mass;
+            Vector3 clampedForce = (force.normalized) * fillPercentage * (power) * rb.mass;
             rb.AddForce(clampedForce, ForceMode2D.Impulse);
 
             jump = false;
@@ -232,15 +237,21 @@ public class PlayerController : MonoBehaviour
         if (skipToJump)
             dragStartPos = tongueLauncher.dragStartPosition;
 
-        int extraforce = 5;
         if (dried)
         {
-            extraforce = 2;
+            maxJumpAimLineLength = driedMaxJumpAimLineLength;
+            maxSwimAimLineLength = driedMaxSwimAimLineLength;
+        }        
+        else
+        {
+            maxJumpAimLineLength = initialMaxJumpAimLineLength;
+            maxSwimAimLineLength = initialMaxSwimAimLineLength;
         }
-        secondLinePoint = transform.position + (Vector3.ClampMagnitude((dragStartPos - draggingPos), maxDrag + extraforce));
-        
+
+
         if (isSwimming)
         {
+            secondLinePoint = transform.position + (Vector3.ClampMagnitude((dragStartPos - draggingPos), maxSwimAimLineLength));
             jumpLr.positionCount = 0;
             swimLr.positionCount = 2;
             swimLr.SetPosition(0, transform.position);
@@ -248,6 +259,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            secondLinePoint = transform.position + (Vector3.ClampMagnitude((dragStartPos - draggingPos), maxJumpAimLineLength));
             if (!isSliding) 
             {
                 if (aimingJumpStopsMomentum)
@@ -274,9 +286,63 @@ public class PlayerController : MonoBehaviour
         jump = true;
     }
 
+    void ConfigureSpecies()
+    {
+        switch (species) 
+        {
+            case Species.Default:
+                jumpingPower = 28;
+                swimmingPower = 28f;
+                maxJumpAimLineLength = 10;
+                maxSwimAimLineLength = 8;
+                oxygenAndMoistureController.oxygenLossRate = 0.05f;
+                oxygenAndMoistureController.moistureLossRate = 0.06f;
+                tongueLauncher.baseMaxDistance = 25;
+                break;
+            case Species.Treefrog:
+                jumpingPower = 35f;
+                swimmingPower = 23;
+                maxJumpAimLineLength = 12;
+                maxSwimAimLineLength = 7;
+                oxygenAndMoistureController.oxygenLossRate = 0.08f;
+                oxygenAndMoistureController.moistureLossRate = 0.06f;
+                tongueLauncher.baseMaxDistance = 33;
+                break;
+            case Species.Froglet:
+                jumpingPower = 20;
+                swimmingPower = 40f;
+                maxJumpAimLineLength = 6;
+                maxSwimAimLineLength = 13;
+                oxygenAndMoistureController.oxygenLossRate = 0f;
+                oxygenAndMoistureController.moistureLossRate = 0.15f;
+                tongueLauncher.baseMaxDistance = 18;
+                break;
+            case Species.BullFrog:
+                jumpingPower = 28;
+                swimmingPower = 28;
+                maxJumpAimLineLength = 10;
+                maxSwimAimLineLength = 10;
+                oxygenAndMoistureController.oxygenLossRate = 0.04f;
+                oxygenAndMoistureController.moistureLossRate = 0.05f;
+                tongueLauncher.baseMaxDistance = 30;
+                break;
+            case Species.PoisonDartFrog:
+                jumpingPower = 30;
+                swimmingPower = 30;
+                maxJumpAimLineLength = 10;
+                maxSwimAimLineLength = 10;
+                oxygenAndMoistureController.oxygenLossRate = 0.05f;
+                oxygenAndMoistureController.moistureLossRate = 0.06f;
+                tongueLauncher.baseMaxDistance = 25;
+                break;
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == 7 || collision.gameObject.layer == 12) //Prey
+        if ((collision.gameObject.layer == 7 || collision.gameObject.layer == 12) 
+            || (species == Species.BullFrog && collision.gameObject.CompareTag("BPrey"))
+            || (species == Species.PoisonDartFrog && collision.gameObject.CompareTag("Poisonous"))) //Prey
         {
             AddPreyScore(collision);
 
@@ -402,7 +468,7 @@ public class PlayerController : MonoBehaviour
         {
             saturated = true;
         }
-        if (collision.gameObject.CompareTag("Poisonous"))
+        if (collision.gameObject.CompareTag("Poisonous") && species != Species.PoisonDartFrog)
         {
             dead = true;
             poisoned = true;
@@ -472,10 +538,18 @@ public class PlayerController : MonoBehaviour
             }
 
             //If spider, add 20
-            else if (collision.gameObject.transform.parent.name == "Spider" || collision.gameObject.transform.parent.name == "Spider(Clone)")
+            else if ((collision.gameObject.transform.parent.name == "Spider" || collision.gameObject.transform.parent.name == "Spider(Clone)"))
             {
-                scoreController.SpawnFloatingText(20, transform.position, Color.white);
-                scoreController.Score(20);
+                if (!collision.gameObject.transform.parent.gameObject.GetComponent<SpiderBehavior>().poisonous)
+                {
+                    scoreController.SpawnFloatingText(20, transform.position, Color.white);
+                    scoreController.Score(20);
+                }
+                else //If poison dart frog eats a poisonous spider, add green 50
+                {
+                    scoreController.SpawnFloatingText(50, transform.position, Color.green);
+                    scoreController.Score(50);
+                }
             }
 
             //if dragonfly, add 25
@@ -484,8 +558,13 @@ public class PlayerController : MonoBehaviour
                 scoreController.SpawnFloatingText(25, transform.position, Color.white);
                 scoreController.Score(25);
             }
-
-            //if goldfish, add 100
+            //if cichlid, add blue 50
+            else if (collision.gameObject.transform.parent.name == "Cichlid(Clone)")
+            {
+                scoreController.SpawnFloatingText(50, transform.position, Color.blue);
+                scoreController.Score(50);
+            }
+            //if goldfish, add yellow 100
             else if (collision.gameObject.transform.parent.name == "Goldfish(Clone)")
             {
                 scoreController.SpawnFloatingText(100, transform.position, Color.yellow);
