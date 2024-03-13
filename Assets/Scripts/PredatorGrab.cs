@@ -23,12 +23,12 @@ public class PredatorGrab : MonoBehaviour
             {
                 if (collision.CompareTag("Player"))
                 {
+                    grabbed = true;
+
                     if (collision.name == "Frog")
                         frog = collision.gameObject.transform;
                     else
                         frog = collision.gameObject.transform.parent;
-
-                    grabbed = true;
                 }
             }
         }

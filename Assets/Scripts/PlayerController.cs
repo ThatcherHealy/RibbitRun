@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
     public enum Species { Default, Treefrog, Froglet, BullFrog, PoisonDartFrog };
 
     [Header("Settings")]
-    public Species species;
+    public static Species species;
     [SerializeField] bool conserveMomentum;
     [SerializeField] bool aimingJumpStopsMomentum;
 
@@ -547,8 +547,11 @@ public class PlayerController : MonoBehaviour
                 }
                 else //If poison dart frog eats a poisonous spider, add green 50
                 {
-                    scoreController.SpawnFloatingText(50, transform.position, Color.green);
-                    scoreController.Score(50);
+                    if(species == Species.PoisonDartFrog)
+                    {
+                        scoreController.SpawnFloatingText(50, transform.position, Color.green);
+                        scoreController.Score(50);
+                    }
                 }
             }
 

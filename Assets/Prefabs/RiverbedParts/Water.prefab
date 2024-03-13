@@ -2215,7 +2215,7 @@ Transform:
   - {fileID: 6902579539464426578}
   - {fileID: 9179921146817061673}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!60 &6959607050492706130
 PolygonCollider2D:
@@ -2282,7 +2282,7 @@ PolygonCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 12287
+    m_Bits: 61439
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -5856,7 +5856,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 32768
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

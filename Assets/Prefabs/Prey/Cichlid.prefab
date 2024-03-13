@@ -175,7 +175,7 @@ GameObject:
   - component: {fileID: 7955283509821337419}
   - component: {fileID: 7757167237538718628}
   - component: {fileID: 6076789842880134328}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Cichlid
   m_TagString: BPrey
   m_Icon: {fileID: 0}
