@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class BirdSwoopBehavior : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class BirdSwoopBehavior : MonoBehaviour
     [SerializeField] PredatorGrab hitbox1;
     [SerializeField] PredatorGrab hitbox2;
     [SerializeField] PredatorTurner turner;
+    [SerializeField] Rigidbody2D rb;
     bool turned;
     LevelGenerator levelGenerator;
     Vector3 endPoint;
@@ -34,6 +36,17 @@ public class BirdSwoopBehavior : MonoBehaviour
         }
         else
             turner.active = false;
+
+        if(hitbox1.dead || hitbox2.dead) //Makes the predator die and float to the surface when it gets poisoned
+        {
+            GetComponentInChildren<PolygonCollider2D>().gameObject.tag = "Grapplable";
+            rb.bodyType = RigidbodyType2D.Dynamic;
+            rb.mass = 30;
+            rb.gravityScale = 1;
+            Destroy(hitbox1.gameObject);
+            Destroy(hitbox2.gameObject);
+            Destroy(this);
+        }
     }
     void FixedUpdate()
     {

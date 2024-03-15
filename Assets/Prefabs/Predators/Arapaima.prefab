@@ -1210,6 +1210,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 4497575319649750351}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &2795477539998715459
 GameObject:
   m_ObjectHideFlags: 0
@@ -1305,6 +1307,7 @@ GameObject:
   - component: {fileID: 5482832616825724812}
   - component: {fileID: 1766199331420619688}
   - component: {fileID: 2045511735212827566}
+  - component: {fileID: 4762613155706842407}
   m_Layer: 0
   m_Name: Arapaima
   m_TagString: Untagged
@@ -1356,7 +1359,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1ab55397e069fc43a66128f44a3f947, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grab: {fileID: 8887872684178510319}
+  rb: {fileID: 4762613155706842407}
   iSpeed: 2
+--- !u!50 &4762613155706842407
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5735698226653071592}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &6799879269609887187
 GameObject:
   m_ObjectHideFlags: 0

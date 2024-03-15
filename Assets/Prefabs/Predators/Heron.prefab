@@ -97,6 +97,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 4093224693479399801}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &681465637006647985
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,6 +109,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5338577963502540196}
   - component: {fileID: 1914660176075915768}
+  - component: {fileID: 4118062726274989137}
   m_Layer: 0
   m_Name: Heron
   m_TagString: Untagged
@@ -150,6 +153,34 @@ MonoBehaviour:
   hitbox1: {fileID: 7964657758407242778}
   hitbox2: {fileID: 2368006066772823091}
   turner: {fileID: 7275390746906009221}
+  rb: {fileID: 4118062726274989137}
+--- !u!50 &4118062726274989137
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 681465637006647985}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &738758675935135594
 GameObject:
   m_ObjectHideFlags: 0
@@ -1215,6 +1246,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 427570295663160403}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &3736519638909945243
 GameObject:
   m_ObjectHideFlags: 0
@@ -1439,7 +1472,7 @@ PolygonCollider2D:
     m_Bits: 4
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 16379
+    m_Bits: 16371
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

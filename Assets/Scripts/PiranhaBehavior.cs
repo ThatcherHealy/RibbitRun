@@ -35,14 +35,28 @@ public class PiranhaBehavior : MonoBehaviour
 
         ReturnToWaypoints();
 
-        //Make the gar fall down when out of water
-        if (uc.underwater)
+        if (hitbox.dead) //Makes the predator die and float to the surface when it gets poisoned
         {
-            rb.gravityScale = 0;
+            GetComponentInChildren<PolygonCollider2D>().gameObject.layer = 6;
+            GetComponentInChildren<PolygonCollider2D>().gameObject.tag = "Grapplable";
+            gameObject.layer = 6; //Ground
+            rb.mass = 5;
+            rb.gravityScale = 1;
+            transform.localScale = new Vector3(transform.localScale.x, -1, 1); // Flip the sprite
+            Destroy(this);
         }
-        else
+
+        //Make the gar fall down when out of water
+        if (!hitbox.dead) 
         {
-            rb.gravityScale = 5;
+            if (uc.underwater)
+            {
+                rb.gravityScale = 0;
+            }
+            else
+            {
+                rb.gravityScale = 5;
+            }
         }
     }
     private void FixedUpdate()

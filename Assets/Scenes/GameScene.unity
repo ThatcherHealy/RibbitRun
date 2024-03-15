@@ -225,100 +225,6 @@ PolygonCollider2D:
       - {x: -5.967445, y: -999.99994}
       - {x: 10, y: -1000}
   m_UseDelaunayMesh: 0
---- !u!21 &11128877
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Shapes2D Material
-  m_Shader: {fileID: 4800000, guid: 44f74e30da9814584b2fdcdbe799e51a, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - FILL_SOLID_COLOR
-  - SIMPLE_ELLIPSE
-  m_InvalidKeywords:
-  - _EMISSION
-  m_LightmapFlags: 1
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _BumpMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailAlbedoMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailMask:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailNormalMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _EmissionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MetallicGlossMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _OcclusionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _ParallaxMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats:
-    - _BumpScale: 1
-    - _ColorMask: 15
-    - _Cutoff: 0.5
-    - _DetailNormalMapScale: 1
-    - _DstBlend: 0
-    - _GlossMapScale: 1
-    - _Glossiness: 0.5
-    - _GlossyReflections: 1
-    - _Metallic: 0
-    - _Mode: 0
-    - _OcclusionStrength: 1
-    - _Parallax: 0.02
-    - _Shapes2D_DstAlpha: 1
-    - _Shapes2D_DstBlend: 10
-    - _Shapes2D_SrcAlpha: 1
-    - _Shapes2D_SrcBlend: 1
-    - _SmoothnessTextureChannel: 0
-    - _SpecularHighlights: 1
-    - _SrcBlend: 1
-    - _Stencil: 0
-    - _StencilComp: 8
-    - _StencilOp: 0
-    - _StencilReadMask: 255
-    - _StencilWriteMask: 255
-    - _UVSec: 0
-    - _ZWrite: 1
-    m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &15930494
 GameObject:
   m_ObjectHideFlags: 0
@@ -594,7 +500,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.19500732, y: 0.7677207}
@@ -624,6 +530,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 24225584}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &27838729
 GameObject:
   m_ObjectHideFlags: 0
@@ -819,7 +727,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.17245483, y: 0.887059}
@@ -849,6 +757,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 29917444}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &40553590
 GameObject:
   m_ObjectHideFlags: 0
@@ -2122,7 +2032,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.4547119, y: -1.3766482}
@@ -2152,6 +2062,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 225239664}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &227280706
 GameObject:
   m_ObjectHideFlags: 0
@@ -2214,7 +2126,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.11444092, y: 1.0063968}
@@ -2244,6 +2156,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 227280707}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &228329570
 GameObject:
   m_ObjectHideFlags: 0
@@ -3064,7 +2978,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.30267334, y: -1.6368568}
@@ -3094,6 +3008,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 307749370}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &308400681
 GameObject:
   m_ObjectHideFlags: 0
@@ -3410,7 +3326,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.21678162, y: 0.68816257}
@@ -3440,6 +3356,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 371944950}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &373912529
 GameObject:
   m_ObjectHideFlags: 0
@@ -3502,7 +3420,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.5389404, y: -1.3648775}
@@ -3532,6 +3450,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 373912530}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &380866925
 GameObject:
   m_ObjectHideFlags: 0
@@ -3594,7 +3514,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.19500732, y: -0.43743658}
@@ -3624,6 +3544,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 380866926}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &383423148
 GameObject:
   m_ObjectHideFlags: 0
@@ -3854,7 +3776,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.20916748, y: -1.5879157}
@@ -3884,6 +3806,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 434811670}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &449247776
 GameObject:
   m_ObjectHideFlags: 0
@@ -4370,7 +4294,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.074645996, y: 0.84728}
@@ -4400,6 +4324,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 490698418}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &505405605
 GameObject:
   m_ObjectHideFlags: 0
@@ -4738,7 +4664,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.023284912, y: -0.2181263}
@@ -4768,6 +4694,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 505894388}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -5378,7 +5306,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.8939514, y: -1.6311548}
@@ -5408,6 +5336,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 563500240}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &571968651
 GameObject:
   m_ObjectHideFlags: 0
@@ -5895,7 +5825,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.03312683, y: 0.64838314}
@@ -5925,6 +5855,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 600767868}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &603426715
 GameObject:
   m_ObjectHideFlags: 0
@@ -6296,7 +6228,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.0927887, y: 1.0063975}
@@ -6326,6 +6258,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 637861498}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &662519244
 GameObject:
   m_ObjectHideFlags: 0
@@ -6388,7 +6322,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 1.0050964, y: -1.5817971}
@@ -6418,6 +6352,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 662519245}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &665531664
 GameObject:
   m_ObjectHideFlags: 0
@@ -6564,7 +6500,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.02305603, y: -0.36433268}
@@ -6594,6 +6530,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 667598966}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &703003364
 GameObject:
   m_ObjectHideFlags: 0
@@ -6861,7 +6799,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.13201904, y: 0.8784224}
@@ -6891,6 +6829,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 740922429}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &741372921
 GameObject:
   m_ObjectHideFlags: 0
@@ -7128,7 +7068,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.1756134, y: 0.8075007}
@@ -7158,6 +7098,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 761217241}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &827262948
 GameObject:
   m_ObjectHideFlags: 0
@@ -7943,7 +7885,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.30913264, y: -1.3958538}
@@ -7973,6 +7915,102 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 915587264}
   grabbed: 0
+  poisoned: 0
+  dead: 0
+--- !u!21 &924210710
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Shapes2D Material
+  m_Shader: {fileID: 4800000, guid: 44f74e30da9814584b2fdcdbe799e51a, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - FILL_SOLID_COLOR
+  - SIMPLE_ELLIPSE
+  m_InvalidKeywords:
+  - _EMISSION
+  m_LightmapFlags: 1
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 3000
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _BumpScale: 1
+    - _ColorMask: 15
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
+    - _Metallic: 0
+    - _Mode: 0
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _Shapes2D_DstAlpha: 1
+    - _Shapes2D_DstBlend: 10
+    - _Shapes2D_SrcAlpha: 1
+    - _Shapes2D_SrcBlend: 1
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _UVSec: 0
+    - _ZWrite: 1
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &925300991
 GameObject:
   m_ObjectHideFlags: 0
@@ -8035,7 +8073,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.05255127, y: -0.2181263}
@@ -8065,6 +8103,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 925300992}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &927117798
 GameObject:
   m_ObjectHideFlags: 0
@@ -8127,7 +8167,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.8939514, y: -1.8668344}
@@ -8157,6 +8197,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 927117799}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &934999182
 GameObject:
   m_ObjectHideFlags: 0
@@ -8770,7 +8812,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.044281006, y: -1.543308}
@@ -8800,6 +8842,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 1002177911}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &1018012411
 GameObject:
   m_ObjectHideFlags: 0
@@ -8862,7 +8906,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.6731262, y: -1.5368006}
@@ -8892,6 +8936,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 1018012412}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &1028489644
 GameObject:
   m_ObjectHideFlags: 0
@@ -8954,7 +9000,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.11021423, y: 0.95152617}
@@ -8984,6 +9030,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 1028489645}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &1057308018
 GameObject:
   m_ObjectHideFlags: 0
@@ -9464,7 +9512,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.16471863, y: 0.8075006}
@@ -9494,6 +9542,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 1121609201}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &1126648977
 GameObject:
   m_ObjectHideFlags: 0
@@ -9556,7 +9606,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.4468689, y: -0.29122972}
@@ -9586,6 +9636,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 1126648978}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &1136404751
 GameObject:
   m_ObjectHideFlags: 0
@@ -9648,7 +9700,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.16183472, y: -1.737766}
@@ -9678,6 +9730,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 1136404752}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &1138483006
 GameObject:
   m_ObjectHideFlags: 0
@@ -10117,7 +10171,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.32585144, y: -0.51053953}
@@ -10147,6 +10201,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 1184776498}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &1186204146
 GameObject:
   m_ObjectHideFlags: 0
@@ -10293,7 +10349,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.19500732, y: -0.40088463}
@@ -10323,6 +10379,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 1193425093}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &1211022740
 GameObject:
   m_ObjectHideFlags: 0
@@ -10760,7 +10818,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.7866516, y: -1.3766482}
@@ -10790,6 +10848,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 1298710933}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &1302317936
 GameObject:
   m_ObjectHideFlags: 0
@@ -11233,7 +11293,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.27597165, y: -1.4919028}
@@ -11263,6 +11323,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 1313753338}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &1318409724
 GameObject:
   m_ObjectHideFlags: 0
@@ -11325,7 +11387,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.0028533936, y: 0.7677212}
@@ -11355,6 +11417,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 1318409725}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &1320209680
 GameObject:
   m_ObjectHideFlags: 0
@@ -11749,7 +11813,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.7308655, y: -1.1715}
@@ -11779,6 +11843,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 1374351613}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &1375644048
 GameObject:
   m_ObjectHideFlags: 0
@@ -12288,7 +12354,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.13818681, y: -1.3874018}
@@ -12318,6 +12384,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 1406267768}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &1422926512
 GameObject:
   m_ObjectHideFlags: 0
@@ -12824,7 +12892,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.19178772, y: 0.8870597}
@@ -12854,6 +12922,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 1526627546}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &1540273766
 GameObject:
   m_ObjectHideFlags: 0
@@ -14015,7 +14085,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.19500732, y: -0.25467777}
@@ -14045,6 +14115,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 1594199278}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &1600419570
 GameObject:
   m_ObjectHideFlags: 0
@@ -14107,7 +14179,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.19500732, y: -0.2181263}
@@ -14137,6 +14209,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 1600419571}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &1625469367
 GameObject:
   m_ObjectHideFlags: 0
@@ -14283,7 +14357,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.19500732, y: -0.14502335}
@@ -14313,6 +14387,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 1637094088}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &1637874675
 GameObject:
   m_ObjectHideFlags: 0
@@ -14444,7 +14520,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.19500732, y: -0.25467777}
@@ -14474,6 +14550,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 1638873179}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!4 &1638873179
 Transform:
   m_ObjectHideFlags: 0
@@ -14551,7 +14629,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.42190552, y: -1.5987456}
@@ -14581,6 +14659,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 1641249107}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &1658142823
 GameObject:
   m_ObjectHideFlags: 0
@@ -14777,7 +14857,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.3940735, y: -1.535948}
@@ -14807,6 +14887,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 1669947360}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &1674908330
 GameObject:
   m_ObjectHideFlags: 0
@@ -15493,7 +15575,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.12875366, y: 0.96661806}
@@ -15523,6 +15605,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 1724625049}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &1728321352
 GameObject:
   m_ObjectHideFlags: 0
@@ -15689,7 +15773,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.31661987, y: 1.4041913}
@@ -15719,6 +15803,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 1730471286}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &1747589769
 GameObject:
   m_ObjectHideFlags: 0
@@ -16037,7 +16123,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.19500732, y: -0.29122972}
@@ -16067,6 +16153,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 1806094178}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &1822083865
 GameObject:
   m_ObjectHideFlags: 0
@@ -16213,7 +16301,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.45187378, y: -1.7185626}
@@ -16243,6 +16331,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 1834967993}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &1852746087
 GameObject:
   m_ObjectHideFlags: 0
@@ -16865,7 +16955,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.0012359619, y: -0.5470915}
@@ -16895,6 +16985,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 1891899190}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &1898305580
 GameObject:
   m_ObjectHideFlags: 0
@@ -17380,7 +17472,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.49487305, y: -1.4848659}
@@ -17410,6 +17502,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabArea: {fileID: 1919970304}
   grabbed: 0
+  poisoned: 0
+  dead: 0
 --- !u!1 &1926965956
 GameObject:
   m_ObjectHideFlags: 0
@@ -18429,7 +18523,7 @@ MonoBehaviour:
   spawnTransitionRamp: 0
   biomeSpawning: 0
   playerBiome: 0
-  startBiome: 2
+  startBiome: 0
 --- !u!4 &2028519408
 Transform:
   m_ObjectHideFlags: 0
@@ -19414,7 +19508,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 11128877}
+  - {fileID: 924210710}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -19479,6 +19573,7 @@ MonoBehaviour:
   mudParticles: {fileID: 4594591438336009085, guid: bc99fdd8d46b2d74da615751f75755ef, type: 3}
   splashParticles: {fileID: 3649707564744613919, guid: 87fba088b2896ba4fa6e8b5f5045ff21, type: 3}
   eatParticles: {fileID: 2950932474343735176, guid: 659fe94ec8287094fb51b4c2f3a76b7e, type: 3}
+  dartFrogPoisonParticles: {fileID: 2260106413219428936, guid: 249a8bf8f90afc649be40f134450d245, type: 3}
   biomeIn: 
   isGrounded: 1
   isSliding: 0
@@ -19492,6 +19587,7 @@ MonoBehaviour:
   drowned: 0
   dried: 0
   poisoned: 0
+  invulnerable: 0
   conserveMomentum: 1
   aimingJumpStopsMomentum: 1
   skipToJump: 0

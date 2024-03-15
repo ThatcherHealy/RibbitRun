@@ -1522,7 +1522,7 @@ GameObject:
   - component: {fileID: 1898296204496452404}
   - component: {fileID: 8021227117079594299}
   - component: {fileID: 3866431097630190151}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ChaseRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}

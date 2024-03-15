@@ -1975,6 +1975,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitSlideLeft: 0
   hitSlideRight: 0
+  hitGroundLeft: 0
+  hitGroundRight: 0
   hitMud: 0
 --- !u!1 &6256523958329227824
 GameObject:
@@ -2439,7 +2441,7 @@ GameObject:
   - component: {fileID: 3965392112155841781}
   - component: {fileID: 8367625206100490422}
   - component: {fileID: 1737900836472411825}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ChaseRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}

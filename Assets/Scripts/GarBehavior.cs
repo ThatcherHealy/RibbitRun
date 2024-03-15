@@ -37,14 +37,29 @@ public class GarBehavior : MonoBehaviour
 
         ReturnToWaypoints();
 
-        //Make the gar fall down when out of water
-        if (uc.underwater)
+        if (hitbox.dead) //Makes the predator die and float to the surface when it gets poisoned
         {
-            rb.gravityScale = 0;
+            GetComponentInChildren<PolygonCollider2D>().gameObject.layer = 6;
+            GetComponentInChildren<PolygonCollider2D>().gameObject.tag = "Grapplable";
+            gameObject.layer = 6; //Ground
+            rb.mass = 5;
+            rb.gravityScale = 1;
+            animator.enabled = false;
+            transform.localScale = new Vector3(transform.localScale.x, -1, 1); // Flip the sprite
+            Destroy(this);
         }
-        else
+
+        //Make the gar fall down when out of water
+        if (!hitbox.dead) 
         {
-            rb.gravityScale = 5;
+            if (uc.underwater)
+            {
+                rb.gravityScale = 0;
+            }
+            else
+            {
+                rb.gravityScale = 5;
+            }
         }
     }
     private void FixedUpdate()
@@ -55,7 +70,7 @@ public class GarBehavior : MonoBehaviour
             LockRotation(rb.velocity);
         }
 
-        if (hitbox.grabbed)
+        if (hitbox.grabbed && !hitbox.dead)
         {
             StartCoroutine(EatPlayer());
         }
@@ -270,7 +285,7 @@ public class GarBehavior : MonoBehaviour
     IEnumerator EatPlayer() 
     {
         yield return new WaitForSeconds(0.3f);
-        if (pv.frog != null) 
+        if (pv.frog != null && !hitbox.dead) 
         {
                 if (pv.frog.position.x > transform.position.x)
             transform.localScale = new Vector3(-1, 1, 1); // Flip the sprite

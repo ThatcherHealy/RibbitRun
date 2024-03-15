@@ -23,10 +23,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask ground;
     [SerializeField] private LayerMask slide;
     [SerializeField] GameObject tongueRangeCircle;
+
     [SerializeField] GameObject cattailParticles;
     [SerializeField] GameObject mudParticles;
     [SerializeField] GameObject splashParticles;
     [SerializeField] GameObject eatParticles;
+    [SerializeField] GameObject dartFrogPoisonParticles;
+    GameObject activeDartFrogPoisonParticles;
     public string biomeIn;
 
     [Header("States")]
@@ -42,7 +45,9 @@ public class PlayerController : MonoBehaviour
     public bool drowned;
     public bool dried;
     public bool poisoned;
+    public bool invulnerable;
     public enum Species { Default, Treefrog, Froglet, BullFrog, PoisonDartFrog };
+    bool poisonAvailable;
 
     [Header("Settings")]
     public static Species species;
@@ -69,6 +74,8 @@ public class PlayerController : MonoBehaviour
     
     private void Start()
     {
+        species = Species.PoisonDartFrog;
+
         ConfigureSpecies();
         initialMaxJumpAimLineLength = maxJumpAimLineLength;
         initialMaxSwimAimLineLength = maxSwimAimLineLength;
@@ -334,6 +341,9 @@ public class PlayerController : MonoBehaviour
                 oxygenAndMoistureController.oxygenLossRate = 0.05f;
                 oxygenAndMoistureController.moistureLossRate = 0.06f;
                 tongueLauncher.baseMaxDistance = 25;
+
+                poisonAvailable = true;
+                activeDartFrogPoisonParticles = Instantiate(dartFrogPoisonParticles, transform.position, Quaternion.identity, transform);
                 break;
         }
     }
@@ -420,20 +430,36 @@ public class PlayerController : MonoBehaviour
         //When the player gets hit by a predator, they die
         if (collision.gameObject.CompareTag("Predator"))
         {
-            if (killer == "")
+            bool eatenByAlligator = false;
+            if ((collision.transform.parent.transform.parent != null))
             {
-                if (collision.transform.parent.transform.parent != null)
-                    killer = collision.transform.parent.transform.parent.gameObject.name;
-                else if (collision.transform.parent != null)
-                    killer = collision.transform.parent.gameObject.name;
-                else
-                    killer = collision.gameObject.name;
+                if (collision.transform.parent.transform.parent.gameObject.name == "ALLIGATOR")
+                {
+                    eatenByAlligator = true;
+                }
             }
-
-            if (!drowned)
+            if (!drowned && (!poisonAvailable) && !invulnerable 
+                || eatenByAlligator)
             {
+                if (killer == "")
+                {
+                    if (collision.transform.parent.transform.parent != null)
+                        killer = collision.transform.parent.transform.parent.gameObject.name;
+                    else if (collision.transform.parent != null)
+                        killer = collision.transform.parent.gameObject.name;
+                    else
+                        killer = collision.gameObject.name;
+                }
+
                 eaten = true;
                 dead = true;
+            }
+            else if (poisonAvailable) 
+            {
+                poisonAvailable = false;
+                collision.gameObject.tag = "Untagged";
+                invulnerable = true;
+                StartCoroutine(DartFrogPoison(collision));
             }
         }
 
@@ -599,5 +625,45 @@ public class PlayerController : MonoBehaviour
     {
         GameObject ep = Instantiate(eatParticles, col.transform.position, Quaternion.identity);
         Destroy(ep, 1);
+    }
+    IEnumerator DartFrogPoison(Collider2D col) 
+    {
+        activeDartFrogPoisonParticles.transform.SetParent(col.transform.parent);
+
+        if (col.transform.parent.name == "Fish" || col.transform.parent.name == "Fish (1)" || col.transform.parent.name == "Fish (2)" 
+            || col.transform.parent.name == "Fish (3)" || col.transform.parent.name == "Fish (4)" || col.transform.parent.name == "Fish (5)")
+        {
+            activeDartFrogPoisonParticles.transform.localPosition = new Vector3(-1.7f, 1.1f, 0);
+            activeDartFrogPoisonParticles.transform.localScale = new Vector3(8.5f, 4, 4);
+        }
+        else if (col.transform.parent.name == "Heron(Clone)" || col.transform.parent.name == "Heron")
+        {
+            activeDartFrogPoisonParticles.transform.localPosition = new Vector3(18.2f, -0.9f, 0);
+            activeDartFrogPoisonParticles.transform.localScale = new Vector3(6, 6, 6);
+            activeDartFrogPoisonParticles.GetComponent<ParticleSystemRenderer>().sortingOrder = 11;
+        }
+        else if (col.transform.parent.name == "Gar(Clone)" || col.transform.parent.name == "Gar")
+        {
+            activeDartFrogPoisonParticles.transform.localPosition = Vector3.zero;
+            activeDartFrogPoisonParticles.transform.localScale = new Vector3(10, 3, 8);
+            activeDartFrogPoisonParticles.GetComponent<ParticleSystemRenderer>().sortingOrder = 7;
+        }
+        else if (col.transform.parent.name == "Arapaima(Clone)" || col.transform.parent.name == "Arapaima")
+        {
+            activeDartFrogPoisonParticles.transform.localPosition = new Vector3(3, 1.47f, 0);
+            activeDartFrogPoisonParticles.transform.localScale = new Vector3(18.75f, 4.625f, 6);
+            activeDartFrogPoisonParticles.GetComponent<ParticleSystemRenderer>().sortingOrder = 11;
+        }
+        else if (col.transform.parent.name == "Piranha(Clone)" || col.transform.parent.name == "Piranha")
+        {
+            activeDartFrogPoisonParticles.transform.localPosition = new Vector3(2, 0.54f, 0);
+            activeDartFrogPoisonParticles.transform.localScale = new Vector3(3, 3, 3);
+            activeDartFrogPoisonParticles.GetComponent<ParticleSystemRenderer>().sortingOrder = 2;
+        }
+
+
+        col.gameObject.GetComponent<PredatorGrab>().poisoned = true;
+        yield return new WaitForSeconds(5);
+        invulnerable = false;
     }
 }
