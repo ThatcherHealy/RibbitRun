@@ -280,14 +280,14 @@ public class LevelGenerator : MonoBehaviour
     }
     private void SpawnRiverbeds()
     {
-        Transform lastMudTransform;
+        Transform lastRiverbedTransform;
 
         Vector2 mudOffset = new Vector2(82f, 0);
 
         if (spawnTransitionRamp) //Spawn a biome transition
         {
-            lastMudTransform = SpawnRiverbed(transitionRamps[0], new Vector3(lastRiverbedEndPosition.x + mudOffset.x + 36, endPoint.y - 67, 0));
-            endPoint = lastMudTransform.GetChild(0).position;
+            lastRiverbedTransform = SpawnRiverbed(transitionRamps[0], new Vector3(lastRiverbedEndPosition.x + mudOffset.x + 36, endPoint.y - 67, 0));
+            endPoint = lastRiverbedTransform.GetChild(0).position;
             spawnTransitionRamp = false;
             switchPoints = true;
             biomeSwapSpawned = false;
@@ -342,10 +342,14 @@ public class LevelGenerator : MonoBehaviour
             }
         }
     }
-    private Transform SpawnRiverbed(Transform mud, Vector3 mudSpawnPosition)
+    private Transform SpawnRiverbed(Transform riverbed, Vector3 riverbedSpawnPosition)
     {
-        lastRiverbedTransform = Instantiate(mud, mudSpawnPosition, Quaternion.identity);
-        lastRiverbedEndPosition = mudSpawnPosition;
+        if (lastRiverbedTransform != null)
+            if (lastRiverbedTransform.GetComponent<BoxCollider2D>() != null)
+                lastRiverbedTransform.GetComponent<BoxCollider2D>().enabled = false;
+
+        lastRiverbedTransform = Instantiate(riverbed, riverbedSpawnPosition, Quaternion.identity);
+        lastRiverbedEndPosition = riverbedSpawnPosition;
         return lastRiverbedTransform;
     }
     private void SpawnFlies()

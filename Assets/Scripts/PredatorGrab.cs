@@ -26,7 +26,9 @@ public class PredatorGrab : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        pc = FindFirstObjectByType<PlayerController>();
+        if (pc == null)
+            pc = FindFirstObjectByType<PlayerController>();
+
         if (!pc.eaten || alligator) //If the player hasn't been eaten already, they get eaten
         {
             if (collision != null)
@@ -34,13 +36,16 @@ public class PredatorGrab : MonoBehaviour
                 
                 if (collision.CompareTag("Player"))
                 {
-                    if (!poisoned) 
-                        grabbed = true;
-
                     if (collision.name == "Frog")
                         frog = collision.gameObject.transform;
                     else
                         frog = collision.gameObject.transform.parent;
+
+                    if (!poisoned)
+                    {
+                        grabbed = true;
+                        frog.gameObject.GetComponent<Rigidbody2D>().mass = 0;
+                    }
                 }
             }
         }
@@ -59,7 +64,6 @@ public class PredatorGrab : MonoBehaviour
         if (grabbed && !dead) //Keeps the player grabbed when the predator isn't dead
         {
             frog.position = grabArea.position;
-            frog.gameObject.GetComponent<Rigidbody2D>().mass = 0;
         }
         if (dead) //Returns the player's mass to normal when they escape
         {

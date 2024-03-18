@@ -74,8 +74,6 @@ public class PlayerController : MonoBehaviour
     
     private void Start()
     {
-        species = Species.PoisonDartFrog;
-
         ConfigureSpecies();
         initialMaxJumpAimLineLength = maxJumpAimLineLength;
         initialMaxSwimAimLineLength = maxSwimAimLineLength;

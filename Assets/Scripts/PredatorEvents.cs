@@ -83,7 +83,18 @@ public class PredatorEvents : MonoBehaviour
 
         if (lg.playerBiome != LevelGenerator.Biome.Amazon) 
         {
+            //Sets currentPredator to be the closest fish in the swarm to the player
             currentPredator = Instantiate(fishSwarmPrefab, predatorSpawnPosition, Quaternion.identity);
+            FishBehavior[] fishes = currentPredator.GetComponentsInChildren<FishBehavior>();
+            Transform closestFish = currentPredator.GetComponentInChildren<FishBehavior>().transform; 
+            foreach (FishBehavior fish in fishes)
+            {
+                if (math.distance(fish.transform.position.x, player.position.x) < math.distance(closestFish.transform.position.x, player.position.x))
+                {
+                    closestFish = fish.transform;
+                }
+            }
+            currentPredator = closestFish.gameObject;
         }
         else
         {

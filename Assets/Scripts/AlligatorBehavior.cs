@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class AlligatorBehavior : MonoBehaviour
 {
+    [SerializeField] GameObject[] grabBoxes;
     [SerializeField] PlayerController pc;
     [SerializeField] LevelGenerator lg;
     [SerializeField] Transform player;
     [SerializeField] GameObject sprite;
+    private PolygonCollider2D spriteCol;
     [SerializeField] GameObject destructionPoint;
     public int followDistance = 200;
     bool active;
@@ -15,6 +17,7 @@ public class AlligatorBehavior : MonoBehaviour
     {
        sprite.SetActive(false);
        destructionPoint.SetActive(false);
+       spriteCol = sprite.GetComponent<PolygonCollider2D>();
        active = false;
     }
     private void FixedUpdate()
@@ -33,7 +36,9 @@ public class AlligatorBehavior : MonoBehaviour
     {
         if (player.position.x > 125 && !active)
         {
-            sprite.SetActive(true);
+            if (sprite != null) 
+                sprite.SetActive(true);
+
             destructionPoint.SetActive(true);
             active = true;
         }
@@ -44,6 +49,25 @@ public class AlligatorBehavior : MonoBehaviour
         {
             Vector3 targetPosition = new Vector3(player.position.x - followDistance, lg.playerRefEndPoint.y + 4.585f, 0);
             transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime);
+        }
+
+        //Deactivates hitbox until the player gets close
+        if (transform.position.x < player.position.x - (followDistance/4))
+        {
+            spriteCol.enabled = false;
+            foreach (GameObject box in grabBoxes)
+            {
+                box.SetActive(false);
+            }
+        }
+        else
+        {
+            //Activates hitbox when the alligator isn't moving
+            foreach (GameObject box in grabBoxes)
+            {
+                box.SetActive(true);
+            }
+            spriteCol.enabled = true;
         }
     }
 }

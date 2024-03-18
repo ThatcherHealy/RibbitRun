@@ -28,23 +28,23 @@ public class WaterShapeController : MonoBehaviour
     public float spread = 0.006f;
     bool otherFrame = true;
 
-    void Start() {
+    void Start()
+    {
         // Clean waterpoints
         StartCoroutine(CreateWaves());
     }
-    IEnumerator CreateWaves() {
-        foreach (Transform child in wavePoints.transform) {
-            StartCoroutine(Destroy(child.gameObject));
+    IEnumerator CreateWaves()
+    {
+        foreach (Transform child in wavePoints.transform)
+        {
+            Destroy(child.gameObject);
         }
         yield return null;
         SetWaves();
         yield return null;
     }
-    IEnumerator Destroy(GameObject go) {
-        yield return null;
-        DestroyImmediate(go);
-    }
-    private void SetWaves() { 
+    private void SetWaves()
+    {
         Spline waterSpline = spriteShapeController.spline;
         int waterPointsCount = waterSpline.GetPointCount();
 
@@ -52,7 +52,8 @@ public class WaterShapeController : MonoBehaviour
         // Keep only the corners
         // Removing 1 point at a time we can remove only the 1st point
         // This means every time we remove 1st point the 2nd point becomes first
-        for (int i = CornersCount; i < waterPointsCount - CornersCount; i++) {
+        for (int i = CornersCount; i < waterPointsCount - CornersCount; i++)
+        {
             waterSpline.RemovePointAt(CornersCount);
         }
 
@@ -60,12 +61,13 @@ public class WaterShapeController : MonoBehaviour
         Vector3 waterTopRightCorner = waterSpline.GetPosition(2);
         float waterWidth = waterTopRightCorner.x - waterTopLeftCorner.x;
 
-        float spacingPerWave = waterWidth / (WavesCount+1);
+        float spacingPerWave = waterWidth / (WavesCount + 1);
         // Set new points for the waves
-        for (int i = WavesCount; i > 0 ; i--) {
+        for (int i = WavesCount; i > 0; i--)
+        {
             int index = CornersCount;
 
-            float xPosition = waterTopLeftCorner.x + (spacingPerWave*i);
+            float xPosition = waterTopLeftCorner.x + (spacingPerWave * i);
             Vector3 wavePoint = new Vector3(xPosition, waterTopLeftCorner.y, waterTopLeftCorner.z);
             waterSpline.InsertPointAt(index, wavePoint);
             waterSpline.SetHeight(index, 0.1f);
@@ -77,11 +79,12 @@ public class WaterShapeController : MonoBehaviour
 
         // loop through all the wave points
         // plus the both top left and right corners
-        
-        springs = new();
-        for (int i = 0; i <= WavesCount+1; i++) {
-            int index = i + 1; 
-            
+
+        springs.Clear();
+        for (int i = 0; i <= WavesCount + 1; i++)
+        {
+            int index = i + 1;
+
             Smoothen(waterSpline, index);
 
             GameObject wavePoint = Instantiate(wavePointPref, wavePoints.transform, false);
@@ -102,11 +105,13 @@ public class WaterShapeController : MonoBehaviour
         Vector3 position = waterSpline.GetPosition(index);
         Vector3 positionPrev = position;
         Vector3 positionNext = position;
-        if (index > 1) {
-            positionPrev = waterSpline.GetPosition(index-1);
+        if (index > 1)
+        {
+            positionPrev = waterSpline.GetPosition(index - 1);
         }
-        if (index - 1 <= WavesCount) {
-            positionNext = waterSpline.GetPosition(index+1);
+        if (index - 1 <= WavesCount)
+        {
+            positionNext = waterSpline.GetPosition(index + 1);
         }
 
         Vector3 forward = gameObject.transform.forward;
@@ -117,7 +122,7 @@ public class WaterShapeController : MonoBehaviour
         Vector3 rightTangent = (positionNext - position).normalized * scale;
 
         SplineUtility.CalculateTangents(position, positionPrev, positionNext, forward, scale, out rightTangent, out leftTangent);
-        
+
         waterSpline.SetLeftTangent(index, leftTangent);
         waterSpline.SetRightTangent(index, rightTangent);
     }
@@ -140,24 +145,30 @@ public class WaterShapeController : MonoBehaviour
 
     }
 
-    private void UpdateSprings() { 
+    private void UpdateSprings()
+    {
         int count = springs.Count;
         float[] left_deltas = new float[count];
         float[] right_deltas = new float[count];
-        
-        for(int i = 0; i < count; i++) {
-            if (i > 0) {
-                left_deltas[i] = spread * (springs[i].height - springs[i-1].height);
-                springs[i-1].velocity += left_deltas[i];
+
+        for (int i = 0; i < count; i++)
+        {
+            if (i > 0)
+            {
+                left_deltas[i] = spread * (springs[i].height - springs[i - 1].height);
+                springs[i - 1].velocity += left_deltas[i];
             }
-            if (i < springs.Count - 1) {
-                right_deltas[i] = spread * (springs[i].height - springs[i+1].height);
-                springs[i+1].velocity += right_deltas[i];
+            if (i < springs.Count - 1)
+            {
+                right_deltas[i] = spread * (springs[i].height - springs[i + 1].height);
+                springs[i + 1].velocity += right_deltas[i];
             }
         }
     }
-    private void Splash(int index, float speed) { 
-        if (index >= 0 && index < springs.Count) {
+    private void Splash(int index, float speed)
+    {
+        if (index >= 0 && index < springs.Count)
+        {
             springs[index].velocity += speed;
         }
     }

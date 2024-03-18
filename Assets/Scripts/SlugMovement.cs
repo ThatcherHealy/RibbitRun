@@ -17,6 +17,7 @@ public class SlugMovement : MonoBehaviour
     private int directionChance;
     private float speed;
     Rigidbody2D rb;
+    RaycastHit2D[] hit;
 
     private void Start()
     {
@@ -77,7 +78,7 @@ public class SlugMovement : MonoBehaviour
             closestPoint = targetCollider.ClosestPoint(transform.position);
 
             // Cast a ray downwards to find the point on the target
-            RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position, closestPoint  - (Vector2)transform.position);
+            hit = Physics2D.RaycastAll(transform.position, closestPoint  - (Vector2)transform.position);
 
             for (int i = 0; i < hit.Length; i++)
             {
@@ -87,6 +88,7 @@ public class SlugMovement : MonoBehaviour
                     transformToPoint = (targetPoint - (Vector2)transform.position);
 
                     rb.AddForceAtPosition(transformToPoint.normalized * gravityStrength, targetPoint, ForceMode2D.Force);
+                    break;
                 }
             }
         }
@@ -95,8 +97,6 @@ public class SlugMovement : MonoBehaviour
     {
         if (targetObject != null)
         {
-            Collider2D targetCollider = targetObject.GetComponent<PolygonCollider2D>();
-
             // Calculate the direction towards the target
             Vector2 targetDirection = targetPoint - (Vector2)transform.position;
             

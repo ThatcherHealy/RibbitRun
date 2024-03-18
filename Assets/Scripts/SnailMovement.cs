@@ -19,6 +19,7 @@ public class SnailMovement : MonoBehaviour
     private Vector2 transformToPoint;
     private float speed;
     Rigidbody2D rb;
+    RaycastHit2D[] hit;
 
     private void Start()
     {
@@ -102,7 +103,7 @@ public class SnailMovement : MonoBehaviour
                 closestPoint = targetCollider.ClosestPoint(transform.position);
 
                 // Cast a ray downwards to find the point on the target
-                RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position, closestPoint - (Vector2)transform.position);
+                hit = Physics2D.RaycastAll(transform.position, closestPoint - (Vector2)transform.position);
 
                 for (int i = 0; i < hit.Length; i++)
                 {
@@ -112,13 +113,13 @@ public class SnailMovement : MonoBehaviour
                         transformToPoint = (targetPoint - (Vector2)transform.position);
 
                         rb.AddForceAtPosition(transformToPoint.normalized * gravityStrength, targetPoint, ForceMode2D.Force);
+                        break;
                     }
                 }
         }
     }
     void RotateTowardsTargetCenter()
     {
-        Collider2D targetCollider = targetObject.GetComponent<PolygonCollider2D>();
         if (targetObject != null)
         {
             // Calculate the direction towards the target
