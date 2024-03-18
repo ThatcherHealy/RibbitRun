@@ -46,10 +46,6 @@ public class BiomeDependece : MonoBehaviour
                 {
                     if (!dependence.Equals("Cypress"))
                     {
-                        if (replacement != null)
-                        {
-                            Instantiate(replacement, transform.position, Quaternion.identity);
-                        }
                         Destroy(gameObject);
                     }
                 }

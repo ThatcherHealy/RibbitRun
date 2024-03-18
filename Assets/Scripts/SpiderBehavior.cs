@@ -14,12 +14,9 @@ public class SpiderBehavior : MonoBehaviour
 
     Rigidbody2D rb;
     [SerializeField] GameObject sprite;
-    [SerializeField] SpriteRenderer[] legSpritePieces;
-    [SerializeField] SpriteShapeRenderer legFillPiece;
-    [SerializeField] SpriteShapeRenderer[] bodySpritePieces;
-    [SerializeField] Color poisonousLegsColor;
-    [SerializeField] Color poisonousBodyColor;
-    [SerializeField] GameObject widowMark;
+    [SerializeField] Sprite basicSprite;
+    [SerializeField] Sprite poisonSprite;
+    private SpriteRenderer sr;
 
     [SerializeField] GameObject poisonParticlesPrefab;
     GameObject poisonParticles;
@@ -37,6 +34,7 @@ public class SpiderBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        sr = sprite.GetComponent<SpriteRenderer>();
         ChanceToExist();
 
         rb = GetComponent<Rigidbody2D>();
@@ -66,6 +64,13 @@ public class SpiderBehavior : MonoBehaviour
         {
             PoisonEffects();
         }
+        else
+        {
+            if (sprite != null)
+                sr.sprite = basicSprite;
+        }
+
+        //Destroy particles when the sprite is destroyed
         if (sprite == null)
         {
             if (poisonParticles != null) 
@@ -150,16 +155,7 @@ public class SpiderBehavior : MonoBehaviour
         if (sprite != null)
         {
             sprite.tag = "Poisonous";
-            foreach (SpriteRenderer legSprite in legSpritePieces)
-            {
-                legSprite.color = poisonousLegsColor;
-            }
-            legFillPiece.color = poisonousLegsColor;
-            foreach (SpriteShapeRenderer bodySprite in bodySpritePieces)
-            {
-                bodySprite.color = poisonousBodyColor;
-            }
-            widowMark.SetActive(true);
+            sr.sprite = poisonSprite;
             PoisonParticles();
         }
     }

@@ -72,4 +72,12 @@ public class WaterSpring : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         cooldown = false;        
     }
+
+    private void Update()
+    {
+        if(Mathf.Abs(velocity) < 0.001f)
+        {
+            velocity = 0;
+        }
+    }
 }

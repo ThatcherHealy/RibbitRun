@@ -213,6 +213,9 @@ public class PlayerController : MonoBehaviour
                 power = jumpingPower;
             }
 
+            if (dried)
+                power = 5;
+
             Vector3 clampedForce = (force.normalized) * fillPercentage * (power) * rb.mass;
             rb.AddForce(clampedForce, ForceMode2D.Impulse);
 
