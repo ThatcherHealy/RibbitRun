@@ -13,11 +13,11 @@ public class DragonflyBehavior : MonoBehaviour
     [SerializeField] WaypointTurner turner;
     Vector3 initialPosition;
 
-    public SpriteRenderer[] bodySprites;
-    public Color green;
-    public Color blue;
-    public Color yellow;
-    public Color red;
+    public SpriteRenderer sprite;
+    public Sprite green;
+    public Sprite blue;
+    public Sprite yellow;
+    public Sprite red;
 
     void Start()
     {
@@ -128,16 +128,15 @@ public class DragonflyBehavior : MonoBehaviour
     void ChooseColor()
     {
         int randomColor = Random.Range(1, 5);
-        foreach (SpriteRenderer sprite in bodySprites) 
-        {
+
             if (randomColor == 1)
-                sprite.color = green;
+                sprite.sprite = green;
             else if (randomColor == 2)
-                sprite.color = blue;
+                sprite.sprite = blue;
             else if (randomColor == 3)
-                sprite.color = yellow;
+                sprite.sprite = yellow;
             else
-                sprite.color = red;
-        }
+                sprite.sprite = red;
+        
     }
 }
