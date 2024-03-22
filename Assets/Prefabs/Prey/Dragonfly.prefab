@@ -116,10 +116,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turner: {fileID: 8109166259141025757}
   sprite: {fileID: 4036142763807216805}
-  green: {fileID: 21300000, guid: 31f988350a8754348add1b07be31cb02, type: 3}
-  blue: {fileID: 21300000, guid: d1dd83bb5fc1b814e9cc8d7962ced649, type: 3}
-  yellow: {fileID: 21300000, guid: 05c4b2f00e79b9d42bcf9597be4c272c, type: 3}
-  red: {fileID: 21300000, guid: 6bc2852c89b43294887ae468f859c88e, type: 3}
+  green: {fileID: 21300000, guid: eac6cc0d6f61d4f4c9339e843f850a7f, type: 3}
+  blue: {fileID: 21300000, guid: f750806f91ee5e14591d7f00933547f2, type: 3}
+  yellow: {fileID: 21300000, guid: d8e0cf14f08b0be4eb65fbd4bc1f1bcc, type: 3}
+  red: {fileID: 21300000, guid: 2a08c0fe67f0fc445b954da8c88de466, type: 3}
 --- !u!50 &3597085935211433085
 Rigidbody2D:
   serializedVersion: 4
@@ -287,12 +287,12 @@ SpriteRenderer:
   m_SortingLayerID: -803484593
   m_SortingLayer: 2
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: d1dd83bb5fc1b814e9cc8d7962ced649, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f750806f91ee5e14591d7f00933547f2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 20, y: 14}
+  m_Size: {x: 13.26, y: 9}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

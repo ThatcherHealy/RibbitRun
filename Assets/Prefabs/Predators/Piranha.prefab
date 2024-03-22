@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7032330248223540459}
   - component: {fileID: 4027364456721988532}
   - component: {fileID: 3058803576025836098}
-  m_Layer: 15
+  m_Layer: 16
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -446,7 +446,7 @@ GameObject:
   - component: {fileID: 1595104863485734916}
   - component: {fileID: 7820146881641980825}
   - component: {fileID: 3250470600813353989}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Grab Box
   m_TagString: Predator
   m_Icon: {fileID: 0}

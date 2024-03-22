@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1117229507819522420}
   - component: {fileID: 7778913339409927380}
   - component: {fileID: 6556917502144503397}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Closed Sprite Shape (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,7 +175,7 @@ GameObject:
   - component: {fileID: 7955283509821337419}
   - component: {fileID: 7757167237538718628}
   - component: {fileID: 6076789842880134328}
-  m_Layer: 15
+  m_Layer: 16
   m_Name: Cichlid
   m_TagString: BPrey
   m_Icon: {fileID: 0}
@@ -259,7 +259,7 @@ GameObject:
   - component: {fileID: 3944143208072219046}
   - component: {fileID: 6619318429864816381}
   - component: {fileID: 3684940793708040190}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Sprite
   m_TagString: BPrey
   m_Icon: {fileID: 0}
@@ -433,7 +433,7 @@ GameObject:
   - component: {fileID: 5225188365686467643}
   - component: {fileID: 7327406305808071164}
   - component: {fileID: 5744344974231899989}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Closed Sprite Shape (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -597,7 +597,7 @@ GameObject:
   - component: {fileID: 7674858745714114909}
   - component: {fileID: 8279901550474453954}
   - component: {fileID: 7225764488930361980}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Closed Sprite Shape (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -753,7 +753,7 @@ GameObject:
   - component: {fileID: 6873448383588083544}
   - component: {fileID: 6023346753758654908}
   - component: {fileID: 9217141931334911231}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Closed Sprite Shape (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

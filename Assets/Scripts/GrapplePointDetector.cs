@@ -37,25 +37,27 @@ public class GrapplePointDetector : MonoBehaviour
     //End the grapple when the frog gets too close
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(tongueLauncher.grappleTarget != null && tongueLauncher.grappleTarget.layer != 8)
-        {
-            if ((collision.gameObject.tag != "NoSwim" && collision.gameObject.layer != 8 && tongueLauncher.grappleTarget != null && tongueLauncher.grappleTarget.transform != null)
-            && (collision.gameObject.transform == tongueLauncher.grappleTarget.transform))
+            if (tongueLauncher.grappleTarget != null && tongueLauncher.grappleTarget.layer != 8)
             {
-                touchingObjects.Add(collision.gameObject);
+                if ((collision.gameObject.tag != "NoSwim" && collision.gameObject.layer != 8 && tongueLauncher.grappleTarget != null && tongueLauncher.grappleTarget.transform != null)
+                && (collision.gameObject.transform == tongueLauncher.grappleTarget.transform))
+                {
+                    touchingObjects.Add(collision.gameObject);
+                }
             }
-        }
-        else 
-        {
-            if (tongueLauncher.grappleTarget != null && tongueLauncher.grappleTarget.transform.parent != null && collision.gameObject.transform.parent != null
-            && collision.gameObject.transform.parent == tongueLauncher.grappleTarget.transform.parent)
+            else
             {
-                colliderParentChildCollider = collision.gameObject.transform.parent.GetComponentInChildren<Collider2D>();
-                touchingObjects.Add(colliderParentChildCollider.gameObject);
-                bugHit = true;
-                Detatch();
+                if (tongueLauncher.grappleTarget != null && tongueLauncher.grappleTarget.transform.parent != null && collision.gameObject.transform.parent != null
+                && collision.gameObject.transform.parent == tongueLauncher.grappleTarget.transform.parent && !collision.CompareTag("GrappleIgnore"))
+                {
+                    colliderParentChildCollider = collision.gameObject.transform.parent.GetComponentInChildren<Collider2D>();
+                    touchingObjects.Add(colliderParentChildCollider.gameObject);
+                    bugHit = true;
+                    Detatch();
+                }
             }
-        }
+        
+
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -70,7 +72,7 @@ public class GrapplePointDetector : MonoBehaviour
         else
         {
             if (tongueLauncher.grappleTarget != null && tongueLauncher.grappleTarget.transform.parent != null && collision.gameObject.transform.parent != null
-            && collision.gameObject.transform.parent == tongueLauncher.grappleTarget.transform.parent)
+            && collision.gameObject.transform.parent == tongueLauncher.grappleTarget.transform.parent && !collision.CompareTag("GrappleIgnore"))
             {
                 colliderParentChildCollider = collision.gameObject.transform.parent.GetComponentInChildren<Collider2D>();
                 touchingObjects.Add(colliderParentChildCollider.gameObject);

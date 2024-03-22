@@ -224,19 +224,19 @@ public class MinnowBehavior : MonoBehaviour
         }
         else if (random <= 65f)
         {
-            scale += 0.05f;
+            scale += 0.03f;
         }
         else if (random <= 80f)
         {
-            scale += -0.05f;
+            scale += -0.03f;
         }
         else if (random <= 90f)
         {
-            scale += 0.1f;
+            scale += 0.06f;
         }
         else
         {
-            scale += -0.1f;
+            scale += -0.06f;
         }
         sprite.localScale = new Vector3(scale, scale, 1);
     }

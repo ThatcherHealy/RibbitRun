@@ -231,7 +231,7 @@ Transform:
   - {fileID: 3239816856001094855}
   - {fileID: 7767357726463442714}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2600156148664870286
 GameObject:
@@ -313,7 +313,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: -0.0000002663619, y: -0.49999914}
-  m_ConnectedAnchor: {x: 0, y: 0.46031684}
+  m_ConnectedAnchor: {x: 0, y: 0.46031678}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -511,7 +511,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: -0.0000002663619, y: -0.49999914}
-  m_ConnectedAnchor: {x: 0, y: 0.47322416}
+  m_ConnectedAnchor: {x: 0, y: 0.4732244}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -709,7 +709,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: -0.0000002663619, y: -0.5000012}
-  m_ConnectedAnchor: {x: 16.6997, y: -0.18302965}
+  m_ConnectedAnchor: {x: 16.52, y: 10.326265}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -891,6 +891,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7912126708135689535, guid: a62a5f1b73dd937428a05e60ef83f7e1, type: 3}
+      propertyPath: m_SortingOrder
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8225797949336254606, guid: a62a5f1b73dd937428a05e60ef83f7e1, type: 3}
       propertyPath: m_Name
       value: 4Segment2
@@ -916,6 +920,10 @@ PrefabInstance:
     - target: {fileID: 2762095229549867042, guid: ba1511842d56a0a488d272a5438dd948, type: 3}
       propertyPath: m_Name
       value: 4Segment4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4815465483017214897, guid: ba1511842d56a0a488d272a5438dd948, type: 3}
+      propertyPath: m_SortingOrder
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5634007541467230929, guid: ba1511842d56a0a488d272a5438dd948, type: 3}
       propertyPath: m_RootOrder
@@ -1035,6 +1043,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 4Segment1
       objectReference: {fileID: 0}
+    - target: {fileID: 7098395810599035036, guid: 73846127001f8364db74d36637f503ed, type: 3}
+      propertyPath: m_SortingOrder
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1056,6 +1068,10 @@ PrefabInstance:
     - target: {fileID: 3453702172025950030, guid: a18efab03a9878c45a8ff69bfef78161, type: 3}
       propertyPath: m_Name
       value: 4Segment3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6116149175838380136, guid: a18efab03a9878c45a8ff69bfef78161, type: 3}
+      propertyPath: m_SortingOrder
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6765276075310882696, guid: a18efab03a9878c45a8ff69bfef78161, type: 3}
       propertyPath: m_RootOrder

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PredatorVision : MonoBehaviour
 {
-    [SerializeField] GarBehavior garBehavior;
     public bool huntingMode;
     public Transform frog;
     private void OnTriggerEnter2D(Collider2D collision)

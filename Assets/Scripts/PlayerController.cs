@@ -10,6 +10,7 @@ using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] Color brown;
     [SerializeField] private TongueLauncher tongueLauncher;
     [SerializeField] private TongueLine tongueLine;
     [SerializeField] private Rigidbody2D rb;
@@ -592,6 +593,12 @@ public class PlayerController : MonoBehaviour
             else if (collision.gameObject.transform.parent.name == "Cichlid(Clone)")
             {
                 scoreController.SpawnFloatingText(50, transform.position, Color.blue);
+                scoreController.Score(50);
+            }
+            //if bird, add brown 50
+            else if (collision.gameObject.transform.parent.name == "Sparrow(Clone)")
+            {
+                scoreController.SpawnFloatingText(50, transform.position, brown);
                 scoreController.Score(50);
             }
             //if goldfish, add yellow 100

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4093224693479399801}
   - component: {fileID: 149939354455442623}
   - component: {fileID: 2368006066772823091}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Grab Box 2
   m_TagString: Predator
   m_Icon: {fileID: 0}
@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 18098611561789569}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 39.589996, y: -6.9300013, z: 0.39236453}
+  m_LocalPosition: {x: 42.52, y: -7.2, z: 0.39236453}
   m_LocalScale: {x: 1.2499999, y: 1.2499999, z: 1.25}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -192,7 +192,7 @@ GameObject:
   - component: {fileID: 427570295663160403}
   - component: {fileID: 5344564023132075888}
   - component: {fileID: 7964657758407242778}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Grab Box 1
   m_TagString: Predator
   m_Icon: {fileID: 0}
@@ -291,7 +291,7 @@ GameObject:
   - component: {fileID: 5795834348939720913}
   - component: {fileID: 7529675637435701810}
   - component: {fileID: 42480082315863285}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

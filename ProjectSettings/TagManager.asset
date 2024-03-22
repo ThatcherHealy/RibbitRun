@@ -17,6 +17,7 @@ TagManager:
   - Poisonous
   - Web
   - BPrey
+  - GrappleIgnore
   layers:
   - Default
   - TransparentFX
@@ -33,8 +34,8 @@ TagManager:
   - WaterStrider
   - SlugPath
   - Slide
-  - IgnoreFish
   - 
+  - Predator
   - 
   - 
   - 

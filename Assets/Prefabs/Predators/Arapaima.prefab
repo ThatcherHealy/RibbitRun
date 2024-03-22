@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1590722200783713027}
   - component: {fileID: 6349182746632607451}
   - component: {fileID: 4098400999127694485}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -247,7 +247,7 @@ GameObject:
   - component: {fileID: 4497575319649750351}
   - component: {fileID: 4977977739086962489}
   - component: {fileID: 8887872684178510319}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Grab Box
   m_TagString: Predator
   m_Icon: {fileID: 0}
@@ -352,7 +352,7 @@ GameObject:
   - component: {fileID: 1766199331420619688}
   - component: {fileID: 2045511735212827566}
   - component: {fileID: 4762613155706842407}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Arapaima
   m_TagString: Untagged
   m_Icon: {fileID: 0}

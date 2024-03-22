@@ -251,7 +251,7 @@ public class GarBehavior : MonoBehaviour
         {
             if (turner.hitMud)
             {
-                initialPosition = transform.position + new Vector3(0, 20, 0);
+                initialPosition = transform.position + new Vector3(0, 15, 0);
             }
             else if (turner.hitSlideRight)
             {

@@ -19,6 +19,7 @@ public class PiranhaBehavior : MonoBehaviour
     bool forceApplied; //True after the force has been applied to the gar in the direction of its next waypoint
     bool chaseForceApplied; //True after the force has been applied to the gar in the direction of the player
     bool attacking; //True if the gar was hunting last frame
+    bool grabSwap;
     void Start()
     {
         passiveSpeed *= rb.mass;
@@ -47,7 +48,7 @@ public class PiranhaBehavior : MonoBehaviour
         }
 
         //Make the gar fall down when out of water
-        if (!hitbox.dead) 
+        if (!hitbox.dead)
         {
             if (uc.underwater)
             {
@@ -61,34 +62,40 @@ public class PiranhaBehavior : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (!hitbox.grabbed)
-        {
-            LookAtVelocity();
+        LookAtVelocity();
 
-            if (!pv.huntingMode) //Not hunting
-            {
-                rb.drag = 0.001f;
-                if (!forceApplied)
-                {
-                    MoveTowardsWaypoint();
-                }
-            }
-            else //Hunting
-            {
-                rb.drag = 0.6f;
-                if (pv.frog != null)
-                {
-                    if (!chaseForceApplied)
-                    {
-                        MoveTowardsPlayer();
-                    }
-                }
-            }
-        }
-        else
+        if (!pv.huntingMode || hitbox.grabbed) //Not hunting
         {
-            rb.freezeRotation = true;
+           rb.drag = 0.001f;
+            
+            if (hitbox.grabbed) //Death Animation
+            {
+                if(!grabSwap)
+                {
+                    forceApplied = false;
+                    passiveSpeed *= 10;
+                    SetWaypoints();
+                    grabSwap = true;
+                }
+            }
+
+            if (!forceApplied)
+            {
+                MoveTowardsWaypoint();
+            }
         }
+        else //Hunting
+        {
+           rb.drag = 0.6f;
+           if (pv.frog != null)
+           {
+                if (!chaseForceApplied)
+                {
+                    MoveTowardsPlayer();
+                }
+           }
+        }
+        
 
         if (turner.hitMud || turner.hitSlideRight || turner.hitSlideLeft)
         {
@@ -99,7 +106,7 @@ public class PiranhaBehavior : MonoBehaviour
     {
         Vector2 velocity = Vector2.zero;
         float angle;
-        if (!pv.huntingMode)
+        if (!pv.huntingMode || hitbox.grabbed)
         {
             if (rb.velocity != Vector2.zero)
                 velocity = rb.velocity;
@@ -119,7 +126,7 @@ public class PiranhaBehavior : MonoBehaviour
 
         if (pv.huntingMode)
             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 0.02f);
-        else
+        if (!pv.huntingMode || hitbox.grabbed)
             transform.rotation = targetRotation;
 
         if (transform.eulerAngles.z > 90 && transform.eulerAngles.z < 270)

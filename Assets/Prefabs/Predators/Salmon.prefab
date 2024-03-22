@@ -263,7 +263,7 @@ GameObject:
   - component: {fileID: 2449770123281371102}
   - component: {fileID: 3748211176521440487}
   - component: {fileID: 2068867636480313232}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Grab Box
   m_TagString: Predator
   m_Icon: {fileID: 0}
@@ -1087,7 +1087,7 @@ GameObject:
   - component: {fileID: 8272861152350918957}
   - component: {fileID: 3873782417094480847}
   - component: {fileID: 435755306454676729}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Grab Box
   m_TagString: Predator
   m_Icon: {fileID: 0}
@@ -1437,7 +1437,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3242507709139887071}
   - component: {fileID: 5640255257107860212}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1789,7 +1789,7 @@ GameObject:
   - component: {fileID: 3142244735419374868}
   - component: {fileID: 5917585590165334093}
   - component: {fileID: 2691711098028028601}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Grab Box
   m_TagString: Predator
   m_Icon: {fileID: 0}
@@ -1971,7 +1971,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7394703375688397930}
   - component: {fileID: 4683139898029923681}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2331,7 +2331,7 @@ GameObject:
   - component: {fileID: 7210035603124316854}
   - component: {fileID: 3845722409364687775}
   - component: {fileID: 9181380239950013615}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Grab Box
   m_TagString: Predator
   m_Icon: {fileID: 0}
@@ -3529,7 +3529,7 @@ GameObject:
   m_Component:
   - component: {fileID: 279001918205339367}
   - component: {fileID: 653521525382087726}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4056,7 +4056,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6674209484648122875}
   - component: {fileID: 174097704680376176}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4323,7 +4323,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5111988751057233650}
   - component: {fileID: 8402158577534368996}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4858,7 +4858,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2795426795609517760}
   - component: {fileID: 288625871781337222}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5210,7 +5210,7 @@ GameObject:
   - component: {fileID: 217001569357846342}
   - component: {fileID: 8126974647966659694}
   - component: {fileID: 4339176804197034448}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Grab Box
   m_TagString: Predator
   m_Icon: {fileID: 0}
@@ -5829,7 +5829,7 @@ GameObject:
   - component: {fileID: 3451599608175760906}
   - component: {fileID: 4984234939861109918}
   - component: {fileID: 3504443292027132227}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Grab Box
   m_TagString: Predator
   m_Icon: {fileID: 0}

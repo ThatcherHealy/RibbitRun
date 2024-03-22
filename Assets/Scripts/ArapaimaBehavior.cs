@@ -43,6 +43,11 @@ public class ArapaimaBehavior : MonoBehaviour
             yLevel = lg.playerRefEndPoint.y - 10;
         }
 
+        if (yLevel < lg.playerRefEndPoint.y - 32)
+        {
+            yLevel = lg.playerRefEndPoint.y - 32;
+        }
+
         targetPosition = new Vector3(transform.position.x, yLevel, 0);
         Vector3 lerpedPosition = Vector3.Slerp(transform.position, targetPosition, Time.deltaTime * iSpeed);
         transform.position = new Vector3(transform.position.x, lerpedPosition.y, 0);

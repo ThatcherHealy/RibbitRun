@@ -4,7 +4,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 
-public class BirdSwoopBehavior : MonoBehaviour
+public class HeronBehavior : MonoBehaviour
 {
     [SerializeField] Transform flyAwayPosition;
     [SerializeField] PredatorGrab hitbox1;

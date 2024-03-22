@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3045089101650628662}
   - component: {fileID: 8457367869507119863}
   - component: {fileID: 2255825875321478168}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Grab Box
   m_TagString: Predator
   m_Icon: {fileID: 0}
@@ -200,7 +200,7 @@ GameObject:
   - component: {fileID: 8623318931551531593}
   - component: {fileID: 5595847490704857868}
   - component: {fileID: 3993062219495332100}
-  m_Layer: 2
+  m_Layer: 16
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -465,7 +465,7 @@ GameObject:
   - component: {fileID: 6356769796145076264}
   - component: {fileID: 1136353308740664986}
   - component: {fileID: 8044876445998171370}
-  m_Layer: 2
+  m_Layer: 16
   m_Name: Gar
   m_TagString: Predator
   m_Icon: {fileID: 0}
