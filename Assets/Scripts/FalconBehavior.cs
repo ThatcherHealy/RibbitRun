@@ -65,9 +65,9 @@ public class FalconBehavior : MonoBehaviour
         if (diving)
         {
             target = player.position;
-            if (target.y <= lg.playerRefEndPoint.y - 8) //Locks the target to a certain distance under the water
+            if (target.y <= lg.playerRefEndPoint.y - 14) //Locks the target to a certain distance under the water
             {
-                target = new Vector3(target.x, lg.playerRefEndPoint.y - 8, 0);
+                target = new Vector3(target.x, lg.playerRefEndPoint.y - 14, 0);
             }
         }
         else //Change the target position to past the frog so that the falcon flies upward past the frog

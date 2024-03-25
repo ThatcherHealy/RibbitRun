@@ -21,6 +21,7 @@ public class DeathScript : MonoBehaviour
     [SerializeField] TextMeshPro youWerePoisonedText;
     [SerializeField] TextMeshPro[] poisonedText;
     [SerializeField] Image greenout;
+    [SerializeField] GameObject pauseButton;
 
     string deathBiome;
     bool deathBiomeSetOnce;
@@ -36,6 +37,7 @@ public class DeathScript : MonoBehaviour
     {
         if (playerController.dead) 
         {
+            pauseButton.SetActive(false); //Deactivate pause button
             if (!deathBiomeSetOnce) //Set biome
             {
                 if (levelGenerator.playerBiome == LevelGenerator.Biome.Bog)

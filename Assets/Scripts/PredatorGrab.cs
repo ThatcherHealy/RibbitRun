@@ -28,23 +28,25 @@ public class PredatorGrab : MonoBehaviour
     {
         if (pc == null)
             pc = FindFirstObjectByType<PlayerController>();
-
-        if (!pc.eaten || alligator) //If the player hasn't been eaten already, they get eaten
+        if (pc != null) 
         {
-            if (collision != null)
+            if (!pc.eaten || alligator) //If the player hasn't been eaten already, they get eaten
             {
-                
-                if (collision.CompareTag("Player"))
+                if (collision != null)
                 {
-                    if (collision.name == "Frog")
-                        frog = collision.gameObject.transform;
-                    else
-                        frog = collision.gameObject.transform.parent;
 
-                    if (!poisoned)
+                    if (collision.CompareTag("Player"))
                     {
-                        grabbed = true;
-                        frog.gameObject.GetComponent<Rigidbody2D>().mass = 0;
+                        if (collision.name == "Frog")
+                            frog = collision.gameObject.transform;
+                        else
+                            frog = collision.gameObject.transform.parent;
+
+                        if (!poisoned)
+                        {
+                            grabbed = true;
+                            frog.gameObject.GetComponent<Rigidbody2D>().mass = 0;
+                        }
                     }
                 }
             }

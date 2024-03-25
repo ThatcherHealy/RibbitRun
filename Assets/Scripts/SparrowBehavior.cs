@@ -127,17 +127,20 @@ public class SparrowBehavior : MonoBehaviour
     }
     private void Update()
     {
-        if (tl.grappleTarget != null)
+        if(tl != null)
         {
-            if (tl.grappleTarget == grappleDetector) //Slows down the bird when you grapple to it so it can't get away and makes it only grapplable once
+            if (tl.grappleTarget != null)
             {
-                stop = true;
-                rb.velocity /= 1.01f;
-                grappleDetector.tag = "Untagged";
-                scared = true; //Speeds up the bird cause they're scared :(
+                if (tl.grappleTarget == grappleDetector) //Slows down the bird when you grapple to it so it can't get away and makes it only grapplable once
+                {
+                    stop = true;
+                    rb.velocity /= 1.01f;
+                    grappleDetector.tag = "Untagged";
+                    scared = true; //Speeds up the bird cause they're scared :(
+                }
             }
+            else
+                stop = false;
         }
-        else
-            stop = false;
     }
 }

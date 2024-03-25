@@ -60,7 +60,7 @@ public class PredatorEvents : MonoBehaviour
                 else
                 {
                     int falconChance = UnityEngine.Random.Range(1, 4);
-                    if (falconChance >= 1) //CHANGE THIS WHEN DONE////////////////////////////////////////////////////////////////////////////!!
+                    if (falconChance == 1)
                     {
                         falcon = true;
                     } 
