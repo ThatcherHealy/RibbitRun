@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject dartFrogPoisonParticles;
     GameObject activeDartFrogPoisonParticles;
     public string biomeIn;
+    public bool eatenByFalcon;
 
     [Header("States")]
     public bool isGrounded;
@@ -51,6 +52,7 @@ public class PlayerController : MonoBehaviour
     bool poisonAvailable;
 
     [Header("Settings")]
+    [SerializeField] float aimMultiplier = 2;
     public static Species species;
     [SerializeField] bool conserveMomentum;
     [SerializeField] bool aimingJumpStopsMomentum;
@@ -260,7 +262,7 @@ public class PlayerController : MonoBehaviour
 
         if (isSwimming)
         {
-            secondLinePoint = transform.position + (Vector3.ClampMagnitude((dragStartPos - draggingPos), maxSwimAimLineLength));
+            secondLinePoint = transform.position + Vector3.ClampMagnitude(((dragStartPos - draggingPos) * aimMultiplier), maxSwimAimLineLength);
             jumpLr.positionCount = 0;
             swimLr.positionCount = 2;
             swimLr.SetPosition(0, transform.position);
@@ -268,7 +270,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            secondLinePoint = transform.position + (Vector3.ClampMagnitude((dragStartPos - draggingPos), maxJumpAimLineLength));
+            secondLinePoint = transform.position + Vector3.ClampMagnitude(((dragStartPos - draggingPos) * aimMultiplier), maxJumpAimLineLength);
             if (!isSliding) 
             {
                 if (aimingJumpStopsMomentum)
@@ -349,7 +351,7 @@ public class PlayerController : MonoBehaviour
                 break;
         }
     }
-
+    //////////////////////////////////////////////////////////////////////////////////////////////// COLLISIONS //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if ((collision.gameObject.layer == 7 || collision.gameObject.layer == 12) 
@@ -667,6 +669,14 @@ public class PlayerController : MonoBehaviour
             activeDartFrogPoisonParticles.transform.localPosition = new Vector3(2, 0.54f, 0);
             activeDartFrogPoisonParticles.transform.localScale = new Vector3(3, 3, 3);
             activeDartFrogPoisonParticles.GetComponent<ParticleSystemRenderer>().sortingOrder = 2;
+        }
+        else if (col.transform.parent.name == "Falcon(Clone)" || col.transform.parent.name == "Falcon" || col.transform.parent.name == "Sprite")
+        {
+            eatenByFalcon = true;
+            activeDartFrogPoisonParticles.transform.localPosition = new Vector3(0.58f, -0.28f, 0);
+            activeDartFrogPoisonParticles.transform.localScale = new Vector3(3, 6, 1.5f);
+            activeDartFrogPoisonParticles.transform.localRotation = Quaternion.Euler(0,0,140);
+            activeDartFrogPoisonParticles.GetComponent<ParticleSystemRenderer>().sortingOrder = 12;
         }
 
 

@@ -6,10 +6,12 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.Windows;
+using UnityEditor.PackageManager;
 
 public class DeathScript : MonoBehaviour
 {
     [SerializeField] PlayerController playerController;
+    [SerializeField] LevelGenerator levelGenerator;
     [SerializeField] GameObject eatenDeathScene;
     [SerializeField] TextMeshPro killerText;
     [SerializeField] GameObject drownScene;
@@ -19,6 +21,9 @@ public class DeathScript : MonoBehaviour
     [SerializeField] TextMeshPro youWerePoisonedText;
     [SerializeField] TextMeshPro[] poisonedText;
     [SerializeField] Image greenout;
+
+    string deathBiome;
+    bool deathBiomeSetOnce;
 
     bool drownedFadeIn;
     bool poisonedFadeIn;
@@ -31,18 +36,36 @@ public class DeathScript : MonoBehaviour
     {
         if (playerController.dead) 
         {
-            if (playerController.eaten) 
+            if (!deathBiomeSetOnce) //Set biome
+            {
+                if (levelGenerator.playerBiome == LevelGenerator.Biome.Bog)
+                {
+                    deathBiome = "Bog";
+                }
+                if (levelGenerator.playerBiome == LevelGenerator.Biome.Cypress)
+                {
+                    deathBiome = "Cypress";
+                }
+                if (levelGenerator.playerBiome == LevelGenerator.Biome.Amazon)
+                {
+                    deathBiome = "Amazon";
+                }
+                PlayerPrefs.SetString("StartBiome", deathBiome);
+                deathBiomeSetOnce = true;
+            }
+
+            if (playerController.eaten && !playerController.drowned && !playerController.poisoned) //eaten
             {
                 eatenDeathScene.SetActive(true);
                 if (playerController.killer != null)
-                    killerText.text = aOrAn(playerController.killer) + RemoveClone(playerController.killer).ToUpper();
+                    killerText.text = AorAn(playerController.killer) + RemoveClone(playerController.killer).ToUpper();
             }
-            if (playerController.drowned) 
+            if (playerController.drowned && !playerController.poisoned && !playerController.eaten) //drowned
             {
                 drownScene.SetActive(true);
                 StartCoroutine(BeginDrownFadeIn());
             }
-            if (playerController.poisoned)
+            if (playerController.poisoned && !playerController.drowned && !playerController.eaten) //poisoned
             {
                 poisonedScene.SetActive(true);
                 Greenout();
@@ -57,7 +80,7 @@ public class DeathScript : MonoBehaviour
             FadeInPoisonScene();
         }
     }
-    static string aOrAn(string name)
+    static string AorAn(string name)
     {
         string a;
         if (name.Substring(0, 1).ToLower() == "a" || name.Substring(0, 1).ToLower() == "e" || name.Substring(0, 1).ToLower() == "i"

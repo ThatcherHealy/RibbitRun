@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0af2aae65cd8cbe41b04f4123ac6ff77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityStrength: 4
+  gravityStrength: 8
   sprite: {fileID: 2928403111073073174}
   col: {fileID: 714016834645554637}
 --- !u!50 &3530789411756297091

@@ -29,10 +29,10 @@ public class HeronBehavior : MonoBehaviour
         endPoint = levelGenerator.playerRefEndPoint;
 
         //Turn around when hitting an edge
-        if (math.distance(transform.position.x, player.position.x) < 30)
+        if (math.distance(transform.position.x, player.position.x) < 50)
         {
-            TurnAround();
             turner.active = true;
+            TurnAround();
         }
         else
             turner.active = false;

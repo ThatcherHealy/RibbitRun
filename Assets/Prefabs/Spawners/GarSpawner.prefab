@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5890462152152692885
+--- !u!1 &6505068802848644423
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,42 +8,44 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6247929314573722337}
-  - component: {fileID: 7887067009372677664}
+  - component: {fileID: 7900327233653707107}
+  - component: {fileID: 1720188115688337540}
   m_Layer: 0
-  m_Name: PiranhaSpawner
+  m_Name: GarSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6247929314573722337
+--- !u!4 &7900327233653707107
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5890462152152692885}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 69.87037, y: 9.220793, z: -1.2452815}
+  m_GameObject: {fileID: 6505068802848644423}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4.4, y: 29.818596, z: -1.4127166}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7887067009372677664
+--- !u!114 &1720188115688337540
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5890462152152692885}
+  m_GameObject: {fileID: 6505068802848644423}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c047a388cec0cc44b8fcef0b5449aa59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnedObject: {fileID: 7495963372230017151, guid: 72c38f3d50b4eb644b2cc88ad3927166, type: 3}
-  probabilty: 4
+  spawnedObject: {fileID: 8437305425430969167, guid: 80b799b035598784e9161faf8891d220, type: 3}
+  probabilty: 20
   guaranteed: 0
+  child: 0
+  parent: {fileID: 0}

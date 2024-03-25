@@ -14,7 +14,7 @@ public class ChanceSpawner : MonoBehaviour
     [SerializeField] Transform parent;
     private void Start()
     {
-        if (guaranteed || Random.Range(1,probabilty + 1) == 1)
+        if (guaranteed || Random.Range(1, 100) <= probabilty)
         {
             if(!child) 
             {

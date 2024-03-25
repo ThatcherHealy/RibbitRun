@@ -53,6 +53,12 @@ public class CameraFollow : MonoBehaviour
             //Set the camera to a set Y Value (baseHeight)
 
             Vector3 targetPosition = new Vector3(player.position.x + xOffset, baseHeight, 0);
+
+            if (playerController.killer == "Falcon(Clone)" || playerController.killer == "Falcon" || playerController.eatenByFalcon) //Move the target up when eaten by a falcon to keep it in frame
+            {
+                targetPosition = new Vector3(targetPosition.x, targetPosition.y + 20, targetPosition.z);
+            }
+
             cameraGuide.position = Vector3.SmoothDamp(cameraGuide.position, targetPosition, ref velocity, heightDamping);
         }
         else
@@ -62,6 +68,12 @@ public class CameraFollow : MonoBehaviour
                 //Smoothly move the camera out of the baseHeight to a height of yInwardBias *below* the player's position
 
                 Vector3 targetPosition = new Vector3(player.position.x + xOffset, player.position.y - (yInwardsBias + 2), 0);
+
+                if (playerController.killer == "Falcon(Clone)" || playerController.killer == "Falcon" || playerController.eatenByFalcon) //Move the target up when eaten by a falcon to keep it in frame
+                {
+                    targetPosition = new Vector3(targetPosition.x, targetPosition.y + 20, targetPosition.z);
+                }
+
                 cameraGuide.position = Vector3.SmoothDamp(cameraGuide.position, targetPosition, ref velocity, heightDamping);
             }
             else //Below default view window
@@ -74,6 +86,12 @@ public class CameraFollow : MonoBehaviour
                 {
                     targetPosition = new Vector3(targetPosition.x, mudLevel + offsetAboveMud, targetPosition.z);
                 }
+
+                if (playerController.killer == "Falcon(Clone)" || playerController.killer == "Falcon" || playerController.eatenByFalcon) //Move the target up when eaten by a falcon to keep it in frame
+                {
+                    targetPosition = new Vector3(targetPosition.x, targetPosition.y + 20, targetPosition.z);
+                }
+
                 cameraGuide.position = Vector3.SmoothDamp(cameraGuide.position, targetPosition, ref velocity, heightDamping);
             }
         }

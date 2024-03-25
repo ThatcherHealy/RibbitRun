@@ -31,14 +31,32 @@ public class SparrowBehavior : MonoBehaviour
         nextPosition = initialPosition + new Vector3(5, 10);
         escapePosition = nextPosition + new Vector3(200, 20);
         exitPosition = escapePosition + new Vector3(0, 500);
+
+        initialScale = transform.localScale;
+        int chance = Random.Range(1, 3);
+        if (chance == 2)
+            transform.localScale = new Vector3(-initialScale.x,initialScale.y,initialScale.z);
+
+        if(transform.parent != null)
+        {
+            if (transform.parent.name != "Log(Clone")
+            {
+                rb.freezeRotation = true;
+            }
+        }
     }
 
     void FixedUpdate()
     {
+        if (run || escape || exit) //Lock rotation
+        {
+            rb.transform.localRotation = Quaternion.identity;
+            rb.freezeRotation = true;
+        }
+
         if (!run && !escape && !exit) //Stay locked at initial position until the player gets near
         {
             transform.localPosition = initialPosition;
-            initialScale = transform.localScale;
         }
 
 
@@ -54,13 +72,14 @@ public class SparrowBehavior : MonoBehaviour
                     nextPosition = initialPosition + new Vector3(5, 10);
                     escapePosition = nextPosition + new Vector3(200, 20);
                     exitPosition = escapePosition + new Vector3(0, 500);
+                    transform.localScale = new Vector3(Mathf.Abs(initialScale.x), initialScale.y, initialScale.z);
                 }
                 else
                 {
                     nextPosition = initialPosition + new Vector3(-5, 10);
                     escapePosition = nextPosition + new Vector3(-200, 20);
                     exitPosition = escapePosition + new Vector3(0, 500);
-                    transform.localScale = new Vector3(-initialScale.x,initialScale.y,initialScale.z);
+                    transform.localScale = new Vector3(-Mathf.Abs(initialScale.x),initialScale.y,initialScale.z);
                 }
                 positionsSet = true;
             }

@@ -56,6 +56,7 @@ public class TongueLauncher : MonoBehaviour
     public bool touchEnded;
 
     [Header("My Variables")]
+    [SerializeField] float aimMultiplier = 2;
     public GameObject grappleTarget;
     public bool grapplePointIdentified = false;
     private Vector2 hitPoint;
@@ -189,7 +190,7 @@ public class TongueLauncher : MonoBehaviour
             {
                 maxDrag = 4;
             }
-            secondLinePoint = transform.position + (Vector3.ClampMagnitude((dragStartPosition - dragEndPosition), maxDrag));
+            secondLinePoint = transform.position + (Vector3.ClampMagnitude((dragStartPosition - dragEndPosition) * aimMultiplier, maxDrag));
 
             //Create the line
             lr.SetPosition(0, transform.position);

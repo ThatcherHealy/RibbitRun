@@ -12,7 +12,8 @@ public class PredatorEvents : MonoBehaviour
     [SerializeField] LevelGenerator lg;
     [SerializeField] GameObject fishSwarmPrefab;
     [SerializeField] GameObject arapaimaPrefab;
-    [SerializeField] GameObject birdPrefab;
+    [SerializeField] GameObject heronPrefab;
+    [SerializeField] GameObject falconPrefab;
     [SerializeField] GameObject warningPrefab;
     [SerializeField] Transform player;
 
@@ -26,6 +27,7 @@ public class PredatorEvents : MonoBehaviour
     int max, startingValue = 4;
     private bool cooldown = false;
     bool spawned;
+    bool falcon;
 
     private int warningTime = 3;
     private bool warningActive = false;
@@ -57,6 +59,11 @@ public class PredatorEvents : MonoBehaviour
                 }
                 else
                 {
+                    int falconChance = UnityEngine.Random.Range(1, 4);
+                    if (falconChance >= 1) //CHANGE THIS WHEN DONE////////////////////////////////////////////////////////////////////////////!!
+                    {
+                        falcon = true;
+                    } 
                     StartCoroutine(BirdEvent());
                 }
             }
@@ -117,7 +124,12 @@ public class PredatorEvents : MonoBehaviour
         Warning();
         yield return new WaitForSeconds(warningTime);
 
-        currentPredator = Instantiate(birdPrefab, predatorSpawnPosition, Quaternion.identity);
+        if(falcon)
+        {
+            currentPredator = Instantiate(falconPrefab, predatorSpawnPosition, Quaternion.identity);
+        }
+        else
+            currentPredator = Instantiate(heronPrefab, predatorSpawnPosition, Quaternion.identity);
         spawned = true;
 
         //Destroy the fish after 15 seconds
@@ -160,10 +172,18 @@ public class PredatorEvents : MonoBehaviour
         }
         else if (birdEvent)
         {
-            if (directionChance == 1)
-                predatorSpawnPosition = new Vector2(player.position.x + 100, lg.playerRefEndPoint.y + 9.585f);
+            if (!falcon)
+            {
+                if (directionChance == 1)
+                    predatorSpawnPosition = new Vector2(player.position.x + 100, lg.playerRefEndPoint.y + 9.585f);
+                else
+                    predatorSpawnPosition = new Vector2(player.position.x - 100, lg.playerRefEndPoint.y + 9.585f);
+            }
             else
-                predatorSpawnPosition = new Vector2(player.position.x - 100, lg.playerRefEndPoint.y + 9.585f);
+            {
+                predatorSpawnPosition = new Vector2(player.position.x, lg.playerRefEndPoint.y + 209.585f);
+            }
+
         }
     }
     void SetWarningPosition() 
@@ -183,6 +203,9 @@ public class PredatorEvents : MonoBehaviour
 
             //Then, create a new rectangle that is shrunk on the x and y axis
             float xShrink = 0.85f, yShrink = 0.7f;
+            if (falcon)
+                yShrink = 0.8f;
+
             float shrunkWidth = cameraRect.width * xShrink;
             float shrunkHeight = cameraRect.height * yShrink;
             shrunkCameraRect = new Rect(smoothedCenter.x - shrunkWidth / 2, smoothedCenter.y - shrunkHeight / 2, shrunkWidth, shrunkHeight);
@@ -216,6 +239,8 @@ public class PredatorEvents : MonoBehaviour
                 distance = Mathf.Abs(Vector3.Distance(player.position, predatorSpawnPosition));
             }
             float normalizedDistance = Mathf.Clamp01(distance / 150f);
+            if(falcon)
+                normalizedDistance = Mathf.Clamp01(distance / 200f);
 
             // Use Mathf.Lerp to interpolate between 0.5 and 1 based on the normalized distance
             scale = Mathf.Lerp(0.5f, 1f, 1 - normalizedDistance);
@@ -223,7 +248,9 @@ public class PredatorEvents : MonoBehaviour
             warning.transform.localScale = new Vector3(scale,scale,1);
 
             //When the predator enters the cameraview, stop the warning
-            if (spawned && currentPredator.transform.position.x < (topRight.x + 5) && currentPredator.transform.position.x > (bottomLeft.x - 5))
+            
+            if ((!falcon && (spawned && currentPredator.transform.position.x < (topRight.x + 5) && currentPredator.transform.position.x > (bottomLeft.x - 5)))
+                || (falcon && (spawned && currentPredator.transform.position.y < (topRight.y + 5))))
             {
                 warningActive = false;
                 Destroy(warning);
@@ -238,5 +265,6 @@ public class PredatorEvents : MonoBehaviour
         fishEvent = false;
         birdEvent = false;
         cooldown = false;
+        falcon = false;
     }
 }

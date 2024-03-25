@@ -33,7 +33,7 @@ Transform:
   - {fileID: 2774029682065315501}
   - {fileID: 7008238451143019888}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2236431412525080986
 GameObject:
@@ -709,7 +709,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: -0.0000002663619, y: -0.5000012}
-  m_ConnectedAnchor: {x: 33.837605, y: 6.3003216}
+  m_ConnectedAnchor: {x: 31.52, y: -34.29268}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -919,19 +919,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6765276075310882696, guid: a18efab03a9878c45a8ff69bfef78161, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.1156249
+      value: 1.1078155
       objectReference: {fileID: 0}
     - target: {fileID: 6765276075310882696, guid: a18efab03a9878c45a8ff69bfef78161, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.4625
+      value: 1.44144
       objectReference: {fileID: 0}
     - target: {fileID: 6765276075310882696, guid: a18efab03a9878c45a8ff69bfef78161, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.5
+      value: 0.582
       objectReference: {fileID: 0}
     - target: {fileID: 6765276075310882696, guid: a18efab03a9878c45a8ff69bfef78161, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.114
+      value: 0.0331
       objectReference: {fileID: 0}
     - target: {fileID: 6765276075310882696, guid: a18efab03a9878c45a8ff69bfef78161, type: 3}
       propertyPath: m_LocalPosition.z
