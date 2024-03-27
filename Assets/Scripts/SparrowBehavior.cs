@@ -13,13 +13,14 @@ public class SparrowBehavior : MonoBehaviour
     Vector3 escapePosition;
     Vector3 exitPosition;
     Vector3 initialScale;
-    bool run;
-    bool escape;
-    bool exit;
+    public bool run;
+    public bool escape;
+    public bool exit;
     bool stop;
     bool positionsSet;
     bool rotationSet;
     bool scared;
+    bool startRunTimer;
     [SerializeField] PredatorVision vision;
     void Start()
     {
@@ -60,7 +61,7 @@ public class SparrowBehavior : MonoBehaviour
         }
 
 
-        if (vision.huntingMode) //Run when player is within vision box
+        if (vision.huntingMode && !run && !escape && !exit) //Run when player is within vision box
         {
             if(!positionsSet) 
             {
@@ -87,15 +88,13 @@ public class SparrowBehavior : MonoBehaviour
         if (run && !escape && !exit) //Initial jump upward
         {
             transform.localPosition = Vector3.Slerp(transform.localPosition, nextPosition, Time.fixedDeltaTime * 2f);
+            if(!startRunTimer)
+            {
+                StartCoroutine(RunTimer());
+                startRunTimer = true;
+            }
         }
 
-
-        if (Vector2.Distance(transform.localPosition, nextPosition) < 2f) //Start running faster once the bird gets to its next position
-        {
-            exit = false;
-            run = false;
-            escape = true;
-        }
         if (escape && !run && !exit) //Fly away
         {
             if (!rotationSet) 
@@ -142,5 +141,12 @@ public class SparrowBehavior : MonoBehaviour
             else
                 stop = false;
         }
+    }
+    IEnumerator RunTimer()
+    {
+        yield return new WaitForSeconds(0.7f);
+        exit = false;
+        run = false;
+        escape = true;
     }
 }

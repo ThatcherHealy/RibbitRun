@@ -40,19 +40,7 @@ public class DeathScript : MonoBehaviour
             pauseButton.SetActive(false); //Deactivate pause button
             if (!deathBiomeSetOnce) //Set biome
             {
-                if (levelGenerator.playerBiome == LevelGenerator.Biome.Bog)
-                {
-                    deathBiome = "Bog";
-                }
-                if (levelGenerator.playerBiome == LevelGenerator.Biome.Cypress)
-                {
-                    deathBiome = "Cypress";
-                }
-                if (levelGenerator.playerBiome == LevelGenerator.Biome.Amazon)
-                {
-                    deathBiome = "Amazon";
-                }
-                PlayerPrefs.SetString("StartBiome", deathBiome);
+                SetBiome();
                 deathBiomeSetOnce = true;
             }
 
@@ -157,5 +145,21 @@ public class DeathScript : MonoBehaviour
         {
             Time.timeScale = 0;
         }
+    }
+    void SetBiome() 
+    {
+        if (levelGenerator.playerBiome == LevelGenerator.Biome.Bog)
+        {
+            deathBiome = "Bog";
+        }
+        if (levelGenerator.playerBiome == LevelGenerator.Biome.Cypress)
+        {
+            deathBiome = "Cypress";
+        }
+        if (levelGenerator.playerBiome == LevelGenerator.Biome.Amazon)
+        {
+            deathBiome = "Amazon";
+        }
+        PlayerPrefs.SetString("StartBiome", deathBiome);
     }
 }

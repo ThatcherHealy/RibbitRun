@@ -1184,7 +1184,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3265450524910042478, guid: 10d87c0c7dbdea145a11dc5dea928ee7, type: 3}
       propertyPath: m_Name
-      value: CypressKnee7 (1)
+      value: CypressKnee7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

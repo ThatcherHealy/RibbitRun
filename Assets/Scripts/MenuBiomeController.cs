@@ -23,18 +23,19 @@ public class MenuBiomeController : MonoBehaviour
             {
                 bogSampleScene.SetActive(true);
             }
-            if (PlayerPrefs.GetString("StartBiome") == "Cypress")
+            else if (PlayerPrefs.GetString("StartBiome") == "Cypress")
             {
                 cypressSampleScene.SetActive(true);
             }
-            if (PlayerPrefs.GetString("StartBiome") == "Amazon")
+            else if (PlayerPrefs.GetString("StartBiome") == "Amazon")
             {
                 amazonSampleScene.SetActive(true);
             }
-        }
-        else //Default to bog when there is no death biome
-        {
-            bogSampleScene.SetActive(true);
+            else
+            {
+                PlayerPrefs.SetString("StartBiome", "Bog");
+                bogSampleScene.SetActive(true);
+            }
         }
     }
 }

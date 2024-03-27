@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class PauseButtons : MonoBehaviour
 {
+    [SerializeField] LevelGenerator levelGenerator;
+    [SerializeField] ScoreController scoreController;
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject pauseIcon;
     [SerializeField] GameObject score;
@@ -37,5 +39,24 @@ public class PauseButtons : MonoBehaviour
     public void Home()
     {
         SceneManager.LoadScene("MainMenu");
+        SetBiome();
+        scoreController.CheckHighscore(scoreController.score);
+    }
+    void SetBiome()
+    {
+        string deathBiome = "";
+        if (levelGenerator.playerBiome == LevelGenerator.Biome.Bog)
+        {
+            deathBiome = "Bog";
+        }
+        if (levelGenerator.playerBiome == LevelGenerator.Biome.Cypress)
+        {
+            deathBiome = "Cypress";
+        }
+        if (levelGenerator.playerBiome == LevelGenerator.Biome.Amazon)
+        {
+            deathBiome = "Amazon";
+        }
+        PlayerPrefs.SetString("StartBiome", deathBiome);
     }
 }

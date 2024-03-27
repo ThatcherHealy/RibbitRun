@@ -85,7 +85,7 @@ public class ScoreController : MonoBehaviour
         }
     }
 
-    private void CheckHighscore(int finalScore)
+    public void CheckHighscore(int finalScore)
     {
         if (finalScore > PlayerPrefs.GetInt("Highscore", 0))
         {

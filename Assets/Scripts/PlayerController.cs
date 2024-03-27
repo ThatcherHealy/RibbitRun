@@ -77,6 +77,7 @@ public class PlayerController : MonoBehaviour
     
     private void Start()
     {
+        SetSpecies();
         ConfigureSpecies();
         initialMaxJumpAimLineLength = maxJumpAimLineLength;
         initialMaxSwimAimLineLength = maxSwimAimLineLength;
@@ -295,6 +296,24 @@ public class PlayerController : MonoBehaviour
         dragReleasePos.z = 0;
 
         jump = true;
+    }
+    void SetSpecies() 
+    {
+        if (PlayerPrefs.GetString("Species") == "Default")
+            species = Species.Default;
+        else if (PlayerPrefs.GetString("Species") == "Tree Frog")
+            species = Species.Treefrog;
+        else if (PlayerPrefs.GetString("Species") == "Froglet")
+            species = Species.Froglet;
+        else if (PlayerPrefs.GetString("Species") == "Bullfrog")
+            species = Species.BullFrog;
+        else if (PlayerPrefs.GetString("Species") == "Poison Dart Frog")
+            species = Species.PoisonDartFrog;
+        else
+        {
+            PlayerPrefs.SetString("Species", "Default");
+            species = Species.Default;
+        }
     }
 
     void ConfigureSpecies()

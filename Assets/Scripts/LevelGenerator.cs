@@ -61,27 +61,8 @@ public class LevelGenerator : MonoBehaviour
 
     private void Awake()
     {
-        if (PlayerPrefs.GetString("StartBiome") != null)
-        {
-            //Start you in the biome you died in last
-            if (PlayerPrefs.GetString("StartBiome") == "Bog")
-            {
-                startBiome = Biome.Bog;
-            }
-            if (PlayerPrefs.GetString("StartBiome") == "Cypress")
-            {
-                startBiome = Biome.Cypress;
-            }
-            if (PlayerPrefs.GetString("StartBiome") == "Amazon")
-            {
-                startBiome = Biome.Amazon;
-            }
-        }
-        else //Default to bog when there is no death biome
-        {
-            startBiome = Biome.Bog;
-        }
-
+        InitializeBiome();
+        
         endPoint = startEndPoint.position;
         playerRefEndPoint = startEndPoint.position;
         biomeSpawning = startBiome;
@@ -559,5 +540,23 @@ public class LevelGenerator : MonoBehaviour
         }
 
         return levelpartTransform;
+    }
+    void InitializeBiome() 
+    {
+        //Start you in the biome you died in last
+        if (PlayerPrefs.GetString("StartBiome") == "Bog")
+        {
+            startBiome = Biome.Bog;
+        }
+        else if (PlayerPrefs.GetString("StartBiome") == "Cypress")
+        {
+            startBiome = Biome.Cypress;
+        }
+        else if (PlayerPrefs.GetString("StartBiome") == "Amazon")
+        {
+            startBiome = Biome.Amazon;
+        }
+        else
+            startBiome = Biome.Bog;
     }
 }

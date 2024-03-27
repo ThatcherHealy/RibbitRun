@@ -10,7 +10,7 @@ public class FalconBehavior : MonoBehaviour
     LevelGenerator lg;
     Transform player;
 
-    bool diving = true;
+    public bool diving = true;
     float diveSpeed = 65;
     float yVelocity;
     float xVelocity;
@@ -44,7 +44,7 @@ public class FalconBehavior : MonoBehaviour
         float timeToReachTargetX = Mathf.Abs(xDifference) / diveSpeed;
 
         // Calculate the required horizontal velocity to reach the target's x position
-        xVelocity = (xDifference / timeToReachTargetX)/3f;
+        xVelocity = (xDifference / timeToReachTargetX)/3.5f;
         if (float.IsNaN(xVelocity))
             xVelocity = 0f;
 
@@ -65,9 +65,9 @@ public class FalconBehavior : MonoBehaviour
         if (diving)
         {
             target = player.position;
-            if (target.y <= lg.playerRefEndPoint.y - 14) //Locks the target to a certain distance under the water
+            if (target.y <= lg.playerRefEndPoint.y - 8) //Locks the target to a certain distance under the water
             {
-                target = new Vector3(target.x, lg.playerRefEndPoint.y - 14, 0);
+                target = new Vector3(target.x, lg.playerRefEndPoint.y - 8, 0);
             }
         }
         else //Change the target position to past the frog so that the falcon flies upward past the frog
@@ -112,17 +112,24 @@ public class FalconBehavior : MonoBehaviour
 
     void SetDirection() 
     {
-        if (Mathf.Abs(transform.position.x - target.x) <= 1f) //Directly above
+        if (diving) 
         {
-            transform.localScale = transform.localScale;
-        }
-        else if (transform.position.x < target.x) //Approaching from the left
-        {
-            transform.localScale = new Vector3(-1, 1, 1);
-        }
-        else //Approaching from the right
-        {
-            transform.localScale = new Vector3(1, 1, 1);
+            if (Mathf.Abs(transform.position.y - target.y) >= 40f) //High
+            {
+                if (Mathf.Abs(transform.position.x - target.x) <= 1f) //Directly above
+                {
+                    transform.localScale = transform.localScale;
+                }
+                else if (transform.position.x < target.x) //Approaching from the left
+                {
+                    transform.localScale = new Vector3(-1, 1, 1);
+                }
+                else //Approaching from the right
+                {
+                    transform.localScale = new Vector3(1, 1, 1);
+                }
+            }
+
         }
     }
     void LookAtVelocity()

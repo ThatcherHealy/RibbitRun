@@ -1092,7 +1092,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7643452713168346657, guid: 340eefe5bb81e464484c5bf0718b768c, type: 3}
       propertyPath: m_Name
-      value: CypressKnee3 (1)
+      value: CypressKnee3
       objectReference: {fileID: 0}
     - target: {fileID: 8915304697838194192, guid: 340eefe5bb81e464484c5bf0718b768c, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.size
@@ -2639,7 +2639,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7739131778301996965, guid: 289437e153829f24daa9d3d1f4277910, type: 3}
       propertyPath: m_Name
-      value: CypressKnee9 (1)
+      value: CypressKnee9
       objectReference: {fileID: 0}
     - target: {fileID: 8846535702747976635, guid: 289437e153829f24daa9d3d1f4277910, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[7].x
