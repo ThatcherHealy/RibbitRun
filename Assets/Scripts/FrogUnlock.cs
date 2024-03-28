@@ -36,10 +36,17 @@ public class FrogUnlock : MonoBehaviour
     [SerializeField] Slider poisonDartFrogSlider;
     [SerializeField] GameObject poisonDartFrogLocked;
 
+    [SerializeField] GameObject alertPrefab;
+    public GameObject treeFrogAlert;
+    public GameObject frogletAlert;
+    public GameObject bullfrogAlert;
+    public GameObject poisonDartFrogAlert;
+
     private void Awake()
     {
         InitializeProgress();
         InitializeButtonStates();
+        InitializeAlerts();
     }
     private void InitializeProgress()
     {
@@ -205,5 +212,23 @@ public class FrogUnlock : MonoBehaviour
             }
         }
     }
-
+    void InitializeAlerts() 
+    {
+        if (PlayerPrefs.GetInt("treeFrogUnlocked") == 1 && PlayerPrefs.GetInt("TreeFrogClaimed") != 1) 
+        {
+            treeFrogAlert = Instantiate(alertPrefab, new Vector2(-10, -2.8f), Quaternion.identity);
+        }
+        if (PlayerPrefs.GetInt("frogletUnlocked") == 1 && PlayerPrefs.GetInt("FrogletClaimed") != 1)
+        {
+            frogletAlert = Instantiate(alertPrefab, new Vector2(6.6f, -2.8f), Quaternion.identity);
+        }
+        if (PlayerPrefs.GetInt("bullfrogUnlocked") == 1 && PlayerPrefs.GetInt("BullfrogClaimed") != 1)
+        {
+            bullfrogAlert = Instantiate(alertPrefab, new Vector2(22.1f, -2.8f), Quaternion.identity);
+        }
+        if (PlayerPrefs.GetInt("poisonDartFrogUnlocked") == 1 && PlayerPrefs.GetInt("PoisonDartFrogClaimed") != 1)
+        {
+            poisonDartFrogAlert = Instantiate(alertPrefab, new Vector2(38.2f, -2.8f), Quaternion.identity);
+        }
+    }
 }

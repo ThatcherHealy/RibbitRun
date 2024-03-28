@@ -8,6 +8,7 @@ using static PlayerController;
 public class MainMenuButtons : MonoBehaviour
 {
     [SerializeField] Image[] buttons;
+    [SerializeField] FrogUnlock unlock;
 
     private void Awake()
     {
@@ -38,24 +39,44 @@ public class MainMenuButtons : MonoBehaviour
         UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Image>().color = Color.green;
         UnselectOthers(UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Image>());
         PlayerPrefs.SetString("Species", "Tree Frog");
+        PlayerPrefs.SetInt("TreeFrogClaimed", 1);
+        if (unlock.treeFrogAlert != null) 
+        {
+            Destroy(unlock.treeFrogAlert);
+        }
     }
     public void SelectFroglet()
     {
         UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Image>().color = Color.green;
         UnselectOthers(UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Image>());
         PlayerPrefs.SetString("Species", "Froglet");
+        PlayerPrefs.SetInt("FrogletClaimed", 1);
+        if (unlock.frogletAlert != null)
+        {
+            Destroy(unlock.frogletAlert);
+        }
     }
     public void SelectBullfrog()
     {
         UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Image>().color = Color.green;
         UnselectOthers(UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Image>());
         PlayerPrefs.SetString("Species", "Bullfrog");
+        PlayerPrefs.SetInt("BullfrogClaimed", 1);
+        if (unlock.bullfrogAlert != null)
+        {
+            Destroy(unlock.bullfrogAlert);
+        }
     }
     public void SelectPoisonDartFrog()
     {
         UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Image>().color = Color.green;
         UnselectOthers(UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Image>());
         PlayerPrefs.SetString("Species", "Poison Dart Frog");
+        PlayerPrefs.SetInt("PoisonDartFrogClaimed", 1);
+        if (unlock.poisonDartFrogAlert != null)
+        {
+            Destroy(unlock.poisonDartFrogAlert);
+        }
     }
 
     void UnselectOthers(Image currentButton) 

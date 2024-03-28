@@ -12679,6 +12679,7 @@ MonoBehaviour:
   - {fileID: 1260103680}
   - {fileID: 547914354}
   - {fileID: 257789355}
+  unlock: {fileID: 1492049544}
 --- !u!4 &1492049543
 Transform:
   m_ObjectHideFlags: 0
@@ -12730,6 +12731,11 @@ MonoBehaviour:
   poisonDartFrogX: {fileID: 1188348394}
   poisonDartFrogSlider: {fileID: 546084665}
   poisonDartFrogLocked: {fileID: 429805708}
+  alertPrefab: {fileID: 857112284554688771, guid: 91002ed1b3b30f443bea1de77eb84dc2, type: 3}
+  treeFrogAlert: {fileID: 0}
+  frogletAlert: {fileID: 0}
+  bullfrogAlert: {fileID: 0}
+  poisonDartFrogAlert: {fileID: 0}
 --- !u!1 &1495283311
 GameObject:
   m_ObjectHideFlags: 0
