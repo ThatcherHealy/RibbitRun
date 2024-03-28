@@ -45,6 +45,10 @@ public class SparrowBehavior : MonoBehaviour
                 rb.freezeRotation = true;
             }
         }
+        else
+        {
+            rb.freezeRotation = true;
+        }
     }
 
     void FixedUpdate()

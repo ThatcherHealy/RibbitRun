@@ -348,8 +348,8 @@ public class PlayerController : MonoBehaviour
                 tongueLauncher.baseMaxDistance = 18;
                 break;
             case Species.BullFrog:
-                jumpingPower = 28;
-                swimmingPower = 28;
+                jumpingPower = 29;
+                swimmingPower = 32;
                 maxJumpAimLineLength = 10;
                 maxSwimAimLineLength = 10;
                 oxygenAndMoistureController.oxygenLossRate = 0.04f;
@@ -357,8 +357,8 @@ public class PlayerController : MonoBehaviour
                 tongueLauncher.baseMaxDistance = 30;
                 break;
             case Species.PoisonDartFrog:
-                jumpingPower = 30;
-                swimmingPower = 30;
+                jumpingPower = 32;
+                swimmingPower = 29;
                 maxJumpAimLineLength = 10;
                 maxSwimAimLineLength = 10;
                 oxygenAndMoistureController.oxygenLossRate = 0.05f;
@@ -570,18 +570,38 @@ public class PlayerController : MonoBehaviour
             {
                 scoreController.SpawnFloatingText(5, transform.position, Color.white);
                 scoreController.Score(5);
+
+                if (PlayerPrefs.GetInt("frogletUnlocked", 0) == 1)
+                {
+                    PlayerPrefs.SetInt("InsectsEaten", PlayerPrefs.GetInt("InsectsEaten", 0) + 1);
+                }
             }
             //if fly or waterstrider, add 10
             if (collision.gameObject.transform.parent.name == "Fly(Clone)" || collision.gameObject.transform.parent.name == "WaterStrider(Clone)")
             {
                 scoreController.SpawnFloatingText(10, transform.position, Color.white);
                 scoreController.Score(10);
+
+                if (PlayerPrefs.GetInt("frogletUnlocked", 0) == 1)
+                {
+                    PlayerPrefs.SetInt("InsectsEaten", PlayerPrefs.GetInt("InsectsEaten", 0) + 1);
+                }
+            }
+            //if slug or snail, add 15
+            else if (collision.gameObject.transform.parent.name == "Slug(Clone)" || collision.gameObject.transform.parent.name == "Snail(Clone)")
+            {
+                scoreController.SpawnFloatingText(15, transform.position, Color.white);
+                scoreController.Score(15);
             }
 
-            //if slug or snail, or minnow, add 15
-            else if (collision.gameObject.transform.parent.name == "Slug(Clone)" || collision.gameObject.transform.parent.name == "Snail(Clone)" 
-                || collision.gameObject.transform.parent.name == "BogMinnow(Clone)"|| collision.gameObject.transform.parent.name == "AmazonMinnow(Clone)")
+            //if minnow, add 15
+            else if (collision.gameObject.transform.parent.name == "BogMinnow(Clone)" || collision.gameObject.transform.parent.name == "AmazonMinnow(Clone)")
             {
+                if (PlayerPrefs.GetInt("treeFrogUnlocked") == 1)
+                {
+                    PlayerPrefs.SetInt("FishEaten", PlayerPrefs.GetInt("FishEaten", 0) + 1);
+                }
+
                 scoreController.SpawnFloatingText(15, transform.position, Color.white);
                 scoreController.Score(15);
             }
@@ -596,7 +616,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else //If poison dart frog eats a poisonous spider, add green 50
                 {
-                    if(species == Species.PoisonDartFrog)
+                    if (species == Species.PoisonDartFrog)
                     {
                         scoreController.SpawnFloatingText(50, transform.position, Color.green);
                         scoreController.Score(50);
@@ -609,6 +629,11 @@ public class PlayerController : MonoBehaviour
             {
                 scoreController.SpawnFloatingText(25, transform.position, Color.white);
                 scoreController.Score(25);
+
+                if (PlayerPrefs.GetInt("frogletUnlocked", 0) == 1)
+                {
+                    PlayerPrefs.SetInt("InsectsEaten", PlayerPrefs.GetInt("InsectsEaten", 0) + 1);
+                }
             }
             //if cichlid, add blue 50
             else if (collision.gameObject.transform.parent.name == "Cichlid(Clone)")
@@ -625,6 +650,11 @@ public class PlayerController : MonoBehaviour
             //if goldfish, add yellow 100
             else if (collision.gameObject.transform.parent.name == "Goldfish(Clone)")
             {
+                if (PlayerPrefs.GetInt("treeFrogUnlocked", 0) == 1)
+                {
+                    PlayerPrefs.SetInt("FishEaten", PlayerPrefs.GetInt("FishEaten", 0) + 1);
+                }
+
                 scoreController.SpawnFloatingText(100, transform.position, Color.yellow);
                 scoreController.Score(100);
             }
