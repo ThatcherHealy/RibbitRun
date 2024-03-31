@@ -9,10 +9,12 @@ public class FishBehavior : MonoBehaviour
     private Transform player;
     private bool facingLeft;
     [SerializeField] PredatorTurner turner;
+    LevelGenerator lg;
     bool turned;
     private void Start()
     {
         player = GameObject.Find("Frog").transform;
+        lg = FindObjectOfType<LevelGenerator>();
         if (transform.position.x > player.position.x)
             facingLeft = true;
         else
@@ -30,7 +32,7 @@ public class FishBehavior : MonoBehaviour
     private void Update()
     {
         //Turn around when hitting an edge
-        if (math.distance(transform.position.x, player.position.x) < 100)
+        if (math.distance(transform.position.x, player.position.x) < 100 || transform.position.y > (lg.playerRefEndPoint.y + 5))
         {
             TurnAround();
             turner.active = true;

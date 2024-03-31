@@ -84,7 +84,10 @@ public class PlayerController : MonoBehaviour
 
         defaultGravityScale = rb.gravityScale;
         rb.freezeRotation = true;
-        biomeIn = levelGenerator.biomeSpawning.ToString();
+        if(levelGenerator != null) 
+        {
+            biomeIn = levelGenerator.biomeSpawning.ToString();
+        }
     }
 
     void Update()
@@ -107,8 +110,8 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        Jump();
         GroundCheck();
+        Jump();
         Swimming();
     }
 
@@ -123,6 +126,7 @@ public class PlayerController : MonoBehaviour
 
         if (raycastHitGround.collider != null || raycastHitSlide.collider != null)
         {
+
             isGrounded = true;
             if (raycastHitSlide.collider != null)
             {
@@ -145,8 +149,10 @@ public class PlayerController : MonoBehaviour
             isSwimming = false;
             tongueLine.isGrappling = false;
 
-            if (!conserveMomentum)
+            if (!conserveMomentum && !jump)
+            {
                 rb.velocity = Vector2.zero;
+            }
         }
         else
         {

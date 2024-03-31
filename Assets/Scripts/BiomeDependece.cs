@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class BiomeDependece : MonoBehaviour
@@ -7,11 +8,17 @@ public class BiomeDependece : MonoBehaviour
     [SerializeField] string dependence; //The biome that the level part must be in
     [SerializeField] GameObject replacement; //What the level part will be replaced with if it spawns in the wrong biome
     [SerializeField] bool destroyOnTransition; //Destroy the gameobject when it is spawned on a transition slide
+    [SerializeField] bool heightDependence; //Destroy the gameobject when it is spawned too far above the mud
+    [SerializeField] float dependentHeight;
     private void Start()
     {
         if (destroyOnTransition)
         {
             StartCoroutine(CheckForTransitionSlide());
+        }
+        if (heightDependence) 
+        {
+            StartCoroutine(CheckHeight());
         }
         //Determine what biome the level part was spawned at by scanning for the mud under it then looking at that mud's parent name and then seeing what type of riverbed it is.
         //If the level part is in a biome it does not belong in, it replaces itself with the corresponding correct level part and destroys itself.
@@ -64,5 +71,21 @@ public class BiomeDependece : MonoBehaviour
             }
         }
         StartCoroutine(CheckForTransitionSlide());
+    }
+    IEnumerator CheckHeight() 
+    {
+        yield return new WaitForSeconds(4);
+        RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position, Vector2.down);
+        for (int i = 0; i < hit.Length; i++)
+        {
+            if (hit[i].transform.gameObject.layer == 3)
+            {
+                if (math.distance(transform.position.y, hit[i].point.y) > dependentHeight)
+                {
+                    Destroy(gameObject);
+                }
+            }
+        }
+        StartCoroutine(CheckHeight());
     }
 }

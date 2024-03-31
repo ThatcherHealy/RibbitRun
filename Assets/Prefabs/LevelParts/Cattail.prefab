@@ -874,6 +874,8 @@ MonoBehaviour:
   dependence: 
   replacement: {fileID: 0}
   destroyOnTransition: 1
+  heightDependence: 1
+  dependentHeight: 60
 --- !u!1 &6304854888888246989
 GameObject:
   m_ObjectHideFlags: 0

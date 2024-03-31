@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PauseButtons : MonoBehaviour
 {
+    [SerializeField] bool tutorial;
     [SerializeField] LevelGenerator levelGenerator;
     [SerializeField] ScoreController scoreController;
     [SerializeField] GameObject pauseMenu;
@@ -39,8 +40,11 @@ public class PauseButtons : MonoBehaviour
     public void Home()
     {
         SceneManager.LoadScene("MainMenu");
-        SetBiome();
-        scoreController.CheckHighscore(scoreController.score);
+        if (!tutorial) 
+        {
+            SetBiome();
+            scoreController.CheckHighscore(scoreController.score);
+        }
     }
     void SetBiome()
     {

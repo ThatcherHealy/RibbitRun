@@ -8,6 +8,7 @@ public class ScoreController : MonoBehaviour
 {
     public int score;
 
+    [SerializeField] bool tutorial;
     [SerializeField] TextMeshPro scoreText;
     [SerializeField] Transform playerPosition;
     [SerializeField] TextMeshPro floatingText;
@@ -32,7 +33,11 @@ public class ScoreController : MonoBehaviour
     {
         farthestDistance = startPoint.position.x;
         scoreText.enabled = false;
-        initialPosition = lg.endPoint.x;
+
+        if (lg != null)
+            initialPosition = lg.endPoint.x;
+        else
+            initialPosition = startPoint.transform.position.x;
     }
     private void Update()
     {
@@ -71,7 +76,9 @@ public class ScoreController : MonoBehaviour
             }
             scoreText.text = new string(" ");
             finalScoreText.text = score.ToString();
-            CheckHighscore(score);
+
+            if (!tutorial)
+                CheckHighscore(score);
             highscoreText.text = PlayerPrefs.GetInt("Highscore", 0).ToString();
         }
     }

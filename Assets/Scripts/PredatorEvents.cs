@@ -147,7 +147,7 @@ public class PredatorEvents : MonoBehaviour
         SetSpawnPosition();
         SetWarningPosition();
 
-        if(pc.drowned) //Deactivate warning and predator when player drowns
+        if(pc.drowned || pc.poisoned) //Deactivate warning and predator when player drowns
         {
             if (warning != null)
                 warning.SetActive(false);
@@ -190,6 +190,21 @@ public class PredatorEvents : MonoBehaviour
     {
         if (warningActive && warning != null)
         {
+            //Stop the warning when the predator is destroyed
+            if(spawned && currentPredator == null)
+            {
+                spawned = false;
+                Destroy(warning);
+                return;
+            }
+            //Stop the warning when the falcon stops diving
+            if (falcon && spawned && !currentPredator.GetComponent<FalconBehavior>().diving)
+            {
+                spawned = false;
+                Destroy(warning);
+                return;
+            }
+
             //First, smooth the centerpoint of the camera
             Vector3 cameraCenter = Camera.main.transform.position;
             Vector3 smoothedCenter = cameraCenter;
@@ -214,9 +229,9 @@ public class PredatorEvents : MonoBehaviour
             Vector3 warningTarget;
             if (spawned)
             {
-                warningTarget = new Vector3(
-              Mathf.Clamp(currentPredator.transform.position.x, shrunkCameraRect.xMin, shrunkCameraRect.xMax),
-              Mathf.Clamp(currentPredator.transform.position.y, shrunkCameraRect.yMin, shrunkCameraRect.yMax),0);
+                    warningTarget = new Vector3(
+                    Mathf.Clamp(currentPredator.transform.position.x, shrunkCameraRect.xMin, shrunkCameraRect.xMax),
+                    Mathf.Clamp(currentPredator.transform.position.y, shrunkCameraRect.yMin, shrunkCameraRect.yMax), 0);
             }
             else
             {
@@ -248,7 +263,6 @@ public class PredatorEvents : MonoBehaviour
             warning.transform.localScale = new Vector3(scale,scale,1);
 
             //When the predator enters the cameraview, stop the warning
-            
             if ((!falcon && (spawned && currentPredator.transform.position.x < (topRight.x + 5) && currentPredator.transform.position.x > (bottomLeft.x - 5)))
                 || (falcon && (spawned && currentPredator.transform.position.y < (topRight.y + 5))))
             {
@@ -264,7 +278,7 @@ public class PredatorEvents : MonoBehaviour
         spawned = false;
         fishEvent = false;
         birdEvent = false;
-        cooldown = false;
         falcon = false;
+        cooldown = false;
     }
 }
