@@ -255,7 +255,7 @@ public class LevelGenerator : MonoBehaviour
         if (biomeSpawning == Biome.Bog)
         {
             minTransitionXOffset = 400; 
-            maxTransitionXOffset = 700;
+            maxTransitionXOffset = 600;
         }
         else if (biomeSpawning == Biome.Cypress)
         {
@@ -265,7 +265,7 @@ public class LevelGenerator : MonoBehaviour
         else
         {
             minTransitionXOffset = 300;
-            maxTransitionXOffset = 500;
+            maxTransitionXOffset = 600;
         }
 
 
@@ -516,9 +516,9 @@ public class LevelGenerator : MonoBehaviour
         if (levelPartCalc >= 85 && biomeSpawning == Biome.Bog) //60% chance to spawn one slug on a log
         {
             int doubleChance = UnityEngine.Random.Range(1, 5);
-            Instantiate(slugPrefab, spawnPosition + new Vector3(0, UnityEngine.Random.Range(2,6), 0), Quaternion.identity);
+            Instantiate(slugPrefab, spawnPosition + new Vector3(0, UnityEngine.Random.Range(2,3), 0), Quaternion.identity);
             if (doubleChance == 1) //25% chance to spawn another after the first one is spawned
-                Instantiate(slugPrefab, spawnPosition + new Vector3(0, -UnityEngine.Random.Range(2, 6), 0), Quaternion.identity);
+                Instantiate(slugPrefab, spawnPosition + new Vector3(0, -UnityEngine.Random.Range(2, 3), 0), Quaternion.identity);
         }
 
         int striderChance = UnityEngine.Random.Range(1, 8);

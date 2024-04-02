@@ -12,6 +12,7 @@ public class GarBehavior : MonoBehaviour
     [SerializeField] Animator animator;
     [SerializeField] float passiveSpeed = 10;
     [SerializeField] float chaseSpeed = 20;
+    [SerializeField] Transform target;
 
     Vector3 initialPosition;
     private Vector3[] waypoints = new Vector3[4];
@@ -148,7 +149,8 @@ public class GarBehavior : MonoBehaviour
     }
     void MoveTowardsPlayer()
     {
-        Vector3 direction = pv.frog.position - transform.position;
+        //Vector3 direction = pv.frog.position - transform.position;
+        Vector3 direction = target.position - transform.position;
 
         rb.velocity = Vector2.zero;
         rb.AddForce(direction.normalized * chaseSpeed, ForceMode2D.Impulse);

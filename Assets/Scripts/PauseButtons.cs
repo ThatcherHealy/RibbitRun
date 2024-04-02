@@ -35,6 +35,11 @@ public class PauseButtons : MonoBehaviour
         score.SetActive(true);
         pauseIcon.SetActive(true);
         Time.timeScale = 1;
+        if (!tutorial)
+        {
+            SetBiome();
+            scoreController.CheckHighscore(scoreController.score);
+        }
         SceneManager.LoadScene("GameScene");
     }
     public void TutorialRestart()

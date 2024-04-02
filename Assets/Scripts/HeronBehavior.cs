@@ -18,7 +18,7 @@ public class HeronBehavior : MonoBehaviour
     int speed = 50;
     private Transform player;
     private bool facingLeft;
-    bool tutorial = true;
+    bool tutorial;
     private void Start()
     {
         levelGenerator = FindAnyObjectByType<LevelGenerator>();

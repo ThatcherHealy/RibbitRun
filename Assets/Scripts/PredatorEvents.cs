@@ -23,7 +23,7 @@ public class PredatorEvents : MonoBehaviour
     private int directionChance;
     private bool birdEvent;
     public int lowerScoreLimit = 50;
-    private int checkInterval = 5;
+    private float checkInterval = 5;
     int max, startingValue = 4;
     private bool cooldown = false;
     bool spawned;
@@ -44,6 +44,16 @@ public class PredatorEvents : MonoBehaviour
 
     IEnumerator DetermineSpawnTime()
     {
+        //Decrease checkInterval by 0.2 every 250 points, capped out at 2 seconds
+        float multiplier = Mathf.Round(sc.score / 250);
+        for (int i = 0; i < multiplier; i++)
+        {
+            checkInterval -= 0.2f;
+        }
+
+        if (checkInterval < 1)
+            checkInterval = 1;
+
         yield return new WaitForSeconds(checkInterval);
         if (sc.score > lowerScoreLimit && !cooldown && !pc.dead)
         {
@@ -271,9 +281,21 @@ public class PredatorEvents : MonoBehaviour
             }
         }
     }
-    IEnumerator Cooldown(int cooldownTime)
+    IEnumerator Cooldown(float cooldownTime)
     {
         cooldown = true;
+        checkInterval = 5;
+
+        //Decrease cooldownTime by 1 every 250 points, capped out at 5 seconds
+        float multiplier = Mathf.Round(sc.score / 250);
+        for (int i = 0; i < multiplier; i++)
+        {
+            cooldownTime -= 0.5f;
+        }
+
+        if(cooldownTime < 5)
+            cooldownTime = 5;
+
         yield return new WaitForSeconds(cooldownTime);
         spawned = false;
         fishEvent = false;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AffectedByWeb : MonoBehaviour
 {
-    bool stuck;
+    public bool stuck;
     Vector3 stickPoint;
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -15,15 +15,15 @@ public class AffectedByWeb : MonoBehaviour
                 stickPoint = collision.ClosestPoint(transform.position);
                 stuck = true;
 
-                if (transform.parent.name == "Fly(Clone)")
+                if (transform.parent.GetComponent<FlyBehavior>() != null)
                 {
                     Destroy(transform.parent.gameObject.GetComponent<FlyBehavior>());
                 }
-                if (transform.parent.name == "Dragonly(Clone)")
+                if (transform.parent.GetComponent<DragonflyBehavior>() != null)
                 {
                     Destroy(transform.parent.gameObject.GetComponent<DragonflyBehavior>());
                 }
-                if (transform.parent.name == "WaterStrider(Clone)")
+                if (transform.parent.GetComponent<WaterStriderBehavior>() != null)
                 {
                     Destroy(transform.parent.gameObject.GetComponent<WaterStriderBehavior>());
                 }

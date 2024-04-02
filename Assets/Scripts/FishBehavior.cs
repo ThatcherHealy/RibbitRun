@@ -32,7 +32,7 @@ public class FishBehavior : MonoBehaviour
     private void Update()
     {
         //Turn around when hitting an edge
-        if (math.distance(transform.position.x, player.position.x) < 100 || transform.position.y > (lg.playerRefEndPoint.y + 5))
+        if (math.distance(transform.position.x, player.position.x) < 50 || transform.position.y > (lg.playerRefEndPoint.y + 5))
         {
             TurnAround();
             turner.active = true;

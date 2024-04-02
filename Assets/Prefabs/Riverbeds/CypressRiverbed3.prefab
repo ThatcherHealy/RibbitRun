@@ -1298,7 +1298,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7663106152254014147, guid: 6b7ba7d56d456c24fbcb6d88f5721daa, type: 3}
       propertyPath: probabilty
-      value: 2
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

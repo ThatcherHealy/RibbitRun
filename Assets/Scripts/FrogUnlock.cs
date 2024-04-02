@@ -22,12 +22,15 @@ public class FrogUnlock : MonoBehaviour
     [SerializeField] TextMeshProUGUI frogletX;
     [SerializeField] Slider frogletSlider;
     [SerializeField] GameObject frogletLocked;
+    [SerializeField] TextMeshProUGUI frogletText;
+
 
     [SerializeField] GameObject bullfrogProgress;
     [SerializeField] GameObject bullfrogStats;
     [SerializeField] TextMeshProUGUI bullfrogX;
     [SerializeField] Slider bullfrogSlider;
     [SerializeField] GameObject bullfrogLocked;
+    [SerializeField] TextMeshProUGUI bullfrogText;
 
 
     [SerializeField] GameObject poisonDartFrogProgress;
@@ -35,6 +38,7 @@ public class FrogUnlock : MonoBehaviour
     [SerializeField] TextMeshProUGUI poisonDartFrogX;
     [SerializeField] Slider poisonDartFrogSlider;
     [SerializeField] GameObject poisonDartFrogLocked;
+    [SerializeField] TextMeshProUGUI poisonDartFrogText;
 
     [SerializeField] GameObject alertPrefab;
     public GameObject treeFrogAlert;
@@ -120,7 +124,7 @@ public class FrogUnlock : MonoBehaviour
             poisonDartFrogSlider.value = 0.01f;
         }
 
-        if (poisonDartFrogSliderProgress >= 1)
+        if (poisonDartFrogSliderProgress >= 1 && PlayerPrefs.GetInt("bullfrogUnlocked", 0) == 1)
         {
             PlayerPrefs.SetInt("poisonDartFrogUnlocked", 1);
         }
@@ -143,6 +147,7 @@ public class FrogUnlock : MonoBehaviour
         if (PlayerPrefs.GetInt("treeFrogUnlocked", 0) != 1)
         {
             frogletLocked.SetActive(true);
+            frogletText.text = "???";
             frogletProgress.SetActive(false);
             frogletStats.SetActive(false);
 
@@ -169,6 +174,7 @@ public class FrogUnlock : MonoBehaviour
             bullfrogLocked.SetActive(true);
             bullfrogProgress.SetActive(false);
             bullfrogStats.SetActive(false);
+            bullfrogText.text = "???";
 
             bullfrogButton.interactable = false;
         }
@@ -193,6 +199,8 @@ public class FrogUnlock : MonoBehaviour
             poisonDartFrogLocked.SetActive(true);
             poisonDartFrogProgress.SetActive(false);
             poisonDartFrogStats.SetActive(false);
+            poisonDartFrogText.text = "???";
+            poisonDartFrogText.fontSize = 18;
 
             poisonDartFrogButton.interactable = false;
         }

@@ -1871,7 +1871,7 @@ GameObject:
   - component: {fileID: 257789355}
   - component: {fileID: 257789354}
   m_Layer: 5
-  m_Name: Species (4)
+  m_Name: Poison Dart Frog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3733,7 +3733,7 @@ GameObject:
   - component: {fileID: 547914354}
   - component: {fileID: 547914353}
   m_Layer: 5
-  m_Name: Species (3)
+  m_Name: Bullfrog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7601,7 +7601,7 @@ GameObject:
   - component: {fileID: 1061640283}
   - component: {fileID: 1061640282}
   m_Layer: 5
-  m_Name: Species
+  m_Name: Pond Frog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11444,7 +11444,7 @@ GameObject:
   - component: {fileID: 1260103680}
   - component: {fileID: 1260103679}
   m_Layer: 5
-  m_Name: Species (2)
+  m_Name: Froglet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12721,16 +12721,19 @@ MonoBehaviour:
   frogletX: {fileID: 618937117}
   frogletSlider: {fileID: 550974107}
   frogletLocked: {fileID: 1640721558}
+  frogletText: {fileID: 675831699}
   bullfrogProgress: {fileID: 2093973993}
   bullfrogStats: {fileID: 1499158779}
   bullfrogX: {fileID: 652887587}
   bullfrogSlider: {fileID: 442733265}
   bullfrogLocked: {fileID: 2044683167}
+  bullfrogText: {fileID: 896279705}
   poisonDartFrogProgress: {fileID: 1429476639}
   poisonDartFrogStats: {fileID: 938915535}
   poisonDartFrogX: {fileID: 1188348394}
   poisonDartFrogSlider: {fileID: 546084665}
   poisonDartFrogLocked: {fileID: 429805708}
+  poisonDartFrogText: {fileID: 1072095708}
   alertPrefab: {fileID: 857112284554688771, guid: 91002ed1b3b30f443bea1de77eb84dc2, type: 3}
   treeFrogAlert: {fileID: 0}
   frogletAlert: {fileID: 0}
@@ -15388,7 +15391,7 @@ GameObject:
   - component: {fileID: 2077767907}
   - component: {fileID: 2077767906}
   m_Layer: 5
-  m_Name: Species (1)
+  m_Name: Tree Frog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
