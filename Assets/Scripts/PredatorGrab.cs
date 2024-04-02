@@ -58,7 +58,7 @@ public class PredatorGrab : MonoBehaviour
         if (poisoned && !poisonedOnce)
         {
             poisonedOnce = true;
-            StartCoroutine(CancelGrab());
+            StartCoroutine(CancelGrab(2, frog, false));
         }
     }
     private void FixedUpdate()
@@ -72,13 +72,22 @@ public class PredatorGrab : MonoBehaviour
             frog.gameObject.GetComponent<Rigidbody2D>().mass = 3;
         }
     }
-    IEnumerator CancelGrab()
+    public IEnumerator CancelGrab(float cancelDelay, Transform frog, bool tutorial)
     {
         //Releases the player after 2 seconds
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(cancelDelay);
         grabbed = false;
+
         dead = true;
+
         frog.gameObject.GetComponent<Rigidbody2D>().mass = 3;
-        frog.gameObject.GetComponent<Rigidbody2D>().AddForce((frog.position - transform.position).normalized * 15, ForceMode2D.Impulse);
+        if (!tutorial)
+        {
+            frog.gameObject.GetComponent<Rigidbody2D>().AddForce((frog.position - transform.position).normalized * 15, ForceMode2D.Impulse);
+        }
+        else
+        {
+            frog.gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        }
     }
 }

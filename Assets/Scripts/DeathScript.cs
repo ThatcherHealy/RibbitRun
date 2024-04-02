@@ -10,6 +10,11 @@ using UnityEditor.PackageManager;
 
 public class DeathScript : MonoBehaviour
 {
+    [SerializeField] bool tutorial;
+    [SerializeField] GameObject tutorialHelpMessage;
+    [SerializeField] TutorialPhase3 tp3;
+    [SerializeField] GameObject tutorialGarPrefab;
+
     [SerializeField] PlayerController playerController;
     [SerializeField] LevelGenerator levelGenerator;
     [SerializeField] GameObject eatenDeathScene;
@@ -35,39 +40,71 @@ public class DeathScript : MonoBehaviour
 
     private void Update()
     {
-        if (playerController.dead) 
+        if (tutorial)
         {
-            pauseButton.SetActive(false); //Deactivate pause button
-            if (!deathBiomeSetOnce) //Set biome
+            if(playerController.dead) 
             {
-                SetBiome();
-                deathBiomeSetOnce = true;
-            }
+                if (playerController.eaten)
+                {
+                    StartCoroutine(FindFirstObjectByType<PredatorGrab>().CancelGrab(0, playerController.transform, true));
 
-            if (playerController.eaten && !playerController.drowned && !playerController.poisoned) //eaten
-            {
-                eatenDeathScene.SetActive(true);
-                if (playerController.killer != null)
-                    killerText.text = AorAn(playerController.killer) + RemoveClone(playerController.killer).ToUpper();
-            }
-            if (playerController.drowned && !playerController.poisoned && !playerController.eaten) //drowned
-            {
-                drownScene.SetActive(true);
-                StartCoroutine(BeginDrownFadeIn());
-            }
-            if (playerController.poisoned && !playerController.drowned && !playerController.eaten) //poisoned
-            {
-                poisonedScene.SetActive(true);
-                Greenout();
+                    if(FindFirstObjectByType<HeronBehavior>() != null)
+                    {
+                        if(!tp3.pastTheHeron) 
+                            tutorialHelpMessage.SetActive(true);
+
+                        Destroy(FindFirstObjectByType<HeronBehavior>().gameObject);
+                    }
+
+                    Destroy(FindFirstObjectByType<GarBehavior>().gameObject);
+                    Instantiate(tutorialGarPrefab, FindFirstObjectByType<GarBehavior>().gameObject.transform.position, Quaternion.identity);
+
+
+                    playerController.eaten = false;
+                }
+
+                FindFirstObjectByType<PlayerController>().transform.position = FindFirstObjectByType<TutorialController>().respawnPosition.position;
+                FindFirstObjectByType<TutorialPhase3>().predatorSpawned = false;
+                playerController.drowned = false;
+                playerController.dead = false;
             }
         }
-        if (drownedFadeIn)
+        else
         {
-            FadeInDrownScene();
-        }
-        if (poisonedFadeIn)
-        {
-            FadeInPoisonScene();
+            if (playerController.dead)
+            {
+                pauseButton.SetActive(false); //Deactivate pause button
+                if (!deathBiomeSetOnce) //Set biome
+                {
+                    SetBiome();
+                    deathBiomeSetOnce = true;
+                }
+
+                if (playerController.eaten && !playerController.drowned && !playerController.poisoned) //eaten
+                {
+                    eatenDeathScene.SetActive(true);
+                    if (playerController.killer != null)
+                        killerText.text = AorAn(playerController.killer) + RemoveClone(playerController.killer).ToUpper();
+                }
+                if (playerController.drowned && !playerController.poisoned && !playerController.eaten) //drowned
+                {
+                    drownScene.SetActive(true);
+                    StartCoroutine(BeginDrownFadeIn());
+                }
+                if (playerController.poisoned && !playerController.drowned && !playerController.eaten) //poisoned
+                {
+                    poisonedScene.SetActive(true);
+                    Greenout();
+                }
+            }
+            if (drownedFadeIn)
+            {
+                FadeInDrownScene();
+            }
+            if (poisonedFadeIn)
+            {
+                FadeInPoisonScene();
+            }
         }
     }
     static string AorAn(string name)

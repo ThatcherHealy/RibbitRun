@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static UnityEngine.Rendering.DebugUI;
 
 public class HeronBehavior : MonoBehaviour
@@ -17,16 +18,27 @@ public class HeronBehavior : MonoBehaviour
     int speed = 50;
     private Transform player;
     private bool facingLeft;
+    bool tutorial = true;
     private void Start()
     {
         levelGenerator = FindAnyObjectByType<LevelGenerator>();
-        endPoint = levelGenerator.playerRefEndPoint;
+        if (SceneManager.GetActiveScene().name == "Tutorial")
+            tutorial = true;
+           
+        if(tutorial)
+            endPoint = new Vector3(0, -5f, 0);
+        else
+            endPoint = levelGenerator.playerRefEndPoint;
+
         player = GameObject.Find("Frog").transform;
         FaceTheRightWay();
     }
     private void Update()
     {
-        endPoint = levelGenerator.playerRefEndPoint;
+        if (tutorial)
+            endPoint = new Vector3(0, -5f, 0);
+        else
+            endPoint = levelGenerator.playerRefEndPoint;
 
         //Turn around when hitting an edge
         if (math.distance(transform.position.x, player.position.x) < 50)

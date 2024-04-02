@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
     [Header("Settings")]
     [SerializeField] float aimMultiplier = 2;
     public static Species species;
-    [SerializeField] bool conserveMomentum;
+    public bool conserveMomentum;
     [SerializeField] bool aimingJumpStopsMomentum;
 
     [HideInInspector] public bool skipToJump;

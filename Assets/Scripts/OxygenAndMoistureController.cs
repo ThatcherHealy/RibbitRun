@@ -20,8 +20,8 @@ public class OxygenAndMoistureController : MonoBehaviour
     
     private float maxOxygen = 100;
     private float maxMoisture = 100;
-    private float currentOxygen = 100;
-    private float currentMoisture = 100;
+    public float currentOxygen = 100;
+    public float currentMoisture = 100;
     public float oxygenLossRate = 0.05f;
     public float moistureLossRate = 0.06f;
     void Start()
@@ -73,7 +73,7 @@ public class OxygenAndMoistureController : MonoBehaviour
         BoundBar();
         Appear();
         DepleteToZero();
-        if (!playerController.eaten) 
+        if (!playerController.eaten && !playerController.poisoned) 
         {
             Blackout();
         }
@@ -137,7 +137,7 @@ public class OxygenAndMoistureController : MonoBehaviour
     {
         //Begins fade in when the player loses oxygen and fades out when the player gains oxygen
         blackout.color = new Color(blackout.color.r, blackout.color.g, blackout.color.b,
-        Mathf.Clamp(blackout.color.a + (currentOxygen <= 0 || playerController.drowned ? 0.15f : -1f) * Time.deltaTime, 0, 1));
+        Mathf.Clamp(blackout.color.a + (currentOxygen <= 0 || playerController.drowned ? 0.25f : -1f) * Time.deltaTime, 0, 1));
 
         //Die after the blackout is opaque
         if(blackout.color.a >= 1)

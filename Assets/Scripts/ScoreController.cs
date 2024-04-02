@@ -62,7 +62,7 @@ public class ScoreController : MonoBehaviour
         }
 
         //When the player dies, display their final score
-        if (playerController.dead)
+        if (playerController.dead && !tutorial)
         {
             if (playerController.drowned) 
             {
@@ -77,8 +77,7 @@ public class ScoreController : MonoBehaviour
             scoreText.text = new string(" ");
             finalScoreText.text = score.ToString();
 
-            if (!tutorial)
-                CheckHighscore(score);
+            CheckHighscore(score);
             highscoreText.text = PlayerPrefs.GetInt("Highscore", 0).ToString();
         }
     }

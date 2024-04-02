@@ -5296,7 +5296,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -803484593
   m_SortingLayer: 2
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5559,7 +5559,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -803484593
   m_SortingLayer: 2
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -11122,7 +11122,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -803484593
   m_SortingLayer: 2
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -11263,6 +11263,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score: 0
+  tutorial: 0
   scoreText: {fileID: 3190576238859171462}
   playerPosition: {fileID: 4000014155227890}
   floatingText: {fileID: 4048071854548350858, guid: 0211add35ac07c24d83ce9e6c05f0bd5, type: 3}
@@ -11289,6 +11290,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c0d9608b9190174cbb8721311e88f23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tutorial: 0
+  tutorialHelpMessage: {fileID: 0}
+  tp3: {fileID: 0}
+  tutorialGarPrefab: {fileID: 0}
   playerController: {fileID: 212000014462385579}
   levelGenerator: {fileID: 2028519407}
   eatenDeathScene: {fileID: 1183236266}
@@ -11325,6 +11330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1714ca1afe1275c468480c6c062c613f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tutorial: 0
   levelGenerator: {fileID: 2028519407}
   scoreController: {fileID: 1302793728}
   pauseMenu: {fileID: 1064798381}
@@ -11351,6 +11357,8 @@ MonoBehaviour:
   moistureFill: {fileID: 21378443}
   blackout: {fileID: 228329572}
   volume: {fileID: 1899830074}
+  currentOxygen: 100
+  currentMoisture: 100
   oxygenLossRate: 0.05
   moistureLossRate: -0.06
 --- !u!1 &1307870609
@@ -19358,7 +19366,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -803484593
   m_SortingLayer: 2
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0

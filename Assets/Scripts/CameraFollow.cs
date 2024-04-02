@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using System.Runtime.CompilerServices;
+using UnityEngine.SceneManagement;
 
 public class CameraFollow : MonoBehaviour
 {
@@ -31,7 +32,7 @@ public class CameraFollow : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (playerController.eaten)
+        if (playerController.eaten && SceneManager.GetActiveScene().name != "Tutorial")
         {
             StartCoroutine(Pause());
         }
