@@ -93,9 +93,47 @@ public class ScoreController : MonoBehaviour
 
     public void CheckHighscore(int finalScore)
     {
+        //Set the main highscore
         if (finalScore > PlayerPrefs.GetInt("Highscore", 0))
         {
             PlayerPrefs.SetInt("Highscore", finalScore);
+        }
+
+        //Set individual species highscore 
+        if(PlayerController.species == PlayerController.Species.Default)
+        {
+            if (finalScore > PlayerPrefs.GetInt("DefaultHighscore", 0))
+            {
+                PlayerPrefs.SetInt("DefaultHighscore", finalScore);
+            }
+        }
+        if (PlayerController.species == PlayerController.Species.Treefrog)
+        {
+            if (finalScore > PlayerPrefs.GetInt("TreeFrogHighscore", 0))
+            {
+                PlayerPrefs.SetInt("TreeFrogHighscore", finalScore);
+            }
+        }
+        if (PlayerController.species == PlayerController.Species.Froglet)
+        {
+            if (finalScore > PlayerPrefs.GetInt("FrogletHighscore", 0))
+            {
+                PlayerPrefs.SetInt("FrogletHighscore", finalScore);
+            }
+        }
+        if (PlayerController.species == PlayerController.Species.BullFrog)
+        {
+            if (finalScore > PlayerPrefs.GetInt("BullfrogHighscore", 0))
+            {
+                PlayerPrefs.SetInt("BullfrogHighscore", finalScore);
+            }
+        }
+        if (PlayerController.species == PlayerController.Species.PoisonDartFrog)
+        {
+            if (finalScore > PlayerPrefs.GetInt("PoisonDartFrogHighscore", 0))
+            {
+                PlayerPrefs.SetInt("PoisonDartFrogHighscore", finalScore);
+            }
         }
     }
 

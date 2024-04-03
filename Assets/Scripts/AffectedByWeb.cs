@@ -35,6 +35,19 @@ public class AffectedByWeb : MonoBehaviour
         if (stuck) 
         {
             transform.position = stickPoint;
+
+            if(GetComponent<Rigidbody2D>() != null)
+            {
+                GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+                GetComponent<Rigidbody2D>().gravityScale = 0;
+                GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePosition;
+            }
+            if (transform.parent.GetComponent<Rigidbody2D>() != null)
+            {
+                transform.parent.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+                transform.parent.GetComponent<Rigidbody2D>().gravityScale = 0;
+                transform.parent.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePosition;
+            }
         }
     }
 }
