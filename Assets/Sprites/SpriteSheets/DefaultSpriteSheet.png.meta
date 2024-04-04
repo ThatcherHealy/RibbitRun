@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e5fb950f23fea5649aa5f1a0f093a178
+guid: 6da4da702a5d05a4e8435488e68a87ed
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -136,7 +136,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: RealSpriteSheet_0
+      name: DefaultSpriteSheet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -150,14 +150,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e8b54038ffac43c4c9738b950d11a826
-      internalID: -581372091
+      spriteID: 48a8a3db653478a4299a2fc0588efed1
+      internalID: 347592013
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RealSpriteSheet_1
+      name: DefaultSpriteSheet_1
       rect:
         serializedVersion: 2
         x: 800
@@ -171,14 +171,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9d6f5e50d6242494580d6fc6185a464e
-      internalID: 877038568
+      spriteID: 6eadb630461a3784ebb194d9e805f1d6
+      internalID: 1063053634
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RealSpriteSheet_2
+      name: DefaultSpriteSheet_2
       rect:
         serializedVersion: 2
         x: 1600
@@ -192,14 +192,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 929d12ddb29973e4197de65919dc1baf
-      internalID: 954069210
+      spriteID: 24ce009905b1cd04fb793e6338b14339
+      internalID: -334447078
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RealSpriteSheet_3
+      name: DefaultSpriteSheet_3
       rect:
         serializedVersion: 2
         x: 2400
@@ -213,14 +213,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 80ac6d1d1cf9def4cadc0467f42a880d
-      internalID: -994732374
+      spriteID: 353965768fb88d14094d70e19ab799b0
+      internalID: -1557005090
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RealSpriteSheet_4
+      name: DefaultSpriteSheet_4
       rect:
         serializedVersion: 2
         x: 0
@@ -234,14 +234,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d22a80c3f73894f469644dbd6cebcec4
-      internalID: -851535282
+      spriteID: adf72ef24b2ed0848a14f6d6aeb1b7ea
+      internalID: -1632217116
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RealSpriteSheet_5
+      name: DefaultSpriteSheet_5
       rect:
         serializedVersion: 2
         x: 800
@@ -255,14 +255,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7d6ecea4956fcdf4588f9d83805ac7f8
-      internalID: -1656952757
+      spriteID: c6b28ee42b1aa46428b7119574372eae
+      internalID: -1021639645
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RealSpriteSheet_6
+      name: DefaultSpriteSheet_6
       rect:
         serializedVersion: 2
         x: 1600
@@ -276,14 +276,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1c3e33a7965ee0c429b04d50613ab239
-      internalID: 900866712
+      spriteID: 56b36a7caaee49b4ca753a64afc7e86c
+      internalID: 1946136893
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RealSpriteSheet_7
+      name: DefaultSpriteSheet_7
       rect:
         serializedVersion: 2
         x: 2400
@@ -297,14 +297,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d772725ac5e0dd440b575df864140606
-      internalID: -799440901
+      spriteID: ea9523cf8ebd25b4caed762224662ceb
+      internalID: 421380928
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RealSpriteSheet_8
+      name: DefaultSpriteSheet_8
       rect:
         serializedVersion: 2
         x: 0
@@ -318,14 +318,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 67d5b2ff26fe43140b2bf22b3e50bb6b
-      internalID: -1095536561
+      spriteID: e78a8bfb1e13ee942a0bb134fedd714a
+      internalID: 119194826
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RealSpriteSheet_9
+      name: DefaultSpriteSheet_9
       rect:
         serializedVersion: 2
         x: 800
@@ -339,14 +339,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a34db59c80692324a80938e13cfdfec0
-      internalID: 1333669659
+      spriteID: aefa0305647438b4cb6b809a6af0781b
+      internalID: -1247892882
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RealSpriteSheet_10
+      name: DefaultSpriteSheet_10
       rect:
         serializedVersion: 2
         x: 1600
@@ -360,14 +360,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3bfce351b75f68540b53549608349f5f
-      internalID: -2039701668
+      spriteID: 8b6b246944c300f47919e531781b0fa3
+      internalID: 1379967416
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RealSpriteSheet_11
+      name: DefaultSpriteSheet_11
       rect:
         serializedVersion: 2
         x: 2400
@@ -381,14 +381,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 139465b329c07e1479615de9bd21387d
-      internalID: 696143871
+      spriteID: 7003caf3a3aed2e4290914e74e9bb704
+      internalID: 682125591
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RealSpriteSheet_12
+      name: DefaultSpriteSheet_12
       rect:
         serializedVersion: 2
         x: 0
@@ -402,14 +402,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 99370cd8b1d0b4447be714b2e1eba162
-      internalID: 77379875
+      spriteID: 5e1cee457e59d0347a154ded24b24ef6
+      internalID: 987999319
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RealSpriteSheet_13
+      name: DefaultSpriteSheet_13
       rect:
         serializedVersion: 2
         x: 800
@@ -423,14 +423,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f138ff635a3907e4091beaa6b44d47a5
-      internalID: -1813343075
+      spriteID: 921e11493e568c840a7a28f36f009da7
+      internalID: 478309680
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RealSpriteSheet_14
+      name: DefaultSpriteSheet_14
       rect:
         serializedVersion: 2
         x: 1600
@@ -444,14 +444,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4fbb27b12b4e26146803e82c5a08f5e6
-      internalID: -796889891
+      spriteID: aacb7e43b218f2842aba9815b2672680
+      internalID: -465524672
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RealSpriteSheet_15
+      name: DefaultSpriteSheet_15
       rect:
         serializedVersion: 2
         x: 2400
@@ -465,8 +465,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a014144b07db94e46925c54a46548a5b
-      internalID: -2091198904
+      spriteID: 7709aaaf4f18b7147adf3fb55b8c2637
+      internalID: -1840791823
       vertices: []
       indices: 
       edges: []
@@ -482,22 +482,22 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      RealSpriteSheet_0: -581372091
-      RealSpriteSheet_1: 877038568
-      RealSpriteSheet_10: -2039701668
-      RealSpriteSheet_11: 696143871
-      RealSpriteSheet_12: 77379875
-      RealSpriteSheet_13: -1813343075
-      RealSpriteSheet_14: -796889891
-      RealSpriteSheet_15: -2091198904
-      RealSpriteSheet_2: 954069210
-      RealSpriteSheet_3: -994732374
-      RealSpriteSheet_4: -851535282
-      RealSpriteSheet_5: -1656952757
-      RealSpriteSheet_6: 900866712
-      RealSpriteSheet_7: -799440901
-      RealSpriteSheet_8: -1095536561
-      RealSpriteSheet_9: 1333669659
+      DefaultSpriteSheet_0: 347592013
+      DefaultSpriteSheet_1: 1063053634
+      DefaultSpriteSheet_10: 1379967416
+      DefaultSpriteSheet_11: 682125591
+      DefaultSpriteSheet_12: 987999319
+      DefaultSpriteSheet_13: 478309680
+      DefaultSpriteSheet_14: -465524672
+      DefaultSpriteSheet_15: -1840791823
+      DefaultSpriteSheet_2: -334447078
+      DefaultSpriteSheet_3: -1557005090
+      DefaultSpriteSheet_4: -1632217116
+      DefaultSpriteSheet_5: -1021639645
+      DefaultSpriteSheet_6: 1946136893
+      DefaultSpriteSheet_7: 421380928
+      DefaultSpriteSheet_8: 119194826
+      DefaultSpriteSheet_9: -1247892882
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

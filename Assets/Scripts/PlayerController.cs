@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject mudParticles;
     [SerializeField] GameObject splashParticles;
     [SerializeField] GameObject eatParticles;
+    [SerializeField] GameObject sparrowEatParticles;
     [SerializeField] GameObject dartFrogPoisonParticles;
     GameObject activeDartFrogPoisonParticles;
     public string biomeIn;
@@ -81,19 +82,22 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Animator animator;
     string currentState;
     Vector3 initialSpriteScale;
-    float previousXVelocity;
     bool grappleRotationSet;
     bool wasSwimming;
-    const string SLIDE = "FrogSlide";
-    const string IDLE = "FrogIdle";
-    const string READY_JUMP = "FrogReadyJump";
-    const string JUMP = "FrogJump";
-    const string MIDAIR = "FrogMidair";
-    const string GRAPPLE = "FrogGrapple";
-    const string READY_SWIM = "FrogReadySwim";
-    const string SWIM = "FrogSwim";
-    const string MIDSWIM = "FrogMidswim";
-    
+    bool facingRight = true;
+    string SLIDE = "FrogSlide";
+    string IDLE = "FrogIdle";
+    string JUMP = "FrogJump";
+    string MIDAIR = "FrogMidair";
+    string GRAPPLE = "FrogGrapple";
+    string READY_SWIM = "FrogReadySwim";
+    string SWIM = "FrogSwim";
+    string MIDSWIM = "FrogMidswim";
+    string STRAIGHT_JUMP = "FrogStraightJump";
+    string STRAIGHT_GRAPPLE = "FrogStraightGrapple";
+
+
+
     private void Start()
     {
         SetSpecies();
@@ -108,7 +112,6 @@ public class PlayerController : MonoBehaviour
             biomeIn = levelGenerator.biomeSpawning.ToString();
         }
 
-        previousXVelocity = rb.velocity.x;
         initialSpriteScale = sprite.localScale;
     }
 
@@ -310,12 +313,11 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            if(!isSliding)
-                ChangeAnimationState(READY_JUMP);
 
             secondLinePoint = transform.position + Vector3.ClampMagnitude(((dragStartPos - draggingPos) * aimMultiplier), maxJumpAimLineLength);
             if (!isSliding) 
             {
+                ChangeAnimationState(IDLE);
                 if (aimingJumpStopsMomentum)
                 {
                     rb.velocity = new Vector2(0, rb.velocity.y);
@@ -415,9 +417,10 @@ public class PlayerController : MonoBehaviour
     //////////////////////////////////////////////////////////////////////////////////////////////// ANIMATION //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void AnimateFrog()
     {
+        //When the player is grounded, they are idle when their velocity is less than 1 and sliding otherwise
         if (isGrounded && !draggingStarted && !jumpAnimationPlaying)
         {
-            if (Mathf.Abs(rb.velocity.x) <= 1f && !isSliding && currentState != READY_JUMP)
+            if (Mathf.Abs(rb.velocity.x) <= 1f && !isSliding)
             {
                 ChangeAnimationState(IDLE);
                 sprite.rotation = Quaternion.identity;
@@ -429,36 +432,50 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        //Make the player always slide on slides
         if(isSliding && !jumpAnimationPlaying)
         {
             ChangeAnimationState(SLIDE);
         }
 
+        //Open mouth while aiming
+        if(tongueLauncher.aimingGrapple && !isGrounded && !isSwimming)
+        {
+            if(currentState == MIDAIR)
+                ChangeAnimationState(GRAPPLE);
+
+            if(currentState == STRAIGHT_JUMP)
+                ChangeAnimationState(STRAIGHT_GRAPPLE);
+        }
+
+        //Open mouth while grappling, but only set rotation at the moment the frog begins grappling
         if (tongueLine.isGrappling) 
         {
-            ChangeAnimationState(GRAPPLE);
+            ChangeAnimationState(STRAIGHT_GRAPPLE);
 
             if(!grappleRotationSet)
             {
                 SetSpriteRotation((Vector3)tongueLauncher.grapplePoint - transform.position, 0);
-                grappleRotationSet = true;
+                grappleRotationSet = false;
             }
         }
-        else
+        else //When the grapple is done, resume midair animation
         {
             grappleRotationSet = false;
-            if(currentState == GRAPPLE) 
+            if((currentState == GRAPPLE || currentState == STRAIGHT_GRAPPLE) && !tongueLauncher.aimingGrapple) 
             {
-                ChangeAnimationState(MIDAIR);
+                ChangeAnimationState(STRAIGHT_JUMP);
             }
         }
 
+        //If you jump into the water, start MIDSWIM animation
         if(isSwimming && currentState != SWIM && currentState != READY_SWIM)
         {
             ChangeAnimationState(MIDSWIM);
         }
 
-        if(!isSwimming && !isSliding && (currentState == READY_SWIM || currentState == SWIM || currentState == MIDSWIM))
+        //If you jump out of the water, start MIDJUMP animation
+        if(!tongueLauncher.aimingGrapple && !isSwimming && !isSliding && (currentState == READY_SWIM || currentState == SWIM || currentState == MIDSWIM))
         {
             ChangeAnimationState(MIDAIR);
         }
@@ -472,21 +489,24 @@ public class PlayerController : MonoBehaviour
     }
     void SetDirection()
     {
-            // Check previous movement direction
-            if (previousXVelocity > -1f)
-            {
-                // Player was moving in positive direction
-                sprite.localScale = new Vector3(-Mathf.Abs(initialSpriteScale.x), sprite.localScale.y, initialSpriteScale.z);
-            }
-            else if (previousXVelocity < 1f)
-            {
-                // Player was moving in negative direction
-                sprite.localScale = new Vector3(Mathf.Abs(initialSpriteScale.x), sprite.localScale.y, initialSpriteScale.z);
-            }
         
+        if (rb.velocity.x < -1f && facingRight)
+        {
+            // Player was moving in negative direction
+            facingRight = false;
+        }
+        if (rb.velocity.x > 1f && !facingRight)
+        {
+            // Player was moving in positive direction
+            facingRight = true;
+        }
 
-        // Update previous velocity
-        previousXVelocity = rb.velocity.x;
+        if(facingRight)
+        {
+            sprite.localScale = new Vector3(-Mathf.Abs(initialSpriteScale.x), sprite.localScale.y, initialSpriteScale.z);
+        }
+        else
+            sprite.localScale = new Vector3(Mathf.Abs(initialSpriteScale.x), sprite.localScale.y, initialSpriteScale.z);
     }
     void ChangeAnimationState(string newState) 
     {
@@ -498,7 +518,7 @@ public class PlayerController : MonoBehaviour
         currentState = newState;
 
         //Fix the offset so the frog sits on the ground correctly
-        if(currentState == IDLE || currentState == READY_JUMP) 
+        if(currentState == IDLE) 
         {
             sprite.transform.localPosition = new Vector3(0, 0.4f, 0);
         }
@@ -859,7 +879,12 @@ public class PlayerController : MonoBehaviour
     }
     void EatParticles(Collider2D col)
     {
-        GameObject ep = Instantiate(eatParticles, col.transform.position, Quaternion.identity);
+        GameObject ep;
+        if (col.gameObject.transform.parent.name == "Sparrow(Clone)")
+            ep = Instantiate(sparrowEatParticles, col.transform.position, Quaternion.identity);
+        else
+            ep = Instantiate(eatParticles, col.transform.position, Quaternion.identity);
+
         Destroy(ep, 1);
     }
     IEnumerator DartFrogPoison(Collider2D col) 

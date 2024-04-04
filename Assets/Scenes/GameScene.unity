@@ -7504,7 +7504,7 @@ SpriteRenderer:
   m_SortingLayerID: -803484593
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: -581372091, guid: e5fb950f23fea5649aa5f1a0f093a178, type: 3}
+  m_Sprite: {fileID: 347592013, guid: 6da4da702a5d05a4e8435488e68a87ed, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -8688,6 +8688,7 @@ MonoBehaviour:
   grappleTarget: {fileID: 0}
   grapplePointIdentified: 0
   addedForce: {x: 0, y: 0}
+  aimingGrapple: 0
 --- !u!120 &999769796
 LineRenderer:
   serializedVersion: 2
@@ -20514,6 +20515,7 @@ MonoBehaviour:
   mudParticles: {fileID: 4594591438336009085, guid: bc99fdd8d46b2d74da615751f75755ef, type: 3}
   splashParticles: {fileID: 3649707564744613919, guid: 87fba088b2896ba4fa6e8b5f5045ff21, type: 3}
   eatParticles: {fileID: 2950932474343735176, guid: 659fe94ec8287094fb51b4c2f3a76b7e, type: 3}
+  sparrowEatParticles: {fileID: 7824334992808221422, guid: 5867d7164dcdc4c44a7a8d0fe342a630, type: 3}
   dartFrogPoisonParticles: {fileID: 2260106413219428936, guid: 249a8bf8f90afc649be40f134450d245, type: 3}
   biomeIn: 
   eatenByFalcon: 0

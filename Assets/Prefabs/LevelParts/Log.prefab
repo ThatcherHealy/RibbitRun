@@ -157,6 +157,8 @@ MonoBehaviour:
   dependence: Bog
   replacement: {fileID: 3354034345066788107, guid: 2de8ecf5dedb09647afc11cb6c3f73a0, type: 3}
   destroyOnTransition: 0
+  heightDependence: 0
+  dependentHeight: 0
 --- !u!1 &4325554985172462551
 GameObject:
   m_ObjectHideFlags: 0
@@ -480,7 +482,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4003855948981929127, guid: 9ba754959d1ee704b8c8390b79f5b20a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.6
+      value: 5.51
       objectReference: {fileID: 0}
     - target: {fileID: 4003855948981929127, guid: 9ba754959d1ee704b8c8390b79f5b20a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -524,7 +526,11 @@ PrefabInstance:
       objectReference: {fileID: 5675672213997906613}
     - target: {fileID: 5614935392451208512, guid: 9ba754959d1ee704b8c8390b79f5b20a, type: 3}
       propertyPath: guaranteed
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614935392451208512, guid: 9ba754959d1ee704b8c8390b79f5b20a, type: 3}
+      propertyPath: probabilty
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

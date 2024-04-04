@@ -62,6 +62,7 @@ public class TongueLauncher : MonoBehaviour
     private Vector2 hitPoint;
     private Collider2D hitCollider;
     [HideInInspector] public Vector2 addedForce;
+    public bool aimingGrapple;
 
     private void Start()
     {
@@ -88,6 +89,10 @@ public class TongueLauncher : MonoBehaviour
         else
         {
             maxDistance = baseMaxDistance;
+        }
+        if(playerController.isGrounded || playerController.isSwimming)
+        {
+            aimingGrapple = false;
         }
     }
     private void FixedUpdate()
@@ -185,6 +190,7 @@ public class TongueLauncher : MonoBehaviour
         {
             //Set the aim line to a clamped vector of the distance between the first click on the screen to the current dragging position
             lr.positionCount = 2;
+
             int maxDrag = 12;
             if (playerController.dried)
             {
@@ -195,6 +201,7 @@ public class TongueLauncher : MonoBehaviour
             //Create the line
             lr.SetPosition(0, transform.position);
             lr.SetPosition(1, secondLinePoint);
+            aimingGrapple = true;
         }
     }
     private void DetatchWhenClose()
@@ -215,6 +222,7 @@ public class TongueLauncher : MonoBehaviour
     {
         //Remove the aim line when the grapple is fired
         lr.positionCount = 0;
+        aimingGrapple = false;
 
         //Direction of the first click on the screen to when the screen is released
         Vector2 distanceVector = dragStartPosition - dragEndPosition;

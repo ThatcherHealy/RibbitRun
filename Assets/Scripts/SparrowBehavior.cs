@@ -22,6 +22,12 @@ public class SparrowBehavior : MonoBehaviour
     bool scared;
     bool startRunTimer;
     [SerializeField] PredatorVision vision;
+
+    [SerializeField] Animator animator;
+    string currentState;
+    string IDLE = "SparrowIdle";
+    string LEAP = "SparrowLeap";
+    string FLIGHT = "SparrowFlight";
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -62,12 +68,15 @@ public class SparrowBehavior : MonoBehaviour
         if (!run && !escape && !exit) //Stay locked at initial position until the player gets near
         {
             transform.localPosition = initialPosition;
+            ChangeAnimationState(IDLE);
         }
 
 
         if (vision.huntingMode && !run && !escape && !exit) //Run when player is within vision box
         {
-            if(!positionsSet) 
+            ChangeAnimationState(LEAP);
+
+            if (!positionsSet) 
             {
                 run = true;
 
@@ -101,6 +110,7 @@ public class SparrowBehavior : MonoBehaviour
 
         if (escape && !run && !exit) //Fly away
         {
+            ChangeAnimationState(FLIGHT);
             if (!rotationSet) 
             {
                 transform.localScale = new Vector3(-transform.localScale.x, initialScale.y, initialScale.z);
@@ -152,5 +162,14 @@ public class SparrowBehavior : MonoBehaviour
         exit = false;
         run = false;
         escape = true;
+    }
+        void ChangeAnimationState(string newState)
+    {
+        //Stop the same animation from interrupting itself
+        if (currentState == newState) return;
+
+        //Play the new animation
+        animator.Play(newState);
+        currentState = newState;
     }
 }
