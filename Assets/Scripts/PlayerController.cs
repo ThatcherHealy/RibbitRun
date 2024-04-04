@@ -74,6 +74,25 @@ public class PlayerController : MonoBehaviour
     Vector3 dragReleasePos;
     Touch touch;
     bool splashParticleCooldown;
+
+    [Header("Animation")]
+    bool jumpAnimationPlaying;
+    [SerializeField] Transform sprite;
+    [SerializeField] Animator animator;
+    string currentState;
+    Vector3 initialSpriteScale;
+    float previousXVelocity;
+    bool grappleRotationSet;
+    bool wasSwimming;
+    const string SLIDE = "FrogSlide";
+    const string IDLE = "FrogIdle";
+    const string READY_JUMP = "FrogReadyJump";
+    const string JUMP = "FrogJump";
+    const string MIDAIR = "FrogMidair";
+    const string GRAPPLE = "FrogGrapple";
+    const string READY_SWIM = "FrogReadySwim";
+    const string SWIM = "FrogSwim";
+    const string MIDSWIM = "FrogMidswim";
     
     private void Start()
     {
@@ -88,6 +107,9 @@ public class PlayerController : MonoBehaviour
         {
             biomeIn = levelGenerator.biomeSpawning.ToString();
         }
+
+        previousXVelocity = rb.velocity.x;
+        initialSpriteScale = sprite.localScale;
     }
 
     void Update()
@@ -107,12 +129,15 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = Vector3.zero;
         }
+
     }
     private void FixedUpdate()
     {
         GroundCheck();
         Jump();
         Swimming();
+        AnimateFrog();
+        SetDirection();
     }
 
     void GroundCheck()
@@ -212,15 +237,18 @@ public class PlayerController : MonoBehaviour
 
             if (isSwimming) //Swim
             {
+                ChangeAnimationState(SWIM);
                 rb.velocity *= 0.3f;
                 fillPercentage = Mathf.InverseLerp(0, (maxSwimAimLineLength), (secondLinePoint - transform.position).magnitude);
                 power = swimmingPower;
             }
             else //Jump
             {
+                ChangeAnimationState(JUMP);
                 rb.velocity = Vector2.zero;
                 fillPercentage = Mathf.InverseLerp(0, (maxJumpAimLineLength), (secondLinePoint - transform.position).magnitude);
                 power = jumpingPower;
+                StartCoroutine(JumpAnimationTimer());
             }
 
             if (dried)
@@ -228,6 +256,9 @@ public class PlayerController : MonoBehaviour
 
             Vector3 clampedForce = (force.normalized) * fillPercentage * (power) * rb.mass;
             rb.AddForce(clampedForce, ForceMode2D.Impulse);
+
+            if(isSwimming)
+                SetSpriteRotation(secondLinePoint - transform.position, 0);
 
             jump = false;
         }
@@ -269,6 +300,8 @@ public class PlayerController : MonoBehaviour
 
         if (isSwimming)
         {
+            ChangeAnimationState(READY_SWIM);
+
             secondLinePoint = transform.position + Vector3.ClampMagnitude(((dragStartPos - draggingPos) * aimMultiplier), maxSwimAimLineLength);
             jumpLr.positionCount = 0;
             swimLr.positionCount = 2;
@@ -277,6 +310,9 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            if(!isSliding)
+                ChangeAnimationState(READY_JUMP);
+
             secondLinePoint = transform.position + Vector3.ClampMagnitude(((dragStartPos - draggingPos) * aimMultiplier), maxJumpAimLineLength);
             if (!isSliding) 
             {
@@ -375,6 +411,133 @@ public class PlayerController : MonoBehaviour
                 activeDartFrogPoisonParticles = Instantiate(dartFrogPoisonParticles, transform.position, Quaternion.identity, transform);
                 break;
         }
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////// ANIMATION //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    void AnimateFrog()
+    {
+        if (isGrounded && !draggingStarted && !jumpAnimationPlaying)
+        {
+            if (Mathf.Abs(rb.velocity.x) <= 1f && !isSliding && currentState != READY_JUMP)
+            {
+                ChangeAnimationState(IDLE);
+                sprite.rotation = Quaternion.identity;
+            }
+            else
+            {
+                ChangeAnimationState(SLIDE);
+
+            }
+        }
+
+        if(isSliding && !jumpAnimationPlaying)
+        {
+            ChangeAnimationState(SLIDE);
+        }
+
+        if (tongueLine.isGrappling) 
+        {
+            ChangeAnimationState(GRAPPLE);
+
+            if(!grappleRotationSet)
+            {
+                SetSpriteRotation((Vector3)tongueLauncher.grapplePoint - transform.position, 0);
+                grappleRotationSet = true;
+            }
+        }
+        else
+        {
+            grappleRotationSet = false;
+            if(currentState == GRAPPLE) 
+            {
+                ChangeAnimationState(MIDAIR);
+            }
+        }
+
+        if(isSwimming && currentState != SWIM && currentState != READY_SWIM)
+        {
+            ChangeAnimationState(MIDSWIM);
+        }
+
+        if(!isSwimming && !isSliding && (currentState == READY_SWIM || currentState == SWIM || currentState == MIDSWIM))
+        {
+            ChangeAnimationState(MIDAIR);
+        }
+
+        //Resets the rotation after you leave the water
+        if(!isSwimming && wasSwimming)
+        {
+            sprite.rotation = Quaternion.identity;
+        }
+        wasSwimming = isSwimming;
+    }
+    void SetDirection()
+    {
+            // Check previous movement direction
+            if (previousXVelocity > -1f)
+            {
+                // Player was moving in positive direction
+                sprite.localScale = new Vector3(-Mathf.Abs(initialSpriteScale.x), sprite.localScale.y, initialSpriteScale.z);
+            }
+            else if (previousXVelocity < 1f)
+            {
+                // Player was moving in negative direction
+                sprite.localScale = new Vector3(Mathf.Abs(initialSpriteScale.x), sprite.localScale.y, initialSpriteScale.z);
+            }
+        
+
+        // Update previous velocity
+        previousXVelocity = rb.velocity.x;
+    }
+    void ChangeAnimationState(string newState) 
+    {
+        //Stop the same animation from interrupting itself
+        if (currentState == newState) return;
+
+        //Play the new animation
+        animator.Play(newState);
+        currentState = newState;
+
+        //Fix the offset so the frog sits on the ground correctly
+        if(currentState == IDLE || currentState == READY_JUMP) 
+        {
+            sprite.transform.localPosition = new Vector3(0, 0.4f, 0);
+        }
+        else if (currentState == SLIDE) 
+        {
+            sprite.transform.localPosition = new Vector3(0, -0.2f, 0);
+        }
+        else
+        {
+            sprite.transform.localPosition = new Vector3(0, 0, 0);
+        }
+    }
+
+    void SetSpriteRotation(Vector3 target, float offset) 
+    {
+        float angle;
+        angle = Mathf.Atan2(target.y, target.x) * Mathf.Rad2Deg;
+        if (rb.velocity.x < 0f)
+        {
+            angle -= 180;
+        }
+        Quaternion targetRotation = Quaternion.Euler(0f, 0f, angle + offset);
+        sprite.transform.rotation = targetRotation;
+
+        if (sprite.transform.eulerAngles.z > 90 && sprite.transform.eulerAngles.z < 270)
+        {
+            sprite.transform.localScale = new Vector3(1, -1, 1); // Flip the sprite
+        }
+        else
+        {
+            sprite.transform.localScale = new Vector3(1, 1, 1);  // Reset the sprite scale
+        } 
+    }
+
+    IEnumerator JumpAnimationTimer() 
+    {
+        jumpAnimationPlaying = true;
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+        jumpAnimationPlaying = false;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////// COLLISIONS //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void OnTriggerEnter2D(Collider2D collision)
@@ -537,6 +700,14 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
+        //When sliding, match the sprite rotation to the ground
+        if ((collision.gameObject.layer == 14 || collision.gameObject.layer == 6) && currentState == SLIDE)
+        {
+            Vector2 normal = (Vector2)transform.position - collision.ClosestPoint(transform.position);
+            float angle = Mathf.Atan2(normal.y, normal.x) * Mathf.Rad2Deg;
+            sprite.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+        }
+
         //The player swims when they are in water, not grounded, and not in a no-swim-zone
         if (collision.gameObject.tag == "Water")
         {
