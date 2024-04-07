@@ -227,23 +227,27 @@ public class TongueLauncher : MonoBehaviour
         //Direction of the first click on the screen to when the screen is released
         Vector2 distanceVector = dragStartPosition - dragEndPosition;
 
-        if (Physics2D.Raycast(firePoint.position, distanceVector))
+        float fillPercentage = Mathf.InverseLerp(0, (12/*Max Drag*/), (secondLinePoint - transform.position).magnitude);
+        if(fillPercentage > 0.1f)
         {
-            //Aim a raycast that starts at the player and is fired at the direction of the initial touch - the last touch
-            RaycastHit2D _hit = Physics2D.Raycast(firePoint.position, distanceVector);
-
-            if (_hit.collider.gameObject.CompareTag("Grapplable") || grappleToAll)
+            if (Physics2D.Raycast(firePoint.position, distanceVector))
             {
-                //If the hit object can be grappled to, grapple to it
-                if (Vector2.Distance(_hit.point, firePoint.position) <= maxDistance || !hasMaxDistance)
-                {
-                    hitPoint = _hit.point;
-                    hitCollider = _hit.collider;
-                    grappleTarget = _hit.collider.gameObject;
+                //Aim a raycast that starts at the player and is fired at the direction of the initial touch - the last touch
+                RaycastHit2D _hit = Physics2D.Raycast(firePoint.position, distanceVector);
 
-                    grappleDistanceVector = grapplePoint - (Vector2)gunPivot.position;
-                    tongueLine.enabled = true;
-                    grapplePointIdentified = true;
+                if (_hit.collider.gameObject.CompareTag("Grapplable") || grappleToAll)
+                {
+                    //If the hit object can be grappled to, grapple to it
+                    if (Vector2.Distance(_hit.point, firePoint.position) <= maxDistance || !hasMaxDistance)
+                    {
+                        hitPoint = _hit.point;
+                        hitCollider = _hit.collider;
+                        grappleTarget = _hit.collider.gameObject;
+
+                        grappleDistanceVector = grapplePoint - (Vector2)gunPivot.position;
+                        tongueLine.enabled = true;
+                        grapplePointIdentified = true;
+                    }
                 }
             }
         }

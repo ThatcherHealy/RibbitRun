@@ -240,28 +240,39 @@ public class PlayerController : MonoBehaviour
 
             if (isSwimming) //Swim
             {
-                ChangeAnimationState(SWIM);
-                rb.velocity *= 0.3f;
                 fillPercentage = Mathf.InverseLerp(0, (maxSwimAimLineLength), (secondLinePoint - transform.position).magnitude);
-                power = swimmingPower;
+
+                if (fillPercentage > 0.1f) //Don't do anything unless the drag was significant
+                {
+                    rb.velocity *= 0.3f;
+                    power = swimmingPower;
+                    ChangeAnimationState(SWIM);
+                }
             }
             else //Jump
             {
-                ChangeAnimationState(JUMP);
-                rb.velocity = Vector2.zero;
                 fillPercentage = Mathf.InverseLerp(0, (maxJumpAimLineLength), (secondLinePoint - transform.position).magnitude);
-                power = jumpingPower;
-                StartCoroutine(JumpAnimationTimer());
+
+                if (fillPercentage > 0.1f) //Don't do anything unless the drag was significant
+                {
+                    rb.velocity = Vector2.zero;
+                    power = jumpingPower;
+                    ChangeAnimationState(JUMP);
+                    StartCoroutine(JumpAnimationTimer());
+                }
             }
 
             if (dried)
                 power = 5;
 
-            Vector3 clampedForce = (force.normalized) * fillPercentage * (power) * rb.mass;
-            rb.AddForce(clampedForce, ForceMode2D.Impulse);
+            if(fillPercentage > 0.1f) //Don't do anything unless the drag was significant
+            {
+                Vector3 clampedForce = (force.normalized) * fillPercentage * (power) * rb.mass;
+                rb.AddForce(clampedForce, ForceMode2D.Impulse);
 
-            if(isSwimming)
-                SetSpriteRotation(secondLinePoint - transform.position, 0);
+                if (isSwimming)
+                    SetSpriteRotation(secondLinePoint - transform.position, 0);
+            }
 
             jump = false;
         }
@@ -303,13 +314,17 @@ public class PlayerController : MonoBehaviour
 
         if (isSwimming)
         {
-            ChangeAnimationState(READY_SWIM);
-
             secondLinePoint = transform.position + Vector3.ClampMagnitude(((dragStartPos - draggingPos) * aimMultiplier), maxSwimAimLineLength);
             jumpLr.positionCount = 0;
             swimLr.positionCount = 2;
             swimLr.SetPosition(0, transform.position);
             swimLr.SetPosition(1, secondLinePoint);
+
+            float fillPercentage = Mathf.InverseLerp(0, (maxSwimAimLineLength), (secondLinePoint - transform.position).magnitude);
+            if(fillPercentage > 0.1f)
+            {
+                ChangeAnimationState(READY_SWIM);
+            }
         }
         else
         {
@@ -456,7 +471,7 @@ public class PlayerController : MonoBehaviour
             if(!grappleRotationSet)
             {
                 SetSpriteRotation((Vector3)tongueLauncher.grapplePoint - transform.position, 0);
-                grappleRotationSet = false;
+                grappleRotationSet = true;
             }
         }
         else //When the grapple is done, resume midair animation

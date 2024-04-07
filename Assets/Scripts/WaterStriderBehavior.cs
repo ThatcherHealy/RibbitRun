@@ -6,7 +6,9 @@ public class WaterStriderBehavior : MonoBehaviour
 {
     public Rigidbody2D rb;
     public Transform sprite;
+    [SerializeField] Animator animator;
     bool biasLeft;
+    string currentState;
     void Start()
     {
          StartCoroutine(JumpDelay());
@@ -22,6 +24,8 @@ public class WaterStriderBehavior : MonoBehaviour
     {
         int direction = Random.Range(1, 101);
         int power = Random.Range(8, 13);
+
+        ChangeAnimationState("WaterStriderAnimation");
 
         rb.velocity = Vector2.zero;
         if (biasLeft)
@@ -57,9 +61,20 @@ public class WaterStriderBehavior : MonoBehaviour
     }
     IEnumerator JumpDelay()
     {
-        float delay = Random.Range(1.5f, 4);
+        yield return new WaitForSeconds(0.2f);
+        ChangeAnimationState("WaterStriderIdle");
+        float delay = Random.Range(1.3f, 3.8f);
         yield return new WaitForSeconds(delay);
-        
+
         RandomJump();
+    }
+    void ChangeAnimationState(string newState)
+    {
+        //Stop the same animation from interrupting itself
+        if (currentState == newState) return;
+
+        //Play the new animation
+        animator.Play(newState);
+        currentState = newState;
     }
 }

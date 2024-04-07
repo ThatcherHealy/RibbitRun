@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 6345600503653544822}
   - component: {fileID: 5194561148170413289}
   - component: {fileID: 2468783096496000856}
+  - component: {fileID: 7375690091036005789}
   m_Layer: 7
   m_Name: Sprite
   m_TagString: Untagged
@@ -105,8 +106,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5728992012049295159}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.044, y: 0.243, z: -0.004419554}
-  m_LocalScale: {x: 0.14209284, y: 0.14209284, z: 0.14209284}
+  m_LocalPosition: {x: 0.030626, y: 0.243, z: -0.004419554}
+  m_LocalScale: {x: 0.19233687, y: 0.19233687, z: 0.19233687}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6662982331311024087}
@@ -144,8 +145,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.26617742, y: 0.6273016}
-  m_Size: {x: 13.264122, y: 7.431636}
+  m_Offset: {x: -0.014937994, y: -0.17591189}
+  m_Size: {x: 9.97106, y: 5.8252707}
   m_Direction: 1
 --- !u!114 &6345600503653544822
 MonoBehaviour:
@@ -176,6 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09fb78b2e3cbec643a239d032bdb684e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stuck: 0
 --- !u!212 &2468783096496000856
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -217,7 +219,7 @@ SpriteRenderer:
   m_SortingLayerID: -803484593
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: bcc1875082774db4f809b81064711a4d, type: 3}
+  m_Sprite: {fileID: 731277725, guid: 8e63c0e22d579994dae5dd6a4196736c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -228,6 +230,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &7375690091036005789
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5728992012049295159}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d1d88555ea49fce44bf29ae192bd710e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5913384618079185895
 GameObject:
   m_ObjectHideFlags: 0
