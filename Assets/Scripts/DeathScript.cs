@@ -28,6 +28,13 @@ public class DeathScript : MonoBehaviour
     [SerializeField] Image greenout;
     [SerializeField] GameObject pauseButton;
 
+    [SerializeField] GameAlertController alert;
+    [SerializeField] Transform eatenAlertPosition;
+    [SerializeField] Transform drownedAlertPosition;
+    [SerializeField] Transform poisonedAlertPosition;
+    bool alertSpawned;
+
+
     string deathBiome;
     bool deathBiomeSetOnce;
 
@@ -85,6 +92,12 @@ public class DeathScript : MonoBehaviour
                     eatenDeathScene.SetActive(true);
                     if (playerController.killer != null)
                         killerText.text = AorAn(playerController.killer) + RemoveClone(playerController.killer).ToUpper();
+
+                    if(!alertSpawned)
+                    {
+                        alert.CheckForNewUnlocks(eatenAlertPosition);
+                        alertSpawned = true;
+                    }
                 }
                 if (playerController.drowned && !playerController.poisoned && !playerController.eaten) //drowned
                 {
@@ -146,6 +159,15 @@ public class DeathScript : MonoBehaviour
                 text.color = new Color(text.color.r,text.color.g,text.color.b,text.color.a + (0.75f * Time.deltaTime));
             }
         }
+        if (drownedText[0].color.a >= 0.5f)
+        {
+            if (!alertSpawned)
+            {
+                alert.CheckForNewUnlocks(drownedAlertPosition);
+                alertSpawned = true;
+            }
+        }
+
         if (drownedText[0].color.a >= 1)
         {
             Time.timeScale = 0;
@@ -177,6 +199,14 @@ public class DeathScript : MonoBehaviour
             foreach (TextMeshPro text in poisonedText)
             {
                 text.color = new Color(text.color.r, text.color.g, text.color.b, text.color.a + (0.75f * Time.deltaTime));
+            }
+        }
+        if (poisonedText[0].color.a >= 0.5f)
+        {
+            if (!alertSpawned)
+            {
+                alert.CheckForNewUnlocks(poisonedAlertPosition);
+                alertSpawned = true;
             }
         }
         if (poisonedText[0].color.a >= 1)
