@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8e63c0e22d579994dae5dd6a4196736c
+guid: bddc2aff1f7f1de4d96d3205ae6bfeb6
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -136,7 +136,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: fkyguys sprite sheet_0
+      name: FlySpriteSheet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -150,14 +150,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: be1e00ed9b0e69948b76a1313b0e72e4
-      internalID: 731277725
+      spriteID: 216081a4e37802549bf99f39bff6230d
+      internalID: 1177051426
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fkyguys sprite sheet_1
+      name: FlySpriteSheet_1
       rect:
         serializedVersion: 2
         x: 1000
@@ -171,14 +171,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 134da722073ee8b44b3a88e4fec6f8d8
-      internalID: -307236586
+      spriteID: b328cd1742443a2449d257957f6b3fdd
+      internalID: 1417864312
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fkyguys sprite sheet_2
+      name: FlySpriteSheet_2
       rect:
         serializedVersion: 2
         x: 2000
@@ -192,14 +192,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 67140ad173b59bc4398f9c1b831d8750
-      internalID: -215583530
+      spriteID: 34150cd4b757ea84186ae190daa6baa1
+      internalID: 938671012
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fkyguys sprite sheet_3
+      name: FlySpriteSheet_3
       rect:
         serializedVersion: 2
         x: 3000
@@ -213,8 +213,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b1ce1751d6698ec41bed35e26d1f96fd
-      internalID: -1629134039
+      spriteID: c8be81b3cec8f784abeb9ccf1435bec3
+      internalID: 1269163843
       vertices: []
       indices: 
       edges: []
@@ -230,10 +230,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      fkyguys sprite sheet_0: 731277725
-      fkyguys sprite sheet_1: -307236586
-      fkyguys sprite sheet_2: -215583530
-      fkyguys sprite sheet_3: -1629134039
+      FlySpriteSheet_0: 1177051426
+      FlySpriteSheet_1: 1417864312
+      FlySpriteSheet_2: 938671012
+      FlySpriteSheet_3: 1269163843
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

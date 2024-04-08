@@ -200,7 +200,6 @@ public class FrogUnlock : MonoBehaviour
             poisonDartFrogProgress.SetActive(false);
             poisonDartFrogStats.SetActive(false);
             poisonDartFrogText.text = "???";
-            poisonDartFrogText.fontSize = 18;
 
             poisonDartFrogButton.interactable = false;
         }

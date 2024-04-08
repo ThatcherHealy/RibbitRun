@@ -88,6 +88,7 @@ public class DeathScript : MonoBehaviour
                 }
                 if (playerController.drowned && !playerController.poisoned && !playerController.eaten) //drowned
                 {
+                    
                     drownScene.SetActive(true);
                     StartCoroutine(BeginDrownFadeIn());
                 }
@@ -138,11 +139,11 @@ public class DeathScript : MonoBehaviour
     {
         youDrownedText.color = new Color(youDrownedText.color.r, youDrownedText.color.g, youDrownedText.color.b, youDrownedText.color.a + (0.3f * Time.deltaTime));
 
-        if (youDrownedText.color.a >= 0.7f)
+        if (youDrownedText.color.a >= 0.6f)
         {
             foreach(TextMeshPro text in drownedText)
             {
-                text.color = new Color(text.color.r,text.color.g,text.color.b,text.color.a + (1.5f * Time.deltaTime));
+                text.color = new Color(text.color.r,text.color.g,text.color.b,text.color.a + (0.75f * Time.deltaTime));
             }
         }
         if (drownedText[0].color.a >= 1)
@@ -171,11 +172,11 @@ public class DeathScript : MonoBehaviour
     {
         youWerePoisonedText.color = new Color(youWerePoisonedText.color.r, youWerePoisonedText.color.g, youWerePoisonedText.color.b, youWerePoisonedText.color.a + (1f * Time.deltaTime));
 
-        if (youWerePoisonedText.color.a >= 0.7f)
+        if (youWerePoisonedText.color.a >= 0.6f)
         {
             foreach (TextMeshPro text in poisonedText)
             {
-                text.color = new Color(text.color.r, text.color.g, text.color.b, text.color.a + (1.5f * Time.deltaTime));
+                text.color = new Color(text.color.r, text.color.g, text.color.b, text.color.a + (0.75f * Time.deltaTime));
             }
         }
         if (poisonedText[0].color.a >= 1)

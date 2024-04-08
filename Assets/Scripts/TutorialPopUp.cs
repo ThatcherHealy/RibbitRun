@@ -6,19 +6,25 @@ using UnityEngine.SceneManagement;
 public class TutorialPopUp : MonoBehaviour
 {
     [SerializeField] GameObject tutorialPopUp;
-    [SerializeField] GameObject mainMenu;
+    [SerializeField] GameObject[] mainMenu;
     void Start()
     {
         if (PlayerPrefs.GetInt("Tutorial Complete", 0) == 0)
         {
             tutorialPopUp.SetActive(true);
-            mainMenu.SetActive(false);
+            foreach (GameObject obj in mainMenu) 
+            {
+                obj.SetActive(false);
+            }
         }
     }
     public void No()
     {
         tutorialPopUp.SetActive(false);
-        mainMenu.SetActive(true);
+        foreach (GameObject obj in mainMenu)
+        {
+            obj.SetActive(true);
+        }
         PlayerPrefs.SetInt("Tutorial Complete", 1);
     }
     public void Yes()
