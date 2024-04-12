@@ -11,6 +11,7 @@ public class PiranhaBehavior : MonoBehaviour
     [SerializeField] Rigidbody2D rb;
     [SerializeField] float passiveSpeed = 10;
     [SerializeField] float chaseSpeed = 10;
+    [SerializeField] float chaseInterval = 0.5f;
 
     Vector3 initialPosition;
     private Vector3[] waypoints = new Vector3[4];
@@ -153,7 +154,7 @@ public class PiranhaBehavior : MonoBehaviour
         rb.velocity = Vector2.zero;
         rb.AddForce(direction.normalized * chaseSpeed, ForceMode2D.Impulse);
         chaseForceApplied = true;
-        StartCoroutine(LungeDelay(0.5f));
+        StartCoroutine(LungeDelay(chaseInterval));
     }
     private IEnumerator LungeDelay(float lookDelay)
     {

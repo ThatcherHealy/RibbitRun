@@ -1,12 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Net.Mail;
-using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
@@ -536,6 +529,7 @@ public class PlayerController : MonoBehaviour
         if(currentState == IDLE) 
         {
             sprite.transform.localPosition = new Vector3(0, 0.4f, 0);
+            sprite.transform.localScale = new Vector3(initialSpriteScale.x, Mathf.Abs(initialSpriteScale.y), 1);
         }
         else if (currentState == SLIDE) 
         {

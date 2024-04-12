@@ -42,6 +42,7 @@ public class TutorialPhase3 : MonoBehaviour
     public void DisableWarningTutorial()
     {
         stopTime = false;
+        Time.timeScale = 1;
         pc.enabled = true;
         warningTutorial.SetActive(false);
     }

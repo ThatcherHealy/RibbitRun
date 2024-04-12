@@ -49,6 +49,7 @@ public class OxygenAndMoistureTutorial : MonoBehaviour
     public void DisableOxygenTutorial()
     {
         stopTime = false;
+        Time.timeScale = 1;
         pc.enabled = true;
         oxygenTutorialDone = true;
         oxygenTutorial.SetActive(false);
@@ -68,6 +69,7 @@ public class OxygenAndMoistureTutorial : MonoBehaviour
     public void DisableMoistureTutorial()
     {
         stopTime = false;
+        Time.timeScale = 1;
         pc.enabled = true;
         moistureTutorial.SetActive(false);
     }

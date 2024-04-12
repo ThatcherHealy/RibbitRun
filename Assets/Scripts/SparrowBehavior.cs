@@ -23,6 +23,7 @@ public class SparrowBehavior : MonoBehaviour
     bool startRunTimer;
     [SerializeField] PredatorVision vision;
 
+    [SerializeField] Transform sprite;
     [SerializeField] Animator animator;
     string currentState;
     string IDLE = "SparrowIdle";
@@ -163,7 +164,7 @@ public class SparrowBehavior : MonoBehaviour
         run = false;
         escape = true;
     }
-        void ChangeAnimationState(string newState)
+    void ChangeAnimationState(string newState)
     {
         //Stop the same animation from interrupting itself
         if (currentState == newState) return;
@@ -171,5 +172,14 @@ public class SparrowBehavior : MonoBehaviour
         //Play the new animation
         animator.Play(newState);
         currentState = newState;
+
+        if(currentState == LEAP) 
+        {
+            sprite.localPosition = new Vector3(1.23f, -0.18f, 0);
+        }
+        else
+        {
+            sprite.localPosition = new Vector3(0.23f, -0.18f, 0);
+        }
     }
 }

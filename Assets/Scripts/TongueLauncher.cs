@@ -75,12 +75,10 @@ public class TongueLauncher : MonoBehaviour
         {
             GetTouch();
         }
-        SlowTime();
         SwitchFromPointToTransform();
         KeepGrapplePointOnCollider();
         TransitionAimLine();
         DetatchWhenClose();
-        Launch();
 
         if (playerController.dried)
         {
@@ -94,10 +92,17 @@ public class TongueLauncher : MonoBehaviour
         {
             aimingGrapple = false;
         }
+
+        if(playerController.dead)
+        {
+            lr.positionCount = 0;
+        }
     }
     private void FixedUpdate()
     {
         SetRangeCircle();
+        SlowTime();
+        Launch();
 
         if (tongueLine.isGrappling)
         {
@@ -282,7 +287,7 @@ public class TongueLauncher : MonoBehaviour
             {
                 Vector2 firePointDistance = firePoint.position - gunHolder.localPosition;
                 Vector2 targetPos = grapplePoint - firePointDistance;
-                gunHolder.position = Vector2.Lerp(gunHolder.position, targetPos, launchCurve.Evaluate(Time.deltaTime) * launchSpeed);
+                gunHolder.position = Vector2.Lerp(gunHolder.position, targetPos, launchCurve.Evaluate(Time.fixedDeltaTime) * launchSpeed);
             }
         }
     }

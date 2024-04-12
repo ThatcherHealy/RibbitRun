@@ -12,7 +12,7 @@ public class SpeciesHighscores : MonoBehaviour
     [SerializeField] TextMeshPro[] bullfrogHighscores;
     [SerializeField] TextMeshPro[] poisonDartFrogHighscores;
 
-    private void Start()
+    private void Update()
     {
         InitializeHighscores();
         HighlightHighestScore();
@@ -28,25 +28,25 @@ public class SpeciesHighscores : MonoBehaviour
         foreach (TextMeshPro treeFrogHighscore in treeFrogHighscores)
         {
             treeFrogHighscore.text = PlayerPrefs.GetInt("TreeFrogHighscore", 0).ToString();
-            if (treeFrogHighscore.text == "0")
+            if (treeFrogHighscore.text == "0" && PlayerPrefs.GetInt("TreeFrogClaimed", 0) != 1)
                 treeFrogHighscore.text = "";
         }
         foreach (TextMeshPro frogletHighscore in frogletHighscores)
         {
             frogletHighscore.text = PlayerPrefs.GetInt("FrogletHighscore", 0).ToString();
-            if (frogletHighscore.text == "0")
+            if (frogletHighscore.text == "0" && PlayerPrefs.GetInt("FrogletClaimed", 0) != 1)
                 frogletHighscore.text = "";
         }
         foreach (TextMeshPro bullfrogHighscore in bullfrogHighscores)
         {
             bullfrogHighscore.text = PlayerPrefs.GetInt("BullfrogHighscore", 0).ToString();
-            if (bullfrogHighscore.text == "0")
+            if (bullfrogHighscore.text == "0" && PlayerPrefs.GetInt("BullfrogClaimed", 0) != 1)
                 bullfrogHighscore.text = "";
         }
         foreach (TextMeshPro poisonDartFrogHighscore in poisonDartFrogHighscores)
         {
             poisonDartFrogHighscore.text = PlayerPrefs.GetInt("PoisonDartFrogHighscore", 0).ToString();
-            if (poisonDartFrogHighscore.text == "0")
+            if (poisonDartFrogHighscore.text == "0" && PlayerPrefs.GetInt("PoisonDartFrogClaimed", 0) != 1)
                 poisonDartFrogHighscore.text = "";
         }
     }

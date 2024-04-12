@@ -433,7 +433,8 @@ MonoBehaviour:
   turner: {fileID: 4627260650738456839}
   rb: {fileID: 8832579825661028464}
   passiveSpeed: 10
-  chaseSpeed: 15
+  chaseSpeed: 20
+  chaseInterval: 0.5
 --- !u!1 &8661205440925450439
 GameObject:
   m_ObjectHideFlags: 0

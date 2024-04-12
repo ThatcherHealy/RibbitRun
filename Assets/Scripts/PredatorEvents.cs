@@ -5,6 +5,64 @@ using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 
+public class Predator
+{
+    public enum PredatorType { FishSwarm, Arapaima, Heron, Falcon }
+    private PredatorType type;
+    private GameObject linkedWarning;
+    private GameObject prefab;
+    private GameObject activeObject;
+    private int direction;
+
+    public void SetType(PredatorType setType, GameObject setPrefab, GameObject warning, GameObject obj)
+    {
+        type = setType;
+        prefab = setPrefab;
+        linkedWarning = warning;
+        activeObject = obj;
+    }
+    PredatorType Type()
+    {
+        return type;
+    }
+    GameObject LinkedWarning() 
+    {
+        return linkedWarning;
+    }
+    GameObject GetPredator()
+    {
+        return activeObject;
+    }
+    void SetDirection(int directionChance)
+    {
+        direction = directionChance;
+    }
+
+    Vector3 SetSpawnPoint(LevelGenerator lg, Transform player)
+    {
+        if(type == PredatorType.FishSwarm || type == PredatorType.Arapaima)
+        {
+            if (lg.biomeSpawning != lg.playerBiome)
+                direction = 2;
+
+            if (direction == 1)
+                return new Vector2(player.position.x + 150, lg.playerRefEndPoint.y - 16.415f);
+            else
+                return new Vector2(player.position.x - 150, lg.playerRefEndPoint.y - 16.415f);
+        }
+        else if (type == PredatorType.Falcon)
+        {
+            return new Vector2(player.position.x, lg.playerRefEndPoint.y + 209.585f);
+        }
+        else //Heron
+        {
+            if (direction == 1)
+                return new Vector2(player.position.x + 100, lg.playerRefEndPoint.y + 9.585f);
+            else
+                return new Vector2(player.position.x - 100, lg.playerRefEndPoint.y + 9.585f);
+        }
+    }
+}
 public class PredatorEvents : MonoBehaviour
 {
     [SerializeField] PlayerController pc;
@@ -31,8 +89,11 @@ public class PredatorEvents : MonoBehaviour
 
     private int warningTime = 3;
     private bool warningActive = false;
+    private Dictionary<GameObject, GameObject> warningToPredatorMap = new Dictionary<GameObject, GameObject>();
     private GameObject currentPredator;
     private GameObject warning;
+    private List<GameObject> warnings = new List<GameObject>();
+    private List<Predator> predators = new List<Predator>();
     private Rect cameraRect;
     private Rect shrunkCameraRect;
 
@@ -55,6 +116,8 @@ public class PredatorEvents : MonoBehaviour
             checkInterval = 1;
 
         yield return new WaitForSeconds(checkInterval);
+
+
         if (sc.score > lowerScoreLimit && !cooldown && !pc.dead)
         {
             int chance = UnityEngine.Random.Range(1, max);

@@ -195,27 +195,31 @@ public class LevelGenerator : MonoBehaviour
     private void FixedUpdate()
     {
         //Spawns objects when the player reaches a specified distance away from the last one
-        if (math.distance(player.transform.position.x, lastRiverbedEndPosition.x) < spawnDistance)
+        if(!pc.dead)
         {
-            SpawnRiverbeds();
+            if (math.distance(player.transform.position.x, lastRiverbedEndPosition.x) < spawnDistance)
+            {
+                SpawnRiverbeds();
+            }
+            if (math.distance(player.transform.position.x, lastLevelEndPosition.x) < spawnDistance)
+            {
+                if (playerBiome != Biome.Cypress)
+                    SpawnLevelPart();
+            }
+            if (math.distance(player.transform.position.x, lastPreyEndPosition.x) < spawnDistance)
+            {
+                SpawnFlies();
+            }
+            if (math.distance(player.transform.position.x, lastCattailEndPosition.x) < spawnDistance)
+            {
+                SpawnCattail();
+            }
+            if (biomeSpawning != playerBiome && !biomeSwapSpawned)
+            {
+                SpawnTransition();
+            }
         }
-        if (math.distance(player.transform.position.x, lastLevelEndPosition.x) < spawnDistance)
-        {
-            if (playerBiome != Biome.Cypress)
-                SpawnLevelPart();
-        }
-        if (math.distance(player.transform.position.x, lastPreyEndPosition.x) < spawnDistance)
-        {
-            SpawnFlies();
-        }
-        if (math.distance(player.transform.position.x, lastCattailEndPosition.x) < spawnDistance)
-        {
-            SpawnCattail();
-        }
-        if (biomeSpawning != playerBiome && !biomeSwapSpawned)
-        {
-            SpawnTransition();
-        }
+        
     }
     private void SpawnCattail()
     {

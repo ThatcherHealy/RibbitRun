@@ -391,4 +391,5 @@ MonoBehaviour:
   escape: 0
   exit: 0
   vision: {fileID: 611709563016208457}
+  sprite: {fileID: 5680190141273033799}
   animator: {fileID: 4577386013486778116}

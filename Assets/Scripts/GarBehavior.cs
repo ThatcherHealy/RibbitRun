@@ -12,6 +12,7 @@ public class GarBehavior : MonoBehaviour
     [SerializeField] Animator animator;
     [SerializeField] float passiveSpeed = 10;
     [SerializeField] float chaseSpeed = 20;
+    [SerializeField] float chaseInterval = 1.2f;
     [SerializeField] Transform target;
 
     Vector3 initialPosition;
@@ -155,7 +156,7 @@ public class GarBehavior : MonoBehaviour
         rb.velocity = Vector2.zero;
         rb.AddForce(direction.normalized * chaseSpeed, ForceMode2D.Impulse);
         chaseForceApplied = true;
-        StartCoroutine(LungeDelay(1.2f));
+        StartCoroutine(LungeDelay(chaseInterval));
     }
     private IEnumerator LungeDelay(float lookDelay)
     {
