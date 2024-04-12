@@ -1,10 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.ExceptionServices;
 using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
-
 public class Predator
 {
     public enum PredatorType { FishSwarm, Arapaima, Heron, Falcon }
@@ -13,32 +10,40 @@ public class Predator
     private GameObject prefab;
     private GameObject activeObject;
     private int direction;
+    private bool spawned;
 
-    public void SetType(PredatorType setType, GameObject setPrefab, GameObject warning, GameObject obj)
+    public Predator(PredatorType setType, GameObject setPrefab)
     {
         type = setType;
         prefab = setPrefab;
-        linkedWarning = warning;
-        activeObject = obj;
     }
-    PredatorType Type()
+    public PredatorType Type()
     {
         return type;
     }
-    GameObject LinkedWarning() 
+    public GameObject LinkedWarning() 
     {
         return linkedWarning;
     }
-    GameObject GetPredator()
+    public GameObject GetPredator()
     {
         return activeObject;
     }
-    void SetDirection(int directionChance)
+    public void SetDirection(int directionChance)
     {
         direction = directionChance;
     }
 
-    Vector3 SetSpawnPoint(LevelGenerator lg, Transform player)
+    public void SetSpawned(bool spawn)
+    {
+        spawned = spawn;
+    }
+    public bool Spawned()
+    {
+        return spawned;
+    }
+
+    public Vector3 SetSpawnPoint(LevelGenerator lg, Transform player)
     {
         if(type == PredatorType.FishSwarm || type == PredatorType.Arapaima)
         {
@@ -62,6 +67,39 @@ public class Predator
                 return new Vector2(player.position.x - 100, lg.playerRefEndPoint.y + 9.585f);
         }
     }
+    public void SpawnPredator(Vector3 spawnPoint, Transform player)
+    {
+        if(type != PredatorType.FishSwarm)
+            activeObject = GameObject.Instantiate(prefab, spawnPoint, Quaternion.identity);
+        else
+        {
+            activeObject = GameObject.Instantiate(prefab, spawnPoint, Quaternion.identity);
+            FishBehavior[] fishes = activeObject.GetComponentsInChildren<FishBehavior>();
+            Transform closestFish = activeObject.GetComponentInChildren<FishBehavior>().transform;
+            foreach (FishBehavior fish in fishes)
+            {
+                if (math.distance(fish.transform.position.x, player.position.x) < math.distance(closestFish.transform.position.x, player.position.x))
+                {
+                    closestFish = fish.transform;
+                }
+            }
+            activeObject = closestFish.gameObject;
+        }
+    }
+    public void SpawnWarning(GameObject warningPrefab, Vector3 spawnPoint)
+    {
+        linkedWarning = GameObject.Instantiate(warningPrefab, spawnPoint, Quaternion.identity);
+    }
+
+    public IEnumerator DestroyTimer(int time)
+    {
+        yield return new WaitForSeconds(time);
+        GameObject.Destroy(activeObject);
+    }
+    public bool Destroyed()
+    { 
+        return activeObject == null;
+    }
 }
 public class PredatorEvents : MonoBehaviour
 {
@@ -77,23 +115,15 @@ public class PredatorEvents : MonoBehaviour
 
 
     private Vector3 predatorSpawnPosition;
-    private bool fishEvent;
-    private int directionChance;
-    private bool birdEvent;
     public int lowerScoreLimit = 50;
     private float checkInterval = 5;
     int max, startingValue = 4;
     private bool cooldown = false;
-    bool spawned;
     bool falcon;
 
     private int warningTime = 3;
-    private bool warningActive = false;
-    private Dictionary<GameObject, GameObject> warningToPredatorMap = new Dictionary<GameObject, GameObject>();
-    private GameObject currentPredator;
     private GameObject warning;
-    private List<GameObject> warnings = new List<GameObject>();
-    private List<Predator> predators = new List<Predator>();
+    [SerializeField] List<Predator> predators = new List<Predator>();
     private Rect cameraRect;
     private Rect shrunkCameraRect;
 
@@ -151,130 +181,129 @@ public class PredatorEvents : MonoBehaviour
 
     private IEnumerator FishEvent()
     {
-        fishEvent = true;
         int fishCooldownTime = 20;
         StartCoroutine(Cooldown(fishCooldownTime));
 
-        directionChance = UnityEngine.Random.Range(1, 3);
-        SetSpawnPosition();
-
-        Warning();
-        yield return new WaitForSeconds(warningTime);
-
-        if (lg.playerBiome != LevelGenerator.Biome.Amazon) 
+        if (lg.playerBiome != LevelGenerator.Biome.Amazon)
         {
-            //Sets currentPredator to be the closest fish in the swarm to the player
-            currentPredator = Instantiate(fishSwarmPrefab, predatorSpawnPosition, Quaternion.identity);
-            FishBehavior[] fishes = currentPredator.GetComponentsInChildren<FishBehavior>();
-            Transform closestFish = currentPredator.GetComponentInChildren<FishBehavior>().transform; 
-            foreach (FishBehavior fish in fishes)
-            {
-                if (math.distance(fish.transform.position.x, player.position.x) < math.distance(closestFish.transform.position.x, player.position.x))
-                {
-                    closestFish = fish.transform;
-                }
-            }
-            currentPredator = closestFish.gameObject;
+            Predator fishSwarm = new Predator(Predator.PredatorType.FishSwarm, fishSwarmPrefab);
+            predators.Add(fishSwarm);
+            fishSwarm.SetDirection(UnityEngine.Random.Range(1, 3));
+
+            fishSwarm.SetSpawned(false);
+            fishSwarm.SpawnWarning(warningPrefab, fishSwarm.SetSpawnPoint(lg, player));
+
+            yield return new WaitForSeconds(warningTime);
+            fishSwarm.SpawnPredator(fishSwarm.SetSpawnPoint(lg, player), player);
+            fishSwarm.SetSpawned(true);
+
+            fishSwarm.DestroyTimer(15);
         }
         else
         {
-            currentPredator = Instantiate(arapaimaPrefab, predatorSpawnPosition, Quaternion.identity);
-        }
-        spawned = true;
+            Predator arapaima = new Predator(Predator.PredatorType.Arapaima, arapaimaPrefab);
+            predators.Add(arapaima);
+            arapaima.SetDirection(UnityEngine.Random.Range(1, 3));
 
-        //Destroy the fish after 15 seconds
-        Destroy(currentPredator, 15);
+            arapaima.SetSpawned(false);
+            arapaima.SpawnWarning(warningPrefab, arapaima.SetSpawnPoint(lg, player));
+
+            yield return new WaitForSeconds(warningTime);
+            arapaima.SpawnPredator(arapaima.SetSpawnPoint(lg, player), player);
+            arapaima.SetSpawned(true);
+
+            arapaima.DestroyTimer(15);
+        }
     }
     private IEnumerator BirdEvent()
     {
-        birdEvent = true;
         int birdCooldownTime = 20;
         StartCoroutine(Cooldown(birdCooldownTime));
-
-        directionChance = UnityEngine.Random.Range(1, 3);
-        SetSpawnPosition();
-
-        Warning();
-        yield return new WaitForSeconds(warningTime);
-
-        if(falcon)
+        if (falcon)
         {
-            currentPredator = Instantiate(falconPrefab, predatorSpawnPosition, Quaternion.identity);
+            Predator falcon = new Predator(Predator.PredatorType.Falcon, falconPrefab);
+            predators.Add(falcon);
+            falcon.SetDirection(UnityEngine.Random.Range(1, 3));
+
+            falcon.SetSpawned(false);
+            falcon.SpawnWarning(warningPrefab, falcon.SetSpawnPoint(lg, player));
+
+            yield return new WaitForSeconds(warningTime);
+            falcon.SpawnPredator(falcon.SetSpawnPoint(lg, player), player);
+            falcon.SetSpawned(true);
+
+            falcon.DestroyTimer(15);
         }
         else
-            currentPredator = Instantiate(heronPrefab, predatorSpawnPosition, Quaternion.identity);
-        spawned = true;
+        {
+            Predator heron = new Predator(Predator.PredatorType.Heron, heronPrefab);
+            predators.Add(heron);
+            heron.SetDirection(UnityEngine.Random.Range(1, 3));
 
-        //Destroy the fish after 15 seconds
-        Destroy(currentPredator, 15);
+            heron.SetSpawned(false);
+            heron.SpawnWarning(warningPrefab, heron.SetSpawnPoint(lg, player));
 
-    }
-    private void Warning()
-    {
-        warning = Instantiate(warningPrefab, predatorSpawnPosition, Quaternion.identity);
-        warningActive = true;
+            yield return new WaitForSeconds(warningTime);
+            heron.SpawnPredator(heron.SetSpawnPoint(lg, player), player);
+            heron.SetSpawned(true);
+
+            heron.DestroyTimer(15);
+        }
+
+        //Set falcon to false since it is only needed to determine what to spawn
+        falcon = false;
+
     }
 
     void FixedUpdate() 
     {
-        SetSpawnPosition();
-        SetWarningPosition();
+        List<Predator> predatorsCopy = new List<Predator>(predators);
+        foreach (Predator predator in predatorsCopy)
+        {
+            // When the predator has been spawned but it is now destroyed, remove it from the list
+            if (predator.Spawned() && predator.Destroyed())
+            {
+                predators.Remove(predator);
+            }
+        }
+        foreach (Predator predator in predators)
+        {
+            //Update Predator Spawn Position
+            predator.SetSpawnPoint(lg, player);
+        }
+
+        foreach (Predator predator in predators)
+        {
+            SetWarningPosition(predator);
+        }
 
         if(pc.drowned || pc.poisoned) //Deactivate warning and predator when player drowns
         {
-            if (warning != null)
-                warning.SetActive(false);
-
-            if (currentPredator != null)
-                currentPredator.SetActive(false);
+            foreach (Predator predator in predators)
+            {
+                if(predator.LinkedWarning() != null)
+                    predator.LinkedWarning().SetActive(false);
+                if(predator.GetPredator() != null)
+                    predator.GetPredator().SetActive(false);
+            }
         }
     }
-
-    void SetSpawnPosition() 
+    void SetWarningPosition(Predator predator) 
     {
-        if (fishEvent)
-        {
-            //Always spawn fish to the left when you're at the end of a biome
-            if (lg.biomeSpawning != lg.playerBiome)
-                directionChance = 2;
-
-            if (directionChance == 1)
-                predatorSpawnPosition = new Vector2(player.position.x + 150, lg.playerRefEndPoint.y - 16.415f);
-            else
-                predatorSpawnPosition = new Vector2(player.position.x - 150, lg.playerRefEndPoint.y - 16.415f);
-        }
-        else if (birdEvent)
-        {
-            if (!falcon)
-            {
-                if (directionChance == 1)
-                    predatorSpawnPosition = new Vector2(player.position.x + 100, lg.playerRefEndPoint.y + 9.585f);
-                else
-                    predatorSpawnPosition = new Vector2(player.position.x - 100, lg.playerRefEndPoint.y + 9.585f);
-            }
-            else
-            {
-                predatorSpawnPosition = new Vector2(player.position.x, lg.playerRefEndPoint.y + 209.585f);
-            }
-
-        }
-    }
-    void SetWarningPosition() 
-    {
-        if (warningActive && warning != null)
+        if (predator.LinkedWarning() != null)
         {
             //Stop the warning when the predator is destroyed
-            if(spawned && currentPredator == null)
+            if(predator.Spawned() && predator.GetPredator() == null)
             {
-                spawned = false;
-                Destroy(warning);
+                predator.SetSpawned(false);
+                Destroy(predator.LinkedWarning());
                 return;
             }
             //Stop the warning when the falcon stops diving
-            if (falcon && spawned && !currentPredator.GetComponent<FalconBehavior>().diving)
+            if (predator.Type() == Predator.PredatorType.Falcon && predator.Spawned() && !predator.GetPredator().GetComponent<FalconBehavior>().diving)
             {
-                spawned = false;
-                Destroy(warning);
+                predator.SetSpawned(false);
+                Destroy(predator.LinkedWarning());
                 return;
             }
 
@@ -291,7 +320,7 @@ public class PredatorEvents : MonoBehaviour
 
             //Then, create a new rectangle that is shrunk on the x and y axis
             float xShrink = 0.85f, yShrink = 0.7f;
-            if (falcon)
+            if (predator.Type() == Predator.PredatorType.Falcon)
                 yShrink = 0.8f;
 
             float shrunkWidth = cameraRect.width * xShrink;
@@ -300,47 +329,46 @@ public class PredatorEvents : MonoBehaviour
 
             //Finally, set the warning position to be where the predator is going to spawn from (before it's spawned), and then to where the predator is. All clamped within the shrunk rectangle
             Vector3 warningTarget;
-            if (spawned)
+            if (predator.Spawned())
             {
                     warningTarget = new Vector3(
-                    Mathf.Clamp(currentPredator.transform.position.x, shrunkCameraRect.xMin, shrunkCameraRect.xMax),
-                    Mathf.Clamp(currentPredator.transform.position.y, shrunkCameraRect.yMin, shrunkCameraRect.yMax), 0);
+                    Mathf.Clamp(predator.GetPredator().transform.position.x, shrunkCameraRect.xMin, shrunkCameraRect.xMax),
+                    Mathf.Clamp(predator.GetPredator().transform.position.y, shrunkCameraRect.yMin, shrunkCameraRect.yMax), 0);
             }
             else
             {
               warningTarget = new Vector3(
-              Mathf.Clamp(predatorSpawnPosition.x, shrunkCameraRect.xMin, shrunkCameraRect.xMax),
-              Mathf.Clamp(predatorSpawnPosition.y, shrunkCameraRect.yMin, shrunkCameraRect.yMax), 0);
+              Mathf.Clamp(predator.SetSpawnPoint(lg, player).x, shrunkCameraRect.xMin, shrunkCameraRect.xMax),
+              Mathf.Clamp(predator.SetSpawnPoint(lg, player).y, shrunkCameraRect.yMin, shrunkCameraRect.yMax), 0);
             }
 
             //Set Position
-            warning.transform.position = Vector3.Lerp(warning.transform.position, warningTarget, 100 * Time.deltaTime);
+            predator.LinkedWarning().transform.position = Vector3.Lerp(predator.LinkedWarning().transform.position, warningTarget, 100 * Time.deltaTime);
 
             //Set Scale
             float scale; float distance;
-            if (spawned)
+            if (predator.Spawned())
             {
-                distance = Mathf.Abs(Vector3.Distance(player.position, currentPredator.transform.position));
+                distance = Mathf.Abs(Vector3.Distance(player.position, predator.GetPredator().transform.position));
             }
             else
             {
-                distance = Mathf.Abs(Vector3.Distance(player.position, predatorSpawnPosition));
+                distance = Mathf.Abs(Vector3.Distance(player.position, predator.SetSpawnPoint(lg, player)));
             }
             float normalizedDistance = Mathf.Clamp01(distance / 150f);
-            if(falcon)
+            if(predator.Type() == Predator.PredatorType.Falcon)
                 normalizedDistance = Mathf.Clamp01(distance / 200f);
 
             // Use Mathf.Lerp to interpolate between 0.5 and 1 based on the normalized distance
             scale = Mathf.Lerp(0.5f, 1f, 1 - normalizedDistance);
             scale *= 1.5f;
-            warning.transform.localScale = new Vector3(scale,scale,1);
+            predator.LinkedWarning().transform.localScale = new Vector3(scale,scale,1);
 
             //When the predator enters the cameraview, stop the warning
-            if ((!falcon && (spawned && currentPredator.transform.position.x < (topRight.x + 5) && currentPredator.transform.position.x > (bottomLeft.x - 5)))
-                || (falcon && (spawned && currentPredator.transform.position.y < (topRight.y + 5))))
+            if ((predator.Type() != Predator.PredatorType.Falcon && (predator.Spawned() && predator.GetPredator().transform.position.x < (topRight.x + 5) && predator.GetPredator().transform.position.x > (bottomLeft.x - 5)))
+                || (predator.Type() == Predator.PredatorType.Falcon && (predator.Spawned() && predator.GetPredator().transform.position.y < (topRight.y + 5))))
             {
-                warningActive = false;
-                Destroy(warning);
+                Destroy(predator.LinkedWarning());
             }
         }
     }
@@ -360,10 +388,6 @@ public class PredatorEvents : MonoBehaviour
             cooldownTime = 5;
 
         yield return new WaitForSeconds(cooldownTime);
-        spawned = false;
-        fishEvent = false;
-        birdEvent = false;
-        falcon = false;
         cooldown = false;
     }
 }
