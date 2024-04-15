@@ -1475,7 +1475,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6631045498475935377, guid: d6ca64ac56b1321468354f16f68da917, type: 3}
       propertyPath: chanceToExist
-      value: 3
+      value: 33
       objectReference: {fileID: 0}
     - target: {fileID: 7391011328804356909, guid: d6ca64ac56b1321468354f16f68da917, type: 3}
       propertyPath: m_RootOrder

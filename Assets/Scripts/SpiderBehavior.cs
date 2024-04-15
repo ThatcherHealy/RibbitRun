@@ -25,6 +25,9 @@ public class SpiderBehavior : MonoBehaviour
     [SerializeField] PolygonCollider2D polygonCollider;
     private Vector3[] linePositions = new Vector3[2];
 
+    [SerializeField] Animator animator;
+    string CLIMB;
+
     [Header("Settings")]
     [SerializeField] int chanceToExist = 2;
     [SerializeField] float offsetBelow = 2;
@@ -48,10 +51,26 @@ public class SpiderBehavior : MonoBehaviour
 
     IEnumerator Bob()
     {
+        //Down
+        if(animator != null)
+        {
+            animator.SetFloat("Speed", 0);
+        }
+
         rb.velocity = new Vector3(0, -bobSpacing, 0);
         yield return new WaitForSeconds(2.5f);
+
+        //Up
+        if (animator != null)
+        {
+            animator.Play(CLIMB);
+            animator.SetFloat("Speed", 1);
+        }
+
         rb.velocity = new Vector3(0, bobSpacing, 0);
         yield return new WaitForSeconds(2.5f);
+
+        //Repeat
         StartCoroutine(Bob());
     }
 
@@ -136,8 +155,8 @@ public class SpiderBehavior : MonoBehaviour
     }
     void ChanceToExist()
     {
-        int chance = Random.Range(1, chanceToExist + 1);
-        if (chance == 1)
+        int chance = Random.Range(1, 100);
+        if (chance >=  chanceToExist)
         { 
             Destroy(gameObject);
         }
@@ -148,6 +167,11 @@ public class SpiderBehavior : MonoBehaviour
         if (chance == 5)
         {
             poisonous = true;
+            CLIMB = "PoisonousSpider";
+        }
+        else
+        {
+            CLIMB = "Spider";
         }
     }
     void PoisonEffects()

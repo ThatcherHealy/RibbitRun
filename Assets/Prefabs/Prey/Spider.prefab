@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1910740981947606136}
   - component: {fileID: 7201031332221872579}
   - component: {fileID: 5467423612223057930}
+  - component: {fileID: 2016095577310306926}
   m_Layer: 7
   m_Name: Sprite
   m_TagString: Untagged
@@ -138,6 +139,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &2016095577310306926
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 897317842967383606}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1de10263621d32349b0de68a13a74952, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1657003835755005210
 GameObject:
   m_ObjectHideFlags: 0
@@ -255,7 +277,8 @@ MonoBehaviour:
   poisonSprite: {fileID: 21300000, guid: 63f3c7084c3d71f4c948d535625b9795, type: 3}
   poisonParticlesPrefab: {fileID: 5346177098368801390, guid: 3735d90dc3fcf254187a0d395cc7dfdb, type: 3}
   polygonCollider: {fileID: 7931330051451335728}
-  chanceToExist: 2
+  animator: {fileID: 2016095577310306926}
+  chanceToExist: 50
   offsetBelow: 2
   bobSpacing: 2
   poisonous: 0
@@ -592,6 +615,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09fb78b2e3cbec643a239d032bdb684e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stuck: 0
 --- !u!1 &7433250851653987031
 GameObject:
   m_ObjectHideFlags: 0

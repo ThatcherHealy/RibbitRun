@@ -93,6 +93,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        Time.timeScale = 1.0f;
         SetSpecies();
         ConfigureSpecies();
         initialMaxJumpAimLineLength = maxJumpAimLineLength;
