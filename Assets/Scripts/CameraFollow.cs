@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class CameraFollow : MonoBehaviour
 {
     [SerializeField] Transform player;
+    [SerializeField] DeathScript ds;
     [SerializeField] Transform cameraGuide;
     [SerializeField] Rigidbody2D playerRB;
     [SerializeField] PlayerController playerController;
@@ -32,7 +33,7 @@ public class CameraFollow : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (playerController.eaten && SceneManager.GetActiveScene().name != "Tutorial")
+        if (playerController.eaten && SceneManager.GetActiveScene().name != "Tutorial" && (ds.dontRespawnPressed || ds.respawnedOnce))
         {
             StartCoroutine(Pause());
         }
@@ -116,13 +117,14 @@ public class CameraFollow : MonoBehaviour
     IEnumerator Pause()
     {
         yield return new WaitForSeconds(2);
-        paused = true;
 
         if (!pausePositionSet)
         {
             pausePosition = cameraGuide.position;
             pausePositionSet = true;
         }
+        paused = true;
+
         cameraGuide.position = pausePosition;
     }
 }

@@ -26,20 +26,26 @@ public class DeathScript : MonoBehaviour
     [SerializeField] TextMeshPro youWerePoisonedText;
     [SerializeField] TextMeshPro[] poisonedText;
     [SerializeField] Image greenout;
-    [SerializeField] GameObject pauseButton;
+    public GameObject pauseButton;
 
     [SerializeField] GameAlertController alert;
     [SerializeField] Transform eatenAlertPosition;
     [SerializeField] Transform drownedAlertPosition;
     [SerializeField] Transform poisonedAlertPosition;
     bool alertSpawned;
-
+    public bool greenedOut;
+    public bool unpoison;
 
     string deathBiome;
     bool deathBiomeSetOnce;
 
     bool drownedFadeIn;
-    bool poisonedFadeIn;
+
+    [SerializeField] Button adButton;
+    public GameObject continueScreen;
+    public bool dontRespawnPressed;
+    public bool respawnedOnce;
+    bool respawnSpawned;
     public void RespawnButton()
     {
         SceneManager.LoadScene("GameScene");
@@ -47,17 +53,19 @@ public class DeathScript : MonoBehaviour
 
     private void Update()
     {
+        adButton.interactable = true;
+
         if (tutorial)
         {
-            if(playerController.dead) 
+            if (playerController.dead)
             {
                 if (playerController.eaten)
                 {
                     StartCoroutine(FindFirstObjectByType<PredatorGrab>().CancelGrab(0, playerController.transform, true));
 
-                    if(FindFirstObjectByType<HeronBehavior>() != null)
+                    if (FindFirstObjectByType<HeronBehavior>() != null)
                     {
-                        if(!tp3.pastTheHeron) 
+                        if (!tp3.pastTheHeron)
                             tutorialHelpMessage.SetActive(true);
 
                         Destroy(FindFirstObjectByType<HeronBehavior>().gameObject);
@@ -78,7 +86,21 @@ public class DeathScript : MonoBehaviour
         }
         else
         {
-            if (playerController.dead)
+            bool eatenByAlligator = false;
+            if (playerController.killerGrab != null && playerController.killerGrab.transform.parent != null && playerController.killerGrab.transform.parent.parent != null && playerController.killerGrab.transform.parent.parent.name == "ALLIGATOR")
+             eatenByAlligator = true;
+
+            if ((playerController.drowned || playerController.eaten || greenedOut) && !respawnedOnce && !dontRespawnPressed && !eatenByAlligator)
+            {
+                continueScreen.SetActive(true);
+                pauseButton.SetActive(false);
+
+                if(!respawnSpawned)
+                    StartCoroutine(PauseTime(1f));
+                respawnSpawned = true; 
+            }
+
+            if (playerController.dead && (dontRespawnPressed || respawnedOnce || playerController.poisoned || eatenByAlligator))
             {
                 pauseButton.SetActive(false); //Deactivate pause button
                 if (!deathBiomeSetOnce) //Set biome
@@ -92,8 +114,9 @@ public class DeathScript : MonoBehaviour
                     eatenDeathScene.SetActive(true);
                     if (playerController.killer != null)
                         killerText.text = AorAn(playerController.killer) + RemoveClone(playerController.killer).ToUpper();
+                    playerController.killerFinalized = true;
 
-                    if(!alertSpawned)
+                    if (!alertSpawned)
                     {
                         alert.CheckForNewUnlocks(eatenAlertPosition);
                         alertSpawned = true;
@@ -101,7 +124,6 @@ public class DeathScript : MonoBehaviour
                 }
                 if (playerController.drowned && !playerController.poisoned && !playerController.eaten) //drowned
                 {
-                    
                     drownScene.SetActive(true);
                     StartCoroutine(BeginDrownFadeIn());
                 }
@@ -115,39 +137,25 @@ public class DeathScript : MonoBehaviour
             {
                 FadeInDrownScene();
             }
-            if (poisonedFadeIn)
+        }
+
+        if(unpoison)
+        {
+            greenout.color = new Color(greenout.color.r, greenout.color.g, greenout.color.b,
+            Mathf.Clamp(greenout.color.a - 0.6f * Time.deltaTime, 0, 1));
+
+            if (greenout.color.a <= 0)
             {
-                FadeInPoisonScene();
+                unpoison = false;
             }
         }
     }
-    static string AorAn(string name)
-    {
-        string a;
-        if (name.Substring(0, 1).ToLower() == "a" || name.Substring(0, 1).ToLower() == "e" || name.Substring(0, 1).ToLower() == "i"
-            || name.Substring(0, 1).ToLower() == "o" || name.Substring(0, 1).ToLower() == "u")
-        {
-            a = "AN ";
-        }
-        else
-        {
-            a = "A ";
-        }
-        return a;
-    }
-    static string RemoveClone(string name)
-    {
-        if (name.Substring(name.Length - 7, 7) == "(Clone)" )
-        {
-            return name.Substring(0, name.Length - 7);
-        }
-        else
-        {
-            return name;
-        }
-    }
 
-
+    IEnumerator PauseTime(float time)
+    {
+        yield return new WaitForSeconds(time);
+        Time.timeScale = 0;
+    }
     private void FadeInDrownScene()
     {
         youDrownedText.color = new Color(youDrownedText.color.r, youDrownedText.color.g, youDrownedText.color.b, youDrownedText.color.a + (0.3f * Time.deltaTime));
@@ -185,9 +193,12 @@ public class DeathScript : MonoBehaviour
         Mathf.Clamp(greenout.color.a + 0.35f * Time.deltaTime, 0, 1));
 
         //Die after the blackout is opaque
-        if (greenout.color.a >= 1)
+        if (greenout.color.a >= 1 && playerController.poisoned)
         {
-            FadeInPoisonScene();
+            greenedOut = true;
+
+            if(respawnedOnce || dontRespawnPressed)
+                FadeInPoisonScene();
         }
     }
     private void FadeInPoisonScene()
@@ -229,5 +240,30 @@ public class DeathScript : MonoBehaviour
             deathBiome = "Amazon";
         }
         PlayerPrefs.SetString("StartBiome", deathBiome);
+    }
+    static string AorAn(string name)
+    {
+        string a;
+        if (name.Substring(0, 1).ToLower() == "a" || name.Substring(0, 1).ToLower() == "e" || name.Substring(0, 1).ToLower() == "i"
+            || name.Substring(0, 1).ToLower() == "o" || name.Substring(0, 1).ToLower() == "u")
+        {
+            a = "AN ";
+        }
+        else
+        {
+            a = "A ";
+        }
+        return a;
+    }
+    static string RemoveClone(string name)
+    {
+        if (name.Substring(name.Length - 7, 7) == "(Clone)")
+        {
+            return name.Substring(0, name.Length - 7);
+        }
+        else
+        {
+            return name;
+        }
     }
 }

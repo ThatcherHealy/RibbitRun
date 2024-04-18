@@ -362,6 +362,7 @@ GameObject:
   - component: {fileID: 2989037001892407867}
   - component: {fileID: 8832579825661028464}
   - component: {fileID: 3450916673301229311}
+  - component: {fileID: 6807510073304281372}
   m_Layer: 15
   m_Name: Piranha
   m_TagString: Predator
@@ -432,9 +433,31 @@ MonoBehaviour:
   hitbox: {fileID: 3250470600813353989}
   turner: {fileID: 4627260650738456839}
   rb: {fileID: 8832579825661028464}
+  animator: {fileID: 6807510073304281372}
   passiveSpeed: 10
   chaseSpeed: 20
   chaseInterval: 0.5
+--- !u!95 &6807510073304281372
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7495963372230017151}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 756dde37b43ff7549942125dce21a1a8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8661205440925450439
 GameObject:
   m_ObjectHideFlags: 0

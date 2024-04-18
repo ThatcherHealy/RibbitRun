@@ -78,7 +78,33 @@ public class PredatorGrab : MonoBehaviour
         yield return new WaitForSeconds(cancelDelay);
         grabbed = false;
 
-        dead = true;
+        if(poisoned)
+            dead = true;
+        else
+        {
+            Destroy(GetComponent<Collider2D>());
+            if(transform.parent.gameObject.GetComponentInChildren<PredatorVision>() != null)
+                transform.parent.gameObject.GetComponentInChildren<PredatorVision>().GetComponent<Collider2D>().enabled = false;
+            if (transform.parent.gameObject.GetComponentInChildren<ChaseRange>() != null)
+                transform.parent.gameObject.GetComponentInChildren<ChaseRange>().GetComponent<Collider2D>().enabled = false;
+
+            if(transform.parent != null)
+            {
+                if(transform.parent.parent != null)
+                {
+                    if(transform.parent.parent.name == "Salmon" || transform.parent.parent.name == "Salmon(Clone)") //Destroys all salmon swarm grabs
+                    {
+                        PredatorGrab[] grabs = transform.parent.parent.GetComponentsInChildren<PredatorGrab>();
+                        foreach (PredatorGrab grab in grabs)
+                        {
+                            Destroy(grab);
+                        }
+                    }
+                }
+            }
+
+        }
+
 
         frog.gameObject.GetComponent<Rigidbody2D>().mass = 3;
         if (!tutorial)

@@ -140,7 +140,7 @@ public class OxygenAndMoistureController : MonoBehaviour
         Mathf.Clamp(blackout.color.a + (currentOxygen <= 0 || playerController.drowned ? 0.25f : -1f) * Time.deltaTime, 0, 1));
 
         //Die after the blackout is opaque
-        if(blackout.color.a >= 1)
+        if(blackout.color.a >= 1 && currentOxygen <= 0)
         {
             playerController.dead = true;
             playerController.drowned = true;

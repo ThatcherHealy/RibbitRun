@@ -52,7 +52,7 @@ public class GarBehavior : MonoBehaviour
         }
 
         //Make the gar fall down when out of water
-        if (!hitbox.dead) 
+        if (!hitbox.dead)
         {
             if (uc.underwater)
             {
@@ -83,7 +83,7 @@ public class GarBehavior : MonoBehaviour
                 rb.drag = 0.001f;
                 if (!forceApplied)
                 {
-                    MoveTowardsWaypoint(); 
+                    MoveTowardsWaypoint();
                 }
             }
             else //Hunting
@@ -128,7 +128,7 @@ public class GarBehavior : MonoBehaviour
 
         if (pv.huntingMode)
             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 0.02f);
-        else 
+        else
             transform.rotation = targetRotation;
 
         if (transform.eulerAngles.z > 90 && transform.eulerAngles.z < 270)
@@ -285,10 +285,10 @@ public class GarBehavior : MonoBehaviour
         int randomWaypoint = Random.Range(0, waypoints.Length);
         currentWaypoint = randomWaypoint;
     }
-    IEnumerator EatPlayer() 
+    IEnumerator EatPlayer()
     {
         yield return new WaitForSeconds(0.3f);
-        if (pv.frog != null && !hitbox.dead) 
+        if (pv.frog != null && !hitbox.dead && ((FindFirstObjectByType<DeathScript>().dontRespawnPressed || FindFirstObjectByType<DeathScript>().respawnedOnce) && pv.frog.GetComponent<PlayerController>().eaten)) 
         {
                 if (pv.frog.position.x > transform.position.x)
             transform.localScale = new Vector3(-1, 1, 1); // Flip the sprite

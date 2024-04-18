@@ -41,13 +41,9 @@ public class HeronBehavior : MonoBehaviour
             endPoint = levelGenerator.playerRefEndPoint;
 
         //Turn around when hitting an edge
-        if (math.distance(transform.position.x, player.position.x) < 50)
-        {
-            turner.active = true;
-            TurnAround();
-        }
-        else
-            turner.active = false;
+        turner.active = true;
+        TurnAround();
+
 
         if(hitbox1.dead || hitbox2.dead) //Makes the predator die and float to the surface when it gets poisoned
         {

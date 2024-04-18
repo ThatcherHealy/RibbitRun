@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
     public bool dead;
     public bool eaten;
     public string killer;
+    public PredatorGrab killerGrab;
     public bool drowned;
     public bool dried;
     public bool poisoned;
@@ -68,6 +69,7 @@ public class PlayerController : MonoBehaviour
     Vector3 dragReleasePos;
     Touch touch;
     bool splashParticleCooldown;
+    public bool killerFinalized;
 
     [Header("Animation")]
     bool jumpAnimationPlaying;
@@ -663,15 +665,24 @@ public class PlayerController : MonoBehaviour
             if (!drowned && (!poisonAvailable) && !invulnerable 
                 || eatenByAlligator)
             {
-                if (killer == "")
+                killerGrab = collision.gameObject.GetComponent<PredatorGrab>();
+
+                if (!killerFinalized)
                 {
                     if (collision.transform.parent.transform.parent != null)
+                    {
                         killer = collision.transform.parent.transform.parent.gameObject.name;
+                    }
                     else if (collision.transform.parent != null)
+                    {
                         killer = collision.transform.parent.gameObject.name;
+                    }
                     else
+                    {
                         killer = collision.gameObject.name;
+                    }
                 }
+                
 
                 eaten = true;
                 dead = true;

@@ -16,6 +16,7 @@ public class ScoreController : MonoBehaviour
     [SerializeField] Canvas canvas;
     [SerializeField] PlayerController playerController;
     [SerializeField] LevelGenerator lg;
+    [SerializeField] DeathScript ds;
     [SerializeField] TextMeshPro finalScoreText;
     [SerializeField] TextMeshPro highscoreText;
     [SerializeField] TextMeshPro drownedFinalScoreText;
@@ -73,7 +74,7 @@ public class ScoreController : MonoBehaviour
         }
 
         //When the player dies, display their final score
-        if (playerController.dead && !tutorial)
+        if (playerController.dead && (ds.dontRespawnPressed || ds.respawnedOnce) && !tutorial)
         {
             if (playerController.drowned)
             {

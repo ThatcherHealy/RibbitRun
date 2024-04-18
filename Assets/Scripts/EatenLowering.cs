@@ -11,6 +11,10 @@ public class EatenLowering : MonoBehaviour
     {
         if(gameObject.activeSelf && !activated) 
         {
+            if(FindFirstObjectByType<DeathScript>().dontRespawnPressed) 
+            {
+                lowerDelay = 1f;
+            }
             StartCoroutine(WaitThenLower());
             activated = true;
         }

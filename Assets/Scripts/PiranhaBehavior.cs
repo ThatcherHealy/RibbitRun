@@ -9,9 +9,11 @@ public class PiranhaBehavior : MonoBehaviour
     [SerializeField] PredatorGrab hitbox;
     [SerializeField] WaypointTurner turner;
     [SerializeField] Rigidbody2D rb;
+    [SerializeField] Animator animator;
     [SerializeField] float passiveSpeed = 10;
     [SerializeField] float chaseSpeed = 10;
     [SerializeField] float chaseInterval = 0.5f;
+
 
     Vector3 initialPosition;
     private Vector3[] waypoints = new Vector3[4];
@@ -73,10 +75,11 @@ public class PiranhaBehavior : MonoBehaviour
             {
                 if(!grabSwap)
                 {
-                    forceApplied = false;
+                    StartCoroutine(EatPlayer());
+                 /*   forceApplied = false;
                     passiveSpeed *= 10;
-                    SetWaypoints();
-                    grabSwap = true;
+                    SetWaypoints();*/
+                    grabSwap = true; 
                 }
             }
 
@@ -254,5 +257,17 @@ public class PiranhaBehavior : MonoBehaviour
 
         int randomWaypoint = Random.Range(0, waypoints.Length);
         currentWaypoint = randomWaypoint;
+    }
+    IEnumerator EatPlayer()
+    {
+        yield return new WaitForSeconds(0.3f);
+        if (pv.frog != null && !hitbox.dead && ((FindFirstObjectByType<DeathScript>().dontRespawnPressed || FindFirstObjectByType<DeathScript>().respawnedOnce) && pv.frog.GetComponent<PlayerController>().eaten))
+        {
+            if (pv.frog.position.x > transform.position.x)
+                transform.localScale = new Vector3(-1, 1, 1); // Flip the sprite
+
+            animator.enabled = true;
+            animator.SetBool("Thrash", true);
+        }
     }
 }
