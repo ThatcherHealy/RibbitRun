@@ -308,6 +308,7 @@ MonoBehaviour:
   isLinkOffsetScalePositiveY: 0
   isLinkOffsetScaleNegativeY: 0
   turner: {fileID: 6345600503653544822}
+  animator: {fileID: 7375690091036005789}
   behavior: 0
 --- !u!50 &8169689638425876732
 Rigidbody2D:

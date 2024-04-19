@@ -154,8 +154,11 @@ public class PiranhaBehavior : MonoBehaviour
     {
         Vector3 direction = pv.frog.position - transform.position;
 
-        rb.velocity = Vector2.zero;
-        rb.AddForce(direction.normalized * chaseSpeed, ForceMode2D.Impulse);
+        if(uc.underwater)
+        {
+            rb.velocity = Vector2.zero;
+            rb.AddForce(direction.normalized * chaseSpeed, ForceMode2D.Impulse);
+        }
         chaseForceApplied = true;
         StartCoroutine(LungeDelay(chaseInterval));
     }

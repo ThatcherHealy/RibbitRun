@@ -213,7 +213,7 @@ public class ScoreController : MonoBehaviour
             }
         }
     }
-    private int Highscore()
+    public int Highscore()
     {
         if (PlayerController.species == PlayerController.Species.Default)
         {

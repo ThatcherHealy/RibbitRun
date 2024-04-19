@@ -25,6 +25,8 @@ public class FlyBehavior : MonoBehaviour
     private bool isInverted = false;
 
     [SerializeField] WaypointTurner turner;
+    [SerializeField] Animator animator;
+    float animationOffset;
     bool moving;
     float initialOffset;
 
@@ -58,6 +60,11 @@ public class FlyBehavior : MonoBehaviour
             behavior = Behavior.Circle;
         }
 
+        float animationOffset = Random.Range(0, 3);
+        {
+            StartCoroutine(Animate(animationOffset));
+        }
+
         pivot = transform.position;
         originalPosition = transform.position;
 
@@ -69,6 +76,12 @@ public class FlyBehavior : MonoBehaviour
             phase = 3.14f;
         else
             phase = 0;
+    }
+
+    IEnumerator Animate(float offset)
+    {
+        yield return new WaitForSeconds(offset);
+        animator.Play("FlyAnimation");
     }
 
     void Update()

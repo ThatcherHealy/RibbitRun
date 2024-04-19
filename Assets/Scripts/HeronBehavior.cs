@@ -12,6 +12,7 @@ public class HeronBehavior : MonoBehaviour
     [SerializeField] PredatorGrab hitbox2;
     [SerializeField] PredatorTurner turner;
     [SerializeField] Rigidbody2D rb;
+    [SerializeField] float offset;
     bool turned;
     LevelGenerator levelGenerator;
     Vector3 endPoint;
@@ -41,8 +42,13 @@ public class HeronBehavior : MonoBehaviour
             endPoint = levelGenerator.playerRefEndPoint;
 
         //Turn around when hitting an edge
-        turner.active = true;
-        TurnAround();
+        if (math.distance(transform.position.x, player.position.x) < 50)
+        {
+            Debug.Log("Here");
+            turner.active = true;
+            TurnAround();
+        }
+
 
 
         if(hitbox1.dead || hitbox2.dead) //Makes the predator die and float to the surface when it gets poisoned
@@ -110,8 +116,8 @@ public class HeronBehavior : MonoBehaviour
         }
 
         //The bird can't go under the water
-        if (lerpedPosition.y < (endPoint.y + 3.585f))
-            lerpedPosition.y = (endPoint.y + 3.585f);
+        if (lerpedPosition.y < (endPoint.y + 6.085f))
+            lerpedPosition.y = (endPoint.y + 6.085f);
 
         //Sets the birds yPosition
         transform.position = new Vector3(transform.position.x, lerpedPosition.y, 0);
@@ -120,6 +126,7 @@ public class HeronBehavior : MonoBehaviour
     {
         if (turner.turnDirection.Equals("Right")) //If colliding from the left, flip right
         {
+            Debug.Log("Right");
             if (!turned)
             {
                 transform.eulerAngles = new Vector3(0, 0, 0);
@@ -128,6 +135,8 @@ public class HeronBehavior : MonoBehaviour
         }
         else if (turner.turnDirection.Equals("Left")) //If colliding from the right, flip left
         {
+            Debug.Log("Left");
+
             if (!turned)
             {
                 transform.eulerAngles = new Vector3(0, 180, 0);
