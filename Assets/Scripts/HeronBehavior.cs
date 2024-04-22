@@ -42,9 +42,8 @@ public class HeronBehavior : MonoBehaviour
             endPoint = levelGenerator.playerRefEndPoint;
 
         //Turn around when hitting an edge
-        if (math.distance(transform.position.x, player.position.x) < 50)
+        if (math.distance(transform.position.x, player.position.x) < 75 || player.GetComponent<PlayerController>().eaten)
         {
-            Debug.Log("Here");
             turner.active = true;
             TurnAround();
         }
@@ -126,20 +125,18 @@ public class HeronBehavior : MonoBehaviour
     {
         if (turner.turnDirection.Equals("Right")) //If colliding from the left, flip right
         {
-            Debug.Log("Right");
             if (!turned)
             {
-                transform.eulerAngles = new Vector3(0, 0, 0);
+                transform.eulerAngles = new Vector3(0, 180, 0);
                 turned = true;
             }
         }
         else if (turner.turnDirection.Equals("Left")) //If colliding from the right, flip left
         {
-            Debug.Log("Left");
 
             if (!turned)
             {
-                transform.eulerAngles = new Vector3(0, 180, 0);
+                transform.eulerAngles = new Vector3(0, 0, 0);
                 turned = true;
 
             }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.SceneManagement;
 
 public class PredatorGrab : MonoBehaviour
 {
@@ -80,7 +81,7 @@ public class PredatorGrab : MonoBehaviour
 
         if(poisoned)
             dead = true;
-        else
+        else if(!tutorial)
         {
             Destroy(GetComponent<Collider2D>());
             if(transform.parent.gameObject.GetComponentInChildren<PredatorVision>() != null)
@@ -98,6 +99,13 @@ public class PredatorGrab : MonoBehaviour
                         foreach (PredatorGrab grab in grabs)
                         {
                             Destroy(grab);
+                        }
+
+                        Transform[] objects = transform.parent.parent.GetComponentsInChildren<Transform>();
+                        foreach(Transform obj in objects)
+                        {
+                            if (obj.CompareTag("Predator"))
+                                obj.tag = "Untagged";
                         }
                     }
                 }

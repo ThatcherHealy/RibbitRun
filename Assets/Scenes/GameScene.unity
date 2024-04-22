@@ -10125,8 +10125,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000043392, y: -0.000068665}
-  m_SizeDelta: {x: 255.84, y: 342.18}
+  m_AnchoredPosition: {x: -0.00014496, y: -0.00029182}
+  m_SizeDelta: {x: 85.28, y: 114.06}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &954862387
 MonoBehaviour:
@@ -10211,7 +10211,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 85.92697, y: 113.74358, z: 85.34648, w: 114.15089}
+  m_margin: {x: 0.4868965, y: -0.53229517, z: 0.86650467, w: -1.0057068}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -10629,6 +10629,7 @@ MonoBehaviour:
   dragStartPosition: {x: 0, y: 0, z: 0}
   dragEndPosition: {x: 0, y: 0, z: 0}
   touchEnded: 0
+  timeSlow: 0.4
   aimMultiplier: 2
   grappleTarget: {fileID: 0}
   grapplePointIdentified: 0
@@ -23185,8 +23186,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000043392, y: -0.000068665}
-  m_SizeDelta: {x: 255.84, y: 342.18}
+  m_AnchoredPosition: {x: 0.00014496, y: -0.00029182}
+  m_SizeDelta: {x: 85.28, y: 114.06}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1991802157
 MonoBehaviour:
@@ -23271,7 +23272,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 85.54704, y: 113.41534, z: 84.79653, w: 114.419044}
+  m_margin: {x: -0.22024155, y: -0.61076355, z: -0.9707546, w: -1.6603928}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

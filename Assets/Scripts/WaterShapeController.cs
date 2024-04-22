@@ -7,6 +7,7 @@ using UnityEngine.U2D;
 
 public class WaterShapeController : MonoBehaviour
 {
+    [SerializeField] bool everyOther;
 
     private int CornersCount = 2;
     [SerializeField]
@@ -128,7 +129,7 @@ public class WaterShapeController : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (otherFrame == true)
+        if (otherFrame == true || !everyOther)
         {
             foreach (WaterSpring waterSpringComponent in springs.Take(springs.Count() - 1).Skip(1).ToArray())
             {

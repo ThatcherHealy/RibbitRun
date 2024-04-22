@@ -56,6 +56,7 @@ public class TongueLauncher : MonoBehaviour
     public bool touchEnded;
 
     [Header("My Variables")]
+    [SerializeField] float timeSlow = 0.3f;
     [SerializeField] float aimMultiplier = 2;
     public GameObject grappleTarget;
     public bool grapplePointIdentified = false;
@@ -152,7 +153,7 @@ public class TongueLauncher : MonoBehaviour
             && !pauseScript.pause && !playerController.dead)
         {
             touchEnded = true;
-            Time.timeScale = 0.3f;
+            Time.timeScale = timeSlow;
         }
         else if (!pauseScript.pause) //Resume time when tongue is fired or when the player is grounded
         {

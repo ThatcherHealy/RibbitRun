@@ -67,9 +67,14 @@ public class Predator
                 return new Vector2(player.position.x - 100, lg.playerRefEndPoint.y + 9.585f);
         }
     }
-    public void SpawnPredator(Vector3 spawnPoint, Transform player)
+    public void SpawnPredator(Vector3 spawnPoint, Transform player, LevelGenerator lg)
     {
-        if(type != PredatorType.FishSwarm)
+        if (lg.playerBiome == LevelGenerator.Biome.Bog && type == PredatorType.Arapaima)
+            type = PredatorType.FishSwarm;
+        else if (lg.playerBiome == LevelGenerator.Biome.Amazon && type == PredatorType.FishSwarm)
+            type = PredatorType.Arapaima;
+
+        if (type != PredatorType.FishSwarm)
             activeObject = GameObject.Instantiate(prefab, spawnPoint, Quaternion.identity);
         else
         {
@@ -135,8 +140,8 @@ public class PredatorEvents : MonoBehaviour
 
     IEnumerator DetermineSpawnTime()
     {
-        //Decrease checkInterval by 0.2 every 250 points, capped out at 2 seconds
-        float multiplier = Mathf.Round(sc.score / 250);
+        //Decrease checkInterval by 0.2 every 200 points, capped out at 2 seconds
+        float multiplier = Mathf.Round(sc.score / 200);
         for (int i = 0; i < multiplier; i++)
         {
             checkInterval -= 0.2f;
@@ -194,7 +199,7 @@ public class PredatorEvents : MonoBehaviour
             fishSwarm.SpawnWarning(warningPrefab, fishSwarm.SetSpawnPoint(lg, player));
 
             yield return new WaitForSeconds(warningTime);
-            fishSwarm.SpawnPredator(fishSwarm.SetSpawnPoint(lg, player), player);
+            fishSwarm.SpawnPredator(fishSwarm.SetSpawnPoint(lg, player), player, lg);
             fishSwarm.SetSpawned(true);
 
             fishSwarm.DestroyTimer(15);
@@ -209,7 +214,7 @@ public class PredatorEvents : MonoBehaviour
             arapaima.SpawnWarning(warningPrefab, arapaima.SetSpawnPoint(lg, player));
 
             yield return new WaitForSeconds(warningTime);
-            arapaima.SpawnPredator(arapaima.SetSpawnPoint(lg, player), player);
+            arapaima.SpawnPredator(arapaima.SetSpawnPoint(lg, player), player, lg);
             arapaima.SetSpawned(true);
 
             arapaima.DestroyTimer(15);
@@ -229,7 +234,7 @@ public class PredatorEvents : MonoBehaviour
             falcon.SpawnWarning(warningPrefab, falcon.SetSpawnPoint(lg, player));
 
             yield return new WaitForSeconds(warningTime);
-            falcon.SpawnPredator(falcon.SetSpawnPoint(lg, player), player);
+            falcon.SpawnPredator(falcon.SetSpawnPoint(lg, player), player,lg);
             falcon.SetSpawned(true);
 
             falcon.DestroyTimer(15);
@@ -244,7 +249,7 @@ public class PredatorEvents : MonoBehaviour
             heron.SpawnWarning(warningPrefab, heron.SetSpawnPoint(lg, player));
 
             yield return new WaitForSeconds(warningTime);
-            heron.SpawnPredator(heron.SetSpawnPoint(lg, player), player);
+            heron.SpawnPredator(heron.SetSpawnPoint(lg, player), player, lg);
             heron.SetSpawned(true);
 
             heron.DestroyTimer(15);
@@ -377,8 +382,8 @@ public class PredatorEvents : MonoBehaviour
         cooldown = true;
         checkInterval = 5;
 
-        //Decrease cooldownTime by 1 every 250 points, capped out at 5 seconds
-        float multiplier = Mathf.Round(sc.score / 250);
+        //Decrease cooldownTime by 0.5 every 175 points, capped out at 5 seconds at 3500
+        float multiplier = Mathf.Round(sc.score / 175);
         for (int i = 0; i < multiplier; i++)
         {
             cooldownTime -= 0.5f;

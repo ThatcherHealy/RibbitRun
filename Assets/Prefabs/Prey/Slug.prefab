@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6318903690738970438}
   - component: {fileID: 1271045186049059564}
   - component: {fileID: 3530789411756297091}
+  - component: {fileID: -8603693219361510208}
   m_Layer: 7
   m_Name: Slug
   m_TagString: Grapplable
@@ -77,6 +78,23 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-8603693219361510208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2655693556493925586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f28429567214e8f4abbdc206659c5048, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dependence: Bog
+  replacement: {fileID: 0}
+  destroyOnTransition: 0
+  heightDependence: 0
+  dependentHeight: 0
 --- !u!1 &2928403111073073174
 GameObject:
   m_ObjectHideFlags: 0

@@ -2682,6 +2682,7 @@ MonoBehaviour:
   dragStartPosition: {x: 0, y: 0, z: 0}
   dragEndPosition: {x: 0, y: 0, z: 0}
   touchEnded: 0
+  timeSlow: 0.4
   aimMultiplier: 2
   grappleTarget: {fileID: 0}
   grapplePointIdentified: 0
@@ -13274,6 +13275,12 @@ MonoBehaviour:
   eatenAlertPosition: {fileID: 0}
   drownedAlertPosition: {fileID: 0}
   poisonedAlertPosition: {fileID: 0}
+  greenedOut: 0
+  unpoison: 0
+  adButton: {fileID: 0}
+  continueScreen: {fileID: 0}
+  dontRespawnPressed: 0
+  respawnedOnce: 0
 --- !u!223 &983403490
 Canvas:
   m_ObjectHideFlags: 0
@@ -13382,13 +13389,16 @@ MonoBehaviour:
   canvas: {fileID: 983403490}
   playerController: {fileID: 1982715169}
   lg: {fileID: 0}
+  ds: {fileID: 0}
   finalScoreText: {fileID: 0}
   highscoreText: {fileID: 0}
   drownedFinalScoreText: {fileID: 0}
   drownedHighscoreText: {fileID: 0}
   poisonedFinalScoreText: {fileID: 0}
   poisonedHighscoreText: {fileID: 0}
+  highscoreWordTexts: []
   startPoint: {fileID: 803456015}
+  hasHighscore: 0
 --- !u!1 &983937294
 GameObject:
   m_ObjectHideFlags: 0
@@ -13475,6 +13485,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1982715172}
+  ds: {fileID: 0}
   cameraGuide: {fileID: 1823476775}
   playerRB: {fileID: 1982715171}
   playerController: {fileID: 1982715169}
@@ -25318,6 +25329,7 @@ MonoBehaviour:
   dead: 0
   eaten: 0
   killer: 
+  killerGrab: {fileID: 0}
   drowned: 0
   dried: 0
   poisoned: 0
@@ -25328,6 +25340,7 @@ MonoBehaviour:
   skipToJump: 0
   changeBiome: 0
   transitionCamera: 0
+  killerFinalized: 0
   sprite: {fileID: 1349695356}
   animator: {fileID: 1349695357}
 --- !u!58 &1982715170

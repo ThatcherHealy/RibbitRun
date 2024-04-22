@@ -27,9 +27,14 @@ public class AlligatorBehavior : MonoBehaviour
             Activate();
             SetPosition();
         }
+
         if (pc.dead) 
         {
             destructionPoint.SetActive(false);
+        }
+        else if(active)
+        {
+            destructionPoint.SetActive(true);
         }
     }
     void Activate()

@@ -53,7 +53,8 @@ public class DeathScript : MonoBehaviour
 
     private void Update()
     {
-        adButton.interactable = true;
+        if(adButton != null)
+            adButton.interactable = true;
 
         if (tutorial)
         {
@@ -112,6 +113,9 @@ public class DeathScript : MonoBehaviour
                 if (playerController.eaten && !playerController.drowned && !playerController.poisoned) //eaten
                 {
                     eatenDeathScene.SetActive(true);
+                    drownScene.SetActive(false);
+                    poisonedScene.SetActive(false);
+
                     if (playerController.killer != null)
                         killerText.text = AorAn(playerController.killer) + RemoveClone(playerController.killer).ToUpper();
                     playerController.killerFinalized = true;
@@ -125,11 +129,17 @@ public class DeathScript : MonoBehaviour
                 if (playerController.drowned && !playerController.poisoned && !playerController.eaten) //drowned
                 {
                     drownScene.SetActive(true);
+                    eatenDeathScene.SetActive(false);
+                    poisonedScene.SetActive(false);
+
                     StartCoroutine(BeginDrownFadeIn());
                 }
                 if (playerController.poisoned && !playerController.drowned && !playerController.eaten) //poisoned
                 {
                     poisonedScene.SetActive(true);
+                    eatenDeathScene.SetActive(false);
+                    drownScene.SetActive(false);
+
                     Greenout();
                 }
             }

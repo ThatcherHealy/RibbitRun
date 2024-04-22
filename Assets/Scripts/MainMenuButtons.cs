@@ -7,6 +7,8 @@ using static PlayerController;
 
 public class MainMenuButtons : MonoBehaviour
 {
+    [SerializeField] GameObject optionsMenu;
+    [SerializeField] GameObject[] mainStuff;
     [SerializeField] Image[] buttons;
     [SerializeField] FrogUnlock unlock;
 
@@ -27,6 +29,26 @@ public class MainMenuButtons : MonoBehaviour
     public void Return()
     {
         SceneManager.LoadScene("MainMenu");
+    }
+    public void Options()
+    {
+        optionsMenu.SetActive(true);
+        foreach (GameObject obj in mainStuff)
+        {
+            obj.SetActive(false);
+        }
+    }
+    public void OptionsBack()
+    {
+        optionsMenu.SetActive(false);
+        foreach (GameObject obj in mainStuff)
+        {
+            obj.SetActive(true);
+        }
+    }
+    public void ReplayTutorial()
+    {
+        SceneManager.LoadScene("Tutorial");
     }
     public void SelectDefault()
     {
