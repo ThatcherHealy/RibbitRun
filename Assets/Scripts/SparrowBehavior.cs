@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class SparrowBehavior : MonoBehaviour
@@ -8,6 +6,7 @@ public class SparrowBehavior : MonoBehaviour
     Rigidbody2D rb;
     TongueLauncher tl;
     [SerializeField] GameObject grappleDetector;
+    [SerializeField] SparrowTurner turner;
     Vector3 initialPosition;
     Vector3 nextPosition;
     Vector3 escapePosition;
@@ -21,6 +20,7 @@ public class SparrowBehavior : MonoBehaviour
     bool rotationSet;
     bool scared;
     bool startRunTimer;
+    bool turned;
     [SerializeField] PredatorVision vision;
 
     [SerializeField] Transform sprite;
@@ -60,6 +60,9 @@ public class SparrowBehavior : MonoBehaviour
 
     void FixedUpdate()
     {
+        turner.active = true;
+        TurnAround();
+
         if (run || escape || exit) //Lock rotation
         {
             rb.transform.localRotation = Quaternion.identity;
@@ -180,6 +183,28 @@ public class SparrowBehavior : MonoBehaviour
         else
         {
             sprite.localPosition = new Vector3(0.23f, -0.18f, 0);
+        }
+    }
+    void TurnAround()
+    {
+        if(!turner.turnDirection.Equals("") && !turned)
+        {
+            if(transform.localScale.x < 0)
+            {
+                nextPosition = initialPosition - new Vector3(5, 0);
+                escapePosition = nextPosition - new Vector3(200, 0);
+                exitPosition = escapePosition - new Vector3(200, 0);
+                transform.localScale = new Vector3(Mathf.Abs(initialScale.x), initialScale.y, initialScale.z);
+                turned = true;
+            }
+            else if (transform.localScale.x > 0)
+            {
+                nextPosition = initialPosition + new Vector3(5, 0);
+                escapePosition = nextPosition + new Vector3(200, 0);
+                exitPosition = escapePosition + new Vector3(200, 0);
+                transform.localScale = new Vector3(-Mathf.Abs(initialScale.x), initialScale.y, initialScale.z);
+                turned = true;
+            }
         }
     }
 }

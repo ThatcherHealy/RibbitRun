@@ -1,20 +1,17 @@
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class PredatorTurner : MonoBehaviour
+public class SparrowTurner : MonoBehaviour
 {
     public string turnDirection;
     public bool active;
     bool turned;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == 14 || (transform.parent.name == "Heron(Clone)" && collision.gameObject.name == "CypressTree" && FindFirstObjectByType<PlayerController>().eaten) && active)
+        if (collision.gameObject.layer == 14 || collision.gameObject.name == "CypressTree" && active)
         {
-            Debug.Log("Here");
-            if (!turned) 
+            if (!turned)
             {
                 if (transform.parent.position.x < collision.transform.position.x) //Approaching from the left
                 {

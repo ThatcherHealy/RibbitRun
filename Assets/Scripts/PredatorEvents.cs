@@ -270,6 +270,19 @@ public class PredatorEvents : MonoBehaviour
             {
                 predators.Remove(predator);
             }
+
+            //Destroy predators in the wrong biome
+            if((predator.Type() == Predator.PredatorType.Arapaima && lg.playerBiome != LevelGenerator.Biome.Amazon)
+                || predator.Type() == Predator.PredatorType.FishSwarm && lg.playerBiome != LevelGenerator.Biome.Bog)
+            {
+                if(predator.Type() == Predator.PredatorType.FishSwarm)
+                    Destroy(predator.GetPredator().transform.parent.gameObject);
+                else
+                    Destroy(predator.GetPredator());
+
+                Destroy(predator.LinkedWarning());
+                predators.Remove(predator);
+            }
         }
         foreach (Predator predator in predators)
         {

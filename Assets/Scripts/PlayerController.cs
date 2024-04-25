@@ -1,5 +1,7 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -91,7 +93,10 @@ public class PlayerController : MonoBehaviour
     string STRAIGHT_JUMP = "FrogStraightJump";
     string STRAIGHT_GRAPPLE = "FrogStraightGrapple";
 
-
+    private void Awake()
+    {
+        Application.targetFrameRate = 60;
+    }
 
     private void Start()
     {
@@ -116,6 +121,7 @@ public class PlayerController : MonoBehaviour
         if (!dead && !pauseScript.pause) 
         {
             DetectInputs();
+            Jump();
         }
 
         if (dead)
@@ -128,12 +134,10 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = Vector3.zero;
         }
-
     }
     private void FixedUpdate()
     {
         GroundCheck();
-        Jump();
         Swimming();
         AnimateFrog();
         SetDirection();
@@ -537,6 +541,7 @@ public class PlayerController : MonoBehaviour
         else if (currentState == SLIDE) 
         {
             sprite.transform.localPosition = new Vector3(0, -0.2f, 0);
+            sprite.transform.localScale = new Vector3(initialSpriteScale.x, Mathf.Abs(initialSpriteScale.y), 1);
         }
         else
         {
@@ -562,7 +567,8 @@ public class PlayerController : MonoBehaviour
         else
         {
             sprite.transform.localScale = new Vector3(1, 1, 1);  // Reset the sprite scale
-        } 
+        }
+        SetDirection();
     }
 
     IEnumerator JumpAnimationTimer() 

@@ -84,7 +84,15 @@ public class PredatorGrab : MonoBehaviour
         else if(!tutorial)
         {
             Destroy(GetComponent<Collider2D>());
-            if(transform.parent.gameObject.GetComponentInChildren<PredatorVision>() != null)
+            if (transform.parent.gameObject.GetComponentsInChildren<PredatorGrab>() != null) //Destroy all predator grab boxes in a predator
+            {
+                PredatorGrab[] grabs = transform.parent.gameObject.GetComponentsInChildren<PredatorGrab>();
+                foreach (PredatorGrab grab in grabs)
+                {
+                    Destroy(grab.gameObject.GetComponent<Collider2D>());
+                }
+            }
+            if (transform.parent.gameObject.GetComponentInChildren<PredatorVision>() != null)
                 transform.parent.gameObject.GetComponentInChildren<PredatorVision>().GetComponent<Collider2D>().enabled = false;
             if (transform.parent.gameObject.GetComponentInChildren<ChaseRange>() != null)
                 transform.parent.gameObject.GetComponentInChildren<ChaseRange>().GetComponent<Collider2D>().enabled = false;

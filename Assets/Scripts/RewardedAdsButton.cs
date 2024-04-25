@@ -64,16 +64,25 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
         {
             Debug.Log("Unity Ads Rewarded Ad Completed");
             // Grant a reward.
-            if(pc.eaten)
-                StartCoroutine(pc.killerGrab.CancelGrab(0.2f, pc.transform, false));
-            pc.dead = false; pc.eaten = false; pc.drowned = false; pc.poisoned = false;
-            omc.currentMoisture = 100; omc.currentOxygen = 100;
-            ds.respawnedOnce = true;
-            ds.pauseButton.SetActive(true);
-            ds.continueScreen.SetActive(false);
-            ds.greenedOut = false;
-            ds.unpoison = true;
-            Time.timeScale = 1;
+            if(pc != null)
+            {
+                if (pc.eaten)
+                    StartCoroutine(pc.killerGrab.CancelGrab(0.2f, pc.transform, false));
+                pc.dead = false; pc.eaten = false; pc.drowned = false; pc.poisoned = false;
+            }
+            if(omc != null)
+            {
+                omc.currentMoisture = 100; omc.currentOxygen = 100;
+            }
+            if(ds != null) 
+            {
+                ds.respawnedOnce = true;
+                ds.pauseButton.SetActive(true);
+                ds.continueScreen.SetActive(false);
+                ds.greenedOut = false;
+                ds.unpoison = true;
+                Time.timeScale = 1;
+            }
         }
     }
 

@@ -123,6 +123,21 @@ public class HeronBehavior : MonoBehaviour
     }
     void TurnAround() 
     {
+        if(!turner.turnDirection.Equals(""))
+        {
+            if (!turned && transform.eulerAngles == new Vector3(0, 180, 0))
+            {
+                transform.eulerAngles = new Vector3(0, 0, 0);
+                turned = true;
+            }
+            if (!turned && transform.eulerAngles == new Vector3(0, 0, 0))
+            {
+                transform.eulerAngles = new Vector3(0, 180, 0);
+                turned = true;
+            }
+        }
+
+        /*
         if (turner.turnDirection.Equals("Right")) //If colliding from the left, flip right
         {
             if (!turned)
@@ -140,6 +155,6 @@ public class HeronBehavior : MonoBehaviour
                 turned = true;
 
             }
-        }
+        }*/
     }
 }
