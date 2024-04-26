@@ -64,8 +64,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.5032965, y: 0.21999845}
-  m_Size: {x: 4.34707, y: 3.3902879}
+  m_Offset: {x: -0.14430831, y: 0.28526753}
+  m_Size: {x: 6.239948, y: 3.9777625}
   m_Direction: 1
 --- !u!1 &2182179920400537631
 GameObject:
@@ -246,6 +246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09fb78b2e3cbec643a239d032bdb684e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stuck: 0
 --- !u!212 &4036142763807216805
 SpriteRenderer:
   m_ObjectHideFlags: 0

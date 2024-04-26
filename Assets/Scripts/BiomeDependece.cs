@@ -61,7 +61,7 @@ public class BiomeDependece : MonoBehaviour
     }
     IEnumerator CheckForTransitionSlide() 
     {
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(2);
         RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position, Vector2.down);
         for (int i = 0; i < hit.Length; i++)
         {
@@ -74,7 +74,7 @@ public class BiomeDependece : MonoBehaviour
     }
     IEnumerator CheckHeight() 
     {
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(2);
         RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position, Vector2.down);
         for (int i = 0; i < hit.Length; i++)
         {

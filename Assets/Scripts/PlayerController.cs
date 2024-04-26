@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
@@ -95,7 +96,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        Application.targetFrameRate = 60;
+        //Application.targetFrameRate = 60;
     }
 
     private void Start()
@@ -493,6 +494,12 @@ public class PlayerController : MonoBehaviour
         if(!tongueLauncher.aimingGrapple && !isSwimming && !isSliding && (currentState == READY_SWIM || currentState == SWIM || currentState == MIDSWIM))
         {
             ChangeAnimationState(MIDAIR);
+        }
+
+        //While in a straight animation state, rotate to match velocity
+        if(currentState == STRAIGHT_JUMP || currentState == STRAIGHT_GRAPPLE)
+        {
+            SetSpriteRotation((transform.position + (Vector3)rb.velocity) - transform.position, 0);
         }
 
         //Resets the rotation after you leave the water
@@ -959,7 +966,7 @@ public class PlayerController : MonoBehaviour
 
 
         col.gameObject.GetComponent<PredatorGrab>().poisoned = true;
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(10);
         invulnerable = false;
     }
 }

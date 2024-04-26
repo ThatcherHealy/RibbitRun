@@ -13,7 +13,6 @@ public class PredatorTurner : MonoBehaviour
     {
         if (collision.gameObject.layer == 14 || (transform.parent.name == "Heron(Clone)" && collision.gameObject.name == "CypressTree" && FindFirstObjectByType<PlayerController>().eaten) && active)
         {
-            Debug.Log("Here");
             if (!turned) 
             {
                 if (transform.parent.position.x < collision.transform.position.x) //Approaching from the left
@@ -26,6 +25,13 @@ public class PredatorTurner : MonoBehaviour
                 }
                 turned = true;
             }
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 14 || (transform.parent.name == "Heron(Clone)" && collision.gameObject.name == "CypressTree" && FindFirstObjectByType<PlayerController>().eaten) && turned)
+        {
+            turnDirection = "";
         }
     }
 }

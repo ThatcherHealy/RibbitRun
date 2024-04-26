@@ -42,7 +42,7 @@ public class HeronBehavior : MonoBehaviour
             endPoint = levelGenerator.playerRefEndPoint;
 
         //Turn around when hitting an edge
-        if (math.distance(transform.position.x, player.position.x) < 75 || player.GetComponent<PlayerController>().eaten)
+        if (/*math.distance(transform.position.x, player.position.x) < 75 ||*/ player.GetComponent<PlayerController>().eaten)
         {
             turner.active = true;
             TurnAround();
@@ -52,6 +52,7 @@ public class HeronBehavior : MonoBehaviour
 
         if(hitbox1.dead || hitbox2.dead) //Makes the predator die and float to the surface when it gets poisoned
         {
+            GetComponentInChildren<Animator>().enabled = false;
             GetComponentInChildren<PolygonCollider2D>().gameObject.tag = "Grapplable";
             rb.bodyType = RigidbodyType2D.Dynamic;
             rb.mass = 30;

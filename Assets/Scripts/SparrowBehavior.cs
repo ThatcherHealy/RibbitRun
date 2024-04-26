@@ -151,7 +151,7 @@ public class SparrowBehavior : MonoBehaviour
                 if (tl.grappleTarget == grappleDetector) //Slows down the bird when you grapple to it so it can't get away and makes it only grapplable once
                 {
                     stop = true;
-                    rb.velocity /= 1.01f;
+                    rb.velocity /= 1.02f;
                     grappleDetector.tag = "Untagged";
                     scared = true; //Speeds up the bird cause they're scared :(
                 }
