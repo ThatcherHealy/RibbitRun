@@ -93,6 +93,7 @@ public class DeathScript : MonoBehaviour
 
             if ((playerController.drowned || playerController.eaten || greenedOut) && !respawnedOnce && !dontRespawnPressed && !eatenByAlligator)
             {
+                playerController.invulnerable = true;
                 continueScreen.SetActive(true);
                 pauseButton.SetActive(false);
 

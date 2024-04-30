@@ -14,6 +14,7 @@ public class ChaseRange : MonoBehaviour
             {
                 pv.huntingMode = false;
                 pv.frog = null;
+                pv.rangeLeft = true;
             }
         }
     }

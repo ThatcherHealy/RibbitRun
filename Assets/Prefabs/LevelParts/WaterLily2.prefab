@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 6327656569803048972}
   - component: {fileID: 6825692242762832248}
   - component: {fileID: 3913618831239660135}
+  - component: {fileID: 3698133256433394951}
   m_Layer: 6
   m_Name: Sprite
   m_TagString: Grapplable
@@ -241,6 +242,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3698133256433394951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5118703056671918887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5f182c256310fa4193f0edbfbefad8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6428222690697897810
 GameObject:
   m_ObjectHideFlags: 0
@@ -404,3 +417,5 @@ MonoBehaviour:
   dependence: Amazon
   replacement: {fileID: 3914390435318267078, guid: 4cbee6848fb6b444489b949ad87e97d7, type: 3}
   destroyOnTransition: 0
+  heightDependence: 0
+  dependentHeight: 0

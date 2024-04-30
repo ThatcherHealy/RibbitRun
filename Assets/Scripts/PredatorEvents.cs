@@ -124,7 +124,7 @@ public class PredatorEvents : MonoBehaviour
     private float checkInterval = 5;
     int max, startingValue = 4;
     private bool cooldown = false;
-    bool falcon;
+    bool falconEvent;
 
     private int warningTime = 3;
     private GameObject warning;
@@ -140,7 +140,7 @@ public class PredatorEvents : MonoBehaviour
 
     IEnumerator DetermineSpawnTime()
     {
-        //Decrease checkInterval by 0.2 every 200 points, capped out at 2 seconds
+        //Decrease checkInterval by 0.2 every 200 points, capped out at 1 second
         float multiplier = Mathf.Round(sc.score / 200);
         for (int i = 0; i < multiplier; i++)
         {
@@ -160,19 +160,39 @@ public class PredatorEvents : MonoBehaviour
             {
                 max = startingValue;
                 //Spawns a fish when you're in the water and a bird when you're out of the water
-                //Never spawns a bird when you're in cypress
+                //Never spawns a fish when you're in cypress
                 if (pc.isSwimming && lg.playerBiome != LevelGenerator.Biome.Cypress)
                 {
                     StartCoroutine(FishEvent());
+
+                    float doubleChance = UnityEngine.Random.Range(1, 20000);
+                    int sameChance = UnityEngine.Random.Range(1, 3);
+                    if (sc.score > 1000 && doubleChance <= sc.score)
+                    {
+                        yield return new WaitForSeconds(1.5f);
+
+                        if(sameChance == 1)
+                            StartCoroutine(FishEvent());
+                        else
+                            StartCoroutine(BirdEvent());
+                    }
                 }
                 else
                 {
-                    int falconChance = UnityEngine.Random.Range(1, 4);
-                    if (falconChance == 1)
-                    {
-                        falcon = true;
-                    } 
+
                     StartCoroutine(BirdEvent());
+
+                    float doubleChance = UnityEngine.Random.Range(1, 20000);
+                    int sameChance = UnityEngine.Random.Range(1, 3);
+                    if (doubleChance <= sc.score)
+                    {
+                        yield return new WaitForSeconds(1.5f);
+
+                        if (sameChance == 1 || lg.playerBiome == LevelGenerator.Biome.Cypress)
+                            StartCoroutine(BirdEvent());
+                        else
+                            StartCoroutine(FishEvent());
+                    }
                 }
             }
             else
@@ -222,10 +242,21 @@ public class PredatorEvents : MonoBehaviour
     }
     private IEnumerator BirdEvent()
     {
+
         int birdCooldownTime = 20;
         StartCoroutine(Cooldown(birdCooldownTime));
-        if (falcon)
+
+        int falconChance = UnityEngine.Random.Range(1, 4);
+        if (falconChance == 1)
         {
+            falconEvent = true;
+        }
+
+        if (falconEvent)
+        {
+            //Set falcon to false since it is only needed to determine what to spawn
+            falconEvent = false;
+
             Predator falcon = new Predator(Predator.PredatorType.Falcon, falconPrefab);
             predators.Add(falcon);
             falcon.SetDirection(UnityEngine.Random.Range(1, 3));
@@ -255,8 +286,6 @@ public class PredatorEvents : MonoBehaviour
             heron.DestroyTimer(15);
         }
 
-        //Set falcon to false since it is only needed to determine what to spawn
-        falcon = false;
 
     }
 

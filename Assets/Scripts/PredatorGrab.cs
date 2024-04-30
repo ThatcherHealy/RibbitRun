@@ -43,7 +43,7 @@ public class PredatorGrab : MonoBehaviour
                         else
                             frog = collision.gameObject.transform.parent;
 
-                        if (!poisoned)
+                        if (!poisoned && !frog.GetComponent<PlayerController>().invulnerable)
                         {
                             grabbed = true;
                             frog.gameObject.GetComponent<Rigidbody2D>().mass = 0;
@@ -60,6 +60,14 @@ public class PredatorGrab : MonoBehaviour
         {
             poisonedOnce = true;
             StartCoroutine(CancelGrab(2, frog, false));
+        }
+        if(grabbed && poisoned)
+        {
+            pc.grabbedByPoisonedPredator = true;
+        }
+        if(grabbed && transform.parent != null && transform.parent.parent != null && transform.parent.parent.name == "Falcon(Clone)" && poisoned)
+        {
+            pc.grabbedByPoisonedFalcon = true;
         }
     }
     private void FixedUpdate()
@@ -78,6 +86,8 @@ public class PredatorGrab : MonoBehaviour
         //Releases the player after 2 seconds
         yield return new WaitForSeconds(cancelDelay);
         grabbed = false;
+        pc.grabbedByPoisonedPredator = false;
+        pc.grabbedByPoisonedFalcon = false;
 
         if(poisoned)
             dead = true;

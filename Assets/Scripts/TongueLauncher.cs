@@ -27,6 +27,7 @@ public class TongueLauncher : MonoBehaviour
     [SerializeField] Rigidbody2D rb;
 
     [Header("Distance:")]
+    public float grappleStrength = 20;
     [SerializeField] private bool hasMaxDistance = false;
     public float baseMaxDistance;
     private float maxDistance;
@@ -261,10 +262,9 @@ public class TongueLauncher : MonoBehaviour
     void Grapple()
     {
         rb.gravityScale = 0;
-        int strength = 20;
 
         //Set the frog's velocity towards the grapple point
-        addedForce = (grapplePoint - (Vector2)transform.position).normalized * strength;
+        addedForce = (grapplePoint - (Vector2)transform.position).normalized * grappleStrength;
         rb.velocity = addedForce;
     }
     void SetRangeCircle()

@@ -56,9 +56,10 @@ public class CameraFollow : MonoBehaviour
 
             Vector3 targetPosition = new Vector3(player.position.x + xOffset, baseHeight, 0);
 
-            if ((playerController.killer == "Falcon(Clone)" || playerController.killer == "Falcon" || playerController.eatenByFalcon) && playerController.eaten) //Move the target up when eaten by a falcon to keep it in frame
+            if (((playerController.killer == "Falcon(Clone)" || playerController.killer == "Falcon" || playerController.eatenByFalcon) && playerController.eaten)
+                    || playerController.grabbedByPoisonedFalcon) //Move the target up when eaten by a falcon to keep it in frame
             {
-                targetPosition = new Vector3(targetPosition.x, targetPosition.y + 20, targetPosition.z);
+                targetPosition = new Vector3(targetPosition.x, targetPosition.y + 25, targetPosition.z);
             }
 
             cameraGuide.position = Vector3.SmoothDamp(cameraGuide.position, targetPosition, ref velocity, heightDamping);
@@ -71,9 +72,10 @@ public class CameraFollow : MonoBehaviour
 
                 Vector3 targetPosition = new Vector3(player.position.x + xOffset, player.position.y - (yInwardsBias + 2), 0);
 
-                if ((playerController.killer == "Falcon(Clone)" || playerController.killer == "Falcon" || playerController.eatenByFalcon) && playerController.eaten) //Move the target up when eaten by a falcon to keep it in frame
+                if (((playerController.killer == "Falcon(Clone)" || playerController.killer == "Falcon" || playerController.eatenByFalcon) && playerController.eaten)
+                    || playerController.grabbedByPoisonedFalcon) //Move the target up when eaten by a falcon to keep it in frame
                 {
-                    targetPosition = new Vector3(targetPosition.x, targetPosition.y + 20, targetPosition.z);
+                    targetPosition = new Vector3(targetPosition.x, targetPosition.y + 25, targetPosition.z);
                 }
 
                 cameraGuide.position = Vector3.SmoothDamp(cameraGuide.position, targetPosition, ref velocity, heightDamping);
@@ -89,9 +91,10 @@ public class CameraFollow : MonoBehaviour
                     targetPosition = new Vector3(targetPosition.x, mudLevel + offsetAboveMud, targetPosition.z);
                 }
 
-                if ((playerController.killer == "Falcon(Clone)" || playerController.killer == "Falcon" || playerController.eatenByFalcon) && playerController.eaten) //Move the target up when eaten by a falcon to keep it in frame
+                if (((playerController.killer == "Falcon(Clone)" || playerController.killer == "Falcon" || playerController.eatenByFalcon) && playerController.eaten)
+                    || playerController.grabbedByPoisonedFalcon) //Move the target up when eaten by a falcon to keep it in frame
                 {
-                    targetPosition = new Vector3(targetPosition.x, targetPosition.y + 20, targetPosition.z);
+                    targetPosition = new Vector3(targetPosition.x, targetPosition.y + 25, targetPosition.z);
                 }
 
                 cameraGuide.position = Vector3.SmoothDamp(cameraGuide.position, targetPosition, ref velocity, heightDamping);

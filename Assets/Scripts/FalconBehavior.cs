@@ -163,6 +163,7 @@ public class FalconBehavior : MonoBehaviour
             rb.velocity = new Vector2(-20, 0);
             player.GetComponent<Rigidbody2D>().velocity = new Vector2(-15, 0);
             GetComponentInChildren<PolygonCollider2D>().gameObject.tag = "Grapplable";
+            GetComponentInChildren<PolygonCollider2D>().gameObject.layer = LayerMask.NameToLayer("DeadPredator");
             rb.bodyType = RigidbodyType2D.Dynamic;
             rb.mass = 30;
             rb.gravityScale = 1;

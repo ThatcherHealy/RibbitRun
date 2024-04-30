@@ -129,7 +129,7 @@ public class PiranhaBehavior : MonoBehaviour
         Quaternion targetRotation = Quaternion.Euler(0f, 0f, angle - 180);
 
         if (pv.huntingMode)
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 0.02f);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 0.2f);
         if (!pv.huntingMode || hitbox.grabbed)
             transform.rotation = targetRotation;
 

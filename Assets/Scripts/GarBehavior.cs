@@ -11,7 +11,7 @@ public class GarBehavior : MonoBehaviour
     [SerializeField] Rigidbody2D rb;
     [SerializeField] Animator animator;
     [SerializeField] float passiveSpeed = 10;
-    [SerializeField] float chaseSpeed = 20;
+    [SerializeField] float chaseSpeed = 30F;
     [SerializeField] float chaseInterval = 1.2f;
     [SerializeField] Transform target;
 
@@ -22,6 +22,7 @@ public class GarBehavior : MonoBehaviour
     bool forceApplied; //True after the force has been applied to the gar in the direction of its next waypoint
     bool chaseForceApplied; //True after the force has been applied to the gar in the direction of the player
     bool attacking; //True if the gar was hunting last frame
+    bool attackDelayCompleted;
     void Start()
     {
         animator.enabled = false;
@@ -63,6 +64,12 @@ public class GarBehavior : MonoBehaviour
                 rb.gravityScale = 5;
             }
         }
+
+        if(pv.rangeLeft)
+        {
+            attackDelayCompleted = false;
+            pv.rangeLeft = false;
+        }
     }
     private void FixedUpdate()
     {
@@ -91,7 +98,7 @@ public class GarBehavior : MonoBehaviour
                 rb.drag = 0.6f;
                 if (pv.frog != null)
                 {
-                    if (!chaseForceApplied)
+                    if (attackDelayCompleted && !chaseForceApplied)
                     {
                         MoveTowardsPlayer();
                     }
@@ -127,7 +134,7 @@ public class GarBehavior : MonoBehaviour
         Quaternion targetRotation = Quaternion.Euler(0f, 0f, angle - 180);
 
         if (pv.huntingMode)
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 0.1f);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 0.075f);
         else
             transform.rotation = targetRotation;
 
@@ -201,6 +208,12 @@ public class GarBehavior : MonoBehaviour
             StartCoroutine(WaitThenReturn());
         }
 
+        //If the gar just saw a player, wait to attack them
+        if(pv.huntingMode && !attacking) 
+        {
+            StartCoroutine(InitialAttackDelay());
+        }
+
         if (pv.huntingMode)
         {
             attacking = true;
@@ -212,34 +225,39 @@ public class GarBehavior : MonoBehaviour
     }
     IEnumerator WaitThenReturn()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.2f);
         forceApplied = false;
+    }
+    IEnumerator InitialAttackDelay()
+    {
+        yield return new WaitForSeconds(0.3f);
+        attackDelayCompleted = true;
     }
     private void LockRotation(Vector3 target)
     {
         //Locks rotation to 20 degrees
         if (target.x < 0) //looking left
         {
-            //Lock between 340 and 20
-            if (transform.eulerAngles.z > 300 && transform.eulerAngles.z < 340)
+            //Lock between 330 and 30
+            if (transform.eulerAngles.z > 300 && transform.eulerAngles.z < 330)
             {
-                transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 340);
+                transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 330);
             }
-            else if (transform.eulerAngles.z < 180 && transform.eulerAngles.z > 20)
+            else if (transform.eulerAngles.z < 180 && transform.eulerAngles.z >30)
             {
-                transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 20);
+                transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 30);
             }
         }
         else //looking right
         {
-            //Lock between 160 and 200
-            if (transform.eulerAngles.z < 160)
+            //Lock between 150 and 210
+            if (transform.eulerAngles.z < 150)
             {
-                transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 160);
+                transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 150);
             }
-            if (transform.eulerAngles.z > 200)
+            if (transform.eulerAngles.z > 210)
             {
-                transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 200);
+                transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 210);
             }
         }
     }

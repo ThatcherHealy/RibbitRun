@@ -6,6 +6,7 @@ public class PredatorVision : MonoBehaviour
 {
     public bool huntingMode;
     public Transform frog;
+    public bool rangeLeft;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision != null)

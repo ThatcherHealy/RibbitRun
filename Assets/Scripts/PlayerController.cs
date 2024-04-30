@@ -46,8 +46,10 @@ public class PlayerController : MonoBehaviour
     public bool dried;
     public bool poisoned;
     public bool invulnerable;
+    [HideInInspector] public bool grabbedByPoisonedFalcon;
+    [HideInInspector] public bool grabbedByPoisonedPredator;
     public enum Species { Default, Treefrog, Froglet, BullFrog, PoisonDartFrog };
-    bool poisonAvailable;
+    [HideInInspector] public bool poisonAvailable;
 
     [Header("Settings")]
     [SerializeField] float aimMultiplier = 2;
@@ -333,7 +335,9 @@ public class PlayerController : MonoBehaviour
             secondLinePoint = transform.position + Vector3.ClampMagnitude(((dragStartPos - draggingPos) * aimMultiplier), maxJumpAimLineLength);
             if (!isSliding) 
             {
-                ChangeAnimationState(IDLE);
+                if(isGrounded)
+                    ChangeAnimationState(IDLE);
+
                 if (aimingJumpStopsMomentum)
                 {
                     rb.velocity = new Vector2(0, rb.velocity.y);
@@ -391,12 +395,13 @@ public class PlayerController : MonoBehaviour
                 break;
             case Species.Treefrog:
                 jumpingPower = 35f;
-                swimmingPower = 23;
+                swimmingPower = 25;
                 maxJumpAimLineLength = 12;
                 maxSwimAimLineLength = 7;
                 oxygenAndMoistureController.oxygenLossRate = 0.08f;
                 oxygenAndMoistureController.moistureLossRate = 0.06f;
                 tongueLauncher.baseMaxDistance = 33;
+                tongueLauncher.grappleStrength = 25;
                 break;
             case Species.Froglet:
                 jumpingPower = 20;
@@ -406,6 +411,7 @@ public class PlayerController : MonoBehaviour
                 oxygenAndMoistureController.oxygenLossRate = 0f;
                 oxygenAndMoistureController.moistureLossRate = 0.15f;
                 tongueLauncher.baseMaxDistance = 18;
+                tongueLauncher.grappleStrength = 18;
                 break;
             case Species.BullFrog:
                 jumpingPower = 29;
@@ -433,79 +439,99 @@ public class PlayerController : MonoBehaviour
     //////////////////////////////////////////////////////////////////////////////////////////////// ANIMATION //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void AnimateFrog()
     {
-        //When the player is grounded, they are idle when their velocity is less than 1 and sliding otherwise
-        if (isGrounded && !draggingStarted && !jumpAnimationPlaying)
+        if (eaten || grabbedByPoisonedPredator)
         {
-            if (Mathf.Abs(rb.velocity.x) <= 1f && !isSliding)
+            ChangeAnimationState(GRAPPLE);
+        }
+        else
+        {
+            //When the player is grounded, they are idle when their velocity is less than 1 and sliding otherwise
+            if (isGrounded && !draggingStarted && !jumpAnimationPlaying)
             {
-                ChangeAnimationState(IDLE);
-                sprite.rotation = Quaternion.identity;
+                if (Mathf.Abs(rb.velocity.x) <= 1f && !isSliding)
+                {
+                    ChangeAnimationState(IDLE);
+                    sprite.rotation = Quaternion.identity;
+                }
+                else
+                {
+                    ChangeAnimationState(SLIDE);
+                }
             }
-            else
+
+            //Make the player always slide on slides
+            if (isSliding && !jumpAnimationPlaying)
             {
                 ChangeAnimationState(SLIDE);
-
             }
-        }
 
-        //Make the player always slide on slides
-        if(isSliding && !jumpAnimationPlaying)
-        {
-            ChangeAnimationState(SLIDE);
-        }
+            //Open mouth while aiming
+            if (tongueLauncher.aimingGrapple && !isGrounded && !isSwimming)
+            {
+                if (currentState == MIDAIR)
+                    ChangeAnimationState(GRAPPLE);
 
-        //Open mouth while aiming
-        if(tongueLauncher.aimingGrapple && !isGrounded && !isSwimming)
-        {
-            if(currentState == MIDAIR)
-                ChangeAnimationState(GRAPPLE);
+                if (currentState == STRAIGHT_JUMP)
+                    ChangeAnimationState(STRAIGHT_GRAPPLE);
+            }
 
-            if(currentState == STRAIGHT_JUMP)
+            //Open mouth while grappling, but only set rotation at the moment the frog begins grappling
+            if (tongueLine.isGrappling)
+            {
                 ChangeAnimationState(STRAIGHT_GRAPPLE);
-        }
 
-        //Open mouth while grappling, but only set rotation at the moment the frog begins grappling
-        if (tongueLine.isGrappling) 
-        {
-            ChangeAnimationState(STRAIGHT_GRAPPLE);
-
-            if(!grappleRotationSet)
-            {
-                SetSpriteRotation((Vector3)tongueLauncher.grapplePoint - transform.position, 0);
-                grappleRotationSet = true;
+                if (!grappleRotationSet)
+                {
+                    SetSpriteRotation((Vector3)tongueLauncher.grapplePoint - transform.position, 0);
+                    grappleRotationSet = true;
+                }
             }
-        }
-        else //When the grapple is done, resume midair animation
-        {
-            grappleRotationSet = false;
-            if((currentState == GRAPPLE || currentState == STRAIGHT_GRAPPLE) && !tongueLauncher.aimingGrapple) 
+            else //When the grapple is done, resume midair animation
             {
-                ChangeAnimationState(STRAIGHT_JUMP);
+                grappleRotationSet = false;
+                if ((currentState == GRAPPLE || currentState == STRAIGHT_GRAPPLE) && !tongueLauncher.aimingGrapple)
+                {
+                    ChangeAnimationState(STRAIGHT_JUMP);
+                }
             }
-        }
 
-        //If you jump into the water, start MIDSWIM animation
-        if(isSwimming && currentState != SWIM && currentState != READY_SWIM)
-        {
-            ChangeAnimationState(MIDSWIM);
-        }
+            //If you jump into the water, start MIDSWIM animation
+            if (isSwimming && currentState != SWIM && currentState != READY_SWIM)
+            {
+                ChangeAnimationState(MIDSWIM);
+            }
 
-        //If you jump out of the water, start MIDJUMP animation
-        if(!tongueLauncher.aimingGrapple && !isSwimming && !isSliding && (currentState == READY_SWIM || currentState == SWIM || currentState == MIDSWIM))
-        {
-            ChangeAnimationState(MIDAIR);
-        }
+            //If you jump out of the water, start MIDJUMP animation
+            if (!tongueLauncher.aimingGrapple && !isSwimming && !isSliding && (currentState == READY_SWIM || currentState == SWIM || currentState == MIDSWIM))
+            {
+                ChangeAnimationState(MIDAIR);
+            }
+            //If you jump out of the water while aiming grapple, start GRAPPLE animation
+            if (tongueLauncher.aimingGrapple && !isSwimming && !isSliding && (currentState == READY_SWIM || currentState == SWIM || currentState == MIDSWIM))
+            {
+                ChangeAnimationState(GRAPPLE);
+            }
 
-        //While in a straight animation state, rotate to match velocity
-        if(currentState == STRAIGHT_JUMP || currentState == STRAIGHT_GRAPPLE)
-        {
-            SetSpriteRotation((transform.position + (Vector3)rb.velocity) - transform.position, 0);
-        }
+            //Scrapped change that made slide go to straight jump when not grounded
+            if(currentState ==IDLE && !isGrounded)
+            {
+                if (tongueLine.isGrappling)
+                    ChangeAnimationState(STRAIGHT_GRAPPLE);
+                else
+                    ChangeAnimationState(STRAIGHT_JUMP);
+            } 
 
-        //Resets the rotation after you leave the water
-        if(!isSwimming && wasSwimming)
-        {
-            sprite.rotation = Quaternion.identity;
+            //While in a straight animation state, rotate to match velocity
+            if (currentState == STRAIGHT_JUMP || currentState == STRAIGHT_GRAPPLE)
+            {
+                SetSpriteRotation((transform.position + (Vector3)rb.velocity) - transform.position, 0);
+            }
+
+            //Resets the rotation after you leave the water
+            if (!isSwimming && wasSwimming)
+            {
+                sprite.rotation = Quaternion.identity;
+            }
         }
         wasSwimming = isSwimming;
     }

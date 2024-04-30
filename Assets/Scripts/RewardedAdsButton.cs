@@ -69,6 +69,7 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
                 if (pc.eaten)
                     StartCoroutine(pc.killerGrab.CancelGrab(0.2f, pc.transform, false));
                 pc.dead = false; pc.eaten = false; pc.drowned = false; pc.poisoned = false;
+                StartCoroutine(InvincibleDelay());
             }
             if(omc != null)
             {
@@ -84,6 +85,11 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
                 Time.timeScale = 1;
             }
         }
+    }
+    IEnumerator InvincibleDelay()
+    {
+        yield return new WaitForSeconds(5);
+        pc.invulnerable = false;
     }
 
     // Implement Load and Show Listener error callbacks:
