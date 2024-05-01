@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1745991856108436729}
   - component: {fileID: 3250153881691753457}
   - component: {fileID: 5953196143917445302}
+  - component: {fileID: 8534714594571618930}
   m_Layer: 6
   m_Name: CypressKnee10
   m_TagString: Grapplable
@@ -358,3 +359,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &8534714594571618930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2216448665300908953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb2bfb748f7ea4048abd6d2b002bee5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -609,6 +609,7 @@ GameObject:
   - component: {fileID: 67885878}
   - component: {fileID: 67885877}
   - component: {fileID: 67885876}
+  - component: {fileID: 67885881}
   m_Layer: 6
   m_Name: CypressTree
   m_TagString: Untagged
@@ -913,6 +914,18 @@ Transform:
   m_Father: {fileID: 1958806057}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &67885881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 67885875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb2bfb748f7ea4048abd6d2b002bee5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &71183030
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2649,6 +2662,7 @@ MonoBehaviour:
   lr: {fileID: 178464214}
   tongueRangeCircle: {fileID: 305640270}
   rb: {fileID: 1982715171}
+  grappleStrength: 20
   hasMaxDistance: 1
   baseMaxDistance: 0
   launchToPoint: 1
@@ -25373,6 +25387,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brown: {r: 0.8313726, g: 0.6313726, b: 0.36862746, a: 1}
+  sfx: {fileID: 0}
   tongueLauncher: {fileID: 178464215}
   tongueLine: {fileID: 1721627254}
   rb: {fileID: 1982715171}
@@ -25412,6 +25427,9 @@ MonoBehaviour:
   dried: 0
   poisoned: 0
   invulnerable: 0
+  grabbedByPoisonedFalcon: 0
+  grabbedByPoisonedPredator: 0
+  poisonAvailable: 0
   aimMultiplier: 2
   conserveMomentum: 1
   aimingJumpStopsMomentum: 1

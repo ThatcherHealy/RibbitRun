@@ -18,6 +18,8 @@ TagManager:
   - Web
   - BPrey
   - GrappleIgnore
+  - Lilypad
+  - Log
   layers:
   - Default
   - TransparentFX

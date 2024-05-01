@@ -179,12 +179,11 @@ public class PredatorEvents : MonoBehaviour
                 }
                 else
                 {
-
                     StartCoroutine(BirdEvent());
 
                     float doubleChance = UnityEngine.Random.Range(1, 20000);
                     int sameChance = UnityEngine.Random.Range(1, 3);
-                    if (doubleChance <= sc.score)
+                    if (sc.score > 1000 && doubleChance <= sc.score)
                     {
                         yield return new WaitForSeconds(1.5f);
 

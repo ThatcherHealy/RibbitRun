@@ -835,7 +835,7 @@ GameObject:
   - component: {fileID: 4138161386863210938}
   m_Layer: 0
   m_Name: Lilypad
-  m_TagString: Untagged
+  m_TagString: Lilypad
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -873,6 +873,8 @@ MonoBehaviour:
   dependence: Bog
   replacement: {fileID: 0}
   destroyOnTransition: 0
+  heightDependence: 0
+  dependentHeight: 0
 --- !u!1 &5318315375167693042
 GameObject:
   m_ObjectHideFlags: 0

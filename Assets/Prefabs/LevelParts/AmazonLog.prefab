@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 92440913250892267}
   m_Layer: 6
   m_Name: AmazonLog
-  m_TagString: Grapplable
+  m_TagString: Log
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -122,6 +122,8 @@ MonoBehaviour:
   dependence: Amazon
   replacement: {fileID: 2648785778707408754, guid: eb7822ec4ed35314db72879a9499384b, type: 3}
   destroyOnTransition: 0
+  heightDependence: 0
+  dependentHeight: 0
 --- !u!1 &4308163840707849067
 GameObject:
   m_ObjectHideFlags: 0

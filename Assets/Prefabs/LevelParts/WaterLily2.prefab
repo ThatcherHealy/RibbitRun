@@ -380,7 +380,7 @@ GameObject:
   - component: {fileID: 1016981781764439985}
   m_Layer: 0
   m_Name: WaterLily2
-  m_TagString: Untagged
+  m_TagString: Lilypad
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

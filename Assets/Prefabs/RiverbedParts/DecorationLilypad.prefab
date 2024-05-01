@@ -567,7 +567,7 @@ GameObject:
   - component: {fileID: 2651870473555699660}
   m_Layer: 9
   m_Name: DecorationLilypad
-  m_TagString: Untagged
+  m_TagString: Lilypad
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

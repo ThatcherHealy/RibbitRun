@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] Color brown;
+    [SerializeField] SFXManager sfx;
     [SerializeField] private TongueLauncher tongueLauncher;
     [SerializeField] private TongueLine tongueLine;
     [SerializeField] private Rigidbody2D rb;
@@ -103,6 +104,8 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        sfx = FindFirstObjectByType<SFXManager>();
+
         Time.timeScale = 1.0f;
         SetSpecies();
         ConfigureSpecies();
@@ -250,6 +253,7 @@ public class PlayerController : MonoBehaviour
                     rb.velocity *= 0.3f;
                     power = swimmingPower;
                     ChangeAnimationState(SWIM);
+                    sfx.PlaySFX("Swim");
                 }
             }
             else //Jump
@@ -261,6 +265,7 @@ public class PlayerController : MonoBehaviour
                     rb.velocity = Vector2.zero;
                     power = jumpingPower;
                     ChangeAnimationState(JUMP);
+                    sfx.PlaySFX("Jump");
                     StartCoroutine(JumpAnimationTimer());
                 }
             }
@@ -611,6 +616,28 @@ public class PlayerController : MonoBehaviour
         jumpAnimationPlaying = false;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////// COLLISIONS //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.layer == 6) //ground
+        {
+            if(collision.gameObject.transform.parent != null && collision.gameObject.transform.parent.CompareTag("Lilypad"))
+            {
+                sfx.PlaySFX("Lilypad Land");
+            }
+            if ((collision.gameObject.transform.parent != null && collision.gameObject.transform.parent.CompareTag("Log")) || collision.gameObject.CompareTag("Log"))
+            {
+                sfx.PlaySFX("Log Land");
+            }
+            if(collision.gameObject.GetComponent<CypressTag>() != null)
+            {
+                sfx.PlaySFX("Cypress Land");
+            }
+        }
+        if (collision.gameObject.layer == 14) //mud
+        {
+            sfx.PlaySFX("Mud Land");
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if ((collision.gameObject.layer == 7 || collision.gameObject.layer == 12) 
@@ -659,6 +686,8 @@ public class PlayerController : MonoBehaviour
                 tongueLauncher.grapplePointIdentified = false;
                 rb.gravityScale = defaultGravityScale;
                 power = 25;
+
+                sfx.PlaySFX("Cattail");
 
                 //Spawn Cattail Particles
                 float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;

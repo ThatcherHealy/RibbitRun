@@ -655,7 +655,7 @@ GameObject:
   - component: {fileID: 3703033578603349103}
   m_Layer: 0
   m_Name: PinkFloweredLilypad
-  m_TagString: Untagged
+  m_TagString: Lilypad
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -693,6 +693,8 @@ MonoBehaviour:
   dependence: Bog
   replacement: {fileID: 0}
   destroyOnTransition: 0
+  heightDependence: 0
+  dependentHeight: 0
 --- !u!1 &4284117462592375192
 GameObject:
   m_ObjectHideFlags: 0
