@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5353836306077036044}
   m_Layer: 9
   m_Name: Stick1
-  m_TagString: Untagged
+  m_TagString: Log
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34,7 +34,7 @@ Transform:
   m_Children:
   - {fileID: 1614404858518395617}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4572420998595716036
 SpriteRenderer:

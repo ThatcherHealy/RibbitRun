@@ -89,7 +89,10 @@ public class DeathScript : MonoBehaviour
         {
             bool eatenByAlligator = false;
             if (playerController.killerGrab != null && playerController.killerGrab.transform.parent != null && playerController.killerGrab.transform.parent.parent != null && playerController.killerGrab.transform.parent.parent.name == "ALLIGATOR")
-             eatenByAlligator = true;
+            {
+                eatenByAlligator = true;
+                respawnedOnce = true;
+            }
 
             if ((playerController.drowned || playerController.eaten || greenedOut) && !respawnedOnce && !dontRespawnPressed && !eatenByAlligator)
             {

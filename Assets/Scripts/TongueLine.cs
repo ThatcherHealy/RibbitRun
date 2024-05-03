@@ -7,6 +7,7 @@ public class TongueLine : MonoBehaviour
     [Header("General Refernces:")]
     public TongueLauncher tongueLauncher;
     public LineRenderer m_lineRenderer;
+    [SerializeField] SFXManager sfx;
 
     [Header("General Settings:")]
     [SerializeField] private int precision = 40;
@@ -27,8 +28,13 @@ public class TongueLine : MonoBehaviour
 
     bool straightLine = true;
 
+    bool sfxAllowedToPlay;
+
     private void OnEnable()
-    {   
+    {
+        if(sfxAllowedToPlay)
+            sfx.PlaySFX("Grapple");
+
         moveTime = 0;
         m_lineRenderer.positionCount = precision;
         waveSize = StartWaveSize;
@@ -43,6 +49,7 @@ public class TongueLine : MonoBehaviour
     {
         m_lineRenderer.enabled = false;
         isGrappling = false;
+        sfxAllowedToPlay = true;
     }
 
     private void LinePointsToFirePoint()

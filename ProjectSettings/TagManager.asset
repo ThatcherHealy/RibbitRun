@@ -20,6 +20,7 @@ TagManager:
   - GrappleIgnore
   - Lilypad
   - Log
+  - Plant
   layers:
   - Default
   - TransparentFX

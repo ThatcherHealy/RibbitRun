@@ -16,7 +16,9 @@ public class OxygenAndMoistureController : MonoBehaviour
     [SerializeField] GameObject moistureFill;
     [SerializeField] Image blackout;
     [SerializeField] PostProcessVolume volume;
+    SFXManager sfx;
     private Vignette vignette;
+    bool drownSoundMade;
     
     private float maxOxygen = 100;
     private float maxMoisture = 100;
@@ -26,6 +28,7 @@ public class OxygenAndMoistureController : MonoBehaviour
     public float moistureLossRate = 0.06f;
     void Start()
     {
+        sfx = FindFirstObjectByType<SFXManager>();
         volume.profile.TryGetSettings(out vignette);
 
         oxygenBar.maxValue = maxOxygen;
@@ -41,6 +44,16 @@ public class OxygenAndMoistureController : MonoBehaviour
         if (!playerController.eaten)
         {
             LoseAndGainOxygenandMoisture();
+        }
+
+        if(currentOxygen <= 0 && !drownSoundMade)
+        {
+            sfx.PlaySFX("Drown");
+            drownSoundMade = true;
+        }
+        if(currentOxygen >= 10)
+        {
+            drownSoundMade = false;
         }
     }
 

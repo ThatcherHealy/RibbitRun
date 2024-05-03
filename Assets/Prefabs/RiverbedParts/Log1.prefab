@@ -519,7 +519,7 @@ GameObject:
   - component: {fileID: 3980928352257819048}
   m_Layer: 9
   m_Name: Log1
-  m_TagString: Untagged
+  m_TagString: Log
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -544,7 +544,7 @@ Transform:
   - {fileID: 3266614891645568086}
   - {fileID: 6029964911886225829}
   m_Father: {fileID: 0}
-  m_RootOrder: 26
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &3941559624240723963
 Rigidbody2D:

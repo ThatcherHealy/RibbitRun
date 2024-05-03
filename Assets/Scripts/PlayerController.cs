@@ -76,6 +76,7 @@ public class PlayerController : MonoBehaviour
     Touch touch;
     bool splashParticleCooldown;
     public bool killerFinalized;
+    GameObject currentPlant;
 
     [Header("Animation")]
     bool jumpAnimationPlaying;
@@ -518,7 +519,7 @@ public class PlayerController : MonoBehaviour
             }
 
             //Scrapped change that made slide go to straight jump when not grounded
-            if(currentState ==IDLE && !isGrounded)
+            if(currentState == IDLE && !isGrounded)
             {
                 if (tongueLine.isGrappling)
                     ChangeAnimationState(STRAIGHT_GRAPPLE);
@@ -529,13 +530,19 @@ public class PlayerController : MonoBehaviour
             //While in a straight animation state, rotate to match velocity
             if (currentState == STRAIGHT_JUMP || currentState == STRAIGHT_GRAPPLE)
             {
-                SetSpriteRotation((transform.position + (Vector3)rb.velocity) - transform.position, 0);
+                if(rb.velocity.magnitude >= 5)
+                    SetSpriteRotation((transform.position + (Vector3)rb.velocity) - transform.position, 0);
             }
 
             //Resets the rotation after you leave the water
             if (!isSwimming && wasSwimming)
             {
                 sprite.rotation = Quaternion.identity;
+                sfx.PlaySFX("Exit Water");
+            }
+            if(isSwimming && !wasSwimming)
+            {
+                sfx.PlaySFX("Splash");
             }
         }
         wasSwimming = isSwimming;
@@ -543,12 +550,12 @@ public class PlayerController : MonoBehaviour
     void SetDirection()
     {
         
-        if (rb.velocity.x < -1f && facingRight)
+        if (rb.velocity.x < -3f && facingRight)
         {
             // Player was moving in negative direction
             facingRight = false;
         }
-        if (rb.velocity.x > 1f && !facingRight)
+        if (rb.velocity.x > 3f && !facingRight)
         {
             // Player was moving in positive direction
             facingRight = true;
@@ -612,15 +619,15 @@ public class PlayerController : MonoBehaviour
     IEnumerator JumpAnimationTimer() 
     {
         jumpAnimationPlaying = true;
-        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length * 2);
         jumpAnimationPlaying = false;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////// COLLISIONS //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.layer == 6) //ground
+        if(collision.gameObject.layer == 6 || collision.gameObject.layer == 13 || collision.gameObject.layer == 9) //ground, slugpath, or riverbed decoration
         {
-            if(collision.gameObject.transform.parent != null && collision.gameObject.transform.parent.CompareTag("Lilypad"))
+            if(collision.gameObject.transform.parent != null && collision.gameObject.transform.parent.CompareTag("Lilypad") || collision.gameObject.CompareTag("Lilypad"))
             {
                 sfx.PlaySFX("Lilypad Land");
             }
@@ -628,12 +635,16 @@ public class PlayerController : MonoBehaviour
             {
                 sfx.PlaySFX("Log Land");
             }
-            if(collision.gameObject.GetComponent<CypressTag>() != null)
+            if (collision.gameObject.GetComponent<CypressTag>() != null)
             {
                 sfx.PlaySFX("Cypress Land");
             }
+            if (collision.gameObject.transform.parent != null && collision.gameObject.transform.parent.CompareTag("Rock") || collision.gameObject.CompareTag("Rock"))
+            {
+                sfx.PlaySFX("Rock");
+            }
         }
-        if (collision.gameObject.layer == 14) //mud
+        if (collision.gameObject.layer == 14 || collision.gameObject.layer == 3) //mud
         {
             sfx.PlaySFX("Mud Land");
         }
@@ -727,6 +738,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (collision.transform.parent.transform.parent.gameObject.name == "ALLIGATOR")
                 {
+                    
                     eatenByAlligator = true;
                 }
             }
@@ -795,10 +807,29 @@ public class PlayerController : MonoBehaviour
         {
             saturated = true;
         }
+
+        //Die to poison spiders
         if (collision.gameObject.CompareTag("Poisonous") && species != Species.PoisonDartFrog)
         {
+            sfx.PlaySFX("Poison");
             dead = true;
             poisoned = true;
+        }
+
+        //Plant SFX
+        if ((collision.gameObject.transform.parent != null && collision.gameObject.transform.parent.CompareTag("Plant")) || collision.gameObject.CompareTag("Plant"))
+        {
+            if(currentPlant == null)
+            {
+                sfx.PlaySFX("Plant");
+                currentPlant = collision.gameObject.transform.parent.gameObject;
+            }
+            if(collision.gameObject.transform.parent.gameObject != currentPlant)
+            {
+                sfx.PlaySFX("Plant");
+                currentPlant = collision.gameObject.transform.parent.gameObject;
+            }
+
         }
     }
     IEnumerator SplashCooldown()
@@ -851,6 +882,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.transform.parent != null)
         {
+            sfx.PlaySFX("Eat");
             //if beetle, add 5
             if (collision.gameObject.transform.parent.name == "Beetle(Clone)")
             {
@@ -936,6 +968,7 @@ public class PlayerController : MonoBehaviour
             //if goldfish, add yellow 100
             else if (collision.gameObject.transform.parent.name == "Goldfish(Clone)")
             {
+                sfx.PlaySFX("Eat2");
                 if (PlayerPrefs.GetInt("treeFrogUnlocked", 0) == 1)
                 {
                     PlayerPrefs.SetInt("FishEaten", PlayerPrefs.GetInt("FishEaten", 0) + 1);

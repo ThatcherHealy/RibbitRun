@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class SFXManager : MonoBehaviour
 {
-    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioSource audioSource1;
+    [SerializeField] AudioSource audioSource2;
+    [SerializeField] AudioSource audioSource3;
+    AudioSource audioSource;
     [SerializeField] AudioClip eatSFX;
     [SerializeField] AudioClip jumpSFX;
     [SerializeField] AudioClip swimSFX;
@@ -19,10 +22,23 @@ public class SFXManager : MonoBehaviour
     [SerializeField] AudioClip cattailSFX;
     [SerializeField] AudioClip drownSFX;
     [SerializeField] AudioClip poisonedSFX;
+    [SerializeField] AudioClip rockSFX;
 
+    [SerializeField] AudioClip generalClickSFX;
 
+    float delay = 0.15f;
+    public bool oneReady = true;
+    public bool twoReady = true;
+    public bool threeReady = true;
     public void PlaySFX(string clipToPlay)
     {
+        if (oneReady)
+            audioSource = audioSource1;
+        else if (twoReady)
+            audioSource = audioSource2;
+        else
+            audioSource = audioSource3;
+
         switch (clipToPlay)
         {
             case "Eat":
@@ -61,15 +77,41 @@ public class SFXManager : MonoBehaviour
             case "Cattail":
                 audioSource.clip = cattailSFX;
                 break;
-            case "Drowned":
+            case "Drown":
                 audioSource.clip = drownSFX;
                 break;
-            case "Poisoned":
+            case "Poison":
                 audioSource.clip = poisonedSFX;
                 break;
-
+            case "Rock":
+                audioSource.clip = rockSFX;
+                break;
+            case "Click":
+                audioSource.clip = generalClickSFX;
+                break;
         }
 
+        StartCoroutine(UseAudioSource(audioSource));
         audioSource.Play();
+    }
+
+    //When one audio source is being used, use the next one in line so sounds can overlap
+    IEnumerator UseAudioSource (AudioSource audioSource)
+    {
+        if(audioSource == audioSource1)
+            oneReady = false;
+        else if (audioSource == audioSource2) 
+            twoReady = false;
+        else
+            threeReady = false;
+
+        yield return new WaitForSeconds(audioSource.clip.length);
+
+        if (audioSource == audioSource1)
+            oneReady = true;
+        else if (audioSource == audioSource2)
+            twoReady = true;
+        else
+            threeReady = true;
     }
 }

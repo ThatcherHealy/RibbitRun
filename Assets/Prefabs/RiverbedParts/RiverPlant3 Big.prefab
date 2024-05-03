@@ -4148,7 +4148,7 @@ GameObject:
   - component: {fileID: 8163778844768037931}
   m_Layer: 9
   m_Name: RiverPlant3 Big
-  m_TagString: Untagged
+  m_TagString: Plant
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -11,9 +11,15 @@ public class PauseButtons : MonoBehaviour
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject pauseIcon;
     [SerializeField] GameObject score;
+    SFXManager sfx;
     public bool pause;
+    private void Start()
+    {
+        sfx = FindFirstObjectByType<SFXManager>();
+    }
     public void Pause()
     {
+        sfx.PlaySFX("Click");
         pause = true;
         pauseMenu.SetActive(true);
         score.SetActive(false);
@@ -22,6 +28,8 @@ public class PauseButtons : MonoBehaviour
     }
     public void Resume()
     {
+        sfx.PlaySFX("Click");
+
         pause = false;
         pauseMenu.SetActive(false);
         score.SetActive(true);
@@ -30,6 +38,7 @@ public class PauseButtons : MonoBehaviour
     }
     public void Restart()
     {
+        sfx.PlaySFX("Click");
         pause = false;
         pauseMenu.SetActive(false);
         score.SetActive(true);
@@ -44,6 +53,8 @@ public class PauseButtons : MonoBehaviour
     }
     public void TutorialRestart()
     {
+        sfx.PlaySFX("Click");
+
         pause = false;
         pauseMenu.SetActive(false);
         score.SetActive(true);
@@ -53,6 +64,8 @@ public class PauseButtons : MonoBehaviour
     }
     public void Home()
     {
+        sfx.PlaySFX("Click");
+
         SceneManager.LoadScene("MainMenu");
         if (!tutorial) 
         {

@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 8545419359604400590}
   m_Layer: 9
   m_Name: MossyLog2
-  m_TagString: Untagged
+  m_TagString: Log
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -125,7 +125,7 @@ Transform:
   - {fileID: 1298947355933995459}
   - {fileID: 4298305919576717047}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &8582540406880688029
 Rigidbody2D:

@@ -34,7 +34,7 @@ Transform:
   m_Children:
   - {fileID: 1255082525647494016}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1971053207 &5628045432554176820
 SpriteShapeRenderer:
@@ -310,7 +310,7 @@ PolygonCollider2D:
     m_Paths:
     - - {x: -12.5685425, y: -0.6082859}
       - {x: 6.8418427, y: -1.9580879}
-      - {x: 10.411324, y: 5.9587536}
+      - {x: 8.093061, y: 7.1178856}
       - {x: 5.766403, y: 12.158154}
       - {x: 2.0623856, y: 14.828234}
       - {x: -5.4727154, y: 15.404268}
