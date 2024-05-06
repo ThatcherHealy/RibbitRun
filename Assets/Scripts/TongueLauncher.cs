@@ -19,9 +19,11 @@ public class TongueLauncher : MonoBehaviour
     [SerializeField] Transform player;
     [SerializeField] Transform gunHolder;
     [SerializeField] Transform gunPivot;
+    public Transform tongueAimLineStartpoint;
     public Transform firePoint;
     public LineRenderer lr;
-    [SerializeField] Transform tongueRangeCircle;
+    public Transform tongueRangeCircle;
+    public float rangeCircleOffset = 1;
 
     [Header("Physics Ref:")]
     [SerializeField] Rigidbody2D rb;
@@ -206,7 +208,7 @@ public class TongueLauncher : MonoBehaviour
             secondLinePoint = transform.position + (Vector3.ClampMagnitude((dragStartPosition - dragEndPosition) * aimMultiplier, maxDrag));
 
             //Create the line
-            lr.SetPosition(0, transform.position);
+            lr.SetPosition(0, tongueAimLineStartpoint.position);
             lr.SetPosition(1, secondLinePoint);
             aimingGrapple = true;
         }
@@ -272,7 +274,7 @@ public class TongueLauncher : MonoBehaviour
         //Sets the scale of the circle to match the range
         if (lr.positionCount > 0 && !playerController.dead)
         {
-            tongueRangeCircle.transform.localScale = new Vector3(maxDistance * 5.7333f, maxDistance * 6.466f, 0);
+            tongueRangeCircle.transform.localScale = new Vector3(maxDistance * 5.7333f * rangeCircleOffset, maxDistance * 6.466f * rangeCircleOffset, 0);
             tongueRangeCircle.gameObject.SetActive(true);
         }
         else

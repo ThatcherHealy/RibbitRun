@@ -5,6 +5,7 @@ using UnityEngine;
 public class TongueLine : MonoBehaviour
 {
     [Header("General Refernces:")]
+    [SerializeField] Transform tongueStartPoint;
     public TongueLauncher tongueLauncher;
     public LineRenderer m_lineRenderer;
     [SerializeField] SFXManager sfx;

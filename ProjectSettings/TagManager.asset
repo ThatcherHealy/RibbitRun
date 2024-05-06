@@ -21,6 +21,7 @@ TagManager:
   - Lilypad
   - Log
   - Plant
+  - Mud
   layers:
   - Default
   - TransparentFX
@@ -37,7 +38,7 @@ TagManager:
   - WaterStrider
   - SlugPath
   - Slide
-  - 
+  - Saver
   - Predator
   - DeadPredator
   - 

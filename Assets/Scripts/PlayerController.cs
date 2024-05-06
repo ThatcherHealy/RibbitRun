@@ -7,12 +7,16 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] Color brown;
-    [SerializeField] SFXManager sfx;
+    [SerializeField] Sprite[] initialSprites = new Sprite[5];
+    SFXManager sfx;
+    [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] private TongueLauncher tongueLauncher;
     [SerializeField] private TongueLine tongueLine;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private LineRenderer jumpLr;
+    [SerializeField] Transform jumpLrStartpoint;
     [SerializeField] private LineRenderer swimLr;
+    [SerializeField] Transform swimLrStartpoint;
     [SerializeField] private CircleCollider2D circleCollider;
     [SerializeField] private ScoreController scoreController;
     [SerializeField] private PauseButtons pauseScript;
@@ -84,6 +88,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Animator animator;
     string currentState;
     Vector3 initialSpriteScale;
+    Vector3 initialSpriteOffset;
     bool grappleRotationSet;
     bool wasSwimming;
     bool facingRight = true;
@@ -121,6 +126,8 @@ public class PlayerController : MonoBehaviour
         }
 
         initialSpriteScale = sprite.localScale;
+        initialSpriteOffset = sprite.localPosition;
+        ChangeAnimationState(SLIDE);
     }
 
     void Update()
@@ -293,12 +300,12 @@ public class PlayerController : MonoBehaviour
         if (isSwimming) 
         {
             swimLr.positionCount = 1;
-            swimLr.SetPosition(0, transform.position);
+            swimLr.SetPosition(0, swimLrStartpoint.position);
         }
         else
         {
             jumpLr.positionCount = 1;
-            jumpLr.SetPosition(0, transform.position);
+            jumpLr.SetPosition(0, jumpLrStartpoint.position);
         }
     }
     void Dragging() 
@@ -326,7 +333,7 @@ public class PlayerController : MonoBehaviour
             secondLinePoint = transform.position + Vector3.ClampMagnitude(((dragStartPos - draggingPos) * aimMultiplier), maxSwimAimLineLength);
             jumpLr.positionCount = 0;
             swimLr.positionCount = 2;
-            swimLr.SetPosition(0, transform.position);
+            swimLr.SetPosition(0, swimLrStartpoint.position);
             swimLr.SetPosition(1, secondLinePoint);
 
             float fillPercentage = Mathf.InverseLerp(0, (maxSwimAimLineLength), (secondLinePoint - transform.position).magnitude);
@@ -352,7 +359,7 @@ public class PlayerController : MonoBehaviour
 
             swimLr.positionCount = 0;
             jumpLr.positionCount = 2;
-            jumpLr.SetPosition(0, transform.position);
+            jumpLr.SetPosition(0, jumpLrStartpoint.position);
             jumpLr.SetPosition(1, secondLinePoint);
         }
     }
@@ -398,6 +405,8 @@ public class PlayerController : MonoBehaviour
                 oxygenAndMoistureController.oxygenLossRate = 0.05f;
                 oxygenAndMoistureController.moistureLossRate = 0.06f;
                 tongueLauncher.baseMaxDistance = 25;
+
+                spriteRenderer.sprite = initialSprites[0];
                 break;
             case Species.Treefrog:
                 jumpingPower = 35f;
@@ -408,6 +417,14 @@ public class PlayerController : MonoBehaviour
                 oxygenAndMoistureController.moistureLossRate = 0.06f;
                 tongueLauncher.baseMaxDistance = 33;
                 tongueLauncher.grappleStrength = 25;
+
+                sprite.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+                tongueLauncher.rangeCircleOffset *= 1 / 0.35f;
+                tongueLauncher.tongueAimLineStartpoint.localPosition = new Vector3(-5.42f,0.97f,0);
+                jumpLrStartpoint.transform.localPosition = new Vector3(-4.03f, 0.57f, 0);
+                swimLrStartpoint.transform.localPosition = new Vector3(-2.98f, 0.2f, 0);
+                spriteRenderer.sprite = initialSprites[1];
+                ConfigureSpeciesAnimations("Tree");
                 break;
             case Species.Froglet:
                 jumpingPower = 20;
@@ -441,6 +458,19 @@ public class PlayerController : MonoBehaviour
                 activeDartFrogPoisonParticles = Instantiate(dartFrogPoisonParticles, transform.position, Quaternion.identity, transform);
                 break;
         }
+    }
+    void ConfigureSpeciesAnimations(string modifier)
+    {
+        SLIDE = modifier + SLIDE; 
+        IDLE = modifier + IDLE;
+        JUMP = modifier + JUMP;
+        MIDAIR = modifier + MIDAIR;
+        GRAPPLE = modifier + GRAPPLE;
+        READY_SWIM = modifier + READY_SWIM;
+        SWIM = modifier + SWIM; 
+        MIDSWIM = modifier + MIDSWIM;
+        STRAIGHT_JUMP = modifier + STRAIGHT_JUMP;
+        STRAIGHT_GRAPPLE = modifier + STRAIGHT_GRAPPLE;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////// ANIMATION //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void AnimateFrog()
@@ -580,17 +610,24 @@ public class PlayerController : MonoBehaviour
         //Fix the offset so the frog sits on the ground correctly
         if(currentState == IDLE) 
         {
-            sprite.transform.localPosition = new Vector3(0, 0.4f, 0);
+            if (IDLE == "FrogIdle")
+                sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y + 0.4f, 0);
+            else if (IDLE == "TreeFrogIdle")
+                sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y + 0.25f, 0);
             sprite.transform.localScale = new Vector3(initialSpriteScale.x, Mathf.Abs(initialSpriteScale.y), 1);
         }
         else if (currentState == SLIDE) 
         {
-            sprite.transform.localPosition = new Vector3(0, -0.2f, 0);
+            if(SLIDE == "FrogSlide")
+                sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y - 0.2f, 0);
+            else if (SLIDE == "TreeFrogSlide")
+                sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y - 0.55f, 0);
+
             sprite.transform.localScale = new Vector3(initialSpriteScale.x, Mathf.Abs(initialSpriteScale.y), 1);
         }
         else
         {
-            sprite.transform.localPosition = new Vector3(0, 0, 0);
+            sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y, 0);
         }
     }
 
@@ -607,11 +644,11 @@ public class PlayerController : MonoBehaviour
 
         if (sprite.transform.eulerAngles.z > 90 && sprite.transform.eulerAngles.z < 270)
         {
-            sprite.transform.localScale = new Vector3(1, -1, 1); // Flip the sprite
+            sprite.transform.localScale = new Vector3(Mathf.Abs(initialSpriteScale.x), -Mathf.Abs(initialSpriteScale.y), 1); // Flip the sprite
         }
         else
         {
-            sprite.transform.localScale = new Vector3(1, 1, 1);  // Reset the sprite scale
+            sprite.transform.localScale = new Vector3(Mathf.Abs(initialSpriteScale.x), Mathf.Abs(initialSpriteScale.y), 1);  // Reset the sprite scale
         }
         SetDirection();
     }

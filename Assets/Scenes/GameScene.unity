@@ -1495,6 +1495,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &80329857
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 80329858}
+  m_Layer: 0
+  m_Name: SwimLineStartpoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &80329858
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 80329857}
+  m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 827262949}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &81532837
 GameObject:
   m_ObjectHideFlags: 0
@@ -5689,6 +5720,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &485163461
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 485163462}
+  m_Layer: 0
+  m_Name: TongueAimLineStartpoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &485163462
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 485163461}
+  m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 827262949}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &490698417
 GameObject:
   m_ObjectHideFlags: 0
@@ -8967,6 +9029,10 @@ Transform:
   m_Children:
   - {fileID: 1443662457}
   - {fileID: 999769793}
+  - {fileID: 1350354792}
+  - {fileID: 80329858}
+  - {fileID: 910355007}
+  - {fileID: 485163462}
   m_Father: {fileID: 4000014155227890}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9640,6 +9706,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &910355006
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 910355007}
+  m_Layer: 0
+  m_Name: TongueLineStartpoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &910355007
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910355006}
+  m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.73, y: 0.17, z: -0.5171701}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 827262949}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &915587263
 GameObject:
   m_ObjectHideFlags: 0
@@ -10591,9 +10688,11 @@ MonoBehaviour:
   player: {fileID: 4000014155227890}
   gunHolder: {fileID: 4000014155227890}
   gunPivot: {fileID: 577550633}
+  tongueAimLineStartpoint: {fileID: 485163462}
   firePoint: {fileID: 626229132}
   lr: {fileID: 999769796}
   tongueRangeCircle: {fileID: 1385497720}
+  rangeCircleOffset: 1
   rb: {fileID: 187322668}
   grappleStrength: 20
   hasMaxDistance: 1
@@ -14761,6 +14860,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1323589848}
   m_CullTransparentMesh: 1
+--- !u!1 &1350354791
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1350354792}
+  m_Layer: 0
+  m_Name: JumpLineStartpoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1350354792
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1350354791}
+  m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 827262949}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1358783765
 GameObject:
   m_ObjectHideFlags: 0
@@ -15118,6 +15248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fd2da5ef30cbf14e92ac7aecec371a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tongueStartPoint: {fileID: 910355007}
   tongueLauncher: {fileID: 999769794}
   m_lineRenderer: {fileID: 1375644051}
   sfx: {fileID: 1818822820}
@@ -21433,6 +21564,10 @@ MonoBehaviour:
   drownSFX: {fileID: 8300000, guid: 43fdba718503d7047b2c544ee27d49ff, type: 3}
   poisonedSFX: {fileID: 8300000, guid: 89b1e7afe200f7a4a961df2baa36ad8d, type: 3}
   rockSFX: {fileID: 8300000, guid: 289290d420e9d4e4880319f564ea007e, type: 3}
+  birdLeapSFX: {fileID: 8300000, guid: cdcec189f4ce9024f82fa37007b84d72, type: 3}
+  birdFlySFX: {fileID: 8300000, guid: 3052639c859f07c47b1bf7bba7a8cea8, type: 3}
+  birdChirpSFX: {fileID: 8300000, guid: 31e5f1f74360e8546bd91294ea711fcf, type: 3}
+  birdChirp2SFX: {fileID: 8300000, guid: 5a3251c0b1c4fa14f838f1d35bac3f5a, type: 3}
   generalClickSFX: {fileID: 8300000, guid: ab915cbd0eac2e344b727ab992e8f7c6, type: 3}
   oneReady: 1
   twoReady: 1
@@ -24988,12 +25123,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brown: {r: 0.8313726, g: 0.6313726, b: 0.36862746, a: 1}
-  sfx: {fileID: 0}
+  initialSprites:
+  - {fileID: 347592013, guid: 6da4da702a5d05a4e8435488e68a87ed, type: 3}
+  - {fileID: 1491124313, guid: c862c8c80b87397478c429d107b46457, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  spriteRenderer: {fileID: 827262950}
   tongueLauncher: {fileID: 999769794}
   tongueLine: {fileID: 1375644050}
   rb: {fileID: 187322668}
   jumpLr: {fileID: 212000014462385580}
+  jumpLrStartpoint: {fileID: 1350354792}
   swimLr: {fileID: 40553592}
+  swimLrStartpoint: {fileID: 80329858}
   circleCollider: {fileID: 187322672}
   scoreController: {fileID: 1302793728}
   pauseScript: {fileID: 1302793730}

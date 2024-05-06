@@ -893,8 +893,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7692536124028599533}
   - component: {fileID: 8131445547864290986}
-  - component: {fileID: 4315518648881388971}
-  m_Layer: 0
+  - component: {fileID: 6572573530853787432}
+  m_Layer: 15
   m_Name: TreeSaver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -931,7 +931,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 98299
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -961,7 +961,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 13.836592, y: 190.65071}
   m_EdgeRadius: 0
---- !u!114 &4315518648881388971
+--- !u!114 &6572573530853787432
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -973,6 +973,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ab5aff11bc1dc3478d83b1c656553d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rescueOffset: {x: 15, y: 0}
 --- !u!1001 &591103614382213751
 PrefabInstance:
   m_ObjectHideFlags: 0

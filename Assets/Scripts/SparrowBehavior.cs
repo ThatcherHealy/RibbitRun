@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SparrowBehavior : MonoBehaviour
 {
@@ -7,6 +8,9 @@ public class SparrowBehavior : MonoBehaviour
     TongueLauncher tl;
     [SerializeField] GameObject grappleDetector;
     [SerializeField] SparrowTurner turner;
+    SFXManager sfx;
+    bool leapSoundPlayed;
+    bool chirping;
     Vector3 initialPosition;
     Vector3 nextPosition;
     Vector3 escapePosition;
@@ -23,6 +27,7 @@ public class SparrowBehavior : MonoBehaviour
     bool turned;
     [SerializeField] PredatorVision vision;
 
+    Transform player;
     [SerializeField] Transform sprite;
     [SerializeField] Animator animator;
     string currentState;
@@ -31,8 +36,13 @@ public class SparrowBehavior : MonoBehaviour
     string FLIGHT = "SparrowFlight";
     void Start()
     {
+        if(SceneManager.GetActiveScene().name == "GameScene")
+        {
+            player = FindFirstObjectByType<PlayerController>().transform;
+            sfx = FindFirstObjectByType<SFXManager>();
+            tl = FindFirstObjectByType<TongueLauncher>();
+        }
         rb = GetComponent<Rigidbody2D>();
-        tl = FindFirstObjectByType<TongueLauncher>();
         initialPosition = transform.localPosition;
 
         //Initialize positions so the bird doesnt skip states
@@ -78,7 +88,12 @@ public class SparrowBehavior : MonoBehaviour
 
         if (vision.huntingMode && !run && !escape && !exit) //Run when player is within vision box
         {
-            ChangeAnimationState(LEAP);
+            if (!leapSoundPlayed)
+            {
+                sfx.PlaySFX("Bird Chirp");
+                sfx.PlaySFX("Bird Leap");
+                leapSoundPlayed = true;
+            }
 
             if (!positionsSet) 
             {
@@ -107,6 +122,7 @@ public class SparrowBehavior : MonoBehaviour
             transform.localPosition = Vector3.Slerp(transform.localPosition, nextPosition, Time.fixedDeltaTime * 2f);
             if(!startRunTimer)
             {
+                ChangeAnimationState(LEAP);
                 StartCoroutine(RunTimer());
                 startRunTimer = true;
             }
@@ -115,6 +131,7 @@ public class SparrowBehavior : MonoBehaviour
         if (escape && !run && !exit) //Fly away
         {
             ChangeAnimationState(FLIGHT);
+            StartCoroutine(FlapSound());
             if (!rotationSet) 
             {
                 transform.localScale = new Vector3(-transform.localScale.x, initialScale.y, initialScale.z);
@@ -153,12 +170,35 @@ public class SparrowBehavior : MonoBehaviour
                     stop = true;
                     rb.velocity /= 1.02f;
                     grappleDetector.tag = "Untagged";
+                    if(scared == false)
+                    {
+                        StartCoroutine(ChirpTime());
+                        sfx.PlaySFX("Bird Chirp 2");
+                        
+                    }
                     scared = true; //Speeds up the bird cause they're scared :(
                 }
             }
             else
                 stop = false;
         }
+    }
+    IEnumerator ChirpTime() 
+    {
+        chirping = true;
+        yield return new WaitForSeconds(0.2f);
+        chirping = false;
+    }
+    IEnumerator FlapSound()
+    {
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
+        if (Vector3.Distance(player.position, transform.position) <= 50 && !chirping)
+        {
+            sfx.PlaySFX("Bird Fly");
+        }
+        StartCoroutine(FlapSound());
     }
     IEnumerator RunTimer()
     {

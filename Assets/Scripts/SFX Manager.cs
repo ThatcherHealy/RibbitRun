@@ -23,7 +23,10 @@ public class SFXManager : MonoBehaviour
     [SerializeField] AudioClip drownSFX;
     [SerializeField] AudioClip poisonedSFX;
     [SerializeField] AudioClip rockSFX;
-
+    [SerializeField] AudioClip birdLeapSFX;
+    [SerializeField] AudioClip birdFlySFX;
+    [SerializeField] AudioClip birdChirpSFX;
+    [SerializeField] AudioClip birdChirp2SFX;
     [SerializeField] AudioClip generalClickSFX;
 
     float delay = 0.15f;
@@ -76,6 +79,19 @@ public class SFXManager : MonoBehaviour
                 break;
             case "Cattail":
                 audioSource.clip = cattailSFX;
+                break;
+            case "Bird Leap":
+                audioSource.clip = birdLeapSFX;
+                break;
+            case "Bird Fly":
+                audioSource.clip = birdFlySFX;
+                break;
+            case "Bird Chirp":
+                audioSource.clip = birdChirpSFX;
+                break;
+            case "Bird Chirp 2":
+                Debug.Log("Playing Sound");
+                audioSource.clip = birdChirp2SFX;
                 break;
             case "Drown":
                 audioSource.clip = drownSFX;
