@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static PlayerController;
+using static Unity.Collections.AllocatorManager;
 
 public class MainMenuButtons : MonoBehaviour
 {
@@ -11,28 +12,38 @@ public class MainMenuButtons : MonoBehaviour
     [SerializeField] GameObject[] mainStuff;
     [SerializeField] Image[] buttons;
     [SerializeField] FrogUnlock unlock;
+    MenuSFXManager sfx;
 
     private void Awake()
     {
         if(SceneManager.GetActiveScene().name == "SpeciesMenu")
             SelectCurrentSpecies();
     }
+    private void Start()
+    {
+        sfx = FindFirstObjectByType<MenuSFXManager>();
+    }
 
     public void Play()
     {
-        SceneManager.LoadScene("GameScene");
+        StartCoroutine(WaitThenLoadScene("GameScene"));
+        sfx.PlaySFX("Start");
     }
     public void SpeciesMenu()
     {
-        SceneManager.LoadScene("SpeciesMenu");
+        StartCoroutine(WaitThenLoadScene("SpeciesMenu"));
+        sfx.PlaySFX("General Click");
+
     }
     public void Return()
     {
-        SceneManager.LoadScene("MainMenu");
+        StartCoroutine(WaitThenLoadScene("MainMenu"));
+        sfx.PlaySFX("Exit Click");
     }
     public void Options()
     {
         optionsMenu.SetActive(true);
+        sfx.PlaySFX("General Click");
         foreach (GameObject obj in mainStuff)
         {
             obj.SetActive(false);
@@ -45,6 +56,7 @@ public class MainMenuButtons : MonoBehaviour
         {
             obj.SetActive(true);
         }
+        sfx.PlaySFX("Exit Click");
     }
     public void ReplayTutorial()
     {
@@ -55,6 +67,7 @@ public class MainMenuButtons : MonoBehaviour
         UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Image>().color = Color.green;
         UnselectOthers(UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Image>());
         PlayerPrefs.SetString("Species", "Default");
+        sfx.PlaySFX("Default Ribbit");
     }
     public void SelectTreefrog()
     {
@@ -62,6 +75,9 @@ public class MainMenuButtons : MonoBehaviour
         UnselectOthers(UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Image>());
         PlayerPrefs.SetString("Species", "Tree Frog");
         PlayerPrefs.SetInt("TreeFrogClaimed", 1);
+        sfx.PlaySFX("Tree Frog Ribbit");
+        StartCoroutine(WaitThenPlaySFX("Tree Frog Ribbit"));
+
         if (unlock.treeFrogAlert != null) 
         {
             Destroy(unlock.treeFrogAlert);
@@ -73,6 +89,8 @@ public class MainMenuButtons : MonoBehaviour
         UnselectOthers(UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Image>());
         PlayerPrefs.SetString("Species", "Froglet");
         PlayerPrefs.SetInt("FrogletClaimed", 1);
+        sfx.PlaySFX("Froglet Ribbit");
+
         if (unlock.frogletAlert != null)
         {
             Destroy(unlock.frogletAlert);
@@ -84,6 +102,8 @@ public class MainMenuButtons : MonoBehaviour
         UnselectOthers(UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Image>());
         PlayerPrefs.SetString("Species", "Bullfrog");
         PlayerPrefs.SetInt("BullfrogClaimed", 1);
+        sfx.PlaySFX("Bullfrog Ribbit");
+
         if (unlock.bullfrogAlert != null)
         {
             Destroy(unlock.bullfrogAlert);
@@ -95,6 +115,8 @@ public class MainMenuButtons : MonoBehaviour
         UnselectOthers(UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Image>());
         PlayerPrefs.SetString("Species", "Poison Dart Frog");
         PlayerPrefs.SetInt("PoisonDartFrogClaimed", 1);
+        sfx.PlaySFX("Poison Dart Frog Ribbit");
+
         if (unlock.poisonDartFrogAlert != null)
         {
             Destroy(unlock.poisonDartFrogAlert);
@@ -127,5 +149,15 @@ public class MainMenuButtons : MonoBehaviour
             species = Species.Default;
             SelectCurrentSpecies();
         }
+    }
+    IEnumerator WaitThenLoadScene(string sceneName) 
+    {
+        yield return new WaitForSeconds(0.3f);
+        SceneManager.LoadScene(sceneName);
+    }
+    IEnumerator WaitThenPlaySFX(string sfxName)
+    {
+        yield return new WaitForSeconds(0.12f);
+        sfx.PlaySFX(sfxName);
     }
 }

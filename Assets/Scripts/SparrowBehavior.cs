@@ -25,6 +25,7 @@ public class SparrowBehavior : MonoBehaviour
     bool scared;
     bool startRunTimer;
     bool turned;
+    bool flapStarted;
     [SerializeField] PredatorVision vision;
 
     Transform player;
@@ -131,7 +132,11 @@ public class SparrowBehavior : MonoBehaviour
         if (escape && !run && !exit) //Fly away
         {
             ChangeAnimationState(FLIGHT);
-            StartCoroutine(FlapSound());
+            if(!flapStarted) 
+            {
+                StartCoroutine(FlapSound());
+                flapStarted = true;
+            }
             if (!rotationSet) 
             {
                 transform.localScale = new Vector3(-transform.localScale.x, initialScale.y, initialScale.z);
@@ -191,14 +196,12 @@ public class SparrowBehavior : MonoBehaviour
     }
     IEnumerator FlapSound()
     {
-        yield return new WaitForFixedUpdate();
-        yield return new WaitForFixedUpdate();
-        yield return new WaitForFixedUpdate();
-        if (Vector3.Distance(player.position, transform.position) <= 50 && !chirping)
-        {
-            sfx.PlaySFX("Bird Fly");
-        }
-        StartCoroutine(FlapSound());
+         yield return new WaitForSeconds(0.2f);
+         if (Vector3.Distance(player.position, transform.position) <= 50 /*&& !chirping*/)
+         {
+             sfx.PlaySFX("Bird Fly");
+         }
+         StartCoroutine(FlapSound()); 
     }
     IEnumerator RunTimer()
     {

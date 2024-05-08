@@ -91,6 +91,7 @@ public class PlayerController : MonoBehaviour
     Vector3 initialSpriteOffset;
     bool grappleRotationSet;
     bool wasSwimming;
+    bool wasAlive;
     bool facingRight = true;
     string SLIDE = "FrogSlide";
     string IDLE = "FrogIdle";
@@ -147,6 +148,21 @@ public class PlayerController : MonoBehaviour
         if (drowned)
         {
             rb.velocity = Vector3.zero;
+        }
+
+        if(dead && wasAlive)
+        {
+            sfx.PlaySFX("Eaten");
+            wasAlive = false;
+        }
+
+        if(!dead)
+        {
+            wasAlive = true;
+        }
+        else
+        {
+            wasAlive = false;
         }
     }
     private void FixedUpdate()
@@ -247,7 +263,7 @@ public class PlayerController : MonoBehaviour
     }
     void Jump() 
     {
-        if (jump) 
+        if (jump && !pauseScript.pause) 
         {
             Vector3 force = dragStartPos - dragReleasePos;
             float fillPercentage;
@@ -273,7 +289,10 @@ public class PlayerController : MonoBehaviour
                     rb.velocity = Vector2.zero;
                     power = jumpingPower;
                     ChangeAnimationState(JUMP);
-                    sfx.PlaySFX("Jump");
+
+                    if(Time.timeScale != 0f)
+                        sfx.PlaySFX("Jump");
+
                     StartCoroutine(JumpAnimationTimer());
                 }
             }
@@ -330,7 +349,7 @@ public class PlayerController : MonoBehaviour
 
         if (isSwimming)
         {
-            secondLinePoint = transform.position + Vector3.ClampMagnitude(((dragStartPos - draggingPos) * aimMultiplier), maxSwimAimLineLength);
+            secondLinePoint = swimLrStartpoint.position + Vector3.ClampMagnitude(((dragStartPos - draggingPos) * aimMultiplier), maxSwimAimLineLength);
             jumpLr.positionCount = 0;
             swimLr.positionCount = 2;
             swimLr.SetPosition(0, swimLrStartpoint.position);
@@ -345,7 +364,7 @@ public class PlayerController : MonoBehaviour
         else
         {
 
-            secondLinePoint = transform.position + Vector3.ClampMagnitude(((dragStartPos - draggingPos) * aimMultiplier), maxJumpAimLineLength);
+            secondLinePoint = jumpLrStartpoint.position + Vector3.ClampMagnitude(((dragStartPos - draggingPos) * aimMultiplier), maxJumpAimLineLength);
             if (!isSliding) 
             {
                 if(isGrounded)
@@ -419,10 +438,9 @@ public class PlayerController : MonoBehaviour
                 tongueLauncher.grappleStrength = 25;
 
                 sprite.localScale = new Vector3(0.3f, 0.3f, 0.3f);
-                tongueLauncher.rangeCircleOffset *= 1 / 0.35f;
-                tongueLauncher.tongueAimLineStartpoint.localPosition = new Vector3(-5.42f,0.97f,0);
-                jumpLrStartpoint.transform.localPosition = new Vector3(-4.03f, 0.57f, 0);
-                swimLrStartpoint.transform.localPosition = new Vector3(-2.98f, 0.2f, 0);
+                tongueLauncher.tongueAimLineStartpoint.localPosition = new Vector3(-2.98f, 0.5f, 0);
+                jumpLrStartpoint.transform.localPosition = new Vector3(-2.98f, 0.5f, 0);
+                swimLrStartpoint.transform.localPosition = new Vector3(-2.98f, 0.5f, 0);
                 spriteRenderer.sprite = initialSprites[1];
                 ConfigureSpeciesAnimations("Tree");
                 break;
@@ -458,6 +476,7 @@ public class PlayerController : MonoBehaviour
                 activeDartFrogPoisonParticles = Instantiate(dartFrogPoisonParticles, transform.position, Quaternion.identity, transform);
                 break;
         }
+        tongueLauncher.rangeCircleOffset *= 1 / sprite.localScale.x;
     }
     void ConfigureSpeciesAnimations(string modifier)
     {
@@ -621,7 +640,7 @@ public class PlayerController : MonoBehaviour
             if(SLIDE == "FrogSlide")
                 sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y - 0.2f, 0);
             else if (SLIDE == "TreeFrogSlide")
-                sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y - 0.55f, 0);
+                sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y - 0.65f, 0);
 
             sprite.transform.localScale = new Vector3(initialSpriteScale.x, Mathf.Abs(initialSpriteScale.y), 1);
         }

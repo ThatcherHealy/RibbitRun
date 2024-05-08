@@ -205,7 +205,7 @@ public class TongueLauncher : MonoBehaviour
             {
                 maxDrag = 4;
             }
-            secondLinePoint = transform.position + (Vector3.ClampMagnitude((dragStartPosition - dragEndPosition) * aimMultiplier, maxDrag));
+            secondLinePoint = tongueAimLineStartpoint.position + (Vector3.ClampMagnitude((dragStartPosition - dragEndPosition) * aimMultiplier, maxDrag));
 
             //Create the line
             lr.SetPosition(0, tongueAimLineStartpoint.position);

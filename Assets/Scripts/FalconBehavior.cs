@@ -7,6 +7,7 @@ public class FalconBehavior : MonoBehaviour
     [SerializeField] PredatorGrab hitbox;
     [SerializeField] Rigidbody2D rb;
     [SerializeField] Transform sprite;
+    SFXManager sfx;
     LevelGenerator lg;
     Transform player;
 
@@ -20,6 +21,9 @@ public class FalconBehavior : MonoBehaviour
     {
         lg = FindFirstObjectByType<LevelGenerator>();
         player = FindFirstObjectByType<PlayerController>().transform;
+        sfx = FindFirstObjectByType<SFXManager>();
+        sfx.PlaySFX("Falcon Call");
+        sfx.PlaySFX("Falcon Swoosh");
     }
     private void FixedUpdate()
     {

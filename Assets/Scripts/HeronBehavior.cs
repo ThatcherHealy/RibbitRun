@@ -12,6 +12,7 @@ public class HeronBehavior : MonoBehaviour
     [SerializeField] PredatorGrab hitbox2;
     [SerializeField] PredatorTurner turner;
     [SerializeField] Rigidbody2D rb;
+    SFXManager sfx;
     [SerializeField] float offset;
     bool turned;
     LevelGenerator levelGenerator;
@@ -20,8 +21,10 @@ public class HeronBehavior : MonoBehaviour
     private Transform player;
     private bool facingLeft;
     bool tutorial;
+    bool pastFrog;
     private void Start()
     {
+        sfx = FindFirstObjectByType<SFXManager>();
         levelGenerator = FindAnyObjectByType<LevelGenerator>();
         if (SceneManager.GetActiveScene().name == "Tutorial")
             tutorial = true;
@@ -32,7 +35,27 @@ public class HeronBehavior : MonoBehaviour
             endPoint = levelGenerator.playerRefEndPoint;
 
         player = GameObject.Find("Frog").transform;
+
         FaceTheRightWay();
+        sfx.PlaySFX("Heron Call");
+        StartCoroutine(FlappingNoise());
+    }
+    IEnumerator FlappingNoise()
+    {
+        bool inSoundRange;
+        if (Vector3.Distance(new Vector3(transform.position.x, 0, 0), new Vector3(player.position.x, 0, 0)) < 75)
+        {
+            inSoundRange = true;
+        }
+        else
+            inSoundRange = false;
+
+        yield return new WaitForSecondsRealtime(0.65f);
+        if ((!pastFrog || inSoundRange) && Time.timeScale != 0)
+        {
+            sfx.PlaySFX("Heron Flap");
+        }
+        StartCoroutine(FlappingNoise());
     }
     private void Update()
     {
@@ -85,7 +108,7 @@ public class HeronBehavior : MonoBehaviour
 
         Vector3 lerpedPosition;
         float iSpeed = 1f;
-        if (hitbox1.grabbed || hitbox2.grabbed) //When it grabs the frohg it flies away
+        if (hitbox1.grabbed || hitbox2.grabbed) //When it grabs the frog it flies away
         {
             lerpedPosition = Vector3.Lerp(transform.position, transform.position + new Vector3(0,10,0), Time.deltaTime * (iSpeed));
         }
@@ -93,6 +116,7 @@ public class HeronBehavior : MonoBehaviour
         else if ((facingLeft && flyAwayPosition.position.x < player.position.x) || (!facingLeft && flyAwayPosition.position.x > player.position.x))
         {
             lerpedPosition = Vector3.Slerp(transform.position, new Vector3(transform.position.x, (endPoint.y + 34.585f), 0), Time.deltaTime * 0.5f);
+            pastFrog = true;
         }
         else
         {

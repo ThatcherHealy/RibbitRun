@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 2485791404117689320}
   m_Layer: 2
   m_Name: StemSegment (1)
-  m_TagString: Untagged
+  m_TagString: Plant
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -487,7 +487,7 @@ GameObject:
   - component: {fileID: 2017354169145459107}
   m_Layer: 2
   m_Name: StemSegment (4)
-  m_TagString: Untagged
+  m_TagString: Plant
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -750,7 +750,7 @@ GameObject:
   - component: {fileID: 4634375544125999354}
   m_Layer: 2
   m_Name: StemSegment (2)
-  m_TagString: Untagged
+  m_TagString: Plant
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -947,7 +947,7 @@ GameObject:
   - component: {fileID: 3125261986095953463}
   m_Layer: 2
   m_Name: StemSegment (3)
-  m_TagString: Untagged
+  m_TagString: Plant
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

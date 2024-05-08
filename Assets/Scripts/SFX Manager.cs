@@ -7,8 +7,12 @@ public class SFXManager : MonoBehaviour
     [SerializeField] AudioSource audioSource1;
     [SerializeField] AudioSource audioSource2;
     [SerializeField] AudioSource audioSource3;
+    [SerializeField] AudioSource audioSource4;
+    [SerializeField] AudioSource audioSource5;
+    [SerializeField] AudioSource audioSource6;
     AudioSource audioSource;
     [SerializeField] AudioClip eatSFX;
+    [SerializeField] AudioClip eatenSFX;
     [SerializeField] AudioClip jumpSFX;
     [SerializeField] AudioClip swimSFX;
     [SerializeField] AudioClip grappleSFX;
@@ -27,25 +31,49 @@ public class SFXManager : MonoBehaviour
     [SerializeField] AudioClip birdFlySFX;
     [SerializeField] AudioClip birdChirpSFX;
     [SerializeField] AudioClip birdChirp2SFX;
+    [SerializeField] AudioClip falconSwooshSFX;
+    [SerializeField] AudioClip heronFlapSFX;
+    [SerializeField] AudioClip heronCallSFX;
+    [SerializeField] AudioClip falconCallSFX;
+
     [SerializeField] AudioClip generalClickSFX;
+    [SerializeField] AudioClip exitClickSFX;
+    [SerializeField] AudioClip startSFX;
+    [SerializeField] AudioClip defaultRibbit;
+    [SerializeField] AudioClip treeFrogRibbit;
+    [SerializeField] AudioClip frogletRibbit;
+    [SerializeField] AudioClip bullfrogRibbit;
+    [SerializeField] AudioClip poisonDartFrogRibbit;
 
     float delay = 0.15f;
     public bool oneReady = true;
     public bool twoReady = true;
     public bool threeReady = true;
+    public bool fourReady = true;
+    public bool fiveReady = true;
+    public bool sixReady = true;
     public void PlaySFX(string clipToPlay)
     {
         if (oneReady)
             audioSource = audioSource1;
         else if (twoReady)
             audioSource = audioSource2;
-        else
+        else if(threeReady)
             audioSource = audioSource3;
+        else if (fourReady)
+            audioSource = audioSource4;
+        else if (fiveReady)
+            audioSource = audioSource5;
+        else if (sixReady)
+            audioSource = audioSource6;
 
         switch (clipToPlay)
         {
             case "Eat":
                 audioSource.clip = eatSFX;
+                break;
+            case "Eaten":
+                audioSource.clip = eatenSFX;
                 break;
             case "Jump":
                 audioSource.clip = jumpSFX;
@@ -90,8 +118,19 @@ public class SFXManager : MonoBehaviour
                 audioSource.clip = birdChirpSFX;
                 break;
             case "Bird Chirp 2":
-                Debug.Log("Playing Sound");
                 audioSource.clip = birdChirp2SFX;
+                break;
+            case "Falcon Swoosh":
+                audioSource.clip = falconSwooshSFX;
+                break;
+            case "Falcon Call":
+                audioSource.clip = falconCallSFX;
+                break;
+            case "Heron Flap":
+                audioSource.clip = heronFlapSFX;
+                break;
+            case "Heron Call":
+                audioSource.clip = heronCallSFX;
                 break;
             case "Drown":
                 audioSource.clip = drownSFX;
@@ -105,8 +144,52 @@ public class SFXManager : MonoBehaviour
             case "Click":
                 audioSource.clip = generalClickSFX;
                 break;
+            case "Exit Click":
+                audioSource.clip = exitClickSFX;
+                break;
+            case "Start":
+                audioSource.clip = startSFX;
+                break;
         }
 
+        StartCoroutine(UseAudioSource(audioSource));
+        audioSource.Play();
+    }
+    public void PlayRibbit()
+    {
+        if (oneReady)
+            audioSource = audioSource1;
+        else if (twoReady)
+            audioSource = audioSource2;
+        else if (threeReady)
+            audioSource = audioSource3;
+        else if (fourReady)
+            audioSource = audioSource4;
+        else if (fiveReady)
+            audioSource = audioSource5;
+        else if (sixReady)
+            audioSource = audioSource6;
+        if (PlayerController.species == PlayerController.Species.Default ) 
+        {
+            audioSource.clip = defaultRibbit;
+        }
+        else if (PlayerController.species == PlayerController.Species.Treefrog)
+        {
+            audioSource.clip = treeFrogRibbit;
+            StartCoroutine(WaitThenPlayRibbit());
+        }
+        else if (PlayerController.species == PlayerController.Species.Froglet)
+        {
+            audioSource.clip = frogletRibbit;
+        }
+        else if (PlayerController.species == PlayerController.Species.BullFrog)
+        {
+            audioSource.clip = bullfrogRibbit;
+        }
+        else if (PlayerController.species == PlayerController.Species.PoisonDartFrog)
+        {
+            audioSource.clip = poisonDartFrogRibbit;
+        }
         StartCoroutine(UseAudioSource(audioSource));
         audioSource.Play();
     }
@@ -118,16 +201,47 @@ public class SFXManager : MonoBehaviour
             oneReady = false;
         else if (audioSource == audioSource2) 
             twoReady = false;
-        else
+        else if (audioSource == audioSource3)
             threeReady = false;
+        else if (audioSource == audioSource4)
+            fourReady = false;
+        else if (audioSource == audioSource5)
+            fiveReady = false;
+        else if (audioSource == audioSource6)
+            sixReady = false;
 
         yield return new WaitForSeconds(audioSource.clip.length);
 
         if (audioSource == audioSource1)
+        {
             oneReady = true;
+        }
         else if (audioSource == audioSource2)
+        {
             twoReady = true;
-        else
+        }
+        else if (audioSource == audioSource3)
+        {
             threeReady = true;
+        }
+        else if (audioSource == audioSource4)
+        {
+            fourReady = true;
+        }
+        else if (audioSource == audioSource5)
+        {
+            fiveReady = true;
+        }
+        else if (audioSource == audioSource6)
+        {
+            sixReady = true;
+        }
+    }
+    IEnumerator WaitThenPlayRibbit()
+    {
+        yield return new WaitForSeconds(0.12f);
+        audioSource.clip = treeFrogRibbit;
+        StartCoroutine(UseAudioSource(audioSource));
+        audioSource.Play();
     }
 }

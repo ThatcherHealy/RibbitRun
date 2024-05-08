@@ -84,6 +84,7 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
                 ds.unpoison = true;
                 Time.timeScale = 1;
             }
+            FindFirstObjectByType<SFXManager>().PlayRibbit();
         }
     }
     IEnumerator InvincibleDelay()

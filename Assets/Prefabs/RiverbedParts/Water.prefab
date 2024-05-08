@@ -2282,7 +2282,7 @@ PolygonCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 94207
+    m_Bits: 520191
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -2815,6 +2815,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b67bb1b982eb124a9b7b04e5033af00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  everyOther: 0
   spriteShapeController: {fileID: 3492943494552305009}
   wavePointPref: {fileID: 4731394779048943225, guid: 6748a13038032324b8a74966803c3c26, type: 3}
   wavePoints: {fileID: 1291940821753071166}

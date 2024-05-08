@@ -264,7 +264,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7997490171969666494}
   - component: {fileID: 4897507724565110704}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: FrogCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -28,9 +28,8 @@ public class PauseButtons : MonoBehaviour
     }
     public void Resume()
     {
-        sfx.PlaySFX("Click");
-
         pause = false;
+        sfx.PlaySFX("Exit Click");
         pauseMenu.SetActive(false);
         score.SetActive(true);
         pauseIcon.SetActive(true);
@@ -38,7 +37,7 @@ public class PauseButtons : MonoBehaviour
     }
     public void Restart()
     {
-        sfx.PlaySFX("Click");
+        sfx.PlaySFX("Start");
         pause = false;
         pauseMenu.SetActive(false);
         score.SetActive(true);
@@ -49,24 +48,27 @@ public class PauseButtons : MonoBehaviour
             SetBiome();
             scoreController.CheckHighscore(scoreController.score);
         }
-        SceneManager.LoadScene("GameScene");
+        StartCoroutine(WaitThenLoadScene("GameScene"));
     }
     public void TutorialRestart()
     {
-        sfx.PlaySFX("Click");
+        sfx.PlaySFX("Start");
 
         pause = false;
         pauseMenu.SetActive(false);
         score.SetActive(true);
         pauseIcon.SetActive(true);
         Time.timeScale = 1;
-        SceneManager.LoadScene("Tutorial");
+        StartCoroutine(WaitThenLoadScene("Tutorial"));
     }
     public void Home()
     {
-        sfx.PlaySFX("Click");
+        Time.timeScale = 1;
 
-        SceneManager.LoadScene("MainMenu");
+        sfx.PlaySFX("Exit Click");
+
+        StartCoroutine(WaitThenLoadScene("MainMenu"));
+
         if (!tutorial) 
         {
             SetBiome();
@@ -89,5 +91,10 @@ public class PauseButtons : MonoBehaviour
             deathBiome = "Amazon";
         }
         PlayerPrefs.SetString("StartBiome", deathBiome);
+    }
+    IEnumerator WaitThenLoadScene(string sceneName)
+    {
+        yield return new WaitForSeconds(0.3f);
+        SceneManager.LoadScene(sceneName);
     }
 }
