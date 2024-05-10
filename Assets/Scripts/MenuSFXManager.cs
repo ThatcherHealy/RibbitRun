@@ -21,60 +21,64 @@ public class MenuSFXManager : MonoBehaviour
     [SerializeField] AudioClip bullfrogRibbit;
     [SerializeField] AudioClip poisonDartFrogRibbit;
 
-
-    float delay = 0.15f;
     public bool oneReady = true;
     public bool twoReady = true;
     public bool threeReady = true;
     public bool fourReady = true;
     public bool fiveReady = true;
     public bool sixReady = true;
+    static bool mute;
+
     public void PlaySFX(string clipToPlay)
     {
-        if (oneReady)
-            audioSource = audioSource1;
-        else if (twoReady)
-            audioSource = audioSource2;
-        else if (threeReady)
-            audioSource = audioSource3;
-        else if (fourReady)
-            audioSource = audioSource4;
-        else if (fiveReady)
-            audioSource = audioSource5;
-        else if (sixReady)
-            audioSource = audioSource6;
-
-        switch (clipToPlay)
+        if(!mute)
         {
-            case "General Click":
-                audioSource.clip = generalClickSFX;
-                break;
-            case "Start":
-                audioSource.clip = startSFX;
-                break;
-            case "Exit Click":
-                audioSource.clip = exitClickSFX;
-                break;
-            case "Default Ribbit":
-                audioSource.clip = defaultRibbit;
-                break;
-            case "Tree Frog Ribbit":
-                audioSource.clip = treeFrogRibbit;
-                break;
-            case "Froglet Ribbit":
-                audioSource.clip = frogletRibbit;
-                break;
-            case "Bullfrog Ribbit":
-                audioSource.clip = bullfrogRibbit;
-                break;
-            case "Poison Dart Frog Ribbit":
-                audioSource.clip = poisonDartFrogRibbit;
-                break;
+            if (oneReady)
+                audioSource = audioSource1;
+            else if (twoReady)
+                audioSource = audioSource2;
+            else if (threeReady)
+                audioSource = audioSource3;
+            else if (fourReady)
+                audioSource = audioSource4;
+            else if (fiveReady)
+                audioSource = audioSource5;
+            else if (sixReady)
+                audioSource = audioSource6;
 
+            switch (clipToPlay)
+            {
+                case "General Click":
+                    audioSource.clip = generalClickSFX;
+                    break;
+                case "Start":
+                    audioSource.clip = startSFX;
+                    break;
+                case "Exit Click":
+                    audioSource.clip = exitClickSFX;
+                    break;
+                case "Default Ribbit":
+                    audioSource.clip = defaultRibbit;
+                    break;
+                case "Tree Frog Ribbit":
+                    audioSource.clip = treeFrogRibbit;
+                    break;
+                case "Froglet Ribbit":
+                    audioSource.clip = frogletRibbit;
+                    break;
+                case "Bullfrog Ribbit":
+                    audioSource.clip = bullfrogRibbit;
+                    break;
+                case "Poison Dart Frog Ribbit":
+                    audioSource.clip = poisonDartFrogRibbit;
+                    break;
+
+            }
+
+            StartCoroutine(UseAudioSource(audioSource));
+            audioSource.Play();
         }
 
-        StartCoroutine(UseAudioSource(audioSource));
-        audioSource.Play();
     } 
 
     //When one audio source is being used, use the next one in line so sounds can overlap
@@ -119,5 +123,16 @@ public class MenuSFXManager : MonoBehaviour
         {
             sixReady = true;
         }
+    }
+    private void Update()
+    {
+        if (PlayerPrefs.GetInt("SFX Mute") == 0)
+            mute = false;
+        else
+            mute = true;
+    }
+    public static bool GetMuteStatus()
+    {
+        return mute;
     }
 }

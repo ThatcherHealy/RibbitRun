@@ -51,6 +51,7 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
     // Implement a method to execute when the user clicks the button:
     public void ShowAd()
     {
+        FindFirstObjectByType<SFXManager>().PlaySFX("Click");
         // Disable the button:
         _showAdButton.interactable = false;
         // Then show the ad:

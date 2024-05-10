@@ -47,14 +47,14 @@ public class CameraFollow : MonoBehaviour
 
     private void CameraHeight()
     {
-        float minHeight = baseHeight - 13;
-        float maxHeight = baseHeight + 8;
+        float minHeight = baseHeight - 9;// was 13
+        float maxHeight = baseHeight + 9;// was 8
         if (player.position.y <= maxHeight && player.position.y >= minHeight) //Default view window
         {
             //Set the camera to smoothly move slightly ahead of where the player is moving on the x direction
             //Set the camera to a set Y Value (baseHeight)
 
-            Vector3 targetPosition = new Vector3(player.position.x + xOffset, baseHeight, 0);
+            Vector3 targetPosition = new Vector3(player.position.x + xOffset, baseHeight - 2, 0);
 
             if (((playerController.killer == "Falcon(Clone)" || playerController.killer == "Falcon" || playerController.eatenByFalcon) && playerController.eaten)
                     || playerController.grabbedByPoisonedFalcon) //Move the target up when eaten by a falcon to keep it in frame

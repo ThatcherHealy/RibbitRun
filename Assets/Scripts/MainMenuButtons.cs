@@ -62,21 +62,51 @@ public class MainMenuButtons : MonoBehaviour
     {
         SceneManager.LoadScene("Tutorial");
     }
+    public void MuteSound()
+    {
+        if(SFXManager.GetMuteStatus() == true || MenuSFXManager.GetMuteStatus() == true)
+        {
+            Debug.Log("Unmute");
+            PlayerPrefs.SetInt("SFX Mute", 0);
+        }
+        else
+        {
+            Debug.Log("Mute");
+            PlayerPrefs.SetInt("SFX Mute", 1);
+        }
+    }
+    public void MuteMusic()
+    {
+        if (MusicContinuity.GetMuteStatus() == true)
+        {
+            PlayerPrefs.SetInt("Music Mute", 0);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("Music Mute", 1);
+        }
+    }
     public void SelectDefault()
     {
         UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Image>().color = Color.green;
         UnselectOthers(UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Image>());
+        if (PlayerPrefs.GetString("Species", "Default") != "Default") 
+            sfx.PlaySFX("Default Ribbit");
+
         PlayerPrefs.SetString("Species", "Default");
-        sfx.PlaySFX("Default Ribbit");
     }
     public void SelectTreefrog()
     {
         UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Image>().color = Color.green;
         UnselectOthers(UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Image>());
+        if (PlayerPrefs.GetString("Species", "Default") != "Tree Frog")
+        {
+            sfx.PlaySFX("Tree Frog Ribbit");
+            StartCoroutine(WaitThenPlaySFX("Tree Frog Ribbit"));
+        }
+
         PlayerPrefs.SetString("Species", "Tree Frog");
         PlayerPrefs.SetInt("TreeFrogClaimed", 1);
-        sfx.PlaySFX("Tree Frog Ribbit");
-        StartCoroutine(WaitThenPlaySFX("Tree Frog Ribbit"));
 
         if (unlock.treeFrogAlert != null) 
         {
@@ -87,10 +117,13 @@ public class MainMenuButtons : MonoBehaviour
     {
         UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Image>().color = Color.green;
         UnselectOthers(UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Image>());
+        if (PlayerPrefs.GetString("Species") != "Froglet")
+        {
+            sfx.PlaySFX("Froglet Ribbit");
+        }
+
         PlayerPrefs.SetString("Species", "Froglet");
         PlayerPrefs.SetInt("FrogletClaimed", 1);
-        sfx.PlaySFX("Froglet Ribbit");
-
         if (unlock.frogletAlert != null)
         {
             Destroy(unlock.frogletAlert);
@@ -100,9 +133,11 @@ public class MainMenuButtons : MonoBehaviour
     {
         UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Image>().color = Color.green;
         UnselectOthers(UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Image>());
+        if (PlayerPrefs.GetString("Species", "Default") != "Bullfrog")
+            sfx.PlaySFX("Bullfrog Ribbit");
+
         PlayerPrefs.SetString("Species", "Bullfrog");
         PlayerPrefs.SetInt("BullfrogClaimed", 1);
-        sfx.PlaySFX("Bullfrog Ribbit");
 
         if (unlock.bullfrogAlert != null)
         {
@@ -113,9 +148,11 @@ public class MainMenuButtons : MonoBehaviour
     {
         UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Image>().color = Color.green;
         UnselectOthers(UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Image>());
+        if (PlayerPrefs.GetString("Species", "Default") != "Poison Dart Frog")
+            sfx.PlaySFX("Poison Dart Frog Ribbit");
+
         PlayerPrefs.SetString("Species", "Poison Dart Frog");
         PlayerPrefs.SetInt("PoisonDartFrogClaimed", 1);
-        sfx.PlaySFX("Poison Dart Frog Ribbit");
 
         if (unlock.poisonDartFrogAlert != null)
         {

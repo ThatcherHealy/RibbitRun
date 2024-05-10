@@ -196,7 +196,7 @@ public class SparrowBehavior : MonoBehaviour
     }
     IEnumerator FlapSound()
     {
-         yield return new WaitForSeconds(0.2f);
+         yield return new WaitForSeconds(0.4f);
          if (Vector3.Distance(player.position, transform.position) <= 50 /*&& !chirping*/)
          {
              sfx.PlaySFX("Bird Fly");

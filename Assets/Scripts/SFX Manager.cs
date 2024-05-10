@@ -35,6 +35,8 @@ public class SFXManager : MonoBehaviour
     [SerializeField] AudioClip heronFlapSFX;
     [SerializeField] AudioClip heronCallSFX;
     [SerializeField] AudioClip falconCallSFX;
+    [SerializeField] AudioClip fishSpawnSFX;
+
 
     [SerializeField] AudioClip generalClickSFX;
     [SerializeField] AudioClip exitClickSFX;
@@ -45,153 +47,168 @@ public class SFXManager : MonoBehaviour
     [SerializeField] AudioClip bullfrogRibbit;
     [SerializeField] AudioClip poisonDartFrogRibbit;
 
-    float delay = 0.15f;
     public bool oneReady = true;
     public bool twoReady = true;
     public bool threeReady = true;
     public bool fourReady = true;
     public bool fiveReady = true;
     public bool sixReady = true;
+    static bool mute;
     public void PlaySFX(string clipToPlay)
     {
-        if (oneReady)
-            audioSource = audioSource1;
-        else if (twoReady)
-            audioSource = audioSource2;
-        else if(threeReady)
-            audioSource = audioSource3;
-        else if (fourReady)
-            audioSource = audioSource4;
-        else if (fiveReady)
-            audioSource = audioSource5;
-        else if (sixReady)
-            audioSource = audioSource6;
-
-        switch (clipToPlay)
+        if(!mute) 
         {
-            case "Eat":
-                audioSource.clip = eatSFX;
-                break;
-            case "Eaten":
-                audioSource.clip = eatenSFX;
-                break;
-            case "Jump":
-                audioSource.clip = jumpSFX;
-                break;
-            case "Swim":
-                audioSource.clip = swimSFX;
-                break;
-            case "Grapple":
-                audioSource.clip = grappleSFX;
-                break;
-            case "Splash":
-                audioSource.clip = splashSFX;
-                break;
-            case "Exit Water":
-                audioSource.clip = exitWaterSFX;
-                break;
-            case "Lilypad Land":
-                audioSource.clip = lilypadLandSFX;
-                break;
-            case "Log Land":
-                audioSource.clip = logLandSFX;
-                break;
-            case "Mud Land":
-                audioSource.clip = mudLandSFX;
-                break;
-            case "Cypress Land":
-                audioSource.clip = cypressLandSFX;
-                break;
-            case "Plant":
-                audioSource.clip = plantSFX;
-                break;
-            case "Cattail":
-                audioSource.clip = cattailSFX;
-                break;
-            case "Bird Leap":
-                audioSource.clip = birdLeapSFX;
-                break;
-            case "Bird Fly":
-                audioSource.clip = birdFlySFX;
-                break;
-            case "Bird Chirp":
-                audioSource.clip = birdChirpSFX;
-                break;
-            case "Bird Chirp 2":
-                audioSource.clip = birdChirp2SFX;
-                break;
-            case "Falcon Swoosh":
-                audioSource.clip = falconSwooshSFX;
-                break;
-            case "Falcon Call":
-                audioSource.clip = falconCallSFX;
-                break;
-            case "Heron Flap":
-                audioSource.clip = heronFlapSFX;
-                break;
-            case "Heron Call":
-                audioSource.clip = heronCallSFX;
-                break;
-            case "Drown":
-                audioSource.clip = drownSFX;
-                break;
-            case "Poison":
-                audioSource.clip = poisonedSFX;
-                break;
-            case "Rock":
-                audioSource.clip = rockSFX;
-                break;
-            case "Click":
-                audioSource.clip = generalClickSFX;
-                break;
-            case "Exit Click":
-                audioSource.clip = exitClickSFX;
-                break;
-            case "Start":
-                audioSource.clip = startSFX;
-                break;
-        }
+            if (oneReady)
+                audioSource = audioSource1;
+            else if (twoReady)
+                audioSource = audioSource2;
+            else if (threeReady)
+                audioSource = audioSource3;
+            else if (fourReady)
+                audioSource = audioSource4;
+            else if (fiveReady)
+                audioSource = audioSource5;
+            else if (sixReady)
+                audioSource = audioSource6;
 
-        StartCoroutine(UseAudioSource(audioSource));
-        audioSource.Play();
+            audioSource.volume = 1;
+            switch (clipToPlay)
+            {
+                case "Eat":
+                    audioSource.clip = eatSFX;
+                    break;
+                case "Eaten":
+                    audioSource.clip = eatenSFX;
+                    break;
+                case "Jump":
+                    audioSource.volume = 0.8f;
+                    audioSource.clip = jumpSFX;
+                    break;
+                case "Swim":
+                    audioSource.clip = swimSFX;
+                    break;
+                case "Grapple":
+                    audioSource.clip = grappleSFX;
+                    break;
+                case "Splash":
+                    audioSource.clip = splashSFX;
+                    break;
+                case "Exit Water":
+                    audioSource.clip = exitWaterSFX;
+                    break;
+                case "Lilypad Land":
+                    audioSource.clip = lilypadLandSFX;
+                    break;
+                case "Log Land":
+                    audioSource.clip = logLandSFX;
+                    break;
+                case "Mud Land":
+                    audioSource.volume = 0.5f;
+                    audioSource.clip = mudLandSFX;
+                    break;
+                case "Cypress Land":
+                    audioSource.volume = 0.75f;
+                    audioSource.clip = cypressLandSFX;
+                    break;
+                case "Plant":
+                    audioSource.clip = plantSFX;
+                    break;
+                case "Cattail":
+                    audioSource.clip = cattailSFX;
+                    break;
+                case "Bird Leap":
+                    audioSource.clip = birdLeapSFX;
+                    break;
+                case "Bird Fly":
+                    audioSource.volume = 0.75f;
+                    audioSource.clip = birdFlySFX;
+                    break;
+                case "Bird Chirp":
+                    audioSource.clip = birdChirpSFX;
+                    break;
+                case "Bird Chirp 2":
+                    audioSource.clip = birdChirp2SFX;
+                    break;
+                case "Falcon Swoosh":
+                    audioSource.clip = falconSwooshSFX;
+                    break;
+                case "Falcon Call":
+                    audioSource.clip = falconCallSFX;
+                    break;
+                case "Heron Flap":
+                    audioSource.clip = heronFlapSFX;
+                    break;
+                case "Heron Call":
+                    audioSource.volume = 0.6f;
+                    audioSource.clip = heronCallSFX;
+                    break;
+                case "Fish Spawn":
+                    audioSource.clip = fishSpawnSFX;
+                    break;
+                case "Drown":
+                    audioSource.clip = drownSFX;
+                    break;
+                case "Poison":
+                    audioSource.clip = poisonedSFX;
+                    break;
+                case "Rock":
+                    audioSource.clip = rockSFX;
+                    break;
+                case "Click":
+                    audioSource.clip = generalClickSFX;
+                    break;
+                case "Exit Click":
+                    audioSource.clip = exitClickSFX;
+                    break;
+                case "Start":
+                    audioSource.clip = startSFX;
+                    break;
+            }
+
+            StartCoroutine(UseAudioSource(audioSource));
+            audioSource.Play();
+        }
     }
     public void PlayRibbit()
     {
-        if (oneReady)
-            audioSource = audioSource1;
-        else if (twoReady)
-            audioSource = audioSource2;
-        else if (threeReady)
-            audioSource = audioSource3;
-        else if (fourReady)
-            audioSource = audioSource4;
-        else if (fiveReady)
-            audioSource = audioSource5;
-        else if (sixReady)
-            audioSource = audioSource6;
-        if (PlayerController.species == PlayerController.Species.Default ) 
+        if (!mute)
         {
-            audioSource.clip = defaultRibbit;
+            if (oneReady)
+                audioSource = audioSource1;
+            else if (twoReady)
+                audioSource = audioSource2;
+            else if (threeReady)
+                audioSource = audioSource3;
+            else if (fourReady)
+                audioSource = audioSource4;
+            else if (fiveReady)
+                audioSource = audioSource5;
+            else if (sixReady)
+                audioSource = audioSource6;
+            if (PlayerController.species == PlayerController.Species.Default)
+            {
+                audioSource.clip = defaultRibbit;
+            }
+            else if (PlayerController.species == PlayerController.Species.Treefrog)
+            {
+                audioSource.clip = treeFrogRibbit;
+                StartCoroutine(WaitThenPlayRibbit());
+            }
+            else if (PlayerController.species == PlayerController.Species.Froglet)
+            {
+                audioSource.clip = frogletRibbit;
+            }
+            else if (PlayerController.species == PlayerController.Species.BullFrog)
+            {
+                audioSource.clip = bullfrogRibbit;
+            }
+            else if (PlayerController.species == PlayerController.Species.PoisonDartFrog)
+            {
+                audioSource.clip = poisonDartFrogRibbit;
+            }
+            StartCoroutine(UseAudioSource(audioSource));
+            audioSource.Play();
         }
-        else if (PlayerController.species == PlayerController.Species.Treefrog)
-        {
-            audioSource.clip = treeFrogRibbit;
-            StartCoroutine(WaitThenPlayRibbit());
-        }
-        else if (PlayerController.species == PlayerController.Species.Froglet)
-        {
-            audioSource.clip = frogletRibbit;
-        }
-        else if (PlayerController.species == PlayerController.Species.BullFrog)
-        {
-            audioSource.clip = bullfrogRibbit;
-        }
-        else if (PlayerController.species == PlayerController.Species.PoisonDartFrog)
-        {
-            audioSource.clip = poisonDartFrogRibbit;
-        }
-        StartCoroutine(UseAudioSource(audioSource));
-        audioSource.Play();
     }
 
     //When one audio source is being used, use the next one in line so sounds can overlap
@@ -243,5 +260,16 @@ public class SFXManager : MonoBehaviour
         audioSource.clip = treeFrogRibbit;
         StartCoroutine(UseAudioSource(audioSource));
         audioSource.Play();
+    }
+    private void Update()
+    {
+        if (PlayerPrefs.GetInt("SFX Mute") == 0)
+            mute = false;
+        else
+            mute = true;
+    }
+    public static bool GetMuteStatus()
+    {
+        return mute;
     }
 }

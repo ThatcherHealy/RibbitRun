@@ -75,6 +75,28 @@ public class PauseButtons : MonoBehaviour
             scoreController.CheckHighscore(scoreController.score);
         }
     }
+    public void MuteSound()
+    {
+        if (SFXManager.GetMuteStatus() == true)
+        {
+            PlayerPrefs.SetInt("SFX Mute", 0);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("SFX Mute", 1);
+        }
+    }
+    public void MuteMusic()
+    {
+        if (MusicContinuity.GetMuteStatus() == true)
+        {
+            PlayerPrefs.SetInt("Music Mute", 0);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("Music Mute", 1);
+        }
+    }
     void SetBiome()
     {
         string deathBiome = "";

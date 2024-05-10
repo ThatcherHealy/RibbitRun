@@ -528,6 +528,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2657209066421630814}
+  - component: {fileID: 3939464660591010892}
   m_Layer: 0
   m_Name: Salmon
   m_TagString: Untagged
@@ -556,6 +557,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3939464660591010892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546605364257248930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5682125978c43af44b90d61eaa935842, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &763655740660497835
 GameObject:
   m_ObjectHideFlags: 0
@@ -899,6 +912,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 50
+  otherFishTurned: 0
   turner: {fileID: 8143846584942584930}
 --- !u!1 &1020063576174099153
 GameObject:
@@ -2594,6 +2608,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 50
+  otherFishTurned: 0
   turner: {fileID: 6870454316975300275}
 --- !u!1 &3149478449916987118
 GameObject:
@@ -3709,6 +3724,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 50
+  otherFishTurned: 0
   turner: {fileID: 7844319763306796437}
 --- !u!1 &5157207376115030182
 GameObject:
@@ -5641,6 +5657,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 50
+  otherFishTurned: 0
   turner: {fileID: 5450012398889880807}
 --- !u!1 &7487881937774105498
 GameObject:
@@ -6520,6 +6537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 50
+  otherFishTurned: 0
   turner: {fileID: 741890362447299107}
 --- !u!1 &8564154459890188645
 GameObject:
@@ -6780,6 +6798,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 50
+  otherFishTurned: 0
   turner: {fileID: 4998842266782620510}
 --- !u!1 &8665658843440932829
 GameObject:

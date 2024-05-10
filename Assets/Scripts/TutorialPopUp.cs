@@ -7,8 +7,10 @@ public class TutorialPopUp : MonoBehaviour
 {
     [SerializeField] GameObject tutorialPopUp;
     [SerializeField] GameObject[] mainMenu;
+    MenuSFXManager sfx;
     void Start()
     {
+        sfx = FindFirstObjectByType<MenuSFXManager>();
         if (PlayerPrefs.GetInt("Tutorial Complete", 0) == 0)
         {
             tutorialPopUp.SetActive(true);
@@ -20,6 +22,7 @@ public class TutorialPopUp : MonoBehaviour
     }
     public void No()
     {
+        sfx.PlaySFX("Exit Click");
         tutorialPopUp.SetActive(false);
         foreach (GameObject obj in mainMenu)
         {
@@ -29,6 +32,7 @@ public class TutorialPopUp : MonoBehaviour
     }
     public void Yes()
     {
+        sfx.PlaySFX("Click");
         SceneManager.LoadScene("Tutorial");
     }
 }
