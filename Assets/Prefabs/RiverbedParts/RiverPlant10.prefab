@@ -76,7 +76,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.23819439, y: 0.4699414}
+  m_ConnectedAnchor: {x: 0.23822202, y: 0.4699367}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -135,10 +135,10 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 524288
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 524287
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -211,7 +211,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: -0.0000002663619, y: -0.5000006}
-  m_ConnectedAnchor: {x: -0.07391305, y: 0.43311587}
+  m_ConnectedAnchor: {x: -0.073926106, y: 0.4331182}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -365,7 +365,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: -0.0000002663619, y: -0.5000012}
-  m_ConnectedAnchor: {x: 0.00038089385, y: 0.45439044}
+  m_ConnectedAnchor: {x: 0.00038288368, y: 0.45438734}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -438,10 +438,10 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 524288
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 524287
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -564,7 +564,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: -0.0000002663619, y: -0.5000012}
-  m_ConnectedAnchor: {x: -0.072222196, y: 0.45492616}
+  m_ConnectedAnchor: {x: -0.0722327, y: 0.4549235}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -637,10 +637,10 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 524288
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 524287
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -763,7 +763,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: -0.0000002663619, y: -0.5000012}
-  m_ConnectedAnchor: {x: 47.189987, y: 10.258922}
+  m_ConnectedAnchor: {x: 85.75668, y: -22.105494}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -836,10 +836,10 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 524288
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 524287
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -931,10 +931,10 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 524288
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 524287
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -1007,7 +1007,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: -0.0000002663619, y: -0.5000006}
-  m_ConnectedAnchor: {x: -0.0036156068, y: 0.46944833}
+  m_ConnectedAnchor: {x: -0.0036281827, y: 0.46944597}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -1130,10 +1130,10 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 524288
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 524287
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -1206,7 +1206,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: -0.0000002663619, y: -0.5000006}
-  m_ConnectedAnchor: {x: 0.04162581, y: 0.4428638}
+  m_ConnectedAnchor: {x: 0.04162143, y: 0.44286343}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -1433,10 +1433,10 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 524288
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 524287
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -1528,10 +1528,10 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 524288
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 524287
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -1604,7 +1604,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: -0.0000002663619, y: -0.5000006}
-  m_ConnectedAnchor: {x: 0.068059355, y: 0.46476015}
+  m_ConnectedAnchor: {x: 0.06807909, y: 0.4647548}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -1717,7 +1717,7 @@ Transform:
   - {fileID: 8813555593306736805}
   - {fileID: 7094382463976941790}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7179857116561343683
 GameObject:
@@ -1800,7 +1800,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: -0.0000002663619, y: -0.49999914}
-  m_ConnectedAnchor: {x: -0.18886715, y: 0.44959944}
+  m_ConnectedAnchor: {x: -0.18885419, y: 0.44960186}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -1873,10 +1873,10 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 524288
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 524287
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -1999,7 +1999,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: -0.0000002663619, y: -0.49999914}
-  m_ConnectedAnchor: {x: -0.052474134, y: 0.48004305}
+  m_ConnectedAnchor: {x: -0.052481297, y: 0.48004416}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -2072,10 +2072,10 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 524288
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 524287
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

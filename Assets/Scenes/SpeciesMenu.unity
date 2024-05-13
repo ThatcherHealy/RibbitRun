@@ -15450,7 +15450,7 @@ MonoBehaviour:
   audioSource5: {fileID: 1441549211}
   audioSource6: {fileID: 1441549210}
   generalClickSFX: {fileID: 8300000, guid: ab915cbd0eac2e344b727ab992e8f7c6, type: 3}
-  startSFX: {fileID: 8300000, guid: 5f8547ea88f99d446b24c4679591be81, type: 3}
+  startSFX: {fileID: 8300000, guid: c5cb94c50ae153042a6c7f46a4f7c906, type: 3}
   exitClickSFX: {fileID: 8300000, guid: dab85e776947e7048b2850c253812f8a, type: 3}
   defaultRibbit: {fileID: 8300000, guid: 38908d5f6891d7943bf1d1cb75fdb898, type: 3}
   treeFrogRibbit: {fileID: 8300000, guid: f3c340dc1f269e448bde3ba0f29a3a30, type: 3}

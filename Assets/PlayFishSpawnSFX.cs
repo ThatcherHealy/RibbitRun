@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class PlayFishSpawnSFX : MonoBehaviour
 {
+    [SerializeField] bool salmon;
     void Start()
     {
-        FindFirstObjectByType<SFXManager>().PlaySFX("Fish Spawn");
+        if(salmon)
+            FindFirstObjectByType<SFXManager>().PlaySFX("Salmon Spawn");
+        else
+            FindFirstObjectByType<SFXManager>().PlaySFX("Arapaima Spawn");
     }
 }

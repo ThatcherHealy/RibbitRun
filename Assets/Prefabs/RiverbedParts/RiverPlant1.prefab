@@ -152,10 +152,10 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 524288
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 524287
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -245,10 +245,10 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 524288
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 524287
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -426,7 +426,7 @@ Transform:
   - {fileID: 7138008210320932888}
   - {fileID: 8464399884814258646}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6603578116971818649
 GameObject:
@@ -580,10 +580,10 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 524288
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 524287
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

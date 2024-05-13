@@ -31,6 +31,8 @@ public class ScoreController : MonoBehaviour
     private float xDistance;
     private float farthestDistance;
     private float totalDistanceTravelled;
+    bool highscoreSoundPlayed;
+
 
     private void Start()
     {
@@ -56,6 +58,11 @@ public class ScoreController : MonoBehaviour
         if (hasHighscore && !tutorial)
         {
             scoreText.color = Color.yellow;
+            if(!highscoreSoundPlayed) 
+            {
+                FindFirstObjectByType<SFXManager>().PlaySFX("Highscore");
+                highscoreSoundPlayed = true;
+            }
         }
 
         //Set scoreText equal to score

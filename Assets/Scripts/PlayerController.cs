@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    public LayerMask layerMask;
     [SerializeField] Color brown;
     [SerializeField] Sprite[] initialSprites = new Sprite[5];
     SFXManager sfx;
@@ -35,6 +36,7 @@ public class PlayerController : MonoBehaviour
     GameObject activeDartFrogPoisonParticles;
     public string biomeIn;
     public bool eatenByFalcon;
+    float initialMass;
 
     [Header("States")]
     public bool isGrounded;
@@ -113,6 +115,7 @@ public class PlayerController : MonoBehaviour
     {
         sfx = FindFirstObjectByType<SFXManager>();
 
+        initialMass = rb.mass;
         Time.timeScale = 1.0f;
         SetSpecies();
         ConfigureSpecies();
@@ -129,6 +132,7 @@ public class PlayerController : MonoBehaviour
         initialSpriteScale = sprite.localScale;
         initialSpriteOffset = sprite.localPosition;
         ChangeAnimationState(SLIDE);
+        StartCoroutine(RibbitRandomly());
     }
 
     void Update()
@@ -139,23 +143,25 @@ public class PlayerController : MonoBehaviour
             Jump();
         }
 
+        //Cancel lines when you die
         if (dead)
         {
             swimLr.positionCount = 0;
             jumpLr.positionCount = 0;
         }
 
+        //Pause the frog when it drowns
         if (drowned)
         {
             rb.velocity = Vector3.zero;
         }
 
+        //Play eaten sfx everytime the player dies
         if(dead && wasAlive)
         {
             sfx.PlaySFX("Eaten");
             wasAlive = false;
         }
-
         if(!dead)
         {
             wasAlive = true;
@@ -163,6 +169,15 @@ public class PlayerController : MonoBehaviour
         else
         {
             wasAlive = false;
+        }
+
+        //Cancel all swimming and jumping when you pause
+        if(pauseScript.pause)
+        {
+            draggingStarted = false;
+            skipToJump = false;
+            swimLr.positionCount = 0;
+            jumpLr.positionCount = 0;
         }
     }
     private void FixedUpdate()
@@ -172,6 +187,8 @@ public class PlayerController : MonoBehaviour
         AnimateFrog();
         SetDirection();
     }
+    //////////////////////////////////////////////////////////////////////////////////////////////// MOVEMENT //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     void GroundCheck()
     {
@@ -373,6 +390,7 @@ public class PlayerController : MonoBehaviour
                 if (aimingJumpStopsMomentum)
                 {
                     rb.velocity = new Vector2(0, rb.velocity.y);
+                    rb.mass = 0.1f;
                 }
             }
 
@@ -390,9 +408,12 @@ public class PlayerController : MonoBehaviour
         swimLr.positionCount = 0;
         dragReleasePos = draggingPos;
         dragReleasePos.z = 0;
+        rb.mass = initialMass;
 
         jump = true;
     }
+    //////////////////////////////////////////////////////////////////////////////////////////////// SPECIES CONFIGURATION //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     void SetSpecies() 
     {
         if (PlayerPrefs.GetString("Species") == "Default")
@@ -490,6 +511,17 @@ public class PlayerController : MonoBehaviour
         MIDSWIM = modifier + MIDSWIM;
         STRAIGHT_JUMP = modifier + STRAIGHT_JUMP;
         STRAIGHT_GRAPPLE = modifier + STRAIGHT_GRAPPLE;
+    }
+    IEnumerator RibbitRandomly()
+    {
+        float delayTime = Random.Range(15, 30);
+        float chanceOfRibbiting = 3;
+        yield return new WaitForSeconds(delayTime);
+        if(Random.Range(0, 10) <= chanceOfRibbiting) 
+        {
+            sfx.PlayRibbit();
+        }
+        StartCoroutine(RibbitRandomly());
     }
     //////////////////////////////////////////////////////////////////////////////////////////////// ANIMATION //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void AnimateFrog()
@@ -591,7 +623,10 @@ public class PlayerController : MonoBehaviour
             }
             if(isSwimming && !wasSwimming)
             {
-                sfx.PlaySFX("Splash");
+                if (rb.velocity.magnitude < 50)
+                    sfx.PlaySFX("Splash");
+                else
+                    sfx.PlaySFX("Big Splash");
             }
         }
         wasSwimming = isSwimming;

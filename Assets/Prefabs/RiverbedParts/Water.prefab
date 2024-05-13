@@ -2282,7 +2282,7 @@ PolygonCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 520191
+    m_Bits: 1044479
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

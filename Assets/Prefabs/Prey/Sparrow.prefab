@@ -92,6 +92,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   huntingMode: 0
   frog: {fileID: 0}
+  rangeLeft: 0
 --- !u!1 &2500275284507556498
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,7 +300,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -2.349594, y: 1.2391708}
+  m_Offset: {x: -2.6990623, y: 1.1485668}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -310,7 +311,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5.699188, y: 3.4783416}
+  m_Size: {x: 3.6541214, y: 2.6240766}
   m_EdgeRadius: 0
 --- !u!114 &2242746004042075192
 MonoBehaviour:

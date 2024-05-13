@@ -242,9 +242,9 @@ public class TongueLauncher : MonoBehaviour
             if (Physics2D.Raycast(firePoint.position, distanceVector))
             {
                 //Aim a raycast that starts at the player and is fired at the direction of the initial touch - the last touch
-                RaycastHit2D _hit = Physics2D.Raycast(firePoint.position, distanceVector);
+                RaycastHit2D _hit = Physics2D.Raycast(firePoint.position, distanceVector, Mathf.Infinity, playerController.layerMask);
 
-                if (_hit.collider.gameObject.CompareTag("Grapplable") || grappleToAll)
+                if (_hit.collider != null && _hit.collider.gameObject.CompareTag("Grapplable") || grappleToAll)
                 {
                     //If the hit object can be grappled to, grapple to it
                     if (Vector2.Distance(_hit.point, firePoint.position) <= maxDistance || !hasMaxDistance)

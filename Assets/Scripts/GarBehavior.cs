@@ -23,6 +23,10 @@ public class GarBehavior : MonoBehaviour
     bool chaseForceApplied; //True after the force has been applied to the gar in the direction of the player
     bool attacking; //True if the gar was hunting last frame
     bool attackDelayCompleted;
+    bool aimAtPlayer;
+    bool aimCoroutineStarted;
+    Vector3 dashRotation;
+
     void Start()
     {
         animator.enabled = false;
@@ -73,20 +77,22 @@ public class GarBehavior : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (!hitbox.grabbed)
+        LockRotation(rb.velocity);
+        if (aimAtPlayer)
         {
-            LookAtVelocity();
-            LockRotation(rb.velocity);
+            AimAtPlayer();
         }
 
         if (hitbox.grabbed && !hitbox.dead)
         {
             StartCoroutine(EatPlayer());
+            LookAtVelocity();
         }
         else
         {
             if (!pv.huntingMode) //Not hunting
             {
+                LookAtVelocity();
                 rb.drag = 0.001f;
                 if (!forceApplied)
                 {
@@ -98,9 +104,16 @@ public class GarBehavior : MonoBehaviour
                 rb.drag = 0.6f;
                 if (pv.frog != null)
                 {
-                    if (attackDelayCompleted && !chaseForceApplied)
+                    if(!aimCoroutineStarted)
+                    {
+                        aimAtPlayer = true;
+                    }
+
+                    LockRotation(rb.velocity);
+                    if (attackDelayCompleted && !chaseForceApplied && !aimAtPlayer)
                     {
                         MoveTowardsPlayer();
+                        transform.eulerAngles = dashRotation;
                     }
                 }
             }
@@ -115,28 +128,43 @@ public class GarBehavior : MonoBehaviour
     {
         Vector2 velocity = Vector2.zero;
         float angle;
-        if (!pv.huntingMode)
-        {
-            if (rb.velocity != Vector2.zero)
-                velocity = rb.velocity;
-            else
-                velocity = new Vector2(velocity.x, velocity.y);
+
+        if (rb.velocity != Vector2.zero)
+            velocity = rb.velocity;
+        else
+            velocity = new Vector2(velocity.x, velocity.y);
 
             angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
-        }
-        else
-        {
-            Vector2 target = pv.frog.position - transform.position;
-            angle = Mathf.Atan2(target.y, target.x) * Mathf.Rad2Deg;
-        }
 
         // Rotate the GameObject to face the direction of velocity
         Quaternion targetRotation = Quaternion.Euler(0f, 0f, angle - 180);
 
-        if (pv.huntingMode)
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 0.075f);
-        else
-            transform.rotation = targetRotation;
+        if (rb.velocity.x < 0) //looking left
+        {
+            //Lock between 330 and 30
+            if (transform.eulerAngles.z > 300 && transform.eulerAngles.z < 330)
+            {
+                transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 330);
+            }
+            else if (transform.eulerAngles.z < 180 && transform.eulerAngles.z > 30)
+            {
+                transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 30);
+            }
+        }
+        else //looking right
+        {
+            //Lock between 150 and 210
+            if (transform.eulerAngles.z < 150)
+            {
+                transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 150);
+            }
+            else if (transform.eulerAngles.z > 210)
+            {
+                transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 210);
+            }
+        }
+
+        transform.rotation = targetRotation;
 
         if (transform.eulerAngles.z > 90 && transform.eulerAngles.z < 270)
         {
@@ -146,6 +174,36 @@ public class GarBehavior : MonoBehaviour
         {
             transform.localScale = new Vector3(1, 1, 1);  // Reset the sprite scale
         }
+    }
+    void AimAtPlayer()
+    {
+        if(!aimCoroutineStarted) 
+        {
+            StartCoroutine(AimTime(0.8f));
+        }
+        if(pv.frog != null)
+        {
+            Vector2 target = pv.frog.position - transform.position;
+            float angle = Mathf.Atan2(target.y, target.x) * Mathf.Rad2Deg;
+            Quaternion targetRotation = Quaternion.Euler(0f, 0f, angle - 180);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 0.05f);
+            dashRotation = transform.eulerAngles;
+        }
+
+        if (transform.eulerAngles.z > 90 && transform.eulerAngles.z < 270)
+        {
+            transform.localScale = new Vector3(1, -1, 1); // Flip the sprite
+        }
+        else
+        {
+            transform.localScale = new Vector3(1, 1, 1);  // Reset the sprite scale
+        }
+    }
+    IEnumerator AimTime(float time)
+    {
+        aimCoroutineStarted = true;
+        yield return new WaitForSeconds(time);
+        aimAtPlayer = false;
     }
     void MoveTowardsWaypoint()
     {
@@ -168,6 +226,7 @@ public class GarBehavior : MonoBehaviour
     private IEnumerator LungeDelay(float lookDelay)
     {
         yield return new WaitForSeconds(lookDelay);
+        aimCoroutineStarted = false;
         chaseForceApplied = false;
         if (!forceApplied)
             forceApplied = true;
@@ -306,7 +365,7 @@ public class GarBehavior : MonoBehaviour
     IEnumerator EatPlayer()
     {
         yield return new WaitForSeconds(0.3f);
-        if (pv.frog != null && !hitbox.dead && ((FindFirstObjectByType<DeathScript>().dontRespawnPressed || FindFirstObjectByType<DeathScript>().respawnedOnce) && pv.frog.GetComponent<PlayerController>().eaten)) 
+        if (pv.frog != null && !hitbox.dead && (FindFirstObjectByType<DeathScript>().dontRespawnPressed || FindFirstObjectByType<DeathScript>().respawnedOnce) && pv.frog.GetComponent<PlayerController>().eaten) 
         {
                 if (pv.frog.position.x > transform.position.x)
             transform.localScale = new Vector3(-1, 1, 1); // Flip the sprite

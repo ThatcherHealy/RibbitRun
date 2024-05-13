@@ -17,6 +17,7 @@ public class SFXManager : MonoBehaviour
     [SerializeField] AudioClip swimSFX;
     [SerializeField] AudioClip grappleSFX;
     [SerializeField] AudioClip splashSFX;
+    [SerializeField] AudioClip bigSplashSFX;
     [SerializeField] AudioClip exitWaterSFX;
     [SerializeField] AudioClip lilypadLandSFX;
     [SerializeField] AudioClip logLandSFX;
@@ -35,12 +36,14 @@ public class SFXManager : MonoBehaviour
     [SerializeField] AudioClip heronFlapSFX;
     [SerializeField] AudioClip heronCallSFX;
     [SerializeField] AudioClip falconCallSFX;
-    [SerializeField] AudioClip fishSpawnSFX;
+    [SerializeField] AudioClip salmonSpawnSFX;
+    [SerializeField] AudioClip arapaimaSpawnSFX;
 
 
     [SerializeField] AudioClip generalClickSFX;
     [SerializeField] AudioClip exitClickSFX;
     [SerializeField] AudioClip startSFX;
+    [SerializeField] AudioClip highScoreSFX;
     [SerializeField] AudioClip defaultRibbit;
     [SerializeField] AudioClip treeFrogRibbit;
     [SerializeField] AudioClip frogletRibbit;
@@ -70,6 +73,8 @@ public class SFXManager : MonoBehaviour
                 audioSource = audioSource5;
             else if (sixReady)
                 audioSource = audioSource6;
+            else
+                audioSource = audioSource1;
 
             audioSource.volume = 1;
             switch (clipToPlay)
@@ -93,6 +98,9 @@ public class SFXManager : MonoBehaviour
                 case "Splash":
                     audioSource.clip = splashSFX;
                     break;
+                case "Big Splash":
+                    audioSource.clip = bigSplashSFX;
+                    break;
                 case "Exit Water":
                     audioSource.clip = exitWaterSFX;
                     break;
@@ -111,6 +119,7 @@ public class SFXManager : MonoBehaviour
                     audioSource.clip = cypressLandSFX;
                     break;
                 case "Plant":
+                    audioSource.volume = 0.5f;
                     audioSource.clip = plantSFX;
                     break;
                 case "Cattail":
@@ -142,8 +151,11 @@ public class SFXManager : MonoBehaviour
                     audioSource.volume = 0.6f;
                     audioSource.clip = heronCallSFX;
                     break;
-                case "Fish Spawn":
-                    audioSource.clip = fishSpawnSFX;
+                case "Salmon Spawn":
+                    audioSource.clip = salmonSpawnSFX;
+                    break;
+                case "Arapaima Spawn":
+                    audioSource.clip = arapaimaSpawnSFX;
                     break;
                 case "Drown":
                     audioSource.clip = drownSFX;
@@ -163,6 +175,10 @@ public class SFXManager : MonoBehaviour
                 case "Start":
                     audioSource.clip = startSFX;
                     break;
+                case "Highscore":
+                    audioSource.clip = highScoreSFX;
+                    break;
+                    
             }
 
             StartCoroutine(UseAudioSource(audioSource));

@@ -48,7 +48,9 @@ public class PauseButtons : MonoBehaviour
             SetBiome();
             scoreController.CheckHighscore(scoreController.score);
         }
-        StartCoroutine(WaitThenLoadScene("GameScene"));
+        SceneManager.LoadScene("GameScene");
+
+        //StartCoroutine(WaitThenLoadScene("GameScene"));
     }
     public void TutorialRestart()
     {
@@ -66,8 +68,7 @@ public class PauseButtons : MonoBehaviour
         Time.timeScale = 1;
 
         sfx.PlaySFX("Exit Click");
-
-        StartCoroutine(WaitThenLoadScene("MainMenu"));
+        SceneManager.LoadScene("MainMenu");
 
         if (!tutorial) 
         {

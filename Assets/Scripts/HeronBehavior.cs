@@ -126,7 +126,7 @@ public class HeronBehavior : MonoBehaviour
                 //Aligns the y position of the beak exactly to the frog's y position when the frog is above the bird
                 if (player.position.y > transform.position.y)
                 {
-                    lerpedPosition = Vector3.Lerp(transform.position, player.position, Time.deltaTime * (iSpeed + 2));
+                    lerpedPosition = Vector3.Lerp(transform.position, player.position, Time.deltaTime * (iSpeed + 1));
                 }
                 //Slowly moves the y position of the beak  to the frog's y position when the frog is below the bird
                 else

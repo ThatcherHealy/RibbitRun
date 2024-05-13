@@ -623,7 +623,7 @@ MonoBehaviour:
   animator: {fileID: 8044876445998171370}
   passiveSpeed: 10
   chaseSpeed: 30
-  chaseInterval: 1.2
+  chaseInterval: 1.5
   target: {fileID: 7531579420271016657}
 --- !u!95 &8044876445998171370
 Animator:
