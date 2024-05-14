@@ -66,12 +66,10 @@ public class MainMenuButtons : MonoBehaviour
     {
         if(SFXManager.GetMuteStatus() == true || MenuSFXManager.GetMuteStatus() == true)
         {
-            Debug.Log("Unmute");
             PlayerPrefs.SetInt("SFX Mute", 0);
         }
         else
         {
-            Debug.Log("Mute");
             PlayerPrefs.SetInt("SFX Mute", 1);
         }
     }

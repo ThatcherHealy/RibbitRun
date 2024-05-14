@@ -14,6 +14,7 @@ public class GarBehavior : MonoBehaviour
     [SerializeField] float chaseSpeed = 30F;
     [SerializeField] float chaseInterval = 1.2f;
     [SerializeField] Transform target;
+    SFXManager sfx;
 
     Vector3 initialPosition;
     private Vector3[] waypoints = new Vector3[4];
@@ -25,10 +26,12 @@ public class GarBehavior : MonoBehaviour
     bool attackDelayCompleted;
     bool aimAtPlayer;
     bool aimCoroutineStarted;
+    bool committedToAttack;
     Vector3 dashRotation;
 
     void Start()
     {
+        sfx = FindFirstObjectByType<SFXManager>();
         animator.enabled = false;
         passiveSpeed *= rb.mass;
         chaseSpeed *= rb.mass;
@@ -90,16 +93,8 @@ public class GarBehavior : MonoBehaviour
         }
         else
         {
-            if (!pv.huntingMode) //Not hunting
-            {
-                LookAtVelocity();
-                rb.drag = 0.001f;
-                if (!forceApplied)
-                {
-                    MoveTowardsWaypoint();
-                }
-            }
-            else //Hunting
+
+            if(pv.huntingMode || committedToAttack) //Hunting
             {
                 rb.drag = 0.6f;
                 if (pv.frog != null)
@@ -112,9 +107,20 @@ public class GarBehavior : MonoBehaviour
                     LockRotation(rb.velocity);
                     if (attackDelayCompleted && !chaseForceApplied && !aimAtPlayer)
                     {
+                        rb.angularVelocity = 0;
                         MoveTowardsPlayer();
                         transform.eulerAngles = dashRotation;
+                        sfx.PlaySFX("Gar Swim");
                     }
+                }
+            }
+            else if (!pv.huntingMode) //Not hunting
+            {
+                LookAtVelocity();
+                rb.drag = 0.001f;
+                if (!forceApplied)
+                {
+                    MoveTowardsWaypoint();
                 }
             }
         }
@@ -126,19 +132,14 @@ public class GarBehavior : MonoBehaviour
     }
     void LookAtVelocity()
     {
-        Vector2 velocity = Vector2.zero;
-        float angle;
+        Vector3 vector = rb.velocity;
 
-        if (rb.velocity != Vector2.zero)
-            velocity = rb.velocity;
-        else
-            velocity = new Vector2(velocity.x, velocity.y);
-
-            angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
+        float angle = Mathf.Atan2(vector.y, vector.x) * Mathf.Rad2Deg;
 
         // Rotate the GameObject to face the direction of velocity
         Quaternion targetRotation = Quaternion.Euler(0f, 0f, angle - 180);
 
+        transform.rotation = targetRotation;
         if (rb.velocity.x < 0) //looking left
         {
             //Lock between 330 and 30
@@ -164,8 +165,6 @@ public class GarBehavior : MonoBehaviour
             }
         }
 
-        transform.rotation = targetRotation;
-
         if (transform.eulerAngles.z > 90 && transform.eulerAngles.z < 270)
         {
             transform.localScale = new Vector3(1, -1, 1); // Flip the sprite
@@ -179,6 +178,7 @@ public class GarBehavior : MonoBehaviour
     {
         if(!aimCoroutineStarted) 
         {
+            committedToAttack = true;
             StartCoroutine(AimTime(0.8f));
         }
         if(pv.frog != null)
@@ -186,7 +186,31 @@ public class GarBehavior : MonoBehaviour
             Vector2 target = pv.frog.position - transform.position;
             float angle = Mathf.Atan2(target.y, target.x) * Mathf.Rad2Deg;
             Quaternion targetRotation = Quaternion.Euler(0f, 0f, angle - 180);
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 0.05f);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 0.075f);
+            if (rb.velocity.x < 0) //looking left
+            {
+                //Lock between 330 and 30
+                if (transform.eulerAngles.z > 300 && transform.eulerAngles.z < 330)
+                {
+                    transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 330);
+                }
+                else if (transform.eulerAngles.z < 180 && transform.eulerAngles.z > 30)
+                {
+                    transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 30);
+                }
+            }
+            else //looking right
+            {
+                //Lock between 150 and 210
+                if (transform.eulerAngles.z < 150)
+                {
+                    transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 150);
+                }
+                else if (transform.eulerAngles.z > 210)
+                {
+                    transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 210);
+                }
+            }
             dashRotation = transform.eulerAngles;
         }
 
@@ -228,6 +252,7 @@ public class GarBehavior : MonoBehaviour
         yield return new WaitForSeconds(lookDelay);
         aimCoroutineStarted = false;
         chaseForceApplied = false;
+        committedToAttack = false;
         if (!forceApplied)
             forceApplied = true;
     }

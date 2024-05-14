@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour
     public bool isSwimming;
     public bool saturated;
     public bool wet;
+    bool wasWet;
     public bool dead;
     public bool eaten;
     public string killer;
@@ -458,10 +459,10 @@ public class PlayerController : MonoBehaviour
                 tongueLauncher.baseMaxDistance = 33;
                 tongueLauncher.grappleStrength = 25;
 
-                sprite.localScale = new Vector3(0.3f, 0.3f, 0.3f);
-                tongueLauncher.tongueAimLineStartpoint.localPosition = new Vector3(-2.98f, 0.5f, 0);
-                jumpLrStartpoint.transform.localPosition = new Vector3(-2.98f, 0.5f, 0);
-                swimLrStartpoint.transform.localPosition = new Vector3(-2.98f, 0.5f, 0);
+                sprite.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+                //tongueLauncher.tongueAimLineStartpoint.localPosition = new Vector3(-2.98f, 0.5f, 0);
+                //jumpLrStartpoint.transform.localPosition = new Vector3(-2.98f, 0.5f, 0);
+                //swimLrStartpoint.transform.localPosition = new Vector3(-2.98f, 0.5f, 0);
                 spriteRenderer.sprite = initialSprites[1];
                 ConfigureSpeciesAnimations("Tree");
                 break;
@@ -495,6 +496,10 @@ public class PlayerController : MonoBehaviour
 
                 poisonAvailable = true;
                 activeDartFrogPoisonParticles = Instantiate(dartFrogPoisonParticles, transform.position, Quaternion.identity, transform);
+
+                sprite.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+                spriteRenderer.sprite = initialSprites[4];
+                ConfigureSpeciesAnimations("PoisonDart");
                 break;
         }
         tongueLauncher.rangeCircleOffset *= 1 / sprite.localScale.x;
@@ -616,20 +621,25 @@ public class PlayerController : MonoBehaviour
             }
 
             //Resets the rotation after you leave the water
-            if (!isSwimming && wasSwimming)
+            if (wasWet && !wet)
             {
                 sprite.rotation = Quaternion.identity;
-                sfx.PlaySFX("Exit Water");
+                if(!isGrounded)
+                    sfx.PlaySFX("Exit Water");
             }
-            if(isSwimming && !wasSwimming)
+            if(wet && !wasWet)
             {
-                if (rb.velocity.magnitude < 50)
-                    sfx.PlaySFX("Splash");
-                else
-                    sfx.PlaySFX("Big Splash");
+                if(!isGrounded)
+                {
+                    if (rb.velocity.magnitude < 50)
+                        sfx.PlaySFX("Splash");
+                    else
+                        sfx.PlaySFX("Big Splash");
+                }
             }
         }
         wasSwimming = isSwimming;
+        wasWet = wet;
     }
     void SetDirection()
     {
@@ -668,6 +678,8 @@ public class PlayerController : MonoBehaviour
                 sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y + 0.4f, 0);
             else if (IDLE == "TreeFrogIdle")
                 sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y + 0.25f, 0);
+            else if (IDLE == "PoisonDartFrogIdle")
+                sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y + 0.3f, 0);
             sprite.transform.localScale = new Vector3(initialSpriteScale.x, Mathf.Abs(initialSpriteScale.y), 1);
         }
         else if (currentState == SLIDE) 
@@ -675,7 +687,9 @@ public class PlayerController : MonoBehaviour
             if(SLIDE == "FrogSlide")
                 sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y - 0.2f, 0);
             else if (SLIDE == "TreeFrogSlide")
-                sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y - 0.65f, 0);
+                sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y - 0.25f, 0);
+            else if (SLIDE == "PoisonDartFrogSlide")
+                sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y - 0.2f, 0);
 
             sprite.transform.localScale = new Vector3(initialSpriteScale.x, Mathf.Abs(initialSpriteScale.y), 1);
         }

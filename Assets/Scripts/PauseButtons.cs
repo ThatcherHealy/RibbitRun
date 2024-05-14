@@ -13,9 +13,17 @@ public class PauseButtons : MonoBehaviour
     [SerializeField] GameObject score;
     SFXManager sfx;
     public bool pause;
+    bool unpause;
     private void Start()
     {
         sfx = FindFirstObjectByType<SFXManager>();
+    }
+    private void Update()
+    {
+        if(unpause) 
+        {
+            Time.timeScale = 1;
+        }
     }
     public void Pause()
     {
@@ -48,9 +56,7 @@ public class PauseButtons : MonoBehaviour
             SetBiome();
             scoreController.CheckHighscore(scoreController.score);
         }
-        SceneManager.LoadScene("GameScene");
-
-        //StartCoroutine(WaitThenLoadScene("GameScene"));
+        StartCoroutine(WaitThenLoadScene("GameScene"));
     }
     public void TutorialRestart()
     {
@@ -68,7 +74,7 @@ public class PauseButtons : MonoBehaviour
         Time.timeScale = 1;
 
         sfx.PlaySFX("Exit Click");
-        SceneManager.LoadScene("MainMenu");
+        StartCoroutine(WaitThenLoadScene("MainMenu"));
 
         if (!tutorial) 
         {
@@ -117,6 +123,8 @@ public class PauseButtons : MonoBehaviour
     }
     IEnumerator WaitThenLoadScene(string sceneName)
     {
+        Time.timeScale = 1;
+        unpause = true;
         yield return new WaitForSeconds(0.3f);
         SceneManager.LoadScene(sceneName);
     }

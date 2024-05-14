@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c862c8c80b87397478c429d107b46457
+guid: 01bf3513153c5a04699d8e9e30a0896c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -149,7 +149,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: upscaled tree frog sprite sheet_0
+      name: NEW SPRITE SHEET TREE FROG_0
       rect:
         serializedVersion: 2
         x: 0
@@ -163,14 +163,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 141398b6e328c96419075c647df6a8f4
-      internalID: 1491124313
+      spriteID: 60a95d296c015c04f9b14f276a70b69a
+      internalID: -1416811219
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: upscaled tree frog sprite sheet_1
+      name: NEW SPRITE SHEET TREE FROG_1
       rect:
         serializedVersion: 2
         x: 1600
@@ -184,14 +184,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e140d950abe9e2842acd37523e6dabc6
-      internalID: 1927096373
+      spriteID: 518d76d88660d0c4b90ff1073d869949
+      internalID: 555538037
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: upscaled tree frog sprite sheet_2
+      name: NEW SPRITE SHEET TREE FROG_2
       rect:
         serializedVersion: 2
         x: 3200
@@ -205,14 +205,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a97fe0972820ef64abb1f4ad07af80a2
-      internalID: -456073774
+      spriteID: ba9d7fc7c915ba845b825bdf62085c53
+      internalID: -847481700
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: upscaled tree frog sprite sheet_3
+      name: NEW SPRITE SHEET TREE FROG_3
       rect:
         serializedVersion: 2
         x: 4800
@@ -226,14 +226,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d8ad6dc1ed16d904eb24b444204a7c77
-      internalID: -576832205
+      spriteID: b97eb9be5b77c0048978ea8adb20d687
+      internalID: -2042586993
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: upscaled tree frog sprite sheet_4
+      name: NEW SPRITE SHEET TREE FROG_4
       rect:
         serializedVersion: 2
         x: 0
@@ -247,14 +247,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d5377ec6f72d6424087d3ad7e1ff6f2b
-      internalID: -874895192
+      spriteID: 21869f0e6c5a9774d8a47878d1506978
+      internalID: -2121969824
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: upscaled tree frog sprite sheet_5
+      name: NEW SPRITE SHEET TREE FROG_5
       rect:
         serializedVersion: 2
         x: 1600
@@ -268,14 +268,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e69b7ad91598f794f9b0eca6f5cae015
-      internalID: -293873813
+      spriteID: 61cd2609a79ccc6448a1cc5a966861d0
+      internalID: -335258311
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: upscaled tree frog sprite sheet_6
+      name: NEW SPRITE SHEET TREE FROG_6
       rect:
         serializedVersion: 2
         x: 3200
@@ -289,14 +289,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 093d70912507b284288729c0c7ad3568
-      internalID: 765852356
+      spriteID: 9a76094c2ba07a34b822023c196717f3
+      internalID: -692653535
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: upscaled tree frog sprite sheet_7
+      name: NEW SPRITE SHEET TREE FROG_7
       rect:
         serializedVersion: 2
         x: 4800
@@ -310,14 +310,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ded7fed8d589cc54f8ba10f4a30f9e55
-      internalID: -374391947
+      spriteID: 272dba66d1b253843b15e56f6d30d696
+      internalID: 1497886254
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: upscaled tree frog sprite sheet_8
+      name: NEW SPRITE SHEET TREE FROG_8
       rect:
         serializedVersion: 2
         x: 0
@@ -331,14 +331,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1e6f7fe75ec0fb0418e3827b7d67b34a
-      internalID: -1135846526
+      spriteID: d4286446467840d4fb10fa80b5f057ab
+      internalID: -639602491
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: upscaled tree frog sprite sheet_9
+      name: NEW SPRITE SHEET TREE FROG_9
       rect:
         serializedVersion: 2
         x: 1600
@@ -352,14 +352,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f2ca60e35277edf48929f198afe5585f
-      internalID: 50757220
+      spriteID: 03912274cda1c654fb60e4a291c5029a
+      internalID: 1653023166
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: upscaled tree frog sprite sheet_10
+      name: NEW SPRITE SHEET TREE FROG_10
       rect:
         serializedVersion: 2
         x: 3200
@@ -373,14 +373,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0fd7502dd43cb4c42ae759cdc1026d2f
-      internalID: 1078006691
+      spriteID: 74afe52e4845b164e89559da1df41107
+      internalID: 1622023208
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: upscaled tree frog sprite sheet_11
+      name: NEW SPRITE SHEET TREE FROG_11
       rect:
         serializedVersion: 2
         x: 4800
@@ -394,14 +394,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c340d7dcdf479d542b0a0c90fee26ea2
-      internalID: 805043116
+      spriteID: 1969df1dd7f8258468593292ab65ee67
+      internalID: 389937108
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: upscaled tree frog sprite sheet_12
+      name: NEW SPRITE SHEET TREE FROG_12
       rect:
         serializedVersion: 2
         x: 0
@@ -415,14 +415,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 021c31ef8fcfb1943966d64deafd0604
-      internalID: -1725677631
+      spriteID: 4647d12c4a9277a46af8fb60fff40b6e
+      internalID: -1335345759
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: upscaled tree frog sprite sheet_13
+      name: NEW SPRITE SHEET TREE FROG_13
       rect:
         serializedVersion: 2
         x: 1600
@@ -436,14 +436,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 41a45bf388f72094783031ecd75bcc7f
-      internalID: -1147164382
+      spriteID: 8ab1ba25007e41e40b30eca8e8379391
+      internalID: 563559158
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: upscaled tree frog sprite sheet_14
+      name: NEW SPRITE SHEET TREE FROG_14
       rect:
         serializedVersion: 2
         x: 3200
@@ -457,8 +457,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 082d54d72c0340c448830d4478ee2e58
-      internalID: 824881345
+      spriteID: 2593e0da0b58d444c9984ccecfdb050b
+      internalID: -521625846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NEW SPRITE SHEET TREE FROG_15
+      rect:
+        serializedVersion: 2
+        x: 4800
+        y: 0
+        width: 1600
+        height: 1600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79dca13442d80704d9b1d6463dfd4045
+      internalID: 1646573973
       vertices: []
       indices: 
       edges: []
@@ -474,21 +495,22 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      upscaled tree frog sprite sheet_0: 1491124313
-      upscaled tree frog sprite sheet_1: 1927096373
-      upscaled tree frog sprite sheet_10: 1078006691
-      upscaled tree frog sprite sheet_11: 805043116
-      upscaled tree frog sprite sheet_12: -1725677631
-      upscaled tree frog sprite sheet_13: -1147164382
-      upscaled tree frog sprite sheet_14: 824881345
-      upscaled tree frog sprite sheet_2: -456073774
-      upscaled tree frog sprite sheet_3: -576832205
-      upscaled tree frog sprite sheet_4: -874895192
-      upscaled tree frog sprite sheet_5: -293873813
-      upscaled tree frog sprite sheet_6: 765852356
-      upscaled tree frog sprite sheet_7: -374391947
-      upscaled tree frog sprite sheet_8: -1135846526
-      upscaled tree frog sprite sheet_9: 50757220
+      NEW SPRITE SHEET TREE FROG_0: -1416811219
+      NEW SPRITE SHEET TREE FROG_1: 555538037
+      NEW SPRITE SHEET TREE FROG_10: 1622023208
+      NEW SPRITE SHEET TREE FROG_11: 389937108
+      NEW SPRITE SHEET TREE FROG_12: -1335345759
+      NEW SPRITE SHEET TREE FROG_13: 563559158
+      NEW SPRITE SHEET TREE FROG_14: -521625846
+      NEW SPRITE SHEET TREE FROG_15: 1646573973
+      NEW SPRITE SHEET TREE FROG_2: -847481700
+      NEW SPRITE SHEET TREE FROG_3: -2042586993
+      NEW SPRITE SHEET TREE FROG_4: -2121969824
+      NEW SPRITE SHEET TREE FROG_5: -335258311
+      NEW SPRITE SHEET TREE FROG_6: -692653535
+      NEW SPRITE SHEET TREE FROG_7: 1497886254
+      NEW SPRITE SHEET TREE FROG_8: -639602491
+      NEW SPRITE SHEET TREE FROG_9: 1653023166
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

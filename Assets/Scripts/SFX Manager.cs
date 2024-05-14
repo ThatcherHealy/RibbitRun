@@ -38,7 +38,10 @@ public class SFXManager : MonoBehaviour
     [SerializeField] AudioClip falconCallSFX;
     [SerializeField] AudioClip salmonSpawnSFX;
     [SerializeField] AudioClip arapaimaSpawnSFX;
-
+    [SerializeField] AudioClip garSwimSFX;
+    [SerializeField] AudioClip garEatSFX;
+    [SerializeField] AudioClip piranhaSwimSFX;
+    [SerializeField] AudioClip piranhaEatSFX;
 
     [SerializeField] AudioClip generalClickSFX;
     [SerializeField] AudioClip exitClickSFX;
@@ -157,6 +160,19 @@ public class SFXManager : MonoBehaviour
                 case "Arapaima Spawn":
                     audioSource.clip = arapaimaSpawnSFX;
                     break;
+                case "Gar Swim":
+                    audioSource.clip = garSwimSFX;
+                    break;
+                case "Gar Eat":
+                    audioSource.clip = garEatSFX;
+                    break;
+                case "Piranha Swim":
+                    audioSource.volume = 0.75f;
+                    audioSource.clip = piranhaSwimSFX;
+                    break;
+                case "Piranha Eat":
+                    audioSource.clip = piranhaEatSFX;
+                    break;
                 case "Drown":
                     audioSource.clip = drownSFX;
                     break;
@@ -243,7 +259,8 @@ public class SFXManager : MonoBehaviour
         else if (audioSource == audioSource6)
             sixReady = false;
 
-        yield return new WaitForSeconds(audioSource.clip.length);
+        if(audioSource.clip != null) 
+            yield return new WaitForSeconds(audioSource.clip.length);
 
         if (audioSource == audioSource1)
         {

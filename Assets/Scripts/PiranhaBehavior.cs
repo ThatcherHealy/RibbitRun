@@ -96,6 +96,7 @@ public class PiranhaBehavior : MonoBehaviour
                 if (!chaseForceApplied)
                 {
                     MoveTowardsPlayer();
+                    FindFirstObjectByType<SFXManager>().PlaySFX("Piranha Swim");
                 }
            }
         }

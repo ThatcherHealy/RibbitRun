@@ -18,7 +18,7 @@ public class ArapaimaBehavior : MonoBehaviour
     {
         lg = FindAnyObjectByType<LevelGenerator>();
         player = GameObject.Find("Frog").transform;
-        FindFirstObjectByType<SFXManager>().PlaySFX("Fish Spawn");
+        FindFirstObjectByType<SFXManager>().PlaySFX("Arapaima Spawn");
     }
     private void Update()
     {

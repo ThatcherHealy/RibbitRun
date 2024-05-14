@@ -16650,7 +16650,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 93ceab11526d58540b5c4d7b6a1d3fca, type: 3}
+  m_audioClip: {fileID: 8300000, guid: d4dd1033f373a994cb2a989d4b02fd03, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.25
   m_Pitch: 1
@@ -25617,6 +25617,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a92045ae138876b41a5d8e98657d3623, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
   brown: {r: 0.8313726, g: 0.6313726, b: 0.36862746, a: 1}
   initialSprites:
   - {fileID: 0}
@@ -27600,6 +27603,7 @@ MonoBehaviour:
   swimSFX: {fileID: 8300000, guid: fb26fa23e4fdec74caf7be756e139cd9, type: 3}
   grappleSFX: {fileID: 8300000, guid: e45ca2d9aaf5fef46a18d6f0138890a5, type: 3}
   splashSFX: {fileID: 8300000, guid: c93035a62db160a4abda8d08210e42ec, type: 3}
+  bigSplashSFX: {fileID: 0}
   exitWaterSFX: {fileID: 8300000, guid: 0b81d8423c3d4df48aa0cb8ca0965980, type: 3}
   lilypadLandSFX: {fileID: 8300000, guid: 09444a8c17acd5943ae2c9eaa6846543, type: 3}
   logLandSFX: {fileID: 8300000, guid: 5d4e54e9505263a42912f13959b4510b, type: 3}
@@ -27618,9 +27622,16 @@ MonoBehaviour:
   heronFlapSFX: {fileID: 8300000, guid: 15fb95bbecf550d459f071a702b8c0a0, type: 3}
   heronCallSFX: {fileID: 8300000, guid: 69ac6ee290c90bb439e60ddd777f1deb, type: 3}
   falconCallSFX: {fileID: 8300000, guid: ff1178b7182e3fd41ab32e26c71cb31e, type: 3}
+  salmonSpawnSFX: {fileID: 0}
+  arapaimaSpawnSFX: {fileID: 0}
+  garSwimSFX: {fileID: 0}
+  garEatSFX: {fileID: 0}
+  piranhaSwimSFX: {fileID: 0}
+  piranhaEatSFX: {fileID: 0}
   generalClickSFX: {fileID: 8300000, guid: ab915cbd0eac2e344b727ab992e8f7c6, type: 3}
   exitClickSFX: {fileID: 8300000, guid: dab85e776947e7048b2850c253812f8a, type: 3}
   startSFX: {fileID: 8300000, guid: 5f8547ea88f99d446b24c4679591be81, type: 3}
+  highScoreSFX: {fileID: 0}
   defaultRibbit: {fileID: 8300000, guid: 38908d5f6891d7943bf1d1cb75fdb898, type: 3}
   treeFrogRibbit: {fileID: 8300000, guid: f3c340dc1f269e448bde3ba0f29a3a30, type: 3}
   frogletRibbit: {fileID: 8300000, guid: cbf9089f9aa9e3c4faf941587340c25a, type: 3}
