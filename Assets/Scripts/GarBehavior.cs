@@ -19,6 +19,7 @@ public class GarBehavior : MonoBehaviour
     Vector3 initialPosition;
     private Vector3[] waypoints = new Vector3[4];
     int currentWaypoint;
+    bool attackingStoppedByContinue;
 
     bool forceApplied; //True after the force has been applied to the gar in the direction of its next waypoint
     bool chaseForceApplied; //True after the force has been applied to the gar in the direction of the player
@@ -40,6 +41,13 @@ public class GarBehavior : MonoBehaviour
 
     void Update()
     {
+        if (!pv.GetComponent<BoxCollider2D>().isActiveAndEnabled && !attackingStoppedByContinue)
+        {
+            LookAtVelocity();
+            MoveTowardsWaypoint();
+            attackingStoppedByContinue = true;
+        }
+
         if (waypoints[currentWaypoint] != null && Vector2.Distance(transform.position, waypoints[currentWaypoint]) < 5f)
         {
             ChooseNextWaypoint();
@@ -72,10 +80,13 @@ public class GarBehavior : MonoBehaviour
             }
         }
 
+        //Make the gar return to waypoints once the player leaves the range
         if(pv.rangeLeft)
         {
             attackDelayCompleted = false;
             pv.rangeLeft = false;
+            LookAtVelocity();
+            MoveTowardsWaypoint();
         }
     }
     private void FixedUpdate()

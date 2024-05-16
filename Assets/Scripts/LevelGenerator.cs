@@ -376,7 +376,12 @@ public class LevelGenerator : MonoBehaviour
     private Transform SpawnFlies(Transform prey, Vector3 preySpawnPosition)
     {
         //Chooses a random swarm size
-        int swarmSizeGenerator = UnityEngine.Random.Range(0, 101);
+        int swarmSizeGenerator;
+        if (PlayerPrefs.GetInt("HardMode", 0) == 0)
+            swarmSizeGenerator = UnityEngine.Random.Range(0, 101);
+        else
+            swarmSizeGenerator = UnityEngine.Random.Range(50, 101);
+
         if (swarmSizeGenerator >= 95)
             swarmSize = 5;
         else if (swarmSizeGenerator >= 85)
@@ -395,7 +400,12 @@ public class LevelGenerator : MonoBehaviour
             lastPreyTransform = Instantiate(prey, preySpawnPosition + offset, Quaternion.identity);
         }
 
-        int dragonflySpawnChance = UnityEngine.Random.Range(1, 3);
+        int dragonflySpawnChance;
+        if (PlayerPrefs.GetInt("HardMode", 0) == 0)
+            dragonflySpawnChance = UnityEngine.Random.Range(1, 3);
+        else
+            dragonflySpawnChance = UnityEngine.Random.Range(1, 2);
+
         if (dragonflySpawnChance == 1)
             SpawnDragonfly(preySpawnPosition);
 
@@ -524,9 +534,13 @@ public class LevelGenerator : MonoBehaviour
             if (doubleChance == 1) //25% chance to spawn another after the first one is spawned
                 Instantiate(slugPrefab, spawnPosition + new Vector3(0, -UnityEngine.Random.Range(2, 3), 0), Quaternion.identity);
         }
+        int striderChance;
+        if (PlayerPrefs.GetInt("HardMode", 0) == 0)
+            striderChance = UnityEngine.Random.Range(1, 8);
+        else
+            striderChance = UnityEngine.Random.Range(3, 8);
 
-        int striderChance = UnityEngine.Random.Range(1, 8);
-        if (levelPartCalc <= 75 && striderChance >= 7)
+        if (levelPartCalc <= 75 && striderChance >= 6)
         {
             //Chooses a random swarm size
             int swarmSizeGenerator = UnityEngine.Random.Range(0, 101);

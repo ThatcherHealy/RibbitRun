@@ -51,11 +51,18 @@ public class FrogUnlock : MonoBehaviour
     [SerializeField] Transform bullfrogAlertPosition;
     [SerializeField] Transform poisonDartFrogAlertPosition;
 
+    [SerializeField] GameObject[] treeFrogIcons;
+    [SerializeField] GameObject[] frogletIcons;
+    [SerializeField] GameObject[] bullfrogIcons;
+    [SerializeField] GameObject[] poisonDartFrogIcons;
+
+
     private void Awake()
     {
         InitializeProgress();
         InitializeButtonStates();
         InitializeAlerts();
+        InitializeIcons();
     }
     private void InitializeProgress()
     {
@@ -241,6 +248,38 @@ public class FrogUnlock : MonoBehaviour
         if (PlayerPrefs.GetInt("poisonDartFrogUnlocked") == 1 && PlayerPrefs.GetInt("PoisonDartFrogClaimed") != 1)
         {
             poisonDartFrogAlert = Instantiate(alertPrefab, poisonDartFrogAlertPosition.position, Quaternion.identity, poisonDartFrogAlertPosition);
+        }
+    }
+    void InitializeIcons() 
+    {
+        if (PlayerPrefs.GetInt("treeFrogUnlocked") == 1)
+        {
+            foreach(GameObject treeFrogIcon in treeFrogIcons)
+            {
+                treeFrogIcon.SetActive(true);
+            }
+        }
+        if (PlayerPrefs.GetInt("frogletUnlocked") == 1 && frogletIcons[0] != null)
+        {
+            foreach (GameObject frogletIcon in frogletIcons)
+            {
+                frogletIcon.SetActive(true);
+            }
+        }
+        if (PlayerPrefs.GetInt("bullfrogUnlocked") == 1 && bullfrogIcons[0] != null)
+        {
+            foreach (GameObject bullfrogIcon in bullfrogIcons)
+            {
+                bullfrogIcon.SetActive(true);
+            }
+        }
+        if (PlayerPrefs.GetInt("poisonDartFrogUnlocked") == 1)
+        {
+            foreach (GameObject poisonDartFrogIcon in poisonDartFrogIcons)
+            {
+                poisonDartFrogIcon.SetActive(true);
+            }
+            PlayerPrefs.SetInt("HardModeUnlocked", 1);
         }
     }
 }

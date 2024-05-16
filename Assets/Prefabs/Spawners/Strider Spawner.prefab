@@ -46,6 +46,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnedObject: {fileID: 6149950474728172564, guid: 112b309e0af40ec40ac064b7c1ef61dd, type: 3}
   probabilty: 50
+  hardModeProbabilty: 75
   guaranteed: 0
   child: 0
   parent: {fileID: 0}
+  increment: 0
+  incrementDistance: 0
+  incrementSize: 0
+  hardModeIncrementDistance: 0
+  hardModeincrementSize: 0

@@ -15,6 +15,7 @@ public class MenuSFXManager : MonoBehaviour
     [SerializeField] AudioClip generalClickSFX;
     [SerializeField] AudioClip startSFX;
     [SerializeField] AudioClip exitClickSFX;
+    [SerializeField] AudioClip hardModeSFX;
     [SerializeField] AudioClip defaultRibbit;
     [SerializeField] AudioClip treeFrogRibbit;
     [SerializeField] AudioClip frogletRibbit;
@@ -56,6 +57,9 @@ public class MenuSFXManager : MonoBehaviour
                     break;
                 case "Exit Click":
                     audioSource.clip = exitClickSFX;
+                    break;
+                case "Hard Mode":
+                    audioSource.clip = hardModeSFX;
                     break;
                 case "Default Ribbit":
                     audioSource.clip = defaultRibbit;

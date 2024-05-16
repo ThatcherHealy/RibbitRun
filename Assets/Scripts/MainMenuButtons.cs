@@ -13,6 +13,7 @@ public class MainMenuButtons : MonoBehaviour
     [SerializeField] Image[] buttons;
     [SerializeField] FrogUnlock unlock;
     MenuSFXManager sfx;
+    [SerializeField] GameObject hardModeUnlocked;
 
     private void Awake()
     {
@@ -155,7 +156,13 @@ public class MainMenuButtons : MonoBehaviour
         if (unlock.poisonDartFrogAlert != null)
         {
             Destroy(unlock.poisonDartFrogAlert);
+            hardModeUnlocked.SetActive(true);
         }
+    }
+    public void HardModeUnlockedOK()
+    {
+        hardModeUnlocked.SetActive(false);
+        sfx.PlaySFX("General Click");
     }
 
     void UnselectOthers(Image currentButton) 

@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2796879908025794554
 MonoBehaviour:
@@ -46,6 +46,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnedObject: {fileID: 7433109602364427089, guid: d4dfac21ae527f947ba937366760a647, type: 3}
   probabilty: 50
+  hardModeProbabilty: 100
   guaranteed: 0
   child: 0
   parent: {fileID: 0}
+  increment: 0
+  incrementDistance: 0
+  incrementSize: 0
+  hardModeIncrementDistance: 0
+  hardModeincrementSize: 0

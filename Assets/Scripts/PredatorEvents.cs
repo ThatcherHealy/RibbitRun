@@ -11,6 +11,7 @@ public class Predator
     private GameObject activeObject;
     private int direction;
     private bool spawned;
+    private float initialLevel;
 
     public Predator(PredatorType setType, GameObject setPrefab)
     {
@@ -42,6 +43,10 @@ public class Predator
     {
         return spawned;
     }
+    public void SetLevel(float level)
+    {
+        initialLevel = level;
+    }
 
     public Vector3 SetSpawnPoint(LevelGenerator lg, Transform player)
     {
@@ -51,9 +56,9 @@ public class Predator
                 direction = 2;
 
             if (direction == 1)
-                return new Vector2(player.position.x + 150, lg.playerRefEndPoint.y - 16.415f);
+                return new Vector2(player.position.x + 150, initialLevel - 16.415f);
             else
-                return new Vector2(player.position.x - 150, lg.playerRefEndPoint.y - 16.415f);
+                return new Vector2(player.position.x - 150, initialLevel - 16.415f);
         }
         else if (type == PredatorType.Falcon)
         {
@@ -62,17 +67,21 @@ public class Predator
         else //Heron
         {
             if (direction == 1)
-                return new Vector2(player.position.x + 100, lg.playerRefEndPoint.y + 9.585f);
+                return new Vector2(player.position.x + 100, initialLevel + 9.585f);
             else
-                return new Vector2(player.position.x - 100, lg.playerRefEndPoint.y + 9.585f);
+                return new Vector2(player.position.x - 100, initialLevel + 9.585f);
         }
     }
     public void SpawnPredator(Vector3 spawnPoint, Transform player, LevelGenerator lg)
     {
         if (lg.playerBiome == LevelGenerator.Biome.Bog && type == PredatorType.Arapaima)
+        {
             type = PredatorType.FishSwarm;
+        }
         else if (lg.playerBiome == LevelGenerator.Biome.Amazon && type == PredatorType.FishSwarm)
+        {
             type = PredatorType.Arapaima;
+        }
 
         if (type != PredatorType.FishSwarm)
             activeObject = GameObject.Instantiate(prefab, spawnPoint, Quaternion.identity);
@@ -121,8 +130,8 @@ public class PredatorEvents : MonoBehaviour
 
     private Vector3 predatorSpawnPosition;
     public int lowerScoreLimit = 50;
-    private float checkInterval = 5;
-    int max, startingValue = 4;
+    private float checkInterval = 5, hardModeCheckInterval = 2.5f;
+    int max, startingValue = 4, hardModeStartingValue = 2;
     private bool cooldown = false;
     bool falconEvent;
 
@@ -135,62 +144,119 @@ public class PredatorEvents : MonoBehaviour
     void Start()
     {
         StartCoroutine(DetermineSpawnTime());
-        max = startingValue;
+        if (PlayerPrefs.GetInt("HardMode", 0) == 0)
+            max = startingValue;
+        else
+            max = hardModeStartingValue;
     }
 
     IEnumerator DetermineSpawnTime()
     {
-        //Decrease checkInterval by 0.2 every 200 points, capped out at 1 second
-        float multiplier = Mathf.Round(sc.score / 200);
-        for (int i = 0; i < multiplier; i++)
+        if(PlayerPrefs.GetInt("HardMode", 0) == 0)
         {
-            checkInterval -= 0.2f;
+            //Decrease checkInterval by 0.2 every 200 points, capped out at 1 second
+            float multiplier = Mathf.Round(sc.score / 200);
+            for (int i = 0; i < multiplier; i++)
+            {
+                checkInterval -= 0.2f;
+            }
+
+            if (checkInterval < 1)
+                checkInterval = 1;
+
+            yield return new WaitForSeconds(checkInterval);
         }
+        else //Hardmode
+        {
+            //Decrease checkInterval by 0.2 every 200 points, capped out at 1 second
+            float multiplier = Mathf.Round(sc.score / 200);
+            for (int i = 0; i < multiplier; i++)
+            {
+                hardModeCheckInterval -= 0.2f;
+            }
 
-        if (checkInterval < 1)
-            checkInterval = 1;
+            if (hardModeCheckInterval < 1)
+                hardModeCheckInterval = 1;
 
-        yield return new WaitForSeconds(checkInterval);
-
+            yield return new WaitForSeconds(hardModeCheckInterval);
+        }
 
         if (sc.score > lowerScoreLimit && !cooldown && !pc.dead)
         {
             int chance = UnityEngine.Random.Range(1, max);
             if (chance == 1) //33% chance
             {
-                max = startingValue;
+                if (PlayerPrefs.GetInt("HardMode", 0) == 0)
+                    max = startingValue;
+                else
+                    max = hardModeStartingValue;
+
                 //Spawns a fish when you're in the water and a bird when you're out of the water
                 //Never spawns a fish when you're in cypress
                 if (pc.isSwimming && lg.playerBiome != LevelGenerator.Biome.Cypress)
                 {
                     StartCoroutine(FishEvent());
 
-                    float doubleChance = UnityEngine.Random.Range(1, 20000);
-                    int sameChance = UnityEngine.Random.Range(1, 3);
-                    if (sc.score > 1000 && doubleChance <= sc.score)
+                    if (PlayerPrefs.GetInt("HardMode", 0) == 0)
                     {
-                        yield return new WaitForSeconds(1.5f);
+                        float doubleChance = UnityEngine.Random.Range(1, 20000);
+                        int sameChance = UnityEngine.Random.Range(1, 3);
+                        if (sc.score > 1000 && doubleChance <= sc.score)
+                        {
+                            yield return new WaitForSeconds(1.5f);
 
-                        if(sameChance == 1)
-                            StartCoroutine(FishEvent());
-                        else
-                            StartCoroutine(BirdEvent());
+                            if (sameChance == 1)
+                                StartCoroutine(FishEvent());
+                            else
+                                StartCoroutine(BirdEvent());
+                        }
+                    }
+                    else //Hard Mode
+                    {
+                        float doubleChance = UnityEngine.Random.Range(1, 3);
+                        int sameChance = UnityEngine.Random.Range(1, 3);
+                        if (doubleChance == 1)
+                        {
+                            yield return new WaitForSeconds(1.5f);
+
+                            if (sameChance == 1)
+                                StartCoroutine(FishEvent());
+                            else
+                                StartCoroutine(BirdEvent());
+                        }
                     }
                 }
                 else
                 {
                     StartCoroutine(BirdEvent());
 
-                    float doubleChance = UnityEngine.Random.Range(1, 20000);
-                    int sameChance = UnityEngine.Random.Range(1, 3);
-                    if (sc.score > 1000 && doubleChance <= sc.score)
+                    if (PlayerPrefs.GetInt("HardMode", 0) == 0)
                     {
-                        yield return new WaitForSeconds(1.5f);
+                        float doubleChance = UnityEngine.Random.Range(1, 20000);
+                        int sameChance = UnityEngine.Random.Range(1, 3);
+                        if (sc.score > 1000 && doubleChance <= sc.score)
+                        {
+                            yield return new WaitForSeconds(1.5f);
 
-                        if (sameChance == 1 || lg.playerBiome == LevelGenerator.Biome.Cypress)
-                            StartCoroutine(BirdEvent());
-                        else
-                            StartCoroutine(FishEvent());
+                            if (sameChance == 1 || lg.playerBiome == LevelGenerator.Biome.Cypress)
+                                StartCoroutine(BirdEvent());
+                            else
+                                StartCoroutine(FishEvent());
+                        }
+                    }
+                    else //Hard Mode
+                    {
+                        float doubleChance = UnityEngine.Random.Range(1, 3);
+                        int sameChance = UnityEngine.Random.Range(1, 3);
+                        if (doubleChance == 1)
+                        {
+                            yield return new WaitForSeconds(1.5f);
+
+                            if (sameChance == 1)
+                                StartCoroutine(BirdEvent());
+                            else
+                                StartCoroutine(FishEvent());
+                        }
                     }
                 }
             }
@@ -220,6 +286,7 @@ public class PredatorEvents : MonoBehaviour
             yield return new WaitForSeconds(warningTime);
             fishSwarm.SpawnPredator(fishSwarm.SetSpawnPoint(lg, player), player, lg);
             fishSwarm.SetSpawned(true);
+            fishSwarm.SetLevel(lg.playerRefEndPoint.y);
 
             fishSwarm.DestroyTimer(15);
         }
@@ -235,6 +302,7 @@ public class PredatorEvents : MonoBehaviour
             yield return new WaitForSeconds(warningTime);
             arapaima.SpawnPredator(arapaima.SetSpawnPoint(lg, player), player, lg);
             arapaima.SetSpawned(true);
+            arapaima.SetLevel(lg.playerRefEndPoint.y);
 
             arapaima.DestroyTimer(15);
         }
@@ -266,6 +334,7 @@ public class PredatorEvents : MonoBehaviour
             yield return new WaitForSeconds(warningTime);
             falcon.SpawnPredator(falcon.SetSpawnPoint(lg, player), player,lg);
             falcon.SetSpawned(true);
+            falcon.SetLevel(lg.playerRefEndPoint.y);
 
             falcon.DestroyTimer(15);
         }
@@ -281,6 +350,7 @@ public class PredatorEvents : MonoBehaviour
             yield return new WaitForSeconds(warningTime);
             heron.SpawnPredator(heron.SetSpawnPoint(lg, player), player, lg);
             heron.SetSpawned(true);
+            heron.SetLevel(lg.playerRefEndPoint.y);
 
             heron.DestroyTimer(15);
         }
@@ -304,7 +374,10 @@ public class PredatorEvents : MonoBehaviour
                 || predator.Type() == Predator.PredatorType.FishSwarm && lg.playerBiome != LevelGenerator.Biome.Bog)
             {
                 if(predator.Type() == Predator.PredatorType.FishSwarm)
+                {
+                    if(predator.GetPredator().transform.parent != null)
                     Destroy(predator.GetPredator().transform.parent.gameObject);
+                }
                 else
                     Destroy(predator.GetPredator());
 

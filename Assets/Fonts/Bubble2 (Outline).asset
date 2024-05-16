@@ -58,11 +58,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-  m_Name: Bubble2
+  m_Name: Bubble2 (Outline)
   m_EditorClassIdentifier: 
-  hashCode: -419877812
+  hashCode: 1148241101
   material: {fileID: 1723023681197111773}
-  materialHashCode: 1976618988
+  materialHashCode: 699637197
   m_Version: 1.1.0
   m_SourceFontFileGUID: f362852a4bc12b2458e4da8842c2f53b
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: f362852a4bc12b2458e4da8842c2f53b, type: 3}
@@ -2393,7 +2393,7 @@ Material:
     - _OutlineSoftness: 0
     - _OutlineUVSpeedX: 0
     - _OutlineUVSpeedY: 0
-    - _OutlineWidth: 0
+    - _OutlineWidth: 0.2
     - _PerspectiveFilter: 0.875
     - _Reflectivity: 10
     - _ScaleRatioA: 0.9
