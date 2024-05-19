@@ -60,12 +60,16 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool poisonAvailable;
 
     [Header("Settings")]
+    public float coyoteTime = 0.2f;
+    private float coyoteTimeCounter;
+    public float jumpBuffer = 0.2f;
+    private float jumpBufferCounter;
     [SerializeField] float aimMultiplier = 2;
     public static Species species;
     public bool conserveMomentum;
     [SerializeField] bool aimingJumpStopsMomentum;
 
-    [HideInInspector] public bool skipToJump;
+    public bool skipToJump;
     [HideInInspector] public bool changeBiome;
     [HideInInspector] public bool transitionCamera;
     float defaultGravityScale;
@@ -95,6 +99,8 @@ public class PlayerController : MonoBehaviour
     bool grappleRotationSet;
     bool wasSwimming;
     bool wasAlive;
+    bool jumpTransferCoroutineStarted;
+    bool exitWaterSFXAllowed;
     bool facingRight = true;
     string SLIDE = "FrogSlide";
     string IDLE = "FrogIdle";
@@ -138,6 +144,16 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        //Coyote Time
+        if(isGrounded || isSliding)
+        {
+            coyoteTimeCounter = coyoteTime;
+        }
+        else
+        {
+            coyoteTimeCounter -= Time.deltaTime;
+        }
+
         if (!dead && !pauseScript.pause) 
         {
             DetectInputs();
@@ -260,28 +276,48 @@ public class PlayerController : MonoBehaviour
     }
     void DetectInputs()
     {
-        if (Input.touchCount > 0 && (isGrounded || isSwimming))
+        if (Input.touchCount > 0)
         {
             touch = Input.GetTouch(0);
-            if (touch.phase == TouchPhase.Began)
+
+            
+            
+                if (touch.phase == TouchPhase.Began)
+                {
+                    draggingStarted = true;
+                    DragStart();
+                }
+
+                if (((touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary) && draggingStarted) || skipToJump)
+                {
+                    Dragging();
+                }
+
+
+                if ((touch.phase == TouchPhase.Ended && draggingStarted) || (touch.phase == TouchPhase.Ended && skipToJump))
+                {
+                    DragRelease();
+                    draggingStarted = false;
+                }
+            
+
+            if (touch.phase == TouchPhase.Ended)
             {
-                draggingStarted = true;
-                DragStart();
+                jumpBufferCounter = jumpBuffer;
             }
-            if (((touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary) && draggingStarted) || skipToJump)
+            else
             {
-                Dragging();
+                jumpBufferCounter -= Time.deltaTime;
             }
-            if ((touch.phase == TouchPhase.Ended && draggingStarted) || (touch.phase == TouchPhase.Ended && skipToJump))
-            {
-                DragRelease();
-                draggingStarted = false;
-            }
+        }
+        else
+        {
+            jumpBufferCounter -= Time.deltaTime;
         }
     }
     void Jump() 
     {
-        if (jump && !pauseScript.pause) 
+        if (jump && !pauseScript.pause && ((coyoteTimeCounter > 0 || isSwimming) && jumpBufferCounter > 0)) 
         {
             Vector3 force = dragStartPos - dragReleasePos;
             float fillPercentage;
@@ -324,8 +360,13 @@ public class PlayerController : MonoBehaviour
                 rb.AddForce(clampedForce, ForceMode2D.Impulse);
 
                 if (isSwimming)
+                {
                     SetSpriteRotation(secondLinePoint - transform.position, 0);
+                }
             }
+
+            coyoteTimeCounter = 0;
+            jumpBufferCounter = 0;
 
             jump = false;
         }
@@ -379,7 +420,7 @@ public class PlayerController : MonoBehaviour
                 ChangeAnimationState(READY_SWIM);
             }
         }
-        else
+        else if (isGrounded || isSliding || (coyoteTimeCounter > 0 && !tongueLine.isGrappling))  // Updated condition
         {
 
             secondLinePoint = jumpLrStartpoint.position + Vector3.ClampMagnitude(((dragStartPos - draggingPos) * aimMultiplier), maxJumpAimLineLength);
@@ -388,7 +429,7 @@ public class PlayerController : MonoBehaviour
                 if(isGrounded)
                     ChangeAnimationState(IDLE);
 
-                if (aimingJumpStopsMomentum)
+                if (aimingJumpStopsMomentum && isGrounded)
                 {
                     rb.velocity = new Vector2(0, rb.velocity.y);
                     rb.mass = 0.1f;
@@ -401,7 +442,7 @@ public class PlayerController : MonoBehaviour
             jumpLr.SetPosition(1, secondLinePoint);
         }
     }
-    void DragRelease () 
+    void DragRelease() 
     {
         skipToJump = false;
         tongueLauncher.touchEnded = false;
@@ -411,7 +452,8 @@ public class PlayerController : MonoBehaviour
         dragReleasePos.z = 0;
         rb.mass = initialMass;
 
-        jump = true;
+        if((coyoteTimeCounter > 0 || isGrounded) || (jumpBufferCounter > 0 || isSwimming)) 
+            jump = true;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////// SPECIES CONFIGURATION //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -443,8 +485,8 @@ public class PlayerController : MonoBehaviour
                 swimmingPower = 28f;
                 maxJumpAimLineLength = 10;
                 maxSwimAimLineLength = 8;
-                oxygenAndMoistureController.oxygenLossRate = 0.05f;
-                oxygenAndMoistureController.moistureLossRate = 0.06f;
+                oxygenAndMoistureController.oxygenLossRate = 0.06f;
+                oxygenAndMoistureController.moistureLossRate = 0.07f;
                 tongueLauncher.baseMaxDistance = 25;
 
                 spriteRenderer.sprite = initialSprites[0];
@@ -454,7 +496,7 @@ public class PlayerController : MonoBehaviour
                 swimmingPower = 25;
                 maxJumpAimLineLength = 12;
                 maxSwimAimLineLength = 7;
-                oxygenAndMoistureController.oxygenLossRate = 0.08f;
+                oxygenAndMoistureController.oxygenLossRate = 0.09f;
                 oxygenAndMoistureController.moistureLossRate = 0.06f;
                 tongueLauncher.baseMaxDistance = 33;
                 tongueLauncher.grappleStrength = 25;
@@ -481,7 +523,7 @@ public class PlayerController : MonoBehaviour
                 swimmingPower = 32;
                 maxJumpAimLineLength = 10;
                 maxSwimAimLineLength = 10;
-                oxygenAndMoistureController.oxygenLossRate = 0.04f;
+                oxygenAndMoistureController.oxygenLossRate = 0.05f;
                 oxygenAndMoistureController.moistureLossRate = 0.05f;
                 tongueLauncher.baseMaxDistance = 30;
                 break;
@@ -490,8 +532,8 @@ public class PlayerController : MonoBehaviour
                 swimmingPower = 29;
                 maxJumpAimLineLength = 10;
                 maxSwimAimLineLength = 10;
-                oxygenAndMoistureController.oxygenLossRate = 0.05f;
-                oxygenAndMoistureController.moistureLossRate = 0.06f;
+                oxygenAndMoistureController.oxygenLossRate = 0.07f;
+                oxygenAndMoistureController.moistureLossRate = 0.08f;
                 tongueLauncher.baseMaxDistance = 25;
 
                 poisonAvailable = true;
@@ -554,6 +596,7 @@ public class PlayerController : MonoBehaviour
             //Make the player always slide on slides
             if (isSliding && !jumpAnimationPlaying)
             {
+            
                 ChangeAnimationState(SLIDE);
             }
 
@@ -596,7 +639,8 @@ public class PlayerController : MonoBehaviour
             //If you jump out of the water, start MIDJUMP animation
             if (!tongueLauncher.aimingGrapple && !isSwimming && !isSliding && (currentState == READY_SWIM || currentState == SWIM || currentState == MIDSWIM))
             {
-                ChangeAnimationState(MIDAIR);
+                ChangeAnimationState(STRAIGHT_JUMP);
+
             }
             //If you jump out of the water while aiming grapple, start GRAPPLE animation
             if (tongueLauncher.aimingGrapple && !isSwimming && !isSliding && (currentState == READY_SWIM || currentState == SWIM || currentState == MIDSWIM))
@@ -616,22 +660,28 @@ public class PlayerController : MonoBehaviour
             //While in a straight animation state, rotate to match velocity
             if (currentState == STRAIGHT_JUMP || currentState == STRAIGHT_GRAPPLE)
             {
-                if(rb.velocity.magnitude >= 5)
+                if(rb.velocity.magnitude >= 3)
                     SetSpriteRotation((transform.position + (Vector3)rb.velocity) - transform.position, 0);
+            }
+
+            //When you jump or go midjump, wait an interval, then if you are still in that state, switch to straight 
+            if(!jumpTransferCoroutineStarted && currentState == JUMP || currentState == MIDAIR || (currentState == SLIDE && !isGrounded))
+            {
+                StartCoroutine(SwitchFromJumpToStraight());
             }
 
             //Resets the rotation after you leave the water
             if (wasWet && !wet)
             {
-                sprite.rotation = Quaternion.identity;
-                if(!isGrounded)
+                if(!isGrounded && exitWaterSFXAllowed)
                     sfx.PlaySFX("Exit Water");
             }
             if(wet && !wasWet)
             {
+                StartCoroutine(AllowExitSFXDelay());
                 if(!isGrounded)
                 {
-                    if (rb.velocity.magnitude < 50)
+                    if (rb.velocity.magnitude < 40)
                         sfx.PlaySFX("Splash");
                     else
                         sfx.PlaySFX("Big Splash");
@@ -640,6 +690,26 @@ public class PlayerController : MonoBehaviour
         }
         wasSwimming = isSwimming;
         wasWet = wet;
+    }
+    IEnumerator SwitchFromJumpToStraight()
+    {
+        jumpTransferCoroutineStarted = true;
+        yield return new WaitForSeconds(1.5f);
+        if (currentState == JUMP || currentState == MIDAIR || (currentState == SLIDE && !isGrounded))
+        {
+            ChangeAnimationState(STRAIGHT_JUMP);
+        }
+        if (currentState == GRAPPLE)
+        {
+            ChangeAnimationState(STRAIGHT_GRAPPLE);
+        }
+        jumpTransferCoroutineStarted = false;
+    }
+    IEnumerator AllowExitSFXDelay()
+    {
+        exitWaterSFXAllowed = false;
+        yield return new WaitForSeconds(0.2f);
+        exitWaterSFXAllowed = true;
     }
     void SetDirection()
     {
@@ -795,6 +865,17 @@ public class PlayerController : MonoBehaviour
                 Destroy(collision.transform.parent.gameObject);
             }
         }
+
+        //Make a noise when the player bounces off a cichlid
+        if (collision.gameObject.transform.parent != null)
+        {
+            if (collision.gameObject.transform.parent.name == "Cichlid" || collision.gameObject.transform.parent.name == "Cichlid(Clone)")
+            {
+                if (species != Species.BullFrog)
+                    sfx.PlaySFX("Cichlid Bounce");
+            }
+        }
+
         if (collision.gameObject.layer == 11) //Cattail
         {
             if (tongueLauncher.grappleTarget != null && collision.transform == tongueLauncher.grappleTarget.transform)
@@ -903,6 +984,7 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.CompareTag("CameraTransition"))
         {
+            collision.transform.parent.GetComponentInChildren<ReturnBlocker>().GetComponent<PolygonCollider2D>().enabled = true;  
             biomeIn = levelGenerator.biomeSpawning.ToString();
             transitionCamera = true;
             Destroy(collision.gameObject);

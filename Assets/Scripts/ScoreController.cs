@@ -25,6 +25,7 @@ public class ScoreController : MonoBehaviour
     [SerializeField] TextMeshPro poisonedHighscoreText;
     [SerializeField] TextMeshPro[] highscoreWordTexts;
     [SerializeField] Transform startPoint;
+    [SerializeField] Color hardModeHighscoreColor;
     public bool hasHighscore;
 
     private float initialPosition;
@@ -44,6 +45,13 @@ public class ScoreController : MonoBehaviour
             initialPosition = lg.endPoint.x;
         else
             initialPosition = startPoint.transform.position.x;
+
+        //Transfer tutorial score to game
+        if(TutorialEnd.scoreTransfer != 0)
+        {
+            score += TutorialEnd.scoreTransfer;
+            TutorialEnd.scoreTransfer = 0;
+        }
     }
     private void Update()
     {
@@ -53,12 +61,21 @@ public class ScoreController : MonoBehaviour
             scoreText.enabled = true;
         }
 
+        if (PlayerPrefs.GetInt("HardMode", 0) == 1)
+            scoreText.color = Color.red;
+
         //Change the text color to yellow when you have a highscore
         HasHighscore();
         if (hasHighscore && !tutorial)
         {
-            scoreText.color = Color.yellow;
-            if(!highscoreSoundPlayed) 
+            if (PlayerPrefs.GetInt("HardMode", 0) == 0)
+                scoreText.color = Color.yellow;
+            else
+            {
+                scoreText.color = hardModeHighscoreColor;
+            }
+
+            if (!highscoreSoundPlayed) 
             {
                 FindFirstObjectByType<SFXManager>().PlaySFX("Highscore");
                 highscoreSoundPlayed = true;
@@ -101,12 +118,25 @@ public class ScoreController : MonoBehaviour
 
             if (hasHighscore && !tutorial)
             {
-                finalScoreText.color = new Color(1, 0.92f, 0.016f, finalScoreText.color.a); //Yellow
-                highscoreText.color = new Color(1, 0.92f, 0.016f, finalScoreText.color.a); //Yellow
-                foreach(TextMeshPro highscoreWordText in highscoreWordTexts)
+                if (PlayerPrefs.GetInt("HardMode", 0) == 0)
                 {
-                    highscoreWordText.color = new Color(1, 0.92f, 0.016f, finalScoreText.color.a); //Yellow
+                    finalScoreText.color = new Color(1, 0.92f, 0.016f, finalScoreText.color.a); //Yellow
+                    highscoreText.color = new Color(1, 0.92f, 0.016f, finalScoreText.color.a); //Yellow
+                    foreach (TextMeshPro highscoreWordText in highscoreWordTexts)
+                    {
+                        highscoreWordText.color = new Color(1, 0.92f, 0.016f, finalScoreText.color.a); //Yellow
+                    }
                 }
+                else
+                {
+                    finalScoreText.color = hardModeHighscoreColor; //Orange
+                    highscoreText.color = hardModeHighscoreColor; //Orange
+                    foreach (TextMeshPro highscoreWordText in highscoreWordTexts)
+                    {
+                        highscoreWordText.color = hardModeHighscoreColor; //Orange
+                    }
+                }
+
             }
 
         }

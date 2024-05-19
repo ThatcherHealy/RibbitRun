@@ -83,8 +83,10 @@ public class GarBehavior : MonoBehaviour
         //Make the gar return to waypoints once the player leaves the range
         if(pv.rangeLeft)
         {
+            rb.drag = 0.001f;
             attackDelayCompleted = false;
             pv.rangeLeft = false;
+            committedToAttack = false;
             LookAtVelocity();
             MoveTowardsWaypoint();
         }
@@ -105,7 +107,7 @@ public class GarBehavior : MonoBehaviour
         else
         {
 
-            if(pv.huntingMode || committedToAttack) //Hunting
+            if(!pv.rangeLeft && (pv.huntingMode || committedToAttack)) //Hunting
             {
                 rb.drag = 0.6f;
                 if (pv.frog != null)

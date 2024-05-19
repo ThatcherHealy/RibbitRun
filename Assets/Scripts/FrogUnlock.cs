@@ -73,7 +73,7 @@ public class FrogUnlock : MonoBehaviour
         treeFrogSlider.value = treeFrogSliderProgress;
 
         //Avoid slider looking weird
-        if (treeFrogSlider.value != 0 && treeFrogSlider.value < 0.01)
+        if (treeFrogSlider.value > 0.0001 && treeFrogSlider.value < 0.01)
         {
             treeFrogSlider.value = 0.01f;
         }
@@ -93,7 +93,7 @@ public class FrogUnlock : MonoBehaviour
         frogletSlider.value = frogletSliderProgress;
 
         //Avoid slider looking weird
-        if (frogletSlider.value != 0 && frogletSlider.value < 0.01)
+        if (frogletSlider.value > 0.0001 && frogletSlider.value < 0.01)
         {
             frogletSlider.value = 0.01f;
         }
@@ -112,7 +112,7 @@ public class FrogUnlock : MonoBehaviour
         bullfrogSlider.value = bullfrogSliderProgress;
 
         //Avoid slider looking weird
-        if (bullfrogSlider.value != 0 && bullfrogSlider.value < 0.01)
+        if (bullfrogSlider.value > 0.0001 && bullfrogSlider.value < 0.01)
         {
             bullfrogSlider.value = 0.01f;
         }
@@ -131,7 +131,7 @@ public class FrogUnlock : MonoBehaviour
         poisonDartFrogSlider.value = poisonDartFrogSliderProgress;
 
         //Avoid slider looking weird
-        if (poisonDartFrogSlider.value != 0 && poisonDartFrogSlider.value < 0.01)
+        if (poisonDartFrogSlider.value > 0.0001 && poisonDartFrogSlider.value < 0.01)
         {
             poisonDartFrogSlider.value = 0.01f;
         }

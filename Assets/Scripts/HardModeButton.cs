@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +8,11 @@ public class HardModeButton : MonoBehaviour
 {
     [SerializeField] Button button;
     [SerializeField] Image image;
+    [SerializeField] TextMeshPro hardModeText;
     [SerializeField] GameObject hardModePopup;
+    [SerializeField] Color unavailableColor;
+    [SerializeField] Color availableColor;
+    [SerializeField] Color activeColor;
     MenuSFXManager sfx;
     void Start()
     {
@@ -18,26 +23,30 @@ public class HardModeButton : MonoBehaviour
 
         if (PlayerPrefs.GetInt("HardModeUnlocked") == 0)
         {
+            hardModeText.text = "Locked";
             button.interactable = false;
-            image.color = Color.grey;
+            image.color = unavailableColor;
         }
         else
         {
             button.interactable = true;
-            image.color = Color.white;
+            image.color = availableColor;
         }
     }
     private void Update()
     {
-        if (PlayerPrefs.GetInt("HardMode", 0) == 0)
+        if (PlayerPrefs.GetInt("HardModeUnlocked") == 1)
         {
-            hardModePopup.SetActive(false);
-            image.color = Color.white;
-        }
-        else
-        {
-            hardModePopup.SetActive(true);
-            image.color = Color.red;
+            if (PlayerPrefs.GetInt("HardMode", 0) == 0)
+            {
+                hardModePopup.SetActive(false);
+                image.color = availableColor;
+            }
+            else
+            {
+                hardModePopup.SetActive(true);
+                image.color = activeColor;
+            }
         }
     }
     public void EnableHardmode() 

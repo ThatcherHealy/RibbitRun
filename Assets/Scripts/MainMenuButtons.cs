@@ -15,6 +15,12 @@ public class MainMenuButtons : MonoBehaviour
     MenuSFXManager sfx;
     [SerializeField] GameObject hardModeUnlocked;
 
+    [SerializeField] GameObject SFXMuteBar;
+    [SerializeField] Image SFXbutton;
+    [SerializeField] GameObject musicMuteBar;
+    [SerializeField] Image musicButton;
+    [SerializeField] Color onColor;
+
     private void Awake()
     {
         if(SceneManager.GetActiveScene().name == "SpeciesMenu")
@@ -23,6 +29,33 @@ public class MainMenuButtons : MonoBehaviour
     private void Start()
     {
         sfx = FindFirstObjectByType<MenuSFXManager>();
+    }
+    private void Update()
+    {
+        if (SceneManager.GetActiveScene().name != "SpeciesMenu")
+        {
+            if (PlayerPrefs.GetInt("SFX Mute", 0) == 0)
+            {
+                SFXbutton.color = onColor;
+                SFXMuteBar.SetActive(false);
+            }
+            else
+            {
+                SFXbutton.color = Color.grey;
+                SFXMuteBar.SetActive(true);
+            }
+            if (PlayerPrefs.GetInt("Music Mute", 0) == 0)
+            {
+                musicButton.color = onColor;
+                musicMuteBar.SetActive(false);
+            }
+            else
+            {
+                musicButton.color = Color.grey;
+                musicMuteBar.SetActive(true);
+            }
+        }
+
     }
 
     public void Play()

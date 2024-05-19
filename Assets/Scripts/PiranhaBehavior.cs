@@ -11,20 +11,29 @@ public class PiranhaBehavior : MonoBehaviour
     [SerializeField] Rigidbody2D rb;
     [SerializeField] Animator animator;
     [SerializeField] float passiveSpeed = 10;
-    [SerializeField] float chaseSpeed = 10;
-    [SerializeField] float chaseInterval = 0.5f;
-
+    [SerializeField] float chaseSpeed = 30F;
+    [SerializeField] float chaseInterval = 1.2f;
+    [SerializeField] Transform target;
+    SFXManager sfx;
 
     Vector3 initialPosition;
     private Vector3[] waypoints = new Vector3[4];
     int currentWaypoint;
+    bool attackingStoppedByContinue;
 
     bool forceApplied; //True after the force has been applied to the gar in the direction of its next waypoint
     bool chaseForceApplied; //True after the force has been applied to the gar in the direction of the player
     bool attacking; //True if the gar was hunting last frame
-    bool grabSwap;
+    bool attackDelayCompleted;
+    bool aimAtPlayer;
+    bool aimCoroutineStarted;
+    bool committedToAttack;
+    Vector3 dashRotation;
+
     void Start()
     {
+        sfx = FindFirstObjectByType<SFXManager>();
+        animator.enabled = false;
         passiveSpeed *= rb.mass;
         chaseSpeed *= rb.mass;
         SetWaypoints();
@@ -32,6 +41,13 @@ public class PiranhaBehavior : MonoBehaviour
 
     void Update()
     {
+        if (!pv.GetComponent<BoxCollider2D>().isActiveAndEnabled && !attackingStoppedByContinue)
+        {
+            LookAtVelocity();
+            MoveTowardsWaypoint();
+            attackingStoppedByContinue = true;
+        }
+
         if (waypoints[currentWaypoint] != null && Vector2.Distance(transform.position, waypoints[currentWaypoint]) < 5f)
         {
             ChooseNextWaypoint();
@@ -50,6 +66,7 @@ public class PiranhaBehavior : MonoBehaviour
             Destroy(this);
         }
 
+
         //Make the gar fall down when out of water
         if (!hitbox.dead)
         {
@@ -62,45 +79,62 @@ public class PiranhaBehavior : MonoBehaviour
                 rb.gravityScale = 5;
             }
         }
+
+        //Make the piranha return to waypoints once the player leaves the range
+        if (pv.rangeLeft)
+        {
+            rb.drag = 0.001f;
+            attackDelayCompleted = false;
+            pv.rangeLeft = false;
+            committedToAttack = false;
+            LookAtVelocity();
+            MoveTowardsWaypoint();
+        }
     }
     private void FixedUpdate()
     {
-        LookAtVelocity();
-
-        if (!pv.huntingMode || hitbox.grabbed) //Not hunting
+        if (aimAtPlayer)
         {
-           rb.drag = 0.001f;
-            
-            if (hitbox.grabbed) //Death Animation
+            AimAtPlayer();
+        }
+
+        if (hitbox.grabbed && !hitbox.dead)
+        {
+            StartCoroutine(EatPlayer());
+            LookAtVelocity();
+        }
+        else
+        {
+
+            if (!pv.rangeLeft && (pv.huntingMode || committedToAttack)) //Hunting
             {
-                if(!grabSwap)
+                rb.drag = 0.6f;
+                if (pv.frog != null)
                 {
-                    StartCoroutine(EatPlayer());
-                 /*   forceApplied = false;
-                    passiveSpeed *= 10;
-                    SetWaypoints();*/
-                    grabSwap = true; 
+                    if (!aimCoroutineStarted)
+                    {
+                        aimAtPlayer = true;
+                    }
+
+                    if (attackDelayCompleted && !chaseForceApplied && !aimAtPlayer)
+                    {
+                        rb.angularVelocity = 0;
+                        MoveTowardsPlayer();
+                        transform.eulerAngles = dashRotation;
+                        sfx.PlaySFX("Piranha Swim");
+                    }
                 }
             }
-
-            if (!forceApplied)
+            else if (!pv.huntingMode) //Not hunting
             {
-                MoveTowardsWaypoint();
+                LookAtVelocity();
+                rb.drag = 0.001f;
+                if (!forceApplied)
+                {
+                    MoveTowardsWaypoint();
+                }
             }
         }
-        else //Hunting
-        {
-           rb.drag = 0.6f;
-           if (pv.frog != null)
-           {
-                if (!chaseForceApplied)
-                {
-                    MoveTowardsPlayer();
-                    FindFirstObjectByType<SFXManager>().PlaySFX("Piranha Swim");
-                }
-           }
-        }
-        
 
         if (turner.hitMud || turner.hitSlideRight || turner.hitSlideLeft)
         {
@@ -109,30 +143,38 @@ public class PiranhaBehavior : MonoBehaviour
     }
     void LookAtVelocity()
     {
-        Vector2 velocity = Vector2.zero;
-        float angle;
-        if (!pv.huntingMode || hitbox.grabbed)
-        {
-            if (rb.velocity != Vector2.zero)
-                velocity = rb.velocity;
-            else
-                velocity = new Vector2(velocity.x, velocity.y);
+        Vector3 vector = rb.velocity;
 
-            angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
-        }
-        else
-        {
-            Vector2 target = pv.frog.position - transform.position;
-            angle = Mathf.Atan2(target.y, target.x) * Mathf.Rad2Deg;
-        }
+        float angle = Mathf.Atan2(vector.y, vector.x) * Mathf.Rad2Deg;
 
         // Rotate the GameObject to face the direction of velocity
         Quaternion targetRotation = Quaternion.Euler(0f, 0f, angle - 180);
 
-        if (pv.huntingMode)
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 0.2f);
-        if (!pv.huntingMode || hitbox.grabbed)
-            transform.rotation = targetRotation;
+        transform.rotation = targetRotation;
+        if (rb.velocity.x < 0) //looking left
+        {
+            //Lock between 330 and 30
+            if (transform.eulerAngles.z > 300 && transform.eulerAngles.z < 330)
+            {
+                transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 330);
+            }
+            else if (transform.eulerAngles.z < 180 && transform.eulerAngles.z > 30)
+            {
+                transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 30);
+            }
+        }
+        else //looking right
+        {
+            //Lock between 150 and 210
+            if (transform.eulerAngles.z < 150)
+            {
+                transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 150);
+            }
+            else if (transform.eulerAngles.z > 210)
+            {
+                transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 210);
+            }
+        }
 
         if (transform.eulerAngles.z > 90 && transform.eulerAngles.z < 270)
         {
@@ -142,6 +184,37 @@ public class PiranhaBehavior : MonoBehaviour
         {
             transform.localScale = new Vector3(1, 1, 1);  // Reset the sprite scale
         }
+    }
+    void AimAtPlayer()
+    {
+        if (!aimCoroutineStarted)
+        {
+            committedToAttack = true;
+            StartCoroutine(AimTime(chaseInterval));
+        }
+        if (pv.frog != null)
+        {
+            Vector2 target = pv.frog.position - transform.position;
+            float angle = Mathf.Atan2(target.y, target.x) * Mathf.Rad2Deg;
+            Quaternion targetRotation = Quaternion.Euler(0f, 0f, angle - 180);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 0.125f);
+            dashRotation = transform.eulerAngles;
+        }
+
+        if (transform.eulerAngles.z > 90 && transform.eulerAngles.z < 270)
+        {
+            transform.localScale = new Vector3(1, -1, 1); // Flip the sprite
+        }
+        else
+        {
+            transform.localScale = new Vector3(1, 1, 1);  // Reset the sprite scale
+        }
+    }
+    IEnumerator AimTime(float time)
+    {
+        aimCoroutineStarted = true;
+        yield return new WaitForSeconds(time);
+        aimAtPlayer = false;
     }
     void MoveTowardsWaypoint()
     {
@@ -153,20 +226,20 @@ public class PiranhaBehavior : MonoBehaviour
     }
     void MoveTowardsPlayer()
     {
-        Vector3 direction = pv.frog.position - transform.position;
+        //Vector3 direction = pv.frog.position - transform.position;
+        Vector3 direction = target.position - transform.position;
 
-        if(uc.underwater)
-        {
-            rb.velocity = Vector2.zero;
-            rb.AddForce(direction.normalized * chaseSpeed, ForceMode2D.Impulse);
-        }
+        rb.velocity = Vector2.zero;
+        rb.AddForce(direction.normalized * chaseSpeed, ForceMode2D.Impulse);
         chaseForceApplied = true;
         StartCoroutine(LungeDelay(chaseInterval));
     }
     private IEnumerator LungeDelay(float lookDelay)
     {
         yield return new WaitForSeconds(lookDelay);
+        aimCoroutineStarted = false;
         chaseForceApplied = false;
+        committedToAttack = false;
         if (!forceApplied)
             forceApplied = true;
     }
@@ -206,6 +279,12 @@ public class PiranhaBehavior : MonoBehaviour
             StartCoroutine(WaitThenReturn());
         }
 
+        //If the gar just saw a player, wait to attack them
+        if (pv.huntingMode && !attacking)
+        {
+            StartCoroutine(InitialAttackDelay());
+        }
+
         if (pv.huntingMode)
         {
             attacking = true;
@@ -217,8 +296,13 @@ public class PiranhaBehavior : MonoBehaviour
     }
     IEnumerator WaitThenReturn()
     {
-        yield return new WaitForSeconds(0f);
+        yield return new WaitForSeconds(chaseInterval);
         forceApplied = false;
+    }
+    IEnumerator InitialAttackDelay()
+    {
+        yield return new WaitForSeconds(0.3f);
+        attackDelayCompleted = true;
     }
 
     void SetWaypoints()
@@ -231,7 +315,7 @@ public class PiranhaBehavior : MonoBehaviour
         {
             if (turner.hitMud)
             {
-                initialPosition = transform.position + new Vector3(0, 20, 0);
+                initialPosition = transform.position + new Vector3(0, 15, 0);
             }
             else if (turner.hitSlideRight)
             {
@@ -265,7 +349,7 @@ public class PiranhaBehavior : MonoBehaviour
     IEnumerator EatPlayer()
     {
         yield return new WaitForSeconds(0.3f);
-        if (pv.frog != null && !hitbox.dead && ((FindFirstObjectByType<DeathScript>().dontRespawnPressed || FindFirstObjectByType<DeathScript>().respawnedOnce) && pv.frog.GetComponent<PlayerController>().eaten))
+        if (pv.frog != null && !hitbox.dead && (FindFirstObjectByType<DeathScript>().dontRespawnPressed || FindFirstObjectByType<DeathScript>().respawnedOnce) && pv.frog.GetComponent<PlayerController>().eaten)
         {
             if (pv.frog.position.x > transform.position.x)
                 transform.localScale = new Vector3(-1, 1, 1); // Flip the sprite

@@ -42,6 +42,7 @@ public class SFXManager : MonoBehaviour
     [SerializeField] AudioClip garEatSFX;
     [SerializeField] AudioClip piranhaSwimSFX;
     [SerializeField] AudioClip piranhaEatSFX;
+    [SerializeField] AudioClip cichlidBounceSFX;
 
     [SerializeField] AudioClip generalClickSFX;
     [SerializeField] AudioClip exitClickSFX;
@@ -161,17 +162,21 @@ public class SFXManager : MonoBehaviour
                     audioSource.clip = arapaimaSpawnSFX;
                     break;
                 case "Gar Swim":
+                    audioSource.volume = 0.75f;
                     audioSource.clip = garSwimSFX;
                     break;
                 case "Gar Eat":
                     audioSource.clip = garEatSFX;
                     break;
                 case "Piranha Swim":
-                    audioSource.volume = 0.75f;
+                    audioSource.volume = 0.5f;
                     audioSource.clip = piranhaSwimSFX;
                     break;
                 case "Piranha Eat":
                     audioSource.clip = piranhaEatSFX;
+                    break;
+                case "Cichlid Bounce":
+                    audioSource.clip = cichlidBounceSFX;
                     break;
                 case "Drown":
                     audioSource.clip = drownSFX;

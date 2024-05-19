@@ -279,6 +279,7 @@ public class PredatorEvents : MonoBehaviour
             Predator fishSwarm = new Predator(Predator.PredatorType.FishSwarm, fishSwarmPrefab);
             predators.Add(fishSwarm);
             fishSwarm.SetDirection(UnityEngine.Random.Range(1, 3));
+            fishSwarm.SetLevel(lg.playerRefEndPoint.y);
 
             fishSwarm.SetSpawned(false);
             fishSwarm.SpawnWarning(warningPrefab, fishSwarm.SetSpawnPoint(lg, player));
@@ -286,7 +287,6 @@ public class PredatorEvents : MonoBehaviour
             yield return new WaitForSeconds(warningTime);
             fishSwarm.SpawnPredator(fishSwarm.SetSpawnPoint(lg, player), player, lg);
             fishSwarm.SetSpawned(true);
-            fishSwarm.SetLevel(lg.playerRefEndPoint.y);
 
             fishSwarm.DestroyTimer(15);
         }
@@ -295,6 +295,7 @@ public class PredatorEvents : MonoBehaviour
             Predator arapaima = new Predator(Predator.PredatorType.Arapaima, arapaimaPrefab);
             predators.Add(arapaima);
             arapaima.SetDirection(UnityEngine.Random.Range(1, 3));
+            arapaima.SetLevel(lg.playerRefEndPoint.y);
 
             arapaima.SetSpawned(false);
             arapaima.SpawnWarning(warningPrefab, arapaima.SetSpawnPoint(lg, player));
@@ -302,7 +303,6 @@ public class PredatorEvents : MonoBehaviour
             yield return new WaitForSeconds(warningTime);
             arapaima.SpawnPredator(arapaima.SetSpawnPoint(lg, player), player, lg);
             arapaima.SetSpawned(true);
-            arapaima.SetLevel(lg.playerRefEndPoint.y);
 
             arapaima.DestroyTimer(15);
         }
@@ -327,6 +327,7 @@ public class PredatorEvents : MonoBehaviour
             Predator falcon = new Predator(Predator.PredatorType.Falcon, falconPrefab);
             predators.Add(falcon);
             falcon.SetDirection(UnityEngine.Random.Range(1, 3));
+            falcon.SetLevel(lg.playerRefEndPoint.y);
 
             falcon.SetSpawned(false);
             falcon.SpawnWarning(warningPrefab, falcon.SetSpawnPoint(lg, player));
@@ -334,7 +335,6 @@ public class PredatorEvents : MonoBehaviour
             yield return new WaitForSeconds(warningTime);
             falcon.SpawnPredator(falcon.SetSpawnPoint(lg, player), player,lg);
             falcon.SetSpawned(true);
-            falcon.SetLevel(lg.playerRefEndPoint.y);
 
             falcon.DestroyTimer(15);
         }
@@ -343,6 +343,7 @@ public class PredatorEvents : MonoBehaviour
             Predator heron = new Predator(Predator.PredatorType.Heron, heronPrefab);
             predators.Add(heron);
             heron.SetDirection(UnityEngine.Random.Range(1, 3));
+            heron.SetLevel(lg.playerRefEndPoint.y);
 
             heron.SetSpawned(false);
             heron.SpawnWarning(warningPrefab, heron.SetSpawnPoint(lg, player));
@@ -350,7 +351,6 @@ public class PredatorEvents : MonoBehaviour
             yield return new WaitForSeconds(warningTime);
             heron.SpawnPredator(heron.SetSpawnPoint(lg, player), player, lg);
             heron.SetSpawned(true);
-            heron.SetLevel(lg.playerRefEndPoint.y);
 
             heron.DestroyTimer(15);
         }
@@ -375,7 +375,7 @@ public class PredatorEvents : MonoBehaviour
             {
                 if(predator.Type() == Predator.PredatorType.FishSwarm)
                 {
-                    if(predator.GetPredator().transform.parent != null)
+                    if(predator.GetPredator() != null && predator.GetPredator().transform != null && predator.GetPredator().transform.parent != null)
                     Destroy(predator.GetPredator().transform.parent.gameObject);
                 }
                 else

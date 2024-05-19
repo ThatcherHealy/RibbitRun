@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,6 +15,12 @@ public class PauseButtons : MonoBehaviour
     SFXManager sfx;
     public bool pause;
     bool unpause;
+
+    [SerializeField] GameObject SFXMuteBar;
+    [SerializeField] Image SFXbutton;
+    [SerializeField] GameObject musicMuteBar;
+    [SerializeField] Image musicButton;
+    [SerializeField] Color onColor;
     private void Start()
     {
         sfx = FindFirstObjectByType<SFXManager>();
@@ -23,6 +30,27 @@ public class PauseButtons : MonoBehaviour
         if(unpause) 
         {
             Time.timeScale = 1;
+        }
+
+        if (PlayerPrefs.GetInt("SFX Mute", 0) == 0)
+        {
+            SFXbutton.color = onColor;
+            SFXMuteBar.SetActive(false);
+        }
+        else
+        {
+            SFXbutton.color = Color.grey;
+            SFXMuteBar.SetActive(true);
+        }
+        if (PlayerPrefs.GetInt("Music Mute", 0) == 0)
+        {
+            musicButton.color = onColor;
+            musicMuteBar.SetActive(false);
+        }
+        else
+        {
+            musicButton.color = Color.grey;
+            musicMuteBar.SetActive(true);
         }
     }
     public void Pause()
