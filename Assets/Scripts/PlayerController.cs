@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     public string biomeIn;
     public bool eatenByFalcon;
     float initialMass;
+    bool mouseAllowedToDrag;
 
     [Header("States")]
     public bool isGrounded;
@@ -276,104 +277,76 @@ public class PlayerController : MonoBehaviour
     }
     void DetectInputs()
     {
+        bool inputEnded = false;
+        bool inputBegan = false;
+
         if (Input.touchCount > 0)
         {
             touch = Input.GetTouch(0);
-
             
-            
-                if (touch.phase == TouchPhase.Began)
-                {
-                    draggingStarted = true;
-                    DragStart();
-                }
-
-                if (((touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary) && draggingStarted) || skipToJump)
-                {
-                    Dragging();
-                }
-
-
-                if ((touch.phase == TouchPhase.Ended && draggingStarted) || (touch.phase == TouchPhase.Ended && skipToJump))
-                {
-                    DragRelease();
-                    draggingStarted = false;
-                }
-            
-
-            if (touch.phase == TouchPhase.Ended)
+            if (touch.phase == TouchPhase.Began)
             {
-                jumpBufferCounter = jumpBuffer;
+                draggingStarted = true;
+                inputBegan = true;  
+                DragStart();
             }
-            else
+
+            if (((touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary) && draggingStarted) || skipToJump)
             {
-                jumpBufferCounter -= Time.deltaTime;
+                Dragging();
+            }
+
+            if ((touch.phase == TouchPhase.Ended && draggingStarted) || (touch.phase == TouchPhase.Ended && skipToJump))
+            {
+                DragRelease();
+                draggingStarted = false;
+                inputEnded = true;
             }
         }
-        else
+        else if (Input.GetMouseButtonDown(0))
+        {
+            // Handle mouse input start
+            mouseAllowedToDrag = true;
+            draggingStarted = true;
+            inputBegan = true;
+            DragStart();
+        }
+        else if (Input.GetMouseButton(0) && ((mouseAllowedToDrag && draggingStarted) || skipToJump))
+        {
+            // Handle mouse dragging
+            Dragging();
+
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            if (draggingStarted || skipToJump)
+            {
+                DragRelease();
+                draggingStarted = false;
+                inputEnded = true;
+            }
+
+            jumpBufferCounter = jumpBuffer;
+            mouseAllowedToDrag = false;
+        }
+
+        if (inputEnded)
+        {
+            jumpBufferCounter = jumpBuffer;
+        }
+        else if (!inputBegan)
         {
             jumpBufferCounter -= Time.deltaTime;
         }
     }
-    void Jump() 
-    {
-        if (jump && !pauseScript.pause && ((coyoteTimeCounter > 0 || isSwimming) && jumpBufferCounter > 0)) 
-        {
-            Vector3 force = dragStartPos - dragReleasePos;
-            float fillPercentage;
-
-            if (isSwimming) //Swim
-            {
-                fillPercentage = Mathf.InverseLerp(0, (maxSwimAimLineLength), (secondLinePoint - transform.position).magnitude);
-
-                if (fillPercentage > 0.1f) //Don't do anything unless the drag was significant
-                {
-                    rb.velocity *= 0.3f;
-                    power = swimmingPower;
-                    ChangeAnimationState(SWIM);
-                    sfx.PlaySFX("Swim");
-                }
-            }
-            else //Jump
-            {
-                fillPercentage = Mathf.InverseLerp(0, (maxJumpAimLineLength), (secondLinePoint - transform.position).magnitude);
-
-                if (fillPercentage > 0.1f) //Don't do anything unless the drag was significant
-                {
-                    rb.velocity = Vector2.zero;
-                    power = jumpingPower;
-                    ChangeAnimationState(JUMP);
-
-                    if(Time.timeScale != 0f)
-                        sfx.PlaySFX("Jump");
-
-                    StartCoroutine(JumpAnimationTimer());
-                }
-            }
-
-            if (dried)
-                power = 5;
-
-            if(fillPercentage > 0.1f) //Don't do anything unless the drag was significant
-            {
-                Vector3 clampedForce = (force.normalized) * fillPercentage * (power) * rb.mass;
-                rb.AddForce(clampedForce, ForceMode2D.Impulse);
-
-                if (isSwimming)
-                {
-                    SetSpriteRotation(secondLinePoint - transform.position, 0);
-                }
-            }
-
-            coyoteTimeCounter = 0;
-            jumpBufferCounter = 0;
-
-            jump = false;
-        }
-    }
+    
     void DragStart() 
     {
-        dragStartPos = Camera.main.WorldToViewportPoint(touch.position); 
+        if(Input.touchCount > 0)
+            dragStartPos = Camera.main.WorldToViewportPoint(touch.position); 
+        else
+            dragStartPos = Camera.main.WorldToViewportPoint(Input.mousePosition);
+
         dragStartPos.z = 0;
         if (isSwimming) 
         {
@@ -387,9 +360,12 @@ public class PlayerController : MonoBehaviour
         }
     }
     void Dragging() 
-    {            
-       draggingPos = Camera.main.WorldToViewportPoint(touch.position);
-       draggingPos.z = 0;
+    {
+        if (Input.touchCount > 0)
+            draggingPos = Camera.main.WorldToViewportPoint(touch.position);
+        else
+            draggingPos = Camera.main.WorldToViewportPoint(Input.mousePosition);
+        draggingPos.z = 0;
 
         if (skipToJump)
             dragStartPos = tongueLauncher.dragStartPosition;
@@ -454,6 +430,62 @@ public class PlayerController : MonoBehaviour
 
         if((coyoteTimeCounter > 0 || isGrounded) || (jumpBufferCounter > 0 || isSwimming)) 
             jump = true;
+    }
+    void Jump()
+    {
+        if (jump && !pauseScript.pause && ((coyoteTimeCounter > 0 || isSwimming) && jumpBufferCounter > 0))
+        {
+            Vector3 force = dragStartPos - dragReleasePos;
+            float fillPercentage;
+
+            if (isSwimming) //Swim
+            {
+                fillPercentage = Mathf.InverseLerp(0, (maxSwimAimLineLength), (secondLinePoint - transform.position).magnitude);
+
+                if (fillPercentage > 0.1f) //Don't do anything unless the drag was significant
+                {
+                    rb.velocity *= 0.3f;
+                    power = swimmingPower;
+                    ChangeAnimationState(SWIM);
+                    sfx.PlaySFX("Swim");
+                }
+            }
+            else //Jump
+            {
+                fillPercentage = Mathf.InverseLerp(0, (maxJumpAimLineLength), (secondLinePoint - transform.position).magnitude);
+
+                if (fillPercentage > 0.1f) //Don't do anything unless the drag was significant
+                {
+                    rb.velocity = Vector2.zero;
+                    power = jumpingPower;
+                    ChangeAnimationState(JUMP);
+
+                    if (Time.timeScale != 0f)
+                        sfx.PlaySFX("Jump");
+
+                    StartCoroutine(JumpAnimationTimer());
+                }
+            }
+
+            if (dried)
+                power = 5;
+
+            if (fillPercentage > 0.1f) //Don't do anything unless the drag was significant
+            {
+                Vector3 clampedForce = (force.normalized) * fillPercentage * (power) * rb.mass;
+                rb.AddForce(clampedForce, ForceMode2D.Impulse);
+
+                if (isSwimming)
+                {
+                    SetSpriteRotation(secondLinePoint - transform.position, 0);
+                }
+            }
+
+            coyoteTimeCounter = 0;
+            jumpBufferCounter = 0;
+
+            jump = false;
+        }
     }
     //////////////////////////////////////////////////////////////////////////////////////////////// SPECIES CONFIGURATION //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -67,6 +67,7 @@ public class TongueLauncher : MonoBehaviour
     private Collider2D hitCollider;
     [HideInInspector] public Vector2 addedForce;
     public bool aimingGrapple;
+    bool mouseAllowedToDrag;
 
     private void Start()
     {
@@ -119,39 +120,121 @@ public class TongueLauncher : MonoBehaviour
         if (Input.touchCount > 0)
         {
             touch = Input.GetTouch(0);
-        }
 
-        //Get initial touch position
-        if (touch.phase == TouchPhase.Began)
-        {
-            dragStartPosition = Camera.main.WorldToViewportPoint(touch.position);
-            dragStartPosition.z = 0;
-        }
-
-        //Get current touch position
-        dragEndPosition = Camera.main.WorldToViewportPoint(touch.position);
-        dragEndPosition.z = 0;
-
-        if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
-        {
-            Dragging();
-        }
-
-        if (touch.phase == TouchPhase.Ended && !playerController.isGrounded && !playerController.isSwimming && touchEnded)
-        {
-            //On first click, set grapple point then grapple
-            if (touchEnded)
+            //Get initial touch position
+            if (touch.phase == TouchPhase.Began)
             {
-                SetGrapplePoint();
+                dragStartPosition = Camera.main.WorldToViewportPoint(touch.position);
+                dragStartPosition.z = 0;
             }
-            touchEnded = false;
+
+            //Get current touch position
+            dragEndPosition = Camera.main.WorldToViewportPoint(touch.position);
+            dragEndPosition.z = 0;
+
+            if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
+            {
+                Dragging();
+            }
+
+            if (touch.phase == TouchPhase.Ended && !playerController.isGrounded && !playerController.isSwimming && touchEnded)
+            {
+                //On first click, set grapple point then grapple
+                if (touchEnded)
+                {
+                    SetGrapplePoint();
+                }
+                touchEnded = false;
+            }
+        }
+        else
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                dragStartPosition = Camera.main.WorldToViewportPoint(Input.mousePosition);
+                dragStartPosition.z = 0;
+                mouseAllowedToDrag = true;
+            }
+
+            //Get current touch position
+            dragEndPosition = Camera.main.WorldToViewportPoint(Input.mousePosition);
+            dragEndPosition.z = 0;
+
+            if (Input.GetMouseButton(0) && mouseAllowedToDrag)
+            {
+                Dragging();
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+                mouseAllowedToDrag = false;
+                // On first click, set grapple point then grapple
+                if (!playerController.isGrounded && !playerController.isSwimming && touchEnded)
+                {
+                    SetGrapplePoint();
+                }
+                touchEnded = false;
+            }
+        }
+    }
+    void Dragging()
+    {
+        if (!playerController.isGrounded)
+        {
+            //Set the aim line to a clamped vector of the distance between the first click on the screen to the current dragging position
+            lr.positionCount = 2;
+
+            int maxDrag = 12;
+            if (playerController.dried)
+            {
+                maxDrag = 4;
+            }
+            secondLinePoint = tongueAimLineStartpoint.position + (Vector3.ClampMagnitude((dragStartPosition - dragEndPosition) * aimMultiplier, maxDrag));
+
+            //Create the line
+            lr.SetPosition(0, tongueAimLineStartpoint.position);
+            lr.SetPosition(1, secondLinePoint);
+            aimingGrapple = true;
+        }
+    }
+    void SetGrapplePoint()
+    {
+        //Remove the aim line when the grapple is fired
+        lr.positionCount = 0;
+        aimingGrapple = false;
+
+        //Direction of the first click on the screen to when the screen is released
+        Vector2 distanceVector = dragStartPosition - dragEndPosition;
+
+        float fillPercentage = Mathf.InverseLerp(0, (12/*Max Drag*/), (secondLinePoint - transform.position).magnitude);
+        if (fillPercentage > 0.1f)
+        {
+            if (Physics2D.Raycast(firePoint.position, distanceVector))
+            {
+                //Aim a raycast that starts at the player and is fired at the direction of the initial touch - the last touch
+                RaycastHit2D _hit = Physics2D.Raycast(firePoint.position, distanceVector, Mathf.Infinity, playerController.layerMask);
+
+                if (_hit.collider != null && _hit.collider.gameObject.CompareTag("Grapplable") || grappleToAll)
+                {
+                    //If the hit object can be grappled to, grapple to it
+                    if (Vector2.Distance(_hit.point, firePoint.position) <= maxDistance || !hasMaxDistance)
+                    {
+                        hitPoint = _hit.point;
+                        hitCollider = _hit.collider;
+                        grappleTarget = _hit.collider.gameObject;
+
+                        grappleDistanceVector = grapplePoint - (Vector2)gunPivot.position;
+                        tongueLine.enabled = true;
+                        grapplePointIdentified = true;
+                    }
+                }
+            }
         }
     }
 
     void SlowTime()
     {
         //When aiming, slow down time
-        if ((touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
+        if ((touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary || (mouseAllowedToDrag && Input.GetMouseButton(0)))
             && !tongueLine.isGrappling && !playerController.isGrounded && !playerController.isSwimming
             && !pauseScript.pause && !playerController.dead)
         {
@@ -193,26 +276,6 @@ public class TongueLauncher : MonoBehaviour
         }
     }
 
-    void Dragging()
-    {
-        if (!playerController.isGrounded)
-        {
-            //Set the aim line to a clamped vector of the distance between the first click on the screen to the current dragging position
-            lr.positionCount = 2;
-
-            int maxDrag = 12;
-            if (playerController.dried)
-            {
-                maxDrag = 4;
-            }
-            secondLinePoint = tongueAimLineStartpoint.position + (Vector3.ClampMagnitude((dragStartPosition - dragEndPosition) * aimMultiplier, maxDrag));
-
-            //Create the line
-            lr.SetPosition(0, tongueAimLineStartpoint.position);
-            lr.SetPosition(1, secondLinePoint);
-            aimingGrapple = true;
-        }
-    }
     private void DetatchWhenClose()
     {
         //If the tongue gets too close to its target, it detaches;
@@ -224,41 +287,6 @@ public class TongueLauncher : MonoBehaviour
             grappleTarget = null;
             rb.gravityScale = 1.2f;
             grapplePointDetector.bugHit = false;
-        }
-    }
-
-    void SetGrapplePoint()
-    {
-        //Remove the aim line when the grapple is fired
-        lr.positionCount = 0;
-        aimingGrapple = false;
-
-        //Direction of the first click on the screen to when the screen is released
-        Vector2 distanceVector = dragStartPosition - dragEndPosition;
-
-        float fillPercentage = Mathf.InverseLerp(0, (12/*Max Drag*/), (secondLinePoint - transform.position).magnitude);
-        if(fillPercentage > 0.1f)
-        {
-            if (Physics2D.Raycast(firePoint.position, distanceVector))
-            {
-                //Aim a raycast that starts at the player and is fired at the direction of the initial touch - the last touch
-                RaycastHit2D _hit = Physics2D.Raycast(firePoint.position, distanceVector, Mathf.Infinity, playerController.layerMask);
-
-                if (_hit.collider != null && _hit.collider.gameObject.CompareTag("Grapplable") || grappleToAll)
-                {
-                    //If the hit object can be grappled to, grapple to it
-                    if (Vector2.Distance(_hit.point, firePoint.position) <= maxDistance || !hasMaxDistance)
-                    {
-                        hitPoint = _hit.point;
-                        hitCollider = _hit.collider;
-                        grappleTarget = _hit.collider.gameObject;
-
-                        grappleDistanceVector = grapplePoint - (Vector2)gunPivot.position;
-                        tongueLine.enabled = true;
-                        grapplePointIdentified = true;
-                    }
-                }
-            }
         }
     }
     void Grapple()
