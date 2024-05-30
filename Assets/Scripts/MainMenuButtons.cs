@@ -14,6 +14,7 @@ public class MainMenuButtons : MonoBehaviour
     [SerializeField] FrogUnlock unlock;
     MenuSFXManager sfx;
     [SerializeField] GameObject hardModeUnlocked;
+    GameObject activeAlert;
 
     [SerializeField] GameObject SFXMuteBar;
     [SerializeField] Image SFXbutton;
@@ -29,6 +30,33 @@ public class MainMenuButtons : MonoBehaviour
     private void Start()
     {
         sfx = FindFirstObjectByType<MenuSFXManager>();
+
+        if(SceneManager.GetActiveScene().name == "MainMenu" && PlayerPrefs.GetInt("PoisonDartFrogClaimed") == 1 && PlayerPrefs.GetInt("HardModeAccepted", 0) != 1)
+        {
+            hardModeUnlocked.SetActive(true);
+
+            if (activeAlert != null)
+            {
+                activeAlert.SetActive(false);
+            }
+            else
+            {
+                GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
+                foreach (GameObject gameObject in allObjects)
+                {
+                    if (gameObject.name == "Alert(Clone)")
+                    {
+                        activeAlert = gameObject;
+                        gameObject.SetActive(false);
+                    }
+                }
+            }
+
+            foreach (GameObject obj in mainStuff)
+            {
+                obj.SetActive(false);
+            }
+        }
     }
     private void Update()
     {
@@ -41,7 +69,7 @@ public class MainMenuButtons : MonoBehaviour
             }
             else
             {
-                SFXbutton.color = Color.grey;
+                //SFXbutton.color = Color.grey;
                 SFXMuteBar.SetActive(true);
             }
             if (PlayerPrefs.GetInt("Music Mute", 0) == 0)
@@ -51,7 +79,7 @@ public class MainMenuButtons : MonoBehaviour
             }
             else
             {
-                musicButton.color = Color.grey;
+                //musicButton.color = Color.grey;
                 musicMuteBar.SetActive(true);
             }
         }
@@ -78,6 +106,24 @@ public class MainMenuButtons : MonoBehaviour
     {
         optionsMenu.SetActive(true);
         sfx.PlaySFX("General Click");
+
+        if(activeAlert != null)
+        {
+            activeAlert.SetActive(false);
+        }
+        else
+        {
+            GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
+            foreach (GameObject gameObject in allObjects)
+            {
+                if (gameObject.name == "Alert(Clone)")
+                {
+                    activeAlert = gameObject;
+                    gameObject.SetActive(false);
+                }
+            }
+        }
+
         foreach (GameObject obj in mainStuff)
         {
             obj.SetActive(false);
@@ -86,6 +132,10 @@ public class MainMenuButtons : MonoBehaviour
     public void OptionsBack()
     {
         optionsMenu.SetActive(false);
+
+        if(activeAlert != null)
+            activeAlert.SetActive(true);
+
         foreach (GameObject obj in mainStuff)
         {
             obj.SetActive(true);
@@ -98,7 +148,7 @@ public class MainMenuButtons : MonoBehaviour
     }
     public void MuteSound()
     {
-        if(SFXManager.GetMuteStatus() == true || MenuSFXManager.GetMuteStatus() == true)
+        if(MenuSFXManager.GetMuteStatus() == true)
         {
             PlayerPrefs.SetInt("SFX Mute", 0);
         }
@@ -189,13 +239,21 @@ public class MainMenuButtons : MonoBehaviour
         if (unlock.poisonDartFrogAlert != null)
         {
             Destroy(unlock.poisonDartFrogAlert);
-            hardModeUnlocked.SetActive(true);
         }
     }
     public void HardModeUnlockedOK()
     {
+        PlayerPrefs.SetInt("HardModeAccepted", 1);
+
         hardModeUnlocked.SetActive(false);
         sfx.PlaySFX("General Click");
+        if (activeAlert != null)
+            activeAlert.SetActive(true);
+
+        foreach (GameObject obj in mainStuff)
+        {
+            obj.SetActive(true);
+        }
     }
 
     void UnselectOthers(Image currentButton) 

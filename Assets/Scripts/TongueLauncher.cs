@@ -225,6 +225,8 @@ public class TongueLauncher : MonoBehaviour
                         grappleDistanceVector = grapplePoint - (Vector2)gunPivot.position;
                         tongueLine.enabled = true;
                         grapplePointIdentified = true;
+                        playerController.grappleMode = true;
+
                     }
                 }
             }
@@ -235,7 +237,7 @@ public class TongueLauncher : MonoBehaviour
     {
         //When aiming, slow down time
         if ((touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary || (mouseAllowedToDrag && Input.GetMouseButton(0)))
-            && !tongueLine.isGrappling && !playerController.isGrounded && !playerController.isSwimming
+            /*&& !tongueLine.isGrappling*/ && !playerController.isGrounded && !playerController.isSwimming
             && !pauseScript.pause && !playerController.dead)
         {
             touchEnded = true;

@@ -48,6 +48,7 @@ public class SFXManager : MonoBehaviour
     [SerializeField] AudioClip exitClickSFX;
     [SerializeField] AudioClip startSFX;
     [SerializeField] AudioClip highScoreSFX;
+    [SerializeField] AudioClip notificationSFX;
     [SerializeField] AudioClip defaultRibbit;
     [SerializeField] AudioClip treeFrogRibbit;
     [SerializeField] AudioClip frogletRibbit;
@@ -80,7 +81,7 @@ public class SFXManager : MonoBehaviour
             else
                 audioSource = audioSource1;
 
-            audioSource.volume = 1;
+            audioSource.volume = PlayerPrefs.GetFloat("SFX Volume",1);
             switch (clipToPlay)
             {
                 case "Eat":
@@ -90,7 +91,7 @@ public class SFXManager : MonoBehaviour
                     audioSource.clip = eatenSFX;
                     break;
                 case "Jump":
-                    audioSource.volume = 0.8f;
+                    audioSource.volume *= 0.8f;
                     audioSource.clip = jumpSFX;
                     break;
                 case "Swim":
@@ -115,15 +116,15 @@ public class SFXManager : MonoBehaviour
                     audioSource.clip = logLandSFX;
                     break;
                 case "Mud Land":
-                    audioSource.volume = 0.5f;
+                    audioSource.volume *= 0.5f;
                     audioSource.clip = mudLandSFX;
                     break;
                 case "Cypress Land":
-                    audioSource.volume = 0.75f;
+                    audioSource.volume *= 0.75f;
                     audioSource.clip = cypressLandSFX;
                     break;
                 case "Plant":
-                    audioSource.volume = 0.5f;
+                    audioSource.volume *= 0.5f;
                     audioSource.clip = plantSFX;
                     break;
                 case "Cattail":
@@ -133,7 +134,7 @@ public class SFXManager : MonoBehaviour
                     audioSource.clip = birdLeapSFX;
                     break;
                 case "Bird Fly":
-                    audioSource.volume = 0.75f;
+                    audioSource.volume *= 0.75f;
                     audioSource.clip = birdFlySFX;
                     break;
                 case "Bird Chirp":
@@ -152,7 +153,7 @@ public class SFXManager : MonoBehaviour
                     audioSource.clip = heronFlapSFX;
                     break;
                 case "Heron Call":
-                    audioSource.volume = 0.6f;
+                    audioSource.volume *= 0.6f;
                     audioSource.clip = heronCallSFX;
                     break;
                 case "Salmon Spawn":
@@ -162,14 +163,14 @@ public class SFXManager : MonoBehaviour
                     audioSource.clip = arapaimaSpawnSFX;
                     break;
                 case "Gar Swim":
-                    audioSource.volume = 0.75f;
+                    audioSource.volume *= 0.75f;
                     audioSource.clip = garSwimSFX;
                     break;
                 case "Gar Eat":
                     audioSource.clip = garEatSFX;
                     break;
                 case "Piranha Swim":
-                    audioSource.volume = 0.5f;
+                    audioSource.volume *= 0.5f;
                     audioSource.clip = piranhaSwimSFX;
                     break;
                 case "Piranha Eat":
@@ -198,6 +199,9 @@ public class SFXManager : MonoBehaviour
                     break;
                 case "Highscore":
                     audioSource.clip = highScoreSFX;
+                    break;
+                case "Notification":
+                    audioSource.clip = notificationSFX;
                     break;
                     
             }

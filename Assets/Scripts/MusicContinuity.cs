@@ -40,6 +40,7 @@ public class MusicContinuity : MonoBehaviour
             mute = true;
 
         GetComponent<AudioSource>().mute = mute;
+        GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("Music Volume", 1);
 
         if (!InCorrectScene())
         {

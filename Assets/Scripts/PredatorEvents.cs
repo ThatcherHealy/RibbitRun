@@ -368,33 +368,32 @@ public class PredatorEvents : MonoBehaviour
             {
                 predators.Remove(predator);
             }
-
-            //Destroy predators in the wrong biome
-            if((predator.Type() == Predator.PredatorType.Arapaima && lg.playerBiome != LevelGenerator.Biome.Amazon)
-                || predator.Type() == Predator.PredatorType.FishSwarm && lg.playerBiome != LevelGenerator.Biome.Bog)
-            {
-                if(predator.Type() == Predator.PredatorType.FishSwarm)
-                {
-                    if(predator.GetPredator() != null && predator.GetPredator().transform != null && predator.GetPredator().transform.parent != null)
-                    Destroy(predator.GetPredator().transform.parent.gameObject);
-                }
-                else
-                    Destroy(predator.GetPredator());
-
-                Destroy(predator.LinkedWarning());
-                predators.Remove(predator);
-            }
         }
         foreach (Predator predator in predators)
         {
             //Update Predator Spawn Position
             predator.SetSpawnPoint(lg, player);
+
+            //Update Predator warning position
+            SetWarningPosition(predator);
+
+            //Destroy predators in the wrong biome
+            if ((predator.Type() == Predator.PredatorType.Arapaima && lg.playerBiome != LevelGenerator.Biome.Amazon)
+                || predator.Type() == Predator.PredatorType.FishSwarm && lg.playerBiome != LevelGenerator.Biome.Bog)
+            {
+                Debug.Log("Predator destroyed for being in the wrong biome");
+                if (predator.Type() == Predator.PredatorType.FishSwarm)
+                {
+                    if (predator.GetPredator() != null && predator.GetPredator().transform != null && predator.GetPredator().transform.parent != null)
+                        Destroy(predator.GetPredator().transform.parent.gameObject);
+                }
+                else
+                    Destroy(predator.GetPredator());
+
+                Destroy(predator.LinkedWarning());
+            }
         }
 
-        foreach (Predator predator in predators)
-        {
-            SetWarningPosition(predator);
-        }
 
         if(pc.drowned || pc.poisoned) //Deactivate warning and predator when player drowns
         {

@@ -50,8 +50,11 @@ public class LevelGenerator : MonoBehaviour
     public bool spawnTransitionRamp;
     bool biomeSwapSpawned;
 
-    const float bogOffset = 0, cypressOffset = 9.3f, amazonOffset = -4.5f;
-    float currentOffset;
+    const double bogOffset = 0, cypressOffset = 9.3f, amazonOffset = -4.5f;
+    double currentOffset;
+    double initialMudLevel;
+    double baseMudLevel;
+    int numberOfTransitions;
     public enum Biome {Bog,Cypress,Amazon};
     public Biome biomeSpawning;
     public Biome playerBiome;
@@ -72,6 +75,7 @@ public class LevelGenerator : MonoBehaviour
     }
     private void Start()
     {
+        initialMudLevel = cameraScript.mudLevel;
         SpawnTransition();
 
         //Adjust the camera view to match the biome
@@ -104,32 +108,35 @@ public class LevelGenerator : MonoBehaviour
         {
             //Set the player reference endpoint to the current endpoint since the player has moved to the next biome
             playerRefEndPoint = endPoint;
-
-            //Change the camera view when the player hits a cameratransition
-            cameraScript.baseHeight -= 68;
-            if (biomeSpawning == Biome.Bog)
-            {
-                cameraScript.lowerBound = 26;
-                cameraScript.mudLevel = cameraScript.mudLevel - 68 - currentOffset + bogOffset;
-            }
-            else if (biomeSpawning == Biome.Cypress)
-            {
-                cameraScript.lowerBound = 17;
-                cameraScript.mudLevel = cameraScript.mudLevel - 68 - currentOffset + cypressOffset;
-            }
-            else
-            {
-                cameraScript.lowerBound = 31f;
-                cameraScript.mudLevel = cameraScript.mudLevel - 68 - currentOffset + amazonOffset;
-            }
-
+            numberOfTransitions++;           
             pc.transitionCamera = false;
         }
 
-        if(switchPoints)
+        //Adjust camera view to match biome
+        cameraScript.baseHeight = playerRefEndPoint.y + 8.5f;
+        if (playerBiome == Biome.Bog)
+        {
+            cameraScript.lowerBound = 26;
+            currentOffset = bogOffset;
+        }
+        else if (playerBiome == Biome.Cypress)
+        {
+            currentOffset = cypressOffset;
+            cameraScript.lowerBound = 17;
+        }
+        else
+        {
+            currentOffset = amazonOffset;
+            cameraScript.lowerBound = 31f;
+        }
+
+        baseMudLevel = playerRefEndPoint.y - 30.7;
+        cameraScript.mudLevel = baseMudLevel + currentOffset;
+
+        if (switchPoints)
         {
             switchPoints = false;
-            waterLevel -= 68;
+            waterLevel = endPoint.y - 0.06f;
             SpawnStartPoints();
         }
 
@@ -156,8 +163,6 @@ public class LevelGenerator : MonoBehaviour
         int chance = UnityEngine.Random.Range(1, 3);
         if (biomeSpawning == Biome.Bog)
         {
-            currentOffset = bogOffset;
-
             if (chance == 1)
                 biomeSpawning = Biome.Cypress;
             else
@@ -165,8 +170,6 @@ public class LevelGenerator : MonoBehaviour
         }
         else if (biomeSpawning == Biome.Cypress)
         {
-            currentOffset = cypressOffset;
-
             if (chance == 1)
                 biomeSpawning = Biome.Bog;
             else
@@ -174,8 +177,6 @@ public class LevelGenerator : MonoBehaviour
         }
         else if (biomeSpawning == Biome.Amazon)
         {
-            currentOffset = amazonOffset;
-
             if (chance == 1)
                 biomeSpawning = Biome.Bog;
             else
@@ -191,6 +192,22 @@ public class LevelGenerator : MonoBehaviour
         lastPreyEndPosition = endPoint;
         lastRiverbedEndPosition = endPoint - new Vector3(41f, 45.7f, 0);
         lastCattailEndPosition = endPoint - new Vector3(40.34617f, -0.645f,0);
+
+        if (biomeSpawning == Biome.Bog)
+        {
+            cameraScript.lowerBound = 26;
+            currentOffset = bogOffset;
+        }
+        else if (biomeSpawning == Biome.Cypress)
+        {
+            currentOffset = cypressOffset;
+            cameraScript.lowerBound = 17;
+        }
+        else
+        {
+            currentOffset = amazonOffset;
+            cameraScript.lowerBound = 31f;
+        }
     }
     private void FixedUpdate()
     {
@@ -375,12 +392,26 @@ public class LevelGenerator : MonoBehaviour
     }
     private Transform SpawnFlies(Transform prey, Vector3 preySpawnPosition)
     {
+
+        int increment = FindFirstObjectByType<ScoreController>().score / 150;
+
         //Chooses a random swarm size
         int swarmSizeGenerator;
         if (PlayerPrefs.GetInt("HardMode", 0) == 0)
-            swarmSizeGenerator = UnityEngine.Random.Range(0, 101);
+        {
+            if (increment > 75)
+                increment = 75;
+
+            swarmSizeGenerator = UnityEngine.Random.Range(0 + increment, 101);
+        }
         else
-            swarmSizeGenerator = UnityEngine.Random.Range(50, 101);
+        {
+            increment /= 2;
+            if(increment > 48)
+                increment = 48;
+
+            swarmSizeGenerator = UnityEngine.Random.Range(50 + increment, 101);
+        }
 
         if (swarmSizeGenerator >= 95)
             swarmSize = 5;
@@ -402,11 +433,11 @@ public class LevelGenerator : MonoBehaviour
 
         int dragonflySpawnChance;
         if (PlayerPrefs.GetInt("HardMode", 0) == 0)
-            dragonflySpawnChance = UnityEngine.Random.Range(1, 3);
+            dragonflySpawnChance = UnityEngine.Random.Range(1, 101);
         else
-            dragonflySpawnChance = UnityEngine.Random.Range(1, 2);
+            dragonflySpawnChance = UnityEngine.Random.Range(25, 101);
 
-        if (dragonflySpawnChance == 1)
+        if (dragonflySpawnChance >= 50)
             SpawnDragonfly(preySpawnPosition);
 
         return lastPreyTransform;

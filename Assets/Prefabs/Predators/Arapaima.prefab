@@ -77,7 +77,12 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -5.441858, y: -0.68439114}
+    - - {x: -6.99389, y: 0.01757353}
+      - {x: -6.60321, y: 0.068313055}
+      - {x: -6.3600955, y: -0.6427093}
+      - {x: -6.7723565, y: -0.722318}
+      - {x: -6.132584, y: -0.73653084}
+      - {x: -5.3530164, y: -0.70977455}
       - {x: -3.771579, y: -0.93454087}
       - {x: -0.4079917, y: -1.351718}
       - {x: 1.357336, y: -1.3081684}
@@ -90,7 +95,7 @@ PolygonCollider2D:
       - {x: -0.55884373, y: 1.4061563}
       - {x: -3.6578064, y: 1.2520233}
       - {x: -5.1598587, y: 0.9084099}
-      - {x: -5.901972, y: 0.4866057}
+      - {x: -6.4984784, y: 0.19469836}
   m_UseDelaunayMesh: 0
 --- !u!212 &4098400999127694485
 SpriteRenderer:
@@ -313,16 +318,16 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 8.007588, y: 0.800017}
+    - - {x: 6.6519594, y: 0.53333914}
       - {x: 5.096567, y: 0.3025875}
       - {x: 4.8457756, y: -0.15826797}
       - {x: 5.210096, y: -0.77916336}
       - {x: 5.9195175, y: -1.2526245}
-      - {x: 7.927723, y: -1.7848091}
-      - {x: 11.068468, y: -1.9826779}
-      - {x: 12.899302, y: -1.9388123}
-      - {x: 12.0183735, y: 2.4525433}
-      - {x: 9.57243, y: 1.2894194}
+      - {x: 7.572155, y: -1.5403519}
+      - {x: 8.468332, y: -1.7382169}
+      - {x: 10.026186, y: -1.478817}
+      - {x: 9.225126, y: 0.97473717}
+      - {x: 7.8390083, y: 0.73383546}
   m_UseDelaunayMesh: 0
 --- !u!114 &8887872684178510319
 MonoBehaviour:
@@ -352,6 +357,7 @@ GameObject:
   - component: {fileID: 1766199331420619688}
   - component: {fileID: 2045511735212827566}
   - component: {fileID: 4762613155706842407}
+  - component: {fileID: 2334570554688450979}
   m_Layer: 16
   m_Name: Arapaima
   m_TagString: Untagged
@@ -390,6 +396,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 60
+  otherFishTurned: 0
   turner: {fileID: 2426701969367784244}
 --- !u!114 &2045511735212827566
 MonoBehaviour:
@@ -433,3 +440,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &2334570554688450979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5735698226653071592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51f7ab42c2f7b0b4d9e6b7cc190df3af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collliders:
+  - {fileID: 6349182746632607451}
+  - {fileID: 4977977739086962489}
+  - {fileID: 4191832351845466262}
+  deactivateDistance: 75
+  y: 0

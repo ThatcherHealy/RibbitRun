@@ -118,15 +118,15 @@ public class ScoreController : MonoBehaviour
 
             if (hasHighscore && !tutorial)
             {
-                if (PlayerPrefs.GetInt("HardMode", 0) == 0)
-                {
+              /*  if (PlayerPrefs.GetInt("HardMode", 0) == 0)
+                {*/
                     finalScoreText.color = new Color(1, 0.92f, 0.016f, finalScoreText.color.a); //Yellow
                     highscoreText.color = new Color(1, 0.92f, 0.016f, finalScoreText.color.a); //Yellow
                     foreach (TextMeshPro highscoreWordText in highscoreWordTexts)
                     {
                         highscoreWordText.color = new Color(1, 0.92f, 0.016f, finalScoreText.color.a); //Yellow
                     }
-                }
+               /* }
                 else
                 {
                     finalScoreText.color = hardModeHighscoreColor; //Orange
@@ -135,7 +135,7 @@ public class ScoreController : MonoBehaviour
                     {
                         highscoreWordText.color = hardModeHighscoreColor; //Orange
                     }
-                }
+                }*/
 
             }
 

@@ -10,6 +10,7 @@ public class SpiderBehavior : MonoBehaviour
     [SerializeField] LineRenderer web;
     [SerializeField] LineRenderer strand;
     [SerializeField] Transform[] webEnds;
+    [SerializeField] GameObject poisonGlow;
     Vector3 webMidpoint;
 
     Rigidbody2D rb;
@@ -94,6 +95,8 @@ public class SpiderBehavior : MonoBehaviour
         {
             if (poisonParticles != null) 
                 poisonParticles.SetActive(false);
+            if (poisonGlow != null)
+                poisonGlow.SetActive(false);
         }
     }
 
@@ -181,6 +184,7 @@ public class SpiderBehavior : MonoBehaviour
             sprite.tag = "Poisonous";
             sr.sprite = poisonSprite;
             PoisonParticles();
+            poisonGlow.SetActive(true);
         }
     }
     private Vector2[] ToVector2Array(Vector3[] v3)

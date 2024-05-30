@@ -9,7 +9,6 @@ public class AlligatorBehavior : MonoBehaviour
     [SerializeField] LevelGenerator lg;
     [SerializeField] Transform player;
     [SerializeField] GameObject sprite;
-    private PolygonCollider2D spriteCol;
     [SerializeField] GameObject destructionPoint;
     public int followDistance = 200;
     bool active;
@@ -17,7 +16,6 @@ public class AlligatorBehavior : MonoBehaviour
     {
        sprite.SetActive(false);
        destructionPoint.SetActive(false);
-       spriteCol = sprite.GetComponent<PolygonCollider2D>();
        active = false;
     }
     private void FixedUpdate()
@@ -59,7 +57,6 @@ public class AlligatorBehavior : MonoBehaviour
         //Deactivates hitbox until the player gets close
         if (transform.position.x < player.position.x - (followDistance/4))
         {
-            spriteCol.enabled = false;
             foreach (GameObject box in grabBoxes)
             {
                 box.SetActive(false);
@@ -72,7 +69,6 @@ public class AlligatorBehavior : MonoBehaviour
             {
                 box.SetActive(true);
             }
-            spriteCol.enabled = true;
         }
     }
 }

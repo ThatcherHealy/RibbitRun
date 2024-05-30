@@ -122,7 +122,7 @@ public class DeathScript : MonoBehaviour
 
                     if (!alertSpawned)
                     {
-                        alert.CheckForNewUnlocks(eatenAlertPosition);
+                        alert.Alert(eatenAlertPosition);
                         alertSpawned = true;
                     }
                 }
@@ -181,7 +181,7 @@ public class DeathScript : MonoBehaviour
         {
             if (!alertSpawned)
             {
-                alert.CheckForNewUnlocks(drownedAlertPosition);
+                alert.Alert(drownedAlertPosition);
                 alertSpawned = true;
             }
         }
@@ -226,7 +226,7 @@ public class DeathScript : MonoBehaviour
         {
             if (!alertSpawned)
             {
-                alert.CheckForNewUnlocks(poisonedAlertPosition);
+                alert.Alert(poisonedAlertPosition);
                 alertSpawned = true;
             }
         }

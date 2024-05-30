@@ -163,7 +163,14 @@ public class OxygenAndMoistureController : MonoBehaviour
     {
         //Start vignette effect when the player gets to 30% moisture
         //Removes vignette effect when the player goes above 30%
-        vignette.intensity.value += (currentMoisture <= 20 ? 0.05f : -1f) * Time.deltaTime;
+        if(currentMoisture <= 30)
+        {
+            vignette.intensity.value += 0.05f * Time.deltaTime;
+        }
+        else 
+        {
+            vignette.intensity.value -= 0.35f * Time.deltaTime;
+        }
         vignette.intensity.value = Mathf.Clamp(vignette.intensity.value, 0, 0.3f);
 
          //Dry out when the vignette is almost at max intensity and be cured when the player touches water

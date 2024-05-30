@@ -23,8 +23,8 @@ public class CameraFollow : MonoBehaviour
     private float yInwardsBias = 5f;
 
     private Vector3 velocity = Vector3.zero;
-    [SerializeField]public float mudLevel = -34.20609f;
-    public float offsetAboveMud = 13;
+    [SerializeField]public double mudLevel = -34.20609f;
+    public double offsetAboveMud = 13;
     public float lowerBound = 26;
 
     Vector3 pausePosition;
@@ -88,7 +88,7 @@ public class CameraFollow : MonoBehaviour
                 Vector3 targetPosition = new Vector3(player.position.x + xOffset, player.position.y + yInwardsBias, 0);
                 if (targetPosition.y < baseHeight - lowerBound)
                 {
-                    targetPosition = new Vector3(targetPosition.x, mudLevel + offsetAboveMud, targetPosition.z);
+                    targetPosition = new Vector3(targetPosition.x, (float)mudLevel + (float)offsetAboveMud, targetPosition.z);
                 }
 
                 if (((playerController.killer == "Falcon(Clone)" || playerController.killer == "Falcon" || playerController.eatenByFalcon) && playerController.eaten)

@@ -43,6 +43,7 @@ public class FalconBehavior : MonoBehaviour
     {
         // Calculate the difference in x position between falcon and target
         float xDifference = target.x - transform.position.x;
+        float yDifference = target.y - transform.position.y;
 
         // Calculate the time it would take to reach the target's x position
         float timeToReachTargetX = Mathf.Abs(xDifference) / diveSpeed;
@@ -61,7 +62,10 @@ public class FalconBehavior : MonoBehaviour
             yVelocity = diveSpeed;
         }
 
-        rb.velocity = new Vector2(xVelocity, yVelocity);
+        if(yDifference > 25)
+            rb.velocity = new Vector2(xVelocity, yVelocity);
+        else
+            rb.velocity = new Vector2(xVelocity/1.5f, yVelocity);
     }
 
     private void SetTargetPosition()

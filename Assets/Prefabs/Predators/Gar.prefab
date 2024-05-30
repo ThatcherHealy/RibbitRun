@@ -1,5 +1,101 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &853794313911346517
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2706330622461925230}
+  - component: {fileID: 416913832025416842}
+  - component: {fileID: 613978964971937092}
+  m_Layer: 16
+  m_Name: UnderwaterCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2706330622461925230
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 853794313911346517}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3179485715318069358}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &416913832025416842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 853794313911346517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a5267f9473666d4798acdd311894deb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  underwater: 0
+--- !u!60 &613978964971937092
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 853794313911346517}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 1048571
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -7.2232094, y: -0.20258427}
+      - {x: -10.888961, y: -1.20313}
+      - {x: -5.9205394, y: -1.0542535}
+      - {x: -3.982924, y: -0.77470183}
+      - {x: 2.7677612, y: -0.037736}
+  m_UseDelaunayMesh: 0
 --- !u!1 &1396560758966884630
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,9 +377,9 @@ GameObject:
   m_Component:
   - component: {fileID: 696127866267588626}
   - component: {fileID: 4343572089693257531}
-  - component: {fileID: 8623318931551531593}
   - component: {fileID: 5595847490704857868}
   - component: {fileID: 3993062219495332100}
+  - component: {fileID: 6837591291022123218}
   m_Layer: 16
   m_Name: Sprite
   m_TagString: Untagged
@@ -364,19 +460,6 @@ PolygonCollider2D:
       - {x: 6.2757587, y: 4.1243143}
       - {x: 5.5165606, y: 4.0783095}
   m_UseDelaunayMesh: 0
---- !u!114 &8623318931551531593
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5213912513405304109}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a5267f9473666d4798acdd311894deb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  underwater: 0
 --- !u!114 &5595847490704857868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -446,6 +529,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6837591291022123218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5213912513405304109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a5267f9473666d4798acdd311894deb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  underwater: 0
 --- !u!1 &6913589216640246517
 GameObject:
   m_ObjectHideFlags: 0
@@ -511,7 +607,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -12.03635, y: -0.92778206}
+  m_Offset: {x: -20.284237, y: -1.5075979}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -522,7 +618,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 67.64146, y: 23.631287}
+  m_Size: {x: 54.309517, y: 27.622984}
   m_EdgeRadius: 0
 --- !u!114 &1737900836472411825
 MonoBehaviour:
@@ -566,13 +662,14 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -14.590921, y: 34.951664, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 696127866267588626}
   - {fileID: 5191818625228166023}
   - {fileID: 3965392112155841781}
   - {fileID: 3045089101650628662}
   - {fileID: 7531579420271016657}
+  - {fileID: 2706330622461925230}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -588,7 +685,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 100000
+  m_Mass: 100
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -616,14 +713,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pv: {fileID: 4559465151736104983}
-  uc: {fileID: 8623318931551531593}
+  uc: {fileID: 6837591291022123218}
   hitbox: {fileID: 2255825875321478168}
   turner: {fileID: 5595847490704857868}
   rb: {fileID: 6356769796145076264}
   animator: {fileID: 8044876445998171370}
   passiveSpeed: 10
-  chaseSpeed: 30
+  chaseSpeed: 35
+  attackDelay: 0.3
   chaseInterval: 1.5
+  aimTime: 0.7
+  returnTime: 1.2
+  realignmentInterval: 3
   target: {fileID: 7531579420271016657}
 --- !u!95 &8044876445998171370
 Animator:

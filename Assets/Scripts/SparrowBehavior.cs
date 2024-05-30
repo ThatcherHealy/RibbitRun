@@ -40,9 +40,10 @@ public class SparrowBehavior : MonoBehaviour
         if(SceneManager.GetActiveScene().name == "GameScene")
         {
             player = FindFirstObjectByType<PlayerController>().transform;
-            sfx = FindFirstObjectByType<SFXManager>();
             tl = FindFirstObjectByType<TongueLauncher>();
         }
+        sfx = FindFirstObjectByType<SFXManager>();
+
         rb = GetComponent<Rigidbody2D>();
         initialPosition = transform.localPosition;
 

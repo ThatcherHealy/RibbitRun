@@ -42,7 +42,7 @@ public class GrapplePointDetector : MonoBehaviour
                 if ((collision.gameObject.tag != "NoSwim" && collision.gameObject.layer != 8 && tongueLauncher.grappleTarget != null && tongueLauncher.grappleTarget.transform != null)
                 && (collision.gameObject.transform == tongueLauncher.grappleTarget.transform))
                 {
-                    touchingObjects.Add(collision.gameObject);
+                        touchingObjects.Add(collision.gameObject);
                 }
             }
             else

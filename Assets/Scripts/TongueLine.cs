@@ -9,6 +9,7 @@ public class TongueLine : MonoBehaviour
     public TongueLauncher tongueLauncher;
     public LineRenderer m_lineRenderer;
     [SerializeField] SFXManager sfx;
+    public Color poisonDartFrogTongueColor;
 
     [Header("General Settings:")]
     [SerializeField] private int precision = 40;
@@ -33,6 +34,13 @@ public class TongueLine : MonoBehaviour
 
     private void OnEnable()
     {
+        //Set different poison dart frog tongue color
+        if (PlayerPrefs.GetString("Species") == "Poison Dart Frog")
+        {
+            GetComponent<LineRenderer>().startColor = poisonDartFrogTongueColor;
+            GetComponent<LineRenderer>().endColor = poisonDartFrogTongueColor;
+        }
+
         if(sfxAllowedToPlay)
             sfx.PlaySFX("Grapple");
 

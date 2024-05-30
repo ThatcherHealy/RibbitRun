@@ -47,6 +47,8 @@ public class MenuSFXManager : MonoBehaviour
             else if (sixReady)
                 audioSource = audioSource6;
 
+            audioSource.volume = PlayerPrefs.GetFloat("SFX Volume", 1);
+
             switch (clipToPlay)
             {
                 case "General Click":

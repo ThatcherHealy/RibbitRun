@@ -103,6 +103,7 @@ public class PlayerController : MonoBehaviour
     bool jumpTransferCoroutineStarted;
     bool exitWaterSFXAllowed;
     bool facingRight = true;
+    public bool grappleMode;
     string SLIDE = "FrogSlide";
     string IDLE = "FrogIdle";
     string JUMP = "FrogJump";
@@ -219,7 +220,7 @@ public class PlayerController : MonoBehaviour
 
         if (raycastHitGround.collider != null || raycastHitSlide.collider != null)
         {
-
+            grappleMode = false;
             isGrounded = true;
             if (raycastHitSlide.collider != null)
             {
@@ -298,10 +299,12 @@ public class PlayerController : MonoBehaviour
 
             if ((touch.phase == TouchPhase.Ended && draggingStarted) || (touch.phase == TouchPhase.Ended && skipToJump))
             {
+                jumpBufferCounter = jumpBuffer;
                 DragRelease();
                 draggingStarted = false;
                 inputEnded = true;
             }
+
         }
         else if (Input.GetMouseButtonDown(0))
         {
@@ -321,6 +324,7 @@ public class PlayerController : MonoBehaviour
         {
             if (draggingStarted || skipToJump)
             {
+                jumpBufferCounter = jumpBuffer;
                 DragRelease();
                 draggingStarted = false;
                 inputEnded = true;
@@ -396,7 +400,7 @@ public class PlayerController : MonoBehaviour
                 ChangeAnimationState(READY_SWIM);
             }
         }
-        else if (isGrounded || isSliding || (coyoteTimeCounter > 0 && !tongueLine.isGrappling))  // Updated condition
+        else if (isGrounded || (coyoteTimeCounter > 0 && !tongueLine.isGrappling))
         {
 
             secondLinePoint = jumpLrStartpoint.position + Vector3.ClampMagnitude(((dragStartPos - draggingPos) * aimMultiplier), maxJumpAimLineLength);
@@ -412,10 +416,13 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            swimLr.positionCount = 0;
-            jumpLr.positionCount = 2;
-            jumpLr.SetPosition(0, jumpLrStartpoint.position);
-            jumpLr.SetPosition(1, secondLinePoint);
+            if(isGrounded)
+            {
+                swimLr.positionCount = 0;
+                jumpLr.positionCount = 2;
+                jumpLr.SetPosition(0, jumpLrStartpoint.position);
+                jumpLr.SetPosition(1, secondLinePoint);
+            }
         }
     }
     void DragRelease() 
@@ -428,12 +435,14 @@ public class PlayerController : MonoBehaviour
         dragReleasePos.z = 0;
         rb.mass = initialMass;
 
-        if((coyoteTimeCounter > 0 || isGrounded) || (jumpBufferCounter > 0 || isSwimming)) 
+        if((coyoteTimeCounter > 0 || isGrounded || isSwimming) || jumpBufferCounter > 0)
+        {
             jump = true;
+        }
     }
     void Jump()
     {
-        if (jump && !pauseScript.pause && ((coyoteTimeCounter > 0 || isSwimming) && jumpBufferCounter > 0))
+        if (jump && !pauseScript.pause && (coyoteTimeCounter > 0 || isSwimming) && jumpBufferCounter > 0)
         {
             Vector3 force = dragStartPos - dragReleasePos;
             float fillPercentage;
@@ -446,7 +455,8 @@ public class PlayerController : MonoBehaviour
                 {
                     rb.velocity *= 0.3f;
                     power = swimmingPower;
-                    ChangeAnimationState(SWIM);
+                    if(wasSwimming)
+                        ChangeAnimationState(SWIM);
                     sfx.PlaySFX("Swim");
                 }
             }
@@ -481,6 +491,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
+            tongueLauncher.lr.positionCount = 0;
             coyoteTimeCounter = 0;
             jumpBufferCounter = 0;
 
@@ -513,8 +524,8 @@ public class PlayerController : MonoBehaviour
         switch (species) 
         {
             case Species.Default:
-                jumpingPower = 28;
-                swimmingPower = 28f;
+                jumpingPower = 37;
+                swimmingPower = 37f;
                 maxJumpAimLineLength = 10;
                 maxSwimAimLineLength = 8;
                 oxygenAndMoistureController.oxygenLossRate = 0.06f;
@@ -524,8 +535,8 @@ public class PlayerController : MonoBehaviour
                 spriteRenderer.sprite = initialSprites[0];
                 break;
             case Species.Treefrog:
-                jumpingPower = 35f;
-                swimmingPower = 25;
+                jumpingPower = 44f;
+                swimmingPower = 29;
                 maxJumpAimLineLength = 12;
                 maxSwimAimLineLength = 7;
                 oxygenAndMoistureController.oxygenLossRate = 0.09f;
@@ -541,8 +552,8 @@ public class PlayerController : MonoBehaviour
                 ConfigureSpeciesAnimations("Tree");
                 break;
             case Species.Froglet:
-                jumpingPower = 20;
-                swimmingPower = 40f;
+                jumpingPower = 27;
+                swimmingPower = 45f;
                 maxJumpAimLineLength = 6;
                 maxSwimAimLineLength = 13;
                 oxygenAndMoistureController.oxygenLossRate = 0f;
@@ -551,8 +562,8 @@ public class PlayerController : MonoBehaviour
                 tongueLauncher.grappleStrength = 18;
                 break;
             case Species.BullFrog:
-                jumpingPower = 29;
-                swimmingPower = 32;
+                jumpingPower = 39;
+                swimmingPower = 40;
                 maxJumpAimLineLength = 10;
                 maxSwimAimLineLength = 10;
                 oxygenAndMoistureController.oxygenLossRate = 0.05f;
@@ -560,8 +571,8 @@ public class PlayerController : MonoBehaviour
                 tongueLauncher.baseMaxDistance = 30;
                 break;
             case Species.PoisonDartFrog:
-                jumpingPower = 32;
-                swimmingPower = 29;
+                jumpingPower = 43;
+                swimmingPower = 35;
                 maxJumpAimLineLength = 10;
                 maxSwimAimLineLength = 10;
                 oxygenAndMoistureController.oxygenLossRate = 0.07f;
@@ -617,7 +628,7 @@ public class PlayerController : MonoBehaviour
                 if (Mathf.Abs(rb.velocity.x) <= 1f && !isSliding)
                 {
                     ChangeAnimationState(IDLE);
-                    sprite.rotation = Quaternion.identity;
+                    
                 }
                 else
                 {
@@ -649,7 +660,7 @@ public class PlayerController : MonoBehaviour
 
                 if (!grappleRotationSet)
                 {
-                    SetSpriteRotation((Vector3)tongueLauncher.grapplePoint - transform.position, 0);
+                    SetSpriteRotation((Vector3)tongueLauncher.grapplePoint - tongueLauncher.tongueAimLineStartpoint.position, 0);
                     grappleRotationSet = true;
                 }
             }
@@ -663,7 +674,7 @@ public class PlayerController : MonoBehaviour
             }
 
             //If you jump into the water, start MIDSWIM animation
-            if (isSwimming && currentState != SWIM && currentState != READY_SWIM)
+            if (isSwimming && currentState != SWIM && currentState != READY_SWIM && jumpBufferCounter <= -0.1f)
             {
                 ChangeAnimationState(MIDSWIM);
             }
@@ -692,14 +703,42 @@ public class PlayerController : MonoBehaviour
             //While in a straight animation state, rotate to match velocity
             if (currentState == STRAIGHT_JUMP || currentState == STRAIGHT_GRAPPLE)
             {
-                if(rb.velocity.magnitude >= 3)
-                    SetSpriteRotation((transform.position + (Vector3)rb.velocity) - transform.position, 0);
+                if(rb.velocity.magnitude >= 1)
+                {
+                    if (sprite.localScale.x > 0)
+                    {
+                        if (!tongueLine.isGrappling)
+                        {
+                            SetSpriteRotation(((Vector3)rb.velocity) - tongueLauncher.tongueAimLineStartpoint.localPosition, 15);
+                        }
+                        else
+                        {
+                            SetSpriteRotation(((Vector3)tongueLauncher.grapplePoint) - tongueLauncher.tongueAimLineStartpoint.position, 15);
+                        }
+                    }
+                    else
+                    {
+                        if (!tongueLine.isGrappling)
+                        {
+                            SetSpriteRotation(((Vector3)rb.velocity) - tongueLauncher.tongueAimLineStartpoint.localPosition, -15);
+                        }
+                        else
+                        {
+                            SetSpriteRotation(((Vector3)tongueLauncher.grapplePoint) - tongueLauncher.tongueAimLineStartpoint.position, -15);
+                        }
+                    }
+                    
+                }
+            }   
+            if(currentState == IDLE)
+            {
+                sprite.rotation = Quaternion.identity;
             }
 
             //When you jump or go midjump, wait an interval, then if you are still in that state, switch to straight 
-            if(!jumpTransferCoroutineStarted && currentState == JUMP || currentState == MIDAIR || (currentState == SLIDE && !isGrounded))
+            if(!jumpTransferCoroutineStarted && (currentState == JUMP || currentState == MIDAIR || (currentState == SLIDE && !isGrounded)))
             {
-                StartCoroutine(SwitchFromJumpToStraight());
+                StartCoroutine(SwitchFromJumpToStraight(currentState));
             }
 
             //Resets the rotation after you leave the water
@@ -723,17 +762,13 @@ public class PlayerController : MonoBehaviour
         wasSwimming = isSwimming;
         wasWet = wet;
     }
-    IEnumerator SwitchFromJumpToStraight()
+    IEnumerator SwitchFromJumpToStraight(string state)
     {
         jumpTransferCoroutineStarted = true;
         yield return new WaitForSeconds(1.5f);
-        if (currentState == JUMP || currentState == MIDAIR || (currentState == SLIDE && !isGrounded))
+        if ((currentState == state && state != SLIDE) || (state == SLIDE && currentState == SLIDE && !isGrounded))
         {
             ChangeAnimationState(STRAIGHT_JUMP);
-        }
-        if (currentState == GRAPPLE)
-        {
-            ChangeAnimationState(STRAIGHT_GRAPPLE);
         }
         jumpTransferCoroutineStarted = false;
     }
@@ -759,10 +794,10 @@ public class PlayerController : MonoBehaviour
 
         if(facingRight)
         {
-            sprite.localScale = new Vector3(-Mathf.Abs(initialSpriteScale.x), sprite.localScale.y, initialSpriteScale.z);
+            sprite.localScale = new Vector3(-Mathf.Abs(initialSpriteScale.x), initialSpriteScale.y, initialSpriteScale.z);
         }
         else
-            sprite.localScale = new Vector3(Mathf.Abs(initialSpriteScale.x), sprite.localScale.y, initialSpriteScale.z);
+            sprite.localScale = new Vector3(Mathf.Abs(initialSpriteScale.x), initialSpriteScale.y, initialSpriteScale.z);
     }
     void ChangeAnimationState(string newState) 
     {
@@ -1059,12 +1094,50 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
+        if (collision.gameObject.layer == 11) //Cattail
+        {
+            if (tongueLauncher.grappleTarget != null && collision.transform == tongueLauncher.grappleTarget.transform)
+            {
+                tongueLauncher.grapplePointIdentified = false;
+                rb.gravityScale = defaultGravityScale;
+                power = 25;
+
+                sfx.PlaySFX("Cattail");
+
+                //Spawn Cattail Particles
+                float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
+                GameObject particles = Instantiate(cattailParticles, collision.ClosestPoint(transform.position), Quaternion.Euler(-angle, 90, 0));
+                Destroy(particles, 3);
+
+                // Launch the player up and to the right if they are coming from the left
+                if (tongueLauncher.grappleTarget != null && (tongueLauncher.grappleTarget.transform.position.x - transform.position.x >= 0))
+                    rb.AddForce((Vector2.one - new Vector2(0, 0.4f)) * power * rb.mass, ForceMode2D.Impulse); // approx. 60 degree angle
+
+                else //Launch the player up and to the left if they are coming from the right
+                    rb.AddForce(new Vector2(-Vector2.one.x, new Vector2(0, 0.7f).y) * power * rb.mass, ForceMode2D.Impulse); // approx. -60 degree angle
+
+                //Remove the aim line when the frog eats prey
+                tongueLauncher.lr.positionCount = 0;
+
+                //Cancel the grapple
+                tongueLine.enabled = false;
+                tongueLine.isGrappling = false;
+                tongueLauncher.grapplePointIdentified = false;
+                tongueLauncher.grappleTarget = null;
+
+                //Destroy the cattail
+                Destroy(collision.transform.gameObject);
+            }
+        }
+
         //When sliding, match the sprite rotation to the ground
         if ((collision.gameObject.layer == 14 || collision.gameObject.layer == 6) && currentState == SLIDE)
         {
             Vector2 normal = (Vector2)transform.position - collision.ClosestPoint(transform.position);
             float angle = Mathf.Atan2(normal.y, normal.x) * Mathf.Rad2Deg;
-            sprite.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+
+            if(transform.position.y > collision.ClosestPoint(transform.position).y)
+                sprite.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
         }
 
         //The player swims when they are in water, not grounded, and not in a no-swim-zone
@@ -1222,7 +1295,7 @@ public class PlayerController : MonoBehaviour
     {
         GameObject ep;
         if (col.gameObject.transform.parent.name == "Sparrow(Clone)")
-            ep = Instantiate(sparrowEatParticles, col.transform.position, Quaternion.identity);
+            ep = Instantiate(sparrowEatParticles, /*col.*/transform.position, Quaternion.identity);
         else
             ep = Instantiate(eatParticles, col.transform.position, Quaternion.identity);
 

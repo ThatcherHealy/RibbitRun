@@ -569,7 +569,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5682125978c43af44b90d61eaa935842, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  salmon: 1
 --- !u!1 &763655740660497835
 GameObject:
   m_ObjectHideFlags: 0
@@ -834,6 +833,7 @@ GameObject:
   - component: {fileID: 3613641045379094130}
   - component: {fileID: 665345851937869586}
   - component: {fileID: 3236403983982963132}
+  - component: {fileID: 609993707446762502}
   m_Layer: 0
   m_Name: Fish (4)
   m_TagString: Untagged
@@ -915,6 +915,24 @@ MonoBehaviour:
   speed: 50
   otherFishTurned: 0
   turner: {fileID: 8143846584942584930}
+--- !u!114 &609993707446762502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004139442244179924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51f7ab42c2f7b0b4d9e6b7cc190df3af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collliders:
+  - {fileID: 174097704680376176}
+  - {fileID: 3873782417094480847}
+  - {fileID: 3129457164784929403}
+  deactivateDistance: 75
+  y: 0
 --- !u!1 &1020063576174099153
 GameObject:
   m_ObjectHideFlags: 0
@@ -2530,6 +2548,7 @@ GameObject:
   - component: {fileID: 8599784512416902766}
   - component: {fileID: 1670353945162847216}
   - component: {fileID: 2910601571867116778}
+  - component: {fileID: 8941168808371233918}
   m_Layer: 0
   m_Name: Fish (3)
   m_TagString: Untagged
@@ -2611,6 +2630,24 @@ MonoBehaviour:
   speed: 50
   otherFishTurned: 0
   turner: {fileID: 6870454316975300275}
+--- !u!114 &8941168808371233918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3051884482307973651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51f7ab42c2f7b0b4d9e6b7cc190df3af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collliders:
+  - {fileID: 4683139898029923681}
+  - {fileID: 4984234939861109918}
+  - {fileID: 2135828473026367823}
+  deactivateDistance: 75
+  y: 0
 --- !u!1 &3149478449916987118
 GameObject:
   m_ObjectHideFlags: 0
@@ -3646,6 +3683,7 @@ GameObject:
   - component: {fileID: 9127946306867476983}
   - component: {fileID: 7494492470327938011}
   - component: {fileID: 3000269071105590630}
+  - component: {fileID: 652145105468116241}
   m_Layer: 0
   m_Name: Fish (1)
   m_TagString: Untagged
@@ -3727,6 +3765,24 @@ MonoBehaviour:
   speed: 50
   otherFishTurned: 0
   turner: {fileID: 7844319763306796437}
+--- !u!114 &652145105468116241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5040271277389520137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51f7ab42c2f7b0b4d9e6b7cc190df3af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collliders:
+  - {fileID: 5640255257107860212}
+  - {fileID: 5917585590165334093}
+  - {fileID: 6357091749326319581}
+  deactivateDistance: 75
+  y: 0
 --- !u!1 &5157207376115030182
 GameObject:
   m_ObjectHideFlags: 0
@@ -5579,6 +5635,7 @@ GameObject:
   - component: {fileID: 1347604567644646252}
   - component: {fileID: 1482228441848695705}
   - component: {fileID: 5453066844770581498}
+  - component: {fileID: 1572320063509650855}
   m_Layer: 0
   m_Name: Fish
   m_TagString: Untagged
@@ -5660,6 +5717,24 @@ MonoBehaviour:
   speed: 50
   otherFishTurned: 0
   turner: {fileID: 5450012398889880807}
+--- !u!114 &1572320063509650855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7464476221205418166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51f7ab42c2f7b0b4d9e6b7cc190df3af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collliders:
+  - {fileID: 653521525382087726}
+  - {fileID: 8126974647966659694}
+  - {fileID: 6508570051078801313}
+  deactivateDistance: 75
+  y: 0
 --- !u!1 &7487881937774105498
 GameObject:
   m_ObjectHideFlags: 0
@@ -6459,6 +6534,7 @@ GameObject:
   - component: {fileID: 3778317750998351748}
   - component: {fileID: 1194269160845992328}
   - component: {fileID: 4241193444143681362}
+  - component: {fileID: 5771676789331797468}
   m_Layer: 0
   m_Name: Fish (5)
   m_TagString: Untagged
@@ -6540,6 +6616,24 @@ MonoBehaviour:
   speed: 50
   otherFishTurned: 0
   turner: {fileID: 741890362447299107}
+--- !u!114 &5771676789331797468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8413189631904853765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51f7ab42c2f7b0b4d9e6b7cc190df3af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collliders:
+  - {fileID: 288625871781337222}
+  - {fileID: 3748211176521440487}
+  - {fileID: 5605427190434022454}
+  deactivateDistance: 75
+  y: 0
 --- !u!1 &8564154459890188645
 GameObject:
   m_ObjectHideFlags: 0
@@ -6720,6 +6814,7 @@ GameObject:
   - component: {fileID: 288165472463714299}
   - component: {fileID: 3062923823147450603}
   - component: {fileID: 6279102740332312281}
+  - component: {fileID: 884388394243961250}
   m_Layer: 0
   m_Name: Fish (2)
   m_TagString: Untagged
@@ -6801,6 +6896,24 @@ MonoBehaviour:
   speed: 50
   otherFishTurned: 0
   turner: {fileID: 4998842266782620510}
+--- !u!114 &884388394243961250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8654972006342033703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51f7ab42c2f7b0b4d9e6b7cc190df3af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collliders:
+  - {fileID: 8402158577534368996}
+  - {fileID: 3845722409364687775}
+  - {fileID: 6691485610721107282}
+  deactivateDistance: 75
+  y: 0
 --- !u!1 &8665658843440932829
 GameObject:
   m_ObjectHideFlags: 0

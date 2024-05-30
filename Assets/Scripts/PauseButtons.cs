@@ -39,7 +39,7 @@ public class PauseButtons : MonoBehaviour
         }
         else
         {
-            SFXbutton.color = Color.grey;
+            //SFXbutton.color = Color.grey;
             SFXMuteBar.SetActive(true);
         }
         if (PlayerPrefs.GetInt("Music Mute", 0) == 0)
@@ -49,7 +49,7 @@ public class PauseButtons : MonoBehaviour
         }
         else
         {
-            musicButton.color = Color.grey;
+            //musicButton.color = Color.grey;
             musicMuteBar.SetActive(true);
         }
     }

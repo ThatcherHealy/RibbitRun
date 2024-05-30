@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2259293000162958495}
   - component: {fileID: 4627260650738456839}
-  - component: {fileID: 7032330248223540459}
   - component: {fileID: 4027364456721988532}
   - component: {fileID: 3058803576025836098}
   m_Layer: 16
@@ -29,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 2393089999050299150}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 2.81, y: 0.47, z: 0}
-  m_LocalScale: {x: 0.5732819, y: 0.5732819, z: 0.5732819}
+  m_LocalScale: {x: 0.735406, y: 0.735406, z: 0.735406}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1178414271676039539}
@@ -53,19 +52,6 @@ MonoBehaviour:
   hitGroundLeft: 0
   hitGroundRight: 0
   hitMud: 0
---- !u!114 &7032330248223540459
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2393089999050299150}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a5267f9473666d4798acdd311894deb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  underwater: 0
 --- !u!60 &4027364456721988532
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -472,6 +458,7 @@ Transform:
   - {fileID: 2032520142069417305}
   - {fileID: 1898296204496452404}
   - {fileID: 1595104863485734916}
+  - {fileID: 6140412296025130953}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -487,7 +474,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 100000
+  m_Mass: 50
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -515,14 +502,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pv: {fileID: 2940068091242865129}
-  uc: {fileID: 7032330248223540459}
+  uc: {fileID: 1985407776957739480}
   hitbox: {fileID: 3250470600813353989}
   turner: {fileID: 4627260650738456839}
   rb: {fileID: 8832579825661028464}
   animator: {fileID: 6807510073304281372}
   passiveSpeed: 12
-  chaseSpeed: 20
-  chaseInterval: 0.3
+  chaseSpeed: 22
+  attackDelay: 0.2
+  chaseInterval: 0.2
+  aimTime: 0.3
+  returnTime: 0.6
+  realignmentInterval: 3
+  respawnedFromThisPredator: 0
   target: {fileID: 1178414271676039539}
 --- !u!95 &6807510073304281372
 Animator:
@@ -545,6 +537,102 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &7681096715581428885
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6140412296025130953}
+  - component: {fileID: 1985407776957739480}
+  - component: {fileID: 2915218882730318654}
+  m_Layer: 16
+  m_Name: UnderwaterCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6140412296025130953
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7681096715581428885}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2989037001892407867}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1985407776957739480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7681096715581428885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a5267f9473666d4798acdd311894deb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  underwater: 0
+--- !u!60 &2915218882730318654
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7681096715581428885}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 1048571
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.5569382, y: 2.2311354}
+      - {x: -1.947692, y: 0.8073337}
+      - {x: -1.3792281, y: 0.07036507}
+      - {x: -0.4381622, y: -0.45726562}
+      - {x: 0.86311245, y: 0.27970403}
+  m_UseDelaunayMesh: 0
 --- !u!1 &8661205440925450439
 GameObject:
   m_ObjectHideFlags: 0
