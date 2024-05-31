@@ -3981,7 +3981,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 313335438}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -16, y: 0, z: 0}
+  m_LocalPosition: {x: -15.961, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6625,7 +6625,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 17
+  orthographic size: 19
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -6656,7 +6656,7 @@ RectTransform:
   - {fileID: 1101682994}
   - {fileID: 1899830075}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6681,6 +6681,7 @@ MonoBehaviour:
   playerRB: {fileID: 187322668}
   playerController: {fileID: 212000014462385579}
   virtualCamera: {fileID: 628968328}
+  ipadOrthoSize: 25
   baseHeight: 5
   mudLevel: -34.20608901977539
   offsetAboveMud: 13
@@ -8330,7 +8331,7 @@ MonoBehaviour:
   m_Follow: {fileID: 1559354882}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 17
+    OrthographicSize: 19
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -19015,7 +19016,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1559354883
 SpriteRenderer:
@@ -21333,7 +21334,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1702044638}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 16, y: 0, z: 0}
+  m_LocalPosition: {x: 15.961, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -21927,7 +21928,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1728321353
 Transform:
   m_ObjectHideFlags: 0
@@ -22450,14 +22451,15 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -4.780899, y: 11.208252}
-      - {x: 30.018875, y: 37.894524}
+    - - {x: 6.4897766, y: -3.943489}
+      - {x: 2.258316, y: 1.8164215}
+      - {x: 21.764587, y: 33.767387}
       - {x: 42.00161, y: 143.44}
       - {x: -32.239258, y: 140.42859}
       - {x: -30.223625, y: 25.786518}
       - {x: -0.5877852, y: -0.80901706}
-      - {x: 8.627871, y: -7.9074745}
-      - {x: 8.846274, y: -6.7170067}
+      - {x: 15.168436, y: -17.397701}
+      - {x: 16.092491, y: -17.073109}
   m_UseDelaunayMesh: 0
 --- !u!1 &1746292456
 GameObject:
@@ -22971,6 +22973,50 @@ MeshRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 5
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &1792965682
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1792965684}
+  - component: {fileID: 1792965683}
+  m_Layer: 0
+  m_Name: Screenshotter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1792965683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1792965682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f445eb92a31db8941bde2d578a957fc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1792965684
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1792965682}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 14.456986, y: -6.1896667, z: 410.01947}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1806094177
 GameObject:
   m_ObjectHideFlags: 0
@@ -26342,6 +26388,11 @@ MonoBehaviour:
   biomeSpawning: 0
   playerBiome: 0
   startBiome: 2
+  cam: {fileID: 519420031}
+  bogColor: {r: 0.4784314, g: 0.8000001, b: 0.67058825, a: 0}
+  amazonColor: {r: 0.47843137, g: 0.8, b: 0.606735, a: 0}
+  cypressColor: {r: 0.47843137, g: 0.8, b: 0.7025666, a: 0}
+  transitionDuration: 2
 --- !u!4 &2028519408
 Transform:
   m_ObjectHideFlags: 0
@@ -26378,6 +26429,7 @@ MonoBehaviour:
   falconPrefab: {fileID: 5152606901718774784, guid: 46438e84b6bcfbf4598213c9ab1bd3e4, type: 3}
   warningPrefab: {fileID: 857112284554688771, guid: 52b411ee721be4a43b0e96a79aa3a0d1, type: 3}
   player: {fileID: 4000014155227890}
+  canvas: {fileID: 0}
   lowerScoreLimit: 50
 --- !u!1 &2036564417
 GameObject:
@@ -27467,7 +27519,7 @@ Transform:
   - {fileID: 40553591}
   - {fileID: 1109157387}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &212000014462385579
 MonoBehaviour:
@@ -27484,11 +27536,11 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 524283
-  brown: {r: 0.8313726, g: 0.6313726, b: 0.36862746, a: 1}
+  sparrowScoreColor: {r: 0, g: 0, b: 0, a: 0}
   initialSprites:
   - {fileID: 347592013, guid: 6da4da702a5d05a4e8435488e68a87ed, type: 3}
   - {fileID: -1416811219, guid: 01bf3513153c5a04699d8e9e30a0896c, type: 3}
-  - {fileID: 0}
+  - {fileID: 1069499470, guid: a25221c6788746441ac436a041b7d6f6, type: 3}
   - {fileID: 0}
   - {fileID: 23072786, guid: 41267f1b4a6046b4dbb9c349b2e64e42, type: 3}
   spriteRenderer: {fileID: 827262950}
@@ -27518,6 +27570,7 @@ MonoBehaviour:
   sparrowEatParticles: {fileID: 7824334992808221422, guid: 5867d7164dcdc4c44a7a8d0fe342a630, type: 3}
   dartFrogPoisonParticles: {fileID: 2260106413219428936, guid: 249a8bf8f90afc649be40f134450d245, type: 3}
   biomeIn: 
+  transitioningBiome: 0
   eatenByFalcon: 0
   isGrounded: 1
   isSliding: 0

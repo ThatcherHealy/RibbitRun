@@ -114,8 +114,26 @@ public class GameAlertController : MonoBehaviour
     }
     public void Alert(Transform alertPosition)
     {
-        alert = Instantiate(alertPrefab, alertPosition.position, Quaternion.identity);
-        alertTransform = alertPosition;
+        if (PlayerPrefs.GetInt("treeFrogUnlocked", 0) == 1 && PlayerPrefs.GetInt("TreeFrogClaimed", 0) != 1)
+        {
+            alert = Instantiate(alertPrefab, alertPosition.position, Quaternion.identity);
+            alertTransform = alertPosition;
+        }
+        else if (PlayerPrefs.GetInt("frogletUnlocked", 0) == 1 && PlayerPrefs.GetInt("FrogletClaimed", 0) != 1)
+        {
+            alert = Instantiate(alertPrefab, alertPosition.position, Quaternion.identity);
+            alertTransform = alertPosition;
+        }
+        else if (PlayerPrefs.GetInt("bullfrogUnlocked", 0) == 1 && PlayerPrefs.GetInt("BullfrogClaimed", 0) != 1)
+        {
+            alert = Instantiate(alertPrefab, alertPosition.position, Quaternion.identity);
+            alertTransform = alertPosition;
+        }
+        else if (PlayerPrefs.GetInt("poisonDartFrogUnlocked", 0) == 1 && PlayerPrefs.GetInt("PoisonDartFrogClaimed", 0) != 1)
+        {
+            alert = Instantiate(alertPrefab, alertPosition.position, Quaternion.identity);
+            alertTransform = alertPosition;
+        }
     }
     private void FixedUpdate()
     {

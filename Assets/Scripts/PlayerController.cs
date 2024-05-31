@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     public LayerMask layerMask;
-    [SerializeField] Color brown;
+    [SerializeField] Color sparrowScoreColor;
     [SerializeField] Sprite[] initialSprites = new Sprite[5];
     SFXManager sfx;
     [SerializeField] SpriteRenderer spriteRenderer;
@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject dartFrogPoisonParticles;
     GameObject activeDartFrogPoisonParticles;
     public string biomeIn;
+    public bool transitioningBiome;
     public bool eatenByFalcon;
     float initialMass;
     bool mouseAllowedToDrag;
@@ -487,7 +488,15 @@ public class PlayerController : MonoBehaviour
 
                 if (isSwimming)
                 {
-                    SetSpriteRotation(secondLinePoint - transform.position, 0);
+                    if(species != Species.Froglet)
+                        SetSpriteRotation(secondLinePoint - transform.position, 0);
+                    else
+                    {
+                        if(sprite.localScale.x < 0)
+                            SetSpriteRotation(secondLinePoint - transform.position, -18.4f);
+                        else
+                            SetSpriteRotation(secondLinePoint - transform.position, 18.4f);
+                    }
                 }
             }
 
@@ -524,12 +533,12 @@ public class PlayerController : MonoBehaviour
         switch (species) 
         {
             case Species.Default:
-                jumpingPower = 37;
+                jumpingPower = 36;
                 swimmingPower = 37f;
                 maxJumpAimLineLength = 10;
                 maxSwimAimLineLength = 8;
-                oxygenAndMoistureController.oxygenLossRate = 0.06f;
-                oxygenAndMoistureController.moistureLossRate = 0.07f;
+                oxygenAndMoistureController.oxygenLossRate = 0.07f;
+                oxygenAndMoistureController.moistureLossRate = 0.08f;
                 tongueLauncher.baseMaxDistance = 25;
 
                 spriteRenderer.sprite = initialSprites[0];
@@ -539,17 +548,14 @@ public class PlayerController : MonoBehaviour
                 swimmingPower = 29;
                 maxJumpAimLineLength = 12;
                 maxSwimAimLineLength = 7;
-                oxygenAndMoistureController.oxygenLossRate = 0.09f;
-                oxygenAndMoistureController.moistureLossRate = 0.06f;
+                oxygenAndMoistureController.oxygenLossRate = 0.1f;
+                oxygenAndMoistureController.moistureLossRate = 0.07f;
                 tongueLauncher.baseMaxDistance = 33;
                 tongueLauncher.grappleStrength = 25;
 
                 sprite.localScale = new Vector3(0.4f, 0.4f, 0.4f);
-                //tongueLauncher.tongueAimLineStartpoint.localPosition = new Vector3(-2.98f, 0.5f, 0);
-                //jumpLrStartpoint.transform.localPosition = new Vector3(-2.98f, 0.5f, 0);
-                //swimLrStartpoint.transform.localPosition = new Vector3(-2.98f, 0.5f, 0);
                 spriteRenderer.sprite = initialSprites[1];
-                ConfigureSpeciesAnimations("Tree");
+                ConfigureSpeciesAnimations("Tree", false);
                 break;
             case Species.Froglet:
                 jumpingPower = 27;
@@ -559,37 +565,42 @@ public class PlayerController : MonoBehaviour
                 oxygenAndMoistureController.oxygenLossRate = 0f;
                 oxygenAndMoistureController.moistureLossRate = 0.15f;
                 tongueLauncher.baseMaxDistance = 18;
-                tongueLauncher.grappleStrength = 18;
+
+                sprite.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                spriteRenderer.sprite = initialSprites[2];
+                ConfigureSpeciesAnimations("", true);
                 break;
             case Species.BullFrog:
-                jumpingPower = 39;
+                jumpingPower = 38;
                 swimmingPower = 40;
                 maxJumpAimLineLength = 10;
                 maxSwimAimLineLength = 10;
-                oxygenAndMoistureController.oxygenLossRate = 0.05f;
-                oxygenAndMoistureController.moistureLossRate = 0.05f;
+                oxygenAndMoistureController.oxygenLossRate = 0.06f;
+                oxygenAndMoistureController.moistureLossRate = 0.06f;
                 tongueLauncher.baseMaxDistance = 30;
+                tongueLauncher.grappleStrength = 21;
                 break;
             case Species.PoisonDartFrog:
-                jumpingPower = 43;
+                jumpingPower = 40;
                 swimmingPower = 35;
                 maxJumpAimLineLength = 10;
                 maxSwimAimLineLength = 10;
-                oxygenAndMoistureController.oxygenLossRate = 0.07f;
-                oxygenAndMoistureController.moistureLossRate = 0.08f;
+                oxygenAndMoistureController.oxygenLossRate = 0.08f;
+                oxygenAndMoistureController.moistureLossRate = 0.09f;
                 tongueLauncher.baseMaxDistance = 25;
+                tongueLauncher.grappleStrength = 23;
 
                 poisonAvailable = true;
                 activeDartFrogPoisonParticles = Instantiate(dartFrogPoisonParticles, transform.position, Quaternion.identity, transform);
 
                 sprite.localScale = new Vector3(0.8f, 0.8f, 0.8f);
                 spriteRenderer.sprite = initialSprites[4];
-                ConfigureSpeciesAnimations("PoisonDart");
+                ConfigureSpeciesAnimations("PoisonDart", false);
                 break;
         }
         tongueLauncher.rangeCircleOffset *= 1 / sprite.localScale.x;
     }
-    void ConfigureSpeciesAnimations(string modifier)
+    void ConfigureSpeciesAnimations(string modifier, bool froglet)
     {
         SLIDE = modifier + SLIDE; 
         IDLE = modifier + IDLE;
@@ -601,6 +612,20 @@ public class PlayerController : MonoBehaviour
         MIDSWIM = modifier + MIDSWIM;
         STRAIGHT_JUMP = modifier + STRAIGHT_JUMP;
         STRAIGHT_GRAPPLE = modifier + STRAIGHT_GRAPPLE;
+
+        if(froglet)
+        {
+            SLIDE = "FrogletSlide";
+            IDLE = "FrogletIdle";
+            JUMP = "FrogletJump";
+            MIDAIR = "FrogletMidair";
+            GRAPPLE = "FrogletGrapple";
+            READY_SWIM = "FrogletReadySwim";
+            SWIM = "FrogletSwim";
+            MIDSWIM = "FrogletMidswim";
+            STRAIGHT_JUMP = "FrogletStraightJump";
+            STRAIGHT_GRAPPLE = "FrogletStraightGrapple";
+        }
     }
     IEnumerator RibbitRandomly()
     {
@@ -803,6 +828,7 @@ public class PlayerController : MonoBehaviour
     {
         //Stop the same animation from interrupting itself
         if (currentState == newState) return;
+        if (species == Species.Froglet && currentState == SWIM && newState == READY_SWIM) return;
 
         //Play the new animation
         animator.Play(newState);
@@ -824,6 +850,8 @@ public class PlayerController : MonoBehaviour
             if(SLIDE == "FrogSlide")
                 sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y - 0.2f, 0);
             else if (SLIDE == "TreeFrogSlide")
+                sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y - 0.25f, 0);
+            else if (SLIDE == "FrogletSlide")
                 sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y - 0.25f, 0);
             else if (SLIDE == "PoisonDartFrogSlide")
                 sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y - 0.2f, 0);
@@ -1054,7 +1082,12 @@ public class PlayerController : MonoBehaviour
             collision.transform.parent.GetComponentInChildren<ReturnBlocker>().GetComponent<PolygonCollider2D>().enabled = true;  
             biomeIn = levelGenerator.biomeSpawning.ToString();
             transitionCamera = true;
+            transitioningBiome = true;
             Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.CompareTag("EndBiomeTransition"))
+        {
+            transitioningBiome = false;
         }
 
         if (collision.gameObject.layer == 14) //When the player is on mud, it doesnt lose moisture
@@ -1137,7 +1170,13 @@ public class PlayerController : MonoBehaviour
             float angle = Mathf.Atan2(normal.y, normal.x) * Mathf.Rad2Deg;
 
             if(transform.position.y > collision.ClosestPoint(transform.position).y)
-                sprite.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+            {
+                if(species != Species.Froglet)
+                    sprite.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+                else
+                    sprite.transform.rotation = Quaternion.Euler(0, 0, angle - 108.4f);
+
+            }
         }
 
         //The player swims when they are in water, not grounded, and not in a no-swim-zone
@@ -1254,7 +1293,7 @@ public class PlayerController : MonoBehaviour
             //if bird, add brown 50
             else if (collision.gameObject.transform.parent.name == "Sparrow(Clone)")
             {
-                scoreController.SpawnFloatingText(50, transform.position, brown);
+                scoreController.SpawnFloatingText(50, transform.position, sparrowScoreColor);
                 scoreController.Score(50);
             }
             //if goldfish, add yellow 100

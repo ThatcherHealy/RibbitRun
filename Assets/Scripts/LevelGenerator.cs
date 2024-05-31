@@ -52,13 +52,17 @@ public class LevelGenerator : MonoBehaviour
 
     const double bogOffset = 0, cypressOffset = 9.3f, amazonOffset = -4.5f;
     double currentOffset;
-    double initialMudLevel;
     double baseMudLevel;
-    int numberOfTransitions;
     public enum Biome {Bog,Cypress,Amazon};
     public Biome biomeSpawning;
     public Biome playerBiome;
     [SerializeField] Biome startBiome;
+
+    [SerializeField] Camera cam;
+    [SerializeField] Color bogColor;
+    [SerializeField] Color amazonColor;
+    [SerializeField] Color cypressColor;
+    [SerializeField] float transitionDuration;
 
     bool treeSpawned;
 
@@ -75,7 +79,6 @@ public class LevelGenerator : MonoBehaviour
     }
     private void Start()
     {
-        initialMudLevel = cameraScript.mudLevel;
         SpawnTransition();
 
         //Adjust the camera view to match the biome
@@ -108,7 +111,6 @@ public class LevelGenerator : MonoBehaviour
         {
             //Set the player reference endpoint to the current endpoint since the player has moved to the next biome
             playerRefEndPoint = endPoint;
-            numberOfTransitions++;           
             pc.transitionCamera = false;
         }
 
@@ -148,15 +150,51 @@ public class LevelGenerator : MonoBehaviour
         if (pc.biomeIn.Equals("Bog"))
         {
             playerBiome = Biome.Bog;
+            StartColorTransition(bogColor);
         }
         if (pc.biomeIn.Equals("Cypress"))
         {
             playerBiome = Biome.Cypress;
+            StartColorTransition(cypressColor);
         }
         if (pc.biomeIn.Equals("Amazon"))
         {
             playerBiome = Biome.Amazon;
+            StartColorTransition(amazonColor);
         }
+    }
+    public void StartColorTransition(Color newColor)
+    {
+        // Stop any ongoing color transition
+        StopAllCoroutines();
+
+        // Start a new color transition coroutine
+        StartCoroutine(TransitionColor(newColor));
+    }
+
+    private IEnumerator TransitionColor(Color newColor)
+    {
+        // Get the current color of the camera background
+        Color startColor = cam.backgroundColor;
+
+        // Track the elapsed time
+        float elapsedTime = 0.0f;
+
+        // Gradually change the background color over time
+        while (elapsedTime < transitionDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / transitionDuration;
+
+            // Interpolate between the start color and the target color
+            cam.backgroundColor = Color.Lerp(startColor, newColor, t);
+
+            // Wait until the next frame
+            yield return null;
+        }
+
+        // Ensure the target color is set at the end
+        cam.backgroundColor = newColor;
     }
     private void ChangeBiome() 
     {
@@ -164,23 +202,35 @@ public class LevelGenerator : MonoBehaviour
         if (biomeSpawning == Biome.Bog)
         {
             if (chance == 1)
+            {
                 biomeSpawning = Biome.Cypress;
+            }
             else
+            {
                 biomeSpawning = Biome.Amazon;
+            }
         }
         else if (biomeSpawning == Biome.Cypress)
         {
             if (chance == 1)
+            {
                 biomeSpawning = Biome.Bog;
+            }
             else
+            {
                 biomeSpawning = Biome.Amazon;
+            }
         }
         else if (biomeSpawning == Biome.Amazon)
         {
             if (chance == 1)
+            {
                 biomeSpawning = Biome.Bog;
+            }
             else
+            {
                 biomeSpawning = Biome.Cypress;
+            }
         }
 
         treeSpawned = false;
@@ -596,16 +646,22 @@ public class LevelGenerator : MonoBehaviour
         if (PlayerPrefs.GetString("StartBiome") == "Bog")
         {
             startBiome = Biome.Bog;
+            cam.backgroundColor = bogColor;
         }
         else if (PlayerPrefs.GetString("StartBiome") == "Cypress")
         {
             startBiome = Biome.Cypress;
+            cam.backgroundColor = cypressColor;
         }
         else if (PlayerPrefs.GetString("StartBiome") == "Amazon")
         {
             startBiome = Biome.Amazon;
+            cam.backgroundColor = amazonColor;
         }
         else
+        {
             startBiome = Biome.Bog;
+            cam.backgroundColor = bogColor;
+        }
     }
 }

@@ -14,6 +14,8 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] PlayerController playerController;
     [SerializeField] CinemachineVirtualCamera virtualCamera;
 
+    public float ipadOrthoSize = 25;
+
     private float xOffset = 5;
     private bool lookingRight = true;
     private float velocityThreshold = 10;
@@ -31,6 +33,11 @@ public class CameraFollow : MonoBehaviour
     bool pausePositionSet;
     bool paused;
 
+    private void Start()
+    {
+        if (SystemInfo.deviceModel.Contains("iPad") || SystemInfo.deviceModel.StartsWith("iPad"))
+            virtualCamera.m_Lens.OrthographicSize = ipadOrthoSize;
+    }
     private void FixedUpdate()
     {
         if (playerController.eaten && SceneManager.GetActiveScene().name != "Tutorial" && (ds.dontRespawnPressed || ds.respawnedOnce))

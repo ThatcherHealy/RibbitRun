@@ -1698,7 +1698,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultFrog: {fileID: 21300000, guid: 40c3b964eb2c35a4ebf02e6d5447762f, type: 3}
   treeFrog: {fileID: 1653023166, guid: 01bf3513153c5a04699d8e9e30a0896c, type: 3}
-  froglet: {fileID: 0}
+  froglet: {fileID: 1069499470, guid: a25221c6788746441ac436a041b7d6f6, type: 3}
   bullfrog: {fileID: 0}
   poisonDartFrog: {fileID: 1211151951, guid: 41267f1b4a6046b4dbb9c349b2e64e42, type: 3}
 --- !u!212 &126729471
@@ -4635,6 +4635,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 555056043}
     m_Modifications:
+    - target: {fileID: -7508820065237265479, guid: eb7822ec4ed35314db72879a9499384b, type: 3}
+      propertyPath: m_Mass
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 2648785778707408754, guid: eb7822ec4ed35314db72879a9499384b, type: 3}
       propertyPath: m_Name
       value: Log
@@ -4683,7 +4687,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7719599957193730672, guid: eb7822ec4ed35314db72879a9499384b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -6036,7 +6041,6 @@ GameObject:
   - component: {fileID: 533043650}
   - component: {fileID: 533043649}
   - component: {fileID: 533043648}
-  - component: {fileID: 533043651}
   m_Layer: 5
   m_Name: Play
   m_TagString: Untagged
@@ -6052,7 +6056,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533043646}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -2106.0002}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 6.2736073, y: 10.230934, z: 7.7214584}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6063,7 +6067,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -210.60004}
+  m_AnchoredPosition: {x: 0, y: -168.3045}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &533043648
@@ -6160,20 +6164,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533043646}
   m_CullTransparentMesh: 1
---- !u!114 &533043651
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 533043646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8e1605bcac8e7549be2f0d000d45760, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anchorType: 4
-  anchorOffset: {x: 0, y: -9, z: 0}
 --- !u!1 &555056042
 GameObject:
   m_ObjectHideFlags: 0
@@ -9620,7 +9610,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultFrog: {fileID: 21300000, guid: 40c3b964eb2c35a4ebf02e6d5447762f, type: 3}
   treeFrog: {fileID: 1653023166, guid: 01bf3513153c5a04699d8e9e30a0896c, type: 3}
-  froglet: {fileID: 0}
+  froglet: {fileID: 1069499470, guid: a25221c6788746441ac436a041b7d6f6, type: 3}
   bullfrog: {fileID: 0}
   poisonDartFrog: {fileID: 1211151951, guid: 41267f1b4a6046b4dbb9c349b2e64e42, type: 3}
 --- !u!212 &1025595180
@@ -10535,7 +10525,6 @@ GameObject:
   - component: {fileID: 1240758578}
   - component: {fileID: 1240758577}
   - component: {fileID: 1240758576}
-  - component: {fileID: 1240758579}
   m_Layer: 5
   m_Name: Options
   m_TagString: Untagged
@@ -10551,7 +10540,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1240758574}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -2106.0002}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5.294773, y: 7.738609, z: 6.516724}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10562,7 +10551,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 468.00006, y: -397.80005}
+  m_AnchoredPosition: {x: 491, y: -406.7974}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1240758576
@@ -10659,20 +10648,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1240758574}
   m_CullTransparentMesh: 1
---- !u!114 &1240758579
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1240758574}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8e1605bcac8e7549be2f0d000d45760, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anchorType: 4
-  anchorOffset: {x: 20, y: -17, z: 0}
 --- !u!4 &1251374264 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7348142863890869955, guid: a91ce930f97d5694eb105621cef72bcf, type: 3}
@@ -11152,6 +11127,7 @@ GameObject:
   - component: {fileID: 1369094356}
   - component: {fileID: 1369094355}
   - component: {fileID: 1369094354}
+  - component: {fileID: 1369094358}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -11252,6 +11228,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1369094358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369094353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b38bc8cff08e36f469ab0a28d1afd799, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xScale: 2900
+  mainMenu: 0
+  buttons:
+  - {fileID: 533043647}
+  - {fileID: 1604509129}
+  - {fileID: 1240758575}
 --- !u!1 &1377487851
 GameObject:
   m_ObjectHideFlags: 0
@@ -12497,7 +12491,6 @@ GameObject:
   - component: {fileID: 1604509132}
   - component: {fileID: 1604509131}
   - component: {fileID: 1604509130}
-  - component: {fileID: 1604509133}
   m_Layer: 5
   m_Name: Species
   m_TagString: Untagged
@@ -12513,7 +12506,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1604509128}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -2106.0002}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5.294773, y: 7.738609, z: 6.516724}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12525,7 +12518,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -468.00006, y: -397.80005}
+  m_AnchoredPosition: {x: -491, y: -406.7974}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1604509130
@@ -12622,20 +12615,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1604509128}
   m_CullTransparentMesh: 1
---- !u!114 &1604509133
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1604509128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8e1605bcac8e7549be2f0d000d45760, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anchorType: 4
-  anchorOffset: {x: -20, y: -17, z: 0}
 --- !u!1001 &1610159747
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15599,7 +15578,6 @@ GameObject:
   - component: {fileID: 2052392836}
   - component: {fileID: 2052392838}
   - component: {fileID: 2052392837}
-  - component: {fileID: 2052392839}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -15615,7 +15593,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2052392835}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -2106.0002}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 7.26856, y: 7.26856, z: 7.26856}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -15625,7 +15603,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -234}
+  m_AnchoredPosition: {x: 0, y: -298.11606}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2052392837
@@ -15725,20 +15703,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2052392835}
   m_CullTransparentMesh: 1
---- !u!114 &2052392839
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2052392835}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8e1605bcac8e7549be2f0d000d45760, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anchorType: 7
-  anchorOffset: {x: 0, y: -10, z: 0}
 --- !u!4 &2059027342 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1068522642676191589, guid: 221363490a39a064cbddfb0a520efb04, type: 3}
@@ -15770,7 +15734,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2071081581}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.8, y: 2.87, z: 0.026670305}
+  m_LocalPosition: {x: -2.1, y: 2.6, z: 0.026670305}
   m_LocalScale: {x: 1.4296334, y: 1.4296334, z: 1.4296334}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15791,7 +15755,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultFrog: {fileID: 21300000, guid: 40c3b964eb2c35a4ebf02e6d5447762f, type: 3}
   treeFrog: {fileID: 1653023166, guid: 01bf3513153c5a04699d8e9e30a0896c, type: 3}
-  froglet: {fileID: 0}
+  froglet: {fileID: 1069499470, guid: a25221c6788746441ac436a041b7d6f6, type: 3}
   bullfrog: {fileID: 0}
   poisonDartFrog: {fileID: 1211151951, guid: 41267f1b4a6046b4dbb9c349b2e64e42, type: 3}
 --- !u!212 &2071081584

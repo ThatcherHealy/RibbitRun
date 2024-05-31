@@ -22,6 +22,7 @@ TagManager:
   - Log
   - Plant
   - Mud
+  - EndBiomeTransition
   layers:
   - Default
   - TransparentFX

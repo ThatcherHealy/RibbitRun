@@ -126,6 +126,7 @@ public class PredatorEvents : MonoBehaviour
     [SerializeField] GameObject falconPrefab;
     [SerializeField] GameObject warningPrefab;
     [SerializeField] Transform player;
+    [SerializeField] Transform canvas;
 
 
     private Vector3 predatorSpawnPosition;

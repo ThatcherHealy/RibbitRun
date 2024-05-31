@@ -146,6 +146,10 @@ public class TongueLauncher : MonoBehaviour
                 }
                 touchEnded = false;
             }
+            if (touch.phase == TouchPhase.Ended)
+            {
+                lr.positionCount = 0;
+            }
         }
         else
         {

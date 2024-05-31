@@ -88,7 +88,7 @@ public class ScoreController : MonoBehaviour
         //Adds a point whenever the player goes 4 units farther in the x axis than their previous location
         if (playerPosition.position.x > initialPosition)
             xDistance = Vector3.Distance(new Vector3(initialPosition, 0, 0), new Vector3(playerPosition.position.x, 0, 0));
-        int scoreThreshold = 4;
+        int scoreThreshold = 3;
 
         if (xDistance > farthestDistance + scoreThreshold)
         {
@@ -118,25 +118,12 @@ public class ScoreController : MonoBehaviour
 
             if (hasHighscore && !tutorial)
             {
-              /*  if (PlayerPrefs.GetInt("HardMode", 0) == 0)
-                {*/
                     finalScoreText.color = new Color(1, 0.92f, 0.016f, finalScoreText.color.a); //Yellow
                     highscoreText.color = new Color(1, 0.92f, 0.016f, finalScoreText.color.a); //Yellow
                     foreach (TextMeshPro highscoreWordText in highscoreWordTexts)
                     {
                         highscoreWordText.color = new Color(1, 0.92f, 0.016f, finalScoreText.color.a); //Yellow
                     }
-               /* }
-                else
-                {
-                    finalScoreText.color = hardModeHighscoreColor; //Orange
-                    highscoreText.color = hardModeHighscoreColor; //Orange
-                    foreach (TextMeshPro highscoreWordText in highscoreWordTexts)
-                    {
-                        highscoreWordText.color = hardModeHighscoreColor; //Orange
-                    }
-                }*/
-
             }
 
         }

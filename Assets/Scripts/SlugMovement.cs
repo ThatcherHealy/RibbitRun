@@ -16,6 +16,8 @@ public class SlugMovement : MonoBehaviour
     private Vector2 transformToPoint;
     private int directionChance;
     private float speed;
+    float baseSpeed;
+    float baseGravityStrength;
     Rigidbody2D rb;
     RaycastHit2D[] hit;
 
@@ -32,6 +34,9 @@ public class SlugMovement : MonoBehaviour
 
         directionChance = Random.Range(1, 3);
         speed = Random.Range(4, 6);
+
+        baseSpeed = speed;
+        baseGravityStrength = gravityStrength;
     }
     GameObject GetClosestLog(GameObject[] logs) //Finds the closest log in the scene
     { 
@@ -53,6 +58,17 @@ public class SlugMovement : MonoBehaviour
         StickToTargetPoint();
         RotateTowardsTargetCenter();
         Movement();
+
+        if(Vector3.Distance(transform.position, (Vector3)closestPoint) > 0.5f)
+        {
+            speed = baseSpeed/2;
+            gravityStrength = baseGravityStrength * 30;
+        }
+        else
+        {
+            speed = baseSpeed;
+            gravityStrength = baseGravityStrength;
+        }
     }
     void FixSpriteRotation() 
     {

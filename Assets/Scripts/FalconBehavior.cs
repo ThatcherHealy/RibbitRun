@@ -62,7 +62,7 @@ public class FalconBehavior : MonoBehaviour
             yVelocity = diveSpeed;
         }
 
-        if(yDifference > 25)
+        if(yDifference > 10)
             rb.velocity = new Vector2(xVelocity, yVelocity);
         else
             rb.velocity = new Vector2(xVelocity/1.5f, yVelocity);

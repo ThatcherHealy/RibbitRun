@@ -56,7 +56,6 @@ public class FrogUnlock : MonoBehaviour
     [SerializeField] GameObject[] bullfrogIcons;
     [SerializeField] GameObject[] poisonDartFrogIcons;
 
-
     private void Awake()
     {
         InitializeProgress();
