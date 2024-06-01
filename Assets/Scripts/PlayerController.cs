@@ -492,7 +492,7 @@ public class PlayerController : MonoBehaviour
                         SetSpriteRotation(secondLinePoint - transform.position, 0);
                     else
                     {
-                        if(sprite.localScale.x < 0)
+                        if(rb.velocity.x > 0)
                             SetSpriteRotation(secondLinePoint - transform.position, -18.4f);
                         else
                             SetSpriteRotation(secondLinePoint - transform.position, 18.4f);
@@ -566,7 +566,7 @@ public class PlayerController : MonoBehaviour
                 oxygenAndMoistureController.moistureLossRate = 0.15f;
                 tongueLauncher.baseMaxDistance = 18;
 
-                sprite.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                sprite.localScale = new Vector3(0.45f, 0.45f, 0.45f);
                 spriteRenderer.sprite = initialSprites[2];
                 ConfigureSpeciesAnimations("", true);
                 break;
@@ -841,6 +841,8 @@ public class PlayerController : MonoBehaviour
                 sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y + 0.4f, 0);
             else if (IDLE == "TreeFrogIdle")
                 sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y + 0.25f, 0);
+            else if (IDLE == "FrogletIdle")
+                sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y + 0.15f, 0);
             else if (IDLE == "PoisonDartFrogIdle")
                 sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y + 0.3f, 0);
             sprite.transform.localScale = new Vector3(initialSpriteScale.x, Mathf.Abs(initialSpriteScale.y), 1);
