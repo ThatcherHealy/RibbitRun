@@ -43,6 +43,14 @@ public class SelectedFrogImageDisplayer : MonoBehaviour
             if (PlayerPrefs.GetString("Species") == "Froglet" && froglet != null)
             {
                 sr.sprite = froglet;
+                Vector3 desiredWorldScale = new Vector3(-1f, 1f, 1);
+                Vector3 worldScaleFactor = new Vector3(
+           desiredWorldScale.x / transform.lossyScale.x,
+           desiredWorldScale.y / transform.lossyScale.y,
+           desiredWorldScale.z / transform.lossyScale.z);
+
+                // Apply the scaling factor
+                transform.localScale = Vector3.Scale(transform.localScale, worldScaleFactor);
             }
             if (PlayerPrefs.GetString("Species") == "Bullfrog" && bullfrog != null)
             {
