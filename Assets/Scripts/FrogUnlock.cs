@@ -87,8 +87,8 @@ public class FrogUnlock : MonoBehaviour
 
         //Froglet
 
-        frogletX.text = PlayerPrefs.GetInt("FishEaten", 0).ToString();
-        float frogletSliderProgress = (float)PlayerPrefs.GetInt("FishEaten", 0) / 100;
+        frogletX.text = PlayerPrefs.GetInt("InsectsEaten", 0).ToString();
+        float frogletSliderProgress = (float)PlayerPrefs.GetInt("InsectsEaten", 0) / 250;
         frogletSlider.value = frogletSliderProgress;
 
         //Avoid slider looking weird
@@ -106,8 +106,8 @@ public class FrogUnlock : MonoBehaviour
 
         //Bullfrog
 
-        bullfrogX.text = PlayerPrefs.GetInt("InsectsEaten", 0).ToString();
-        float bullfrogSliderProgress = (float)PlayerPrefs.GetInt("InsectsEaten", 0) / 500;
+        bullfrogX.text = PlayerPrefs.GetInt("FishEaten", 0).ToString();
+        float bullfrogSliderProgress = (float)PlayerPrefs.GetInt("FishEaten", 0) / 100;
         bullfrogSlider.value = bullfrogSliderProgress;
 
         //Avoid slider looking weird

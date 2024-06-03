@@ -11,7 +11,12 @@ public class TutorialPhase3 : MonoBehaviour
     public bool pastTheHeron;
     public bool predatorSpawned;
     bool stopTime;
+    SFXManager sfx;
 
+    private void Start()
+    {
+        sfx = FindFirstObjectByType<SFXManager>();
+    }
     private void LateUpdate()
     {
         if (stopTime)
@@ -38,6 +43,8 @@ public class TutorialPhase3 : MonoBehaviour
         stopTime = true;
         pc.enabled = false;
         warningTutorial.SetActive(true);
+        sfx.PlaySFX("Click");
+
     }
     public void DisableWarningTutorial()
     {
@@ -45,6 +52,8 @@ public class TutorialPhase3 : MonoBehaviour
         Time.timeScale = 1;
         pc.enabled = true;
         warningTutorial.SetActive(false);
+        sfx.PlaySFX("Exit Click");
+
     }
 
 }

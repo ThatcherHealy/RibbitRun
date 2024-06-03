@@ -871,7 +871,7 @@ public class PlayerController : MonoBehaviour
             else if (IDLE == "FrogletIdle")
                 sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y + 0.15f, 0);
             else if (IDLE == "BullFrogIdle")
-                sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y + 0.15f, 0);
+                sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y + 0.0f, 0);
             else if (IDLE == "PoisonDartFrogIdle")
                 sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y + 0.3f, 0);
             sprite.transform.localScale = new Vector3(initialSpriteScale.x, Mathf.Abs(initialSpriteScale.y), 1);

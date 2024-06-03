@@ -12,6 +12,11 @@ public class OxygenAndMoistureTutorial : MonoBehaviour
     bool oxygenTutorialDone;
     bool stopTime;
     bool moistureExplained;
+    SFXManager sfx;
+    private void Start()
+    {
+        sfx = FindFirstObjectByType<SFXManager>();
+    }
     private void LateUpdate()
     {
         if (stopTime)
@@ -45,6 +50,7 @@ public class OxygenAndMoistureTutorial : MonoBehaviour
         stopTime = true;
         pc.enabled = false;
         oxygenTutorial.SetActive(true);
+        sfx.PlaySFX("Click");
     }
     public void DisableOxygenTutorial()
     {
@@ -53,6 +59,8 @@ public class OxygenAndMoistureTutorial : MonoBehaviour
         pc.enabled = true;
         oxygenTutorialDone = true;
         oxygenTutorial.SetActive(false);
+        sfx.PlaySFX("Exit Click");
+
     }
 
     IEnumerator StartMoistureTutorial()
@@ -62,6 +70,7 @@ public class OxygenAndMoistureTutorial : MonoBehaviour
     }
     void MoistureTutorial()
     {
+        sfx.PlaySFX("Click");
         stopTime = true;
         pc.enabled = false;
         moistureTutorial.SetActive(true);
@@ -72,5 +81,7 @@ public class OxygenAndMoistureTutorial : MonoBehaviour
         Time.timeScale = 1;
         pc.enabled = true;
         moistureTutorial.SetActive(false);
+        sfx.PlaySFX("Exit Click");
+
     }
 }

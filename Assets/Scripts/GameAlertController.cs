@@ -85,8 +85,6 @@ public class GameAlertController : MonoBehaviour
     }
     private void Notification(string species)
     {
-        Debug.Log("Notification Spawned");
-
         GameObject noti = Instantiate(notification, new Vector3(0, 150, 0), Quaternion.identity, transform);
         noti.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 150);
         sfx.PlaySFX("Notification");

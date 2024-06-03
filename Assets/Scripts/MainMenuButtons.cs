@@ -1,14 +1,13 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static PlayerController;
-using static Unity.Collections.AllocatorManager;
 
 public class MainMenuButtons : MonoBehaviour
 {
     [SerializeField] GameObject optionsMenu;
+    [SerializeField] GameObject credits;
     [SerializeField] GameObject[] mainStuff;
     [SerializeField] Image[] buttons;
     [SerializeField] FrogUnlock unlock;
@@ -140,6 +139,20 @@ public class MainMenuButtons : MonoBehaviour
         {
             obj.SetActive(true);
         }
+        sfx.PlaySFX("Exit Click");
+    }
+    public void Credits()
+    {
+        optionsMenu.SetActive(false);
+        credits.SetActive(true);
+
+        sfx.PlaySFX("General Click");
+    }
+    public void CreditsBack()
+    {
+        optionsMenu.SetActive(true);
+        credits.SetActive(false);
+
         sfx.PlaySFX("Exit Click");
     }
     public void ReplayTutorial()

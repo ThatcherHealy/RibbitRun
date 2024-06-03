@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class MusicContinuity : MonoBehaviour
 {
     [SerializeField] bool menu;
+    string currentScene;
     public static MusicContinuity instance;
     [SerializeField] AudioSource gameMusic;
     [SerializeField] AudioSource underwaterGameMusic;
@@ -46,6 +47,7 @@ public class MusicContinuity : MonoBehaviour
     {
         if (!menu)
         {
+            currentScene = SceneManager.GetActiveScene().name;
             pc = FindFirstObjectByType<PlayerController>();
             ds = FindFirstObjectByType<DeathScript>();
             gameMusic.mute = false; underwaterGameMusic.mute = true; deadGameMusic.mute = true;
@@ -53,6 +55,12 @@ public class MusicContinuity : MonoBehaviour
     }
     private void Update()
     {
+        if(!menu && SceneManager.GetActiveScene().name != currentScene )
+        {
+            pc = FindFirstObjectByType<PlayerController>();
+            ds = FindFirstObjectByType<DeathScript>();
+        }
+
         if (PlayerPrefs.GetInt("Music Mute") == 0)
             mute = false;
         else
@@ -88,11 +96,11 @@ public class MusicContinuity : MonoBehaviour
 
         if (!menu)
         {
-            if (pc.isSwimming)
+            if (pc != null && pc.isSwimming)
             {
                 underwaterMusic = true;
             }
-            if (!pc.wet)
+            if (pc != null && !pc.wet)
             {
                 underwaterMusic = false;
             }
@@ -115,12 +123,10 @@ public class MusicContinuity : MonoBehaviour
                     if (underwaterMusic)
                     {
                         gameMusic.mute = true; underwaterGameMusic.mute = false; deadGameMusic.mute = true;
-
                     }
                     else
                     {
                         gameMusic.mute = false; underwaterGameMusic.mute = true; deadGameMusic.mute = true;
-
                     }
                 }
             }

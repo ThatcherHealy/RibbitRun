@@ -71,7 +71,7 @@ public class TutorialPredatorEvent : MonoBehaviour
     {
         if (birdEvent)
         {
-             predatorSpawnPosition = new Vector2(player.position.x + 100, 6);
+             predatorSpawnPosition = new Vector2(player.position.x + 130, 6);
         }
     }
     void SetWarningPosition()
