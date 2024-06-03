@@ -1,6 +1,7 @@
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
 
@@ -8,6 +9,10 @@ public class PlayerController : MonoBehaviour
 {
     public LayerMask layerMask;
     [SerializeField] Color sparrowScoreColor;
+    [SerializeField] CircleCollider2D normalCol;
+    [SerializeField] CircleCollider2D bullfrogCol;
+    [SerializeField] Transform grapplePointDetector;
+    CircleCollider2D col;
     [SerializeField] Sprite[] initialSprites = new Sprite[5];
     SFXManager sfx;
     [SerializeField] SpriteRenderer spriteRenderer;
@@ -18,7 +23,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform jumpLrStartpoint;
     [SerializeField] private LineRenderer swimLr;
     [SerializeField] Transform swimLrStartpoint;
-    [SerializeField] private CircleCollider2D circleCollider;
     [SerializeField] private ScoreController scoreController;
     [SerializeField] private PauseButtons pauseScript;
     [SerializeField] private LevelGenerator levelGenerator;
@@ -124,6 +128,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         sfx = FindFirstObjectByType<SFXManager>();
+        col = normalCol;
 
         initialMass = rb.mass;
         Time.timeScale = 1.0f;
@@ -143,6 +148,9 @@ public class PlayerController : MonoBehaviour
         initialSpriteOffset = sprite.localPosition;
         ChangeAnimationState(SLIDE);
         StartCoroutine(RibbitRandomly());
+
+        if(SceneManager.GetActiveScene().name == "GameScene")
+            rb.AddForce(new Vector2(40, -40), ForceMode2D.Impulse);
     }
 
     void Update()
@@ -213,11 +221,12 @@ public class PlayerController : MonoBehaviour
     void GroundCheck()
     {
         float extraDistance = 0.35f;
-        RaycastHit2D raycastHitGround = Physics2D.BoxCast(circleCollider.bounds.center,
-        new Vector2(circleCollider.bounds.size.x * 0.4f, circleCollider.bounds.size.y * 0.7f), 0f, Vector2.down, extraDistance, ground);
+        if (species == Species.BullFrog) extraDistance = 0.49f;
+        RaycastHit2D raycastHitGround = Physics2D.BoxCast(col.bounds.center,
+        new Vector2(col.bounds.size.x * 0.4f, col.bounds.size.y * 0.7f), 0f, Vector2.down, extraDistance, ground);
 
-        RaycastHit2D raycastHitSlide = Physics2D.BoxCast(circleCollider.bounds.center,
-       new Vector2(circleCollider.bounds.size.x * 0.4f, circleCollider.bounds.size.y * 0.7f), 0f, Vector2.down, extraDistance, slide);
+        RaycastHit2D raycastHitSlide = Physics2D.BoxCast(col.bounds.center,
+        new Vector2(col.bounds.size.x * 0.4f, col.bounds.size.y * 0.7f), 0f, Vector2.down, extraDistance, slide);
 
         if (raycastHitGround.collider != null || raycastHitSlide.collider != null)
         {
@@ -467,7 +476,8 @@ public class PlayerController : MonoBehaviour
 
                 if (fillPercentage > 0.1f) //Don't do anything unless the drag was significant
                 {
-                    rb.velocity = Vector2.zero;
+                    //rb.velocity = Vector2.zero;
+                    rb.velocity *= 0.3f;
                     power = jumpingPower;
                     ChangeAnimationState(JUMP);
 
@@ -579,6 +589,15 @@ public class PlayerController : MonoBehaviour
                 oxygenAndMoistureController.moistureLossRate = 0.06f;
                 tongueLauncher.baseMaxDistance = 30;
                 tongueLauncher.grappleStrength = 21;
+
+                normalCol.enabled = false;
+                bullfrogCol.enabled = true;
+                col = bullfrogCol;
+                grapplePointDetector.localScale = new Vector3(1.9f, 1.9f, 1.9f);
+
+                sprite.localScale = new Vector3(1f, 1f, 1f);
+                spriteRenderer.sprite = initialSprites[3];
+                ConfigureSpeciesAnimations("Bull", false);
                 break;
             case Species.PoisonDartFrog:
                 jumpingPower = 40;
@@ -728,28 +747,30 @@ public class PlayerController : MonoBehaviour
             //While in a straight animation state, rotate to match velocity
             if (currentState == STRAIGHT_JUMP || currentState == STRAIGHT_GRAPPLE)
             {
+                int offset = 15;
+                if (species == Species.BullFrog) offset = 0;
                 if(rb.velocity.magnitude >= 1)
                 {
                     if (sprite.localScale.x > 0)
                     {
                         if (!tongueLine.isGrappling)
                         {
-                            SetSpriteRotation(((Vector3)rb.velocity) - tongueLauncher.tongueAimLineStartpoint.localPosition, 15);
+                            SetSpriteRotation(((Vector3)rb.velocity) - tongueLauncher.tongueAimLineStartpoint.localPosition, offset);
                         }
                         else
                         {
-                            SetSpriteRotation(((Vector3)tongueLauncher.grapplePoint) - tongueLauncher.tongueAimLineStartpoint.position, 15);
+                            SetSpriteRotation(((Vector3)tongueLauncher.grapplePoint) - tongueLauncher.tongueAimLineStartpoint.position, offset);
                         }
                     }
                     else
                     {
                         if (!tongueLine.isGrappling)
                         {
-                            SetSpriteRotation(((Vector3)rb.velocity) - tongueLauncher.tongueAimLineStartpoint.localPosition, -15);
+                            SetSpriteRotation(((Vector3)rb.velocity) - tongueLauncher.tongueAimLineStartpoint.localPosition, -offset);
                         }
                         else
                         {
-                            SetSpriteRotation(((Vector3)tongueLauncher.grapplePoint) - tongueLauncher.tongueAimLineStartpoint.position, -15);
+                            SetSpriteRotation(((Vector3)tongueLauncher.grapplePoint) - tongueLauncher.tongueAimLineStartpoint.position, -offset);
                         }
                     }
                     
@@ -764,6 +785,12 @@ public class PlayerController : MonoBehaviour
             if(!jumpTransferCoroutineStarted && (currentState == JUMP || currentState == MIDAIR || (currentState == SLIDE && !isGrounded)))
             {
                 StartCoroutine(SwitchFromJumpToStraight(currentState));
+            }
+
+            //
+            if(currentState == SLIDE && coyoteTimeCounter <= 0 && !isGrounded && !isSliding)
+            {
+                ChangeAnimationState(STRAIGHT_JUMP);
             }
 
             //Resets the rotation after you leave the water
@@ -843,6 +870,8 @@ public class PlayerController : MonoBehaviour
                 sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y + 0.25f, 0);
             else if (IDLE == "FrogletIdle")
                 sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y + 0.15f, 0);
+            else if (IDLE == "BullFrogIdle")
+                sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y + 0.15f, 0);
             else if (IDLE == "PoisonDartFrogIdle")
                 sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y + 0.3f, 0);
             sprite.transform.localScale = new Vector3(initialSpriteScale.x, Mathf.Abs(initialSpriteScale.y), 1);
@@ -854,6 +883,8 @@ public class PlayerController : MonoBehaviour
             else if (SLIDE == "TreeFrogSlide")
                 sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y - 0.25f, 0);
             else if (SLIDE == "FrogletSlide")
+                sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y - 0.25f, 0);
+            else if (SLIDE == "BullFrogSlide")
                 sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y - 0.25f, 0);
             else if (SLIDE == "PoisonDartFrogSlide")
                 sprite.transform.localPosition = new Vector3(initialSpriteOffset.x, initialSpriteOffset.y - 0.2f, 0);
@@ -1222,7 +1253,7 @@ public class PlayerController : MonoBehaviour
                 scoreController.SpawnFloatingText(5, transform.position, Color.white);
                 scoreController.Score(5);
 
-                if (PlayerPrefs.GetInt("frogletUnlocked", 0) == 1)
+                if (PlayerPrefs.GetInt("treeFrogUnlocked", 0) == 1)
                 {
                     PlayerPrefs.SetInt("InsectsEaten", PlayerPrefs.GetInt("InsectsEaten", 0) + 1);
                 }
@@ -1233,7 +1264,7 @@ public class PlayerController : MonoBehaviour
                 scoreController.SpawnFloatingText(10, transform.position, Color.white);
                 scoreController.Score(10);
 
-                if (PlayerPrefs.GetInt("frogletUnlocked", 0) == 1)
+                if (PlayerPrefs.GetInt("treeFrogUnlocked", 0) == 1)
                 {
                     PlayerPrefs.SetInt("InsectsEaten", PlayerPrefs.GetInt("InsectsEaten", 0) + 1);
                 }
@@ -1248,7 +1279,7 @@ public class PlayerController : MonoBehaviour
             //if minnow, add 15
             else if (collision.gameObject.transform.parent.name == "BogMinnow(Clone)" || collision.gameObject.transform.parent.name == "AmazonMinnow(Clone)")
             {
-                if (PlayerPrefs.GetInt("treeFrogUnlocked") == 1)
+                if (PlayerPrefs.GetInt("frogletUnlocked") == 1)
                 {
                     PlayerPrefs.SetInt("FishEaten", PlayerPrefs.GetInt("FishEaten", 0) + 1);
                 }
@@ -1281,7 +1312,7 @@ public class PlayerController : MonoBehaviour
                 scoreController.SpawnFloatingText(25, transform.position, Color.white);
                 scoreController.Score(25);
 
-                if (PlayerPrefs.GetInt("frogletUnlocked", 0) == 1)
+                if (PlayerPrefs.GetInt("treeFrogUnlocked", 0) == 1)
                 {
                     PlayerPrefs.SetInt("InsectsEaten", PlayerPrefs.GetInt("InsectsEaten", 0) + 1);
                 }
@@ -1302,7 +1333,7 @@ public class PlayerController : MonoBehaviour
             else if (collision.gameObject.transform.parent.name == "Goldfish(Clone)")
             {
                 sfx.PlaySFX("Eat2");
-                if (PlayerPrefs.GetInt("treeFrogUnlocked", 0) == 1)
+                if (PlayerPrefs.GetInt("frogletUnlocked", 0) == 1)
                 {
                     PlayerPrefs.SetInt("FishEaten", PlayerPrefs.GetInt("FishEaten", 0) + 1);
                 }

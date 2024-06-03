@@ -20,14 +20,14 @@ public class AlertController : MonoBehaviour
         }
 
         //Froglet
-        if (PlayerPrefs.GetInt("FishEaten", 0) >= 100 && PlayerPrefs.GetInt("FrogletClaimed", 0) != 1 && PlayerPrefs.GetInt("treeFrogUnlocked", 0) == 1)
+        if (PlayerPrefs.GetInt("InsectsEaten", 0) >= 250 && PlayerPrefs.GetInt("FrogletClaimed", 0) != 1 && PlayerPrefs.GetInt("treeFrogUnlocked", 0) == 1)
         {
             Alert();
             PlayerPrefs.SetInt("frogletUnlocked", 1);
         }
 
         //Bullfrog
-        if (PlayerPrefs.GetInt("InsectsEaten", 0) >= 500 && PlayerPrefs.GetInt("BullfrogClaimed", 0) != 1 && PlayerPrefs.GetInt("frogletUnlocked", 0) == 1)
+        if (PlayerPrefs.GetInt("FishEaten", 0) >= 100 && PlayerPrefs.GetInt("BullfrogClaimed", 0) != 1 && PlayerPrefs.GetInt("frogletUnlocked", 0) == 1)
         {
             Alert();
             PlayerPrefs.SetInt("bullfrogUnlocked", 1);

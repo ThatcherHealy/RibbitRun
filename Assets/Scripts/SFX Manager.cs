@@ -55,6 +55,9 @@ public class SFXManager : MonoBehaviour
     [SerializeField] AudioClip bullfrogRibbit;
     [SerializeField] AudioClip poisonDartFrogRibbit;
 
+    PlayerController pc;
+    DeathScript ds;
+
     public bool oneReady = true;
     public bool twoReady = true;
     public bool threeReady = true;
@@ -62,6 +65,11 @@ public class SFXManager : MonoBehaviour
     public bool fiveReady = true;
     public bool sixReady = true;
     static bool mute;
+    private void Start()
+    {
+        pc = FindFirstObjectByType<PlayerController>();
+        ds = FindFirstObjectByType<DeathScript>();
+    }
     public void PlaySFX(string clipToPlay)
     {
         if(!mute) 
@@ -309,6 +317,12 @@ public class SFXManager : MonoBehaviour
             mute = false;
         else
             mute = true;
+
+        if (pc.dead && (ds.dontRespawnPressed || ds.respawnedOnce))
+        {
+            mute = true;
+        }
+
     }
     public static bool GetMuteStatus()
     {

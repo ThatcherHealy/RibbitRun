@@ -382,7 +382,6 @@ public class PredatorEvents : MonoBehaviour
             if ((predator.Type() == Predator.PredatorType.Arapaima && lg.playerBiome != LevelGenerator.Biome.Amazon)
                 || predator.Type() == Predator.PredatorType.FishSwarm && lg.playerBiome != LevelGenerator.Biome.Bog)
             {
-                Debug.Log("Predator destroyed for being in the wrong biome");
                 if (predator.Type() == Predator.PredatorType.FishSwarm)
                 {
                     if (predator.GetPredator() != null && predator.GetPredator().transform != null && predator.GetPredator().transform.parent != null)

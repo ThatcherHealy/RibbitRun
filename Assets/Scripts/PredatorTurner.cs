@@ -29,9 +29,12 @@ public class PredatorTurner : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == 14 || (transform.parent.name == "Heron(Clone)" && collision.gameObject.name == "CypressTree" && FindFirstObjectByType<PlayerController>().eaten) && turned)
+        if(collision.gameObject != null && transform.parent != null)
         {
-            turnDirection = "";
+            if (collision.gameObject.layer == 14 || (transform.parent.name == "Heron(Clone)" && collision.gameObject.name == "CypressTree" && FindFirstObjectByType<PlayerController>().eaten) && turned)
+            {
+                turnDirection = "";
+            }
         }
     }
 }

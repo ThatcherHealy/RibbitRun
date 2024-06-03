@@ -34,6 +34,8 @@ public class ArapaimaBehavior : MonoBehaviour
             Destroy(GetComponent<FishBehavior>());
             Destroy(this);
         }
+        if(lg.playerBiome != LevelGenerator.Biome.Amazon)
+            Destroy(gameObject);
     }
     void FixedUpdate()
     {
