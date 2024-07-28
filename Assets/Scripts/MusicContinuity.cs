@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class MusicContinuity : MonoBehaviour
 {
     [SerializeField] bool menu;
-    string currentScene;
+    Scene currentScene;
     public static MusicContinuity instance;
     [SerializeField] AudioSource gameMusic;
     [SerializeField] AudioSource underwaterGameMusic;
@@ -47,7 +47,7 @@ public class MusicContinuity : MonoBehaviour
     {
         if (!menu)
         {
-            currentScene = SceneManager.GetActiveScene().name;
+            currentScene = SceneManager.GetActiveScene();
             pc = FindFirstObjectByType<PlayerController>();
             ds = FindFirstObjectByType<DeathScript>();
             gameMusic.mute = false; underwaterGameMusic.mute = true; deadGameMusic.mute = true;
@@ -55,10 +55,11 @@ public class MusicContinuity : MonoBehaviour
     }
     private void Update()
     {
-        if(!menu && SceneManager.GetActiveScene().name != currentScene )
+        if(!menu && SceneManager.GetActiveScene() != currentScene )
         {
             pc = FindFirstObjectByType<PlayerController>();
             ds = FindFirstObjectByType<DeathScript>();
+            currentScene = SceneManager.GetActiveScene();
         }
 
         if (PlayerPrefs.GetInt("Music Mute") == 0)
@@ -117,16 +118,21 @@ public class MusicContinuity : MonoBehaviour
                 {
                     gameMusic.mute = true; underwaterGameMusic.mute = true; deadGameMusic.mute = false;
                     deadGameMusic.pitch = 0.7f;
+                    //Debug.Log("Dead Music");
                 }
                 else
                 {
                     if (underwaterMusic)
                     {
                         gameMusic.mute = true; underwaterGameMusic.mute = false; deadGameMusic.mute = true;
+                        //Debug.Log("Underwater Music");
+
                     }
                     else
                     {
                         gameMusic.mute = false; underwaterGameMusic.mute = true; deadGameMusic.mute = true;
+                        //Debug.Log("Normal Music");
+
                     }
                 }
             }

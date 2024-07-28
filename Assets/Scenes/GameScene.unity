@@ -390,7 +390,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _androidGameId: 5598074
   _iOSGameId: 5598075
-  _testMode: 1
+  _testMode: 0
   rewardAd: {fileID: 13889975}
 --- !u!4 &13889974
 Transform:
@@ -23195,7 +23195,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1792965682}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f445eb92a31db8941bde2d578a957fc8, type: 3}
   m_Name: 
@@ -27793,7 +27793,7 @@ MonoBehaviour:
   poisonAvailable: 0
   coyoteTime: 0.2
   jumpBuffer: 0.15
-  aimMultiplier: 2
+  aimMultiplier: 5
   conserveMomentum: 1
   aimingJumpStopsMomentum: 1
   skipToJump: 0

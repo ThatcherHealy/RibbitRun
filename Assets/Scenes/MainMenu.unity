@@ -6257,6 +6257,10 @@ MonoBehaviour:
   bogSampleScene: {fileID: 555056042}
   amazonSampleScene: {fileID: 1078578509}
   cypressSampleScene: {fileID: 1238738734}
+  cam: {fileID: 560562620}
+  bogColor: {r: 0.47843137, g: 0.8, b: 0.67058825, a: 0}
+  amazonColor: {r: 0.47843137, g: 0.8, b: 0.60784316, a: 0}
+  cypressColor: {r: 0.47843137, g: 0.8, b: 0.7019608, a: 0}
 --- !u!1 &486480737
 GameObject:
   m_ObjectHideFlags: 0
@@ -15413,7 +15417,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 8.07, y: -6.8}
+  m_AnchoredPosition: {x: 8.07, y: -6.799999}
   m_SizeDelta: {x: 200, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1746832700
@@ -18104,7 +18108,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Froggy Jump
+  m_text: Ribbit Run
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e406a1f56e3b58d4c8368c738ed1dece, type: 2}
   m_sharedMaterial: {fileID: 2303646388587072237, guid: e406a1f56e3b58d4c8368c738ed1dece, type: 2}

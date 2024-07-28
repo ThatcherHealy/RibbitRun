@@ -110,7 +110,15 @@ public class DeathScript : MonoBehaviour
                     deathBiomeSetOnce = true;
                 }
 
-                if (playerController.eaten && !playerController.drowned && !playerController.poisoned) //eaten
+                if (playerController.poisoned/* && !playerController.drowned && !playerController.eaten*/) //poisoned
+                {
+                    poisonedScene.SetActive(true);
+                    eatenDeathScene.SetActive(false);
+                    drownScene.SetActive(false);
+
+                    Greenout();
+                }
+                else if (playerController.eaten/* && !playerController.drowned && !playerController.poisoned*/) //eaten
                 {
                     eatenDeathScene.SetActive(true);
                     drownScene.SetActive(false);
@@ -126,21 +134,13 @@ public class DeathScript : MonoBehaviour
                         alertSpawned = true;
                     }
                 }
-                if (playerController.drowned && !playerController.poisoned && !playerController.eaten) //drowned
+                else if (playerController.drowned/* && !playerController.poisoned && !playerController.eaten*/) //drowned
                 {
                     drownScene.SetActive(true);
                     eatenDeathScene.SetActive(false);
                     poisonedScene.SetActive(false);
 
                     StartCoroutine(BeginDrownFadeIn());
-                }
-                if (playerController.poisoned && !playerController.drowned && !playerController.eaten) //poisoned
-                {
-                    poisonedScene.SetActive(true);
-                    eatenDeathScene.SetActive(false);
-                    drownScene.SetActive(false);
-
-                    Greenout();
                 }
             }
             if (drownedFadeIn)

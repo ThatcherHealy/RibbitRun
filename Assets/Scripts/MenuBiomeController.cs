@@ -9,6 +9,11 @@ public class MenuBiomeController : MonoBehaviour
     [SerializeField] GameObject amazonSampleScene;
     [SerializeField] GameObject cypressSampleScene;
 
+    [SerializeField] Camera cam;
+    [SerializeField] Color bogColor;
+    [SerializeField] Color amazonColor;
+    [SerializeField] Color cypressColor;
+
     void Awake()
     {
         if (Time.timeScale != 1) //Resume time
@@ -22,19 +27,23 @@ public class MenuBiomeController : MonoBehaviour
             if (PlayerPrefs.GetString("StartBiome") == "Bog")
             {
                 bogSampleScene.SetActive(true);
+                cam.backgroundColor = bogColor;
             }
             else if (PlayerPrefs.GetString("StartBiome") == "Cypress")
             {
                 cypressSampleScene.SetActive(true);
+                cam.backgroundColor = cypressColor;
             }
             else if (PlayerPrefs.GetString("StartBiome") == "Amazon")
             {
                 amazonSampleScene.SetActive(true);
+                cam.backgroundColor = amazonColor;
             }
             else
             {
                 PlayerPrefs.SetString("StartBiome", "Bog");
                 bogSampleScene.SetActive(true);
+                cam.backgroundColor = bogColor;
             }
         }
     }

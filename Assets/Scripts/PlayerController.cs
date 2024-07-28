@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
     private float coyoteTimeCounter;
     public float jumpBuffer = 0.2f;
     private float jumpBufferCounter;
-    [SerializeField] float aimMultiplier = 2;
+    [SerializeField] float aimMultiplier = 5;
     public static Species species;
     public bool conserveMomentum;
     [SerializeField] bool aimingJumpStopsMomentum;
@@ -1207,7 +1207,12 @@ public class PlayerController : MonoBehaviour
                 if(species != Species.Froglet)
                     sprite.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
                 else
-                    sprite.transform.rotation = Quaternion.Euler(0, 0, angle - 108.4f);
+                {
+                    if(facingRight)
+                        sprite.transform.rotation = Quaternion.Euler(0, 0, angle - 108.4f);
+                    else
+                        sprite.transform.rotation = Quaternion.Euler(0, 0, angle - 72.6f);
+                }
 
             }
         }

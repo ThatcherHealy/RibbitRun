@@ -201,39 +201,80 @@ public class ScoreController : MonoBehaviour
         }
 
         //Set individual species highscore 
-        if (PlayerController.species == PlayerController.Species.Default)
+        if ((PlayerPrefs.GetInt("HardMode", 0) == 0))
         {
-            if (finalScore > PlayerPrefs.GetInt("DefaultHighscore", 0))
+            if (PlayerController.species == PlayerController.Species.Default)
             {
-                PlayerPrefs.SetInt("DefaultHighscore", finalScore);
+                if (finalScore > PlayerPrefs.GetInt("DefaultHighscore", 0))
+                {
+                    PlayerPrefs.SetInt("DefaultHighscore", finalScore);
+                }
+            }
+            if (PlayerController.species == PlayerController.Species.Treefrog)
+            {
+                if (finalScore > PlayerPrefs.GetInt("TreeFrogHighscore", 0))
+                {
+                    PlayerPrefs.SetInt("TreeFrogHighscore", finalScore);
+                }
+            }
+            if (PlayerController.species == PlayerController.Species.Froglet)
+            {
+                if (finalScore > PlayerPrefs.GetInt("FrogletHighscore", 0))
+                {
+                    PlayerPrefs.SetInt("FrogletHighscore", finalScore);
+                }
+            }
+            if (PlayerController.species == PlayerController.Species.BullFrog)
+            {
+                if (finalScore > PlayerPrefs.GetInt("BullfrogHighscore", 0))
+                {
+                    PlayerPrefs.SetInt("BullfrogHighscore", finalScore);
+                }
+            }
+            if (PlayerController.species == PlayerController.Species.PoisonDartFrog)
+            {
+                if (finalScore > PlayerPrefs.GetInt("PoisonDartFrogHighscore", 0))
+                {
+                    PlayerPrefs.SetInt("PoisonDartFrogHighscore", finalScore);
+                }
             }
         }
-        if (PlayerController.species == PlayerController.Species.Treefrog)
+        else //Hard Mode
         {
-            if (finalScore > PlayerPrefs.GetInt("TreeFrogHighscore", 0))
+            if (PlayerController.species == PlayerController.Species.Default)
             {
-                PlayerPrefs.SetInt("TreeFrogHighscore", finalScore);
+                if (finalScore > PlayerPrefs.GetInt("DefaultHardModeHighscore", 0))
+                {
+                    PlayerPrefs.SetInt("DefaultHardModeHighscore", finalScore);
+                }
             }
-        }
-        if (PlayerController.species == PlayerController.Species.Froglet)
-        {
-            if (finalScore > PlayerPrefs.GetInt("FrogletHighscore", 0))
+            if (PlayerController.species == PlayerController.Species.Treefrog)
             {
-                PlayerPrefs.SetInt("FrogletHighscore", finalScore);
+                if (finalScore > PlayerPrefs.GetInt("TreeFrogHardModeHighscore", 0))
+                {
+                    PlayerPrefs.SetInt("TreeFrogHardModeHighscore", finalScore);
+                }
             }
-        }
-        if (PlayerController.species == PlayerController.Species.BullFrog)
-        {
-            if (finalScore > PlayerPrefs.GetInt("BullfrogHighscore", 0))
+            if (PlayerController.species == PlayerController.Species.Froglet)
             {
-                PlayerPrefs.SetInt("BullfrogHighscore", finalScore);
+                if (finalScore > PlayerPrefs.GetInt("FrogletHardModeHighscore", 0))
+                {
+                    PlayerPrefs.SetInt("FrogletHardModeHighscore", finalScore);
+                }
             }
-        }
-        if (PlayerController.species == PlayerController.Species.PoisonDartFrog)
-        {
-            if (finalScore > PlayerPrefs.GetInt("PoisonDartFrogHighscore", 0))
+            if (PlayerController.species == PlayerController.Species.BullFrog)
             {
-                PlayerPrefs.SetInt("PoisonDartFrogHighscore", finalScore);
+                if (finalScore > PlayerPrefs.GetInt("BullfrogHardModeHighscore", 0))
+                {
+                    PlayerPrefs.SetInt("BullfrogHardModeHighscore", finalScore);
+                }
+            }
+            if (PlayerController.species == PlayerController.Species.PoisonDartFrog)
+            {
+                if (finalScore > PlayerPrefs.GetInt("PoisonDartFrogHardModeHighscore", 0))
+                {
+                    PlayerPrefs.SetInt("PoisonDartFrogHardModeHighscore", finalScore);
+                }
             }
         }
     }
